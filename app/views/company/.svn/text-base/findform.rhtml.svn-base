@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>表单预览 - 和家网后台管理[radmin.hejia.com]</title>
+<meta name="keywords" content="和家网后台管理">
+<meta name="description" content="和家网后台管理">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<meta name="author" content="MSN: qq1713173@hotmail.com" />
+<script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+<link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#datalist {
+    border-collapse:collapse;
+    border:1px solid #BED0E2;
+}
+#datalist th
+{
+text-align:center;
+    font-family:Verdana;
+    padding: 5px 15px 3px 15px;
+    letter-spacing: 12px;
+    background-color: #45719C;
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
+    border:1px solid white;
+}
+#datalist td {
+    color: #757575;
+    font-family:Verdana;
+    padding: 5px 8px 5px 8px;
+    letter-spacing: 1px;
+    font-size: 9pt;
+    border:1px solid #D9E3EE;
+}
+#datalist a {
+    color: #2853FF;
+    text-decoration: none;
+}
+#datalist a:hover {
+    color: #FD352B;
+    text-decoration: none;
+}
+      .formouter{
+          width:100%; clear:left; padding-bottom:20px;
+      }
+      .formleft{
+        width:100px; float:left;
+        font-size:12pt;
+        letter-spacing: 2px;
+        color: #3465D6; padding-top: 4px;
+      }
+      .formcenter{
+          width:420px; float:left;
+      }
+      .formright{
+          float:left;font-size:14px;
+          letter-spacing: 1px;
+          color: #999999; padding-top: 4px;
+      }
+</style>
+</head>
+<body>
+
+<form action="/company/form_save" method="post" >
+
+<div style="margin:15px;">
+    <input type="hidden" name="f_id" id="f_id" value="5" />
+    <input type="hidden" name="c_id" id="c_id" value="0" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                表单标题：<font color="#CE0000">装修公司评论</font>
+    </div>
+
+<script type="text/javascript">
+  function submitForm(form){
+      var valReturn = true;
+      
+          
+      
+          
+      
+          
+      
+          
+      
+          
+      
+          
+      
+          
+      
+      return valReturn;
+  }
+  </script>
+
+
+
+              <input type="hidden" name="c1" id="c1" style="width:390px;" value="<%=@companyid%>" />
+
+
+
+
+<div class="formouter">
+            <div class="formleft">用户名：</div>
+            <div class="formcenter">
+              <input type="text" name="username" id="username" onblur="check_email();" style="width:90px;" /><%=@message%>
+            </div>
+            <div class="formright" id="p_c2">
+                
+                  
+                
+            </div>
+</div>
+
+<script>
+	function check_email(){
+    if (trim(document.getElementById("username").value)!=""){
+      reg_form.userbbsemail.value = blank_filter(document.getElementById("userbbsemail").value);
+      if (check_email_format(blank_filter(document.getElementById("userbbsemail").value))){
+        hideiframe_reg.location.href = '/user/check_email?email=' + EncodeURI(trim(document.getElementById("userbbsemail").value));
+        //p_userbbsemail.innerHTML='Email地址格式正确!'; p_userbbsemail.className='tips1';
+      }else{
+        p_userbbsemail.innerHTML='Email地址格式不正确!'; p_userbbsemail.className='wrongtips';
+      }
+      
+    }
+  }
+</script>
+
+<div class="formouter">
+            <div class="formleft">设计：</div>
+            <div class="formcenter">
+              <select name="c3" id="c3"><option value="1" selected>1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option></select>
+            </div>
+            <div class="formright" id="p_c3">
+                
+                  
+                
+            </div>
+</div>
+
+
+
+<div class="formouter">
+            <div class="formleft">预算：</div>
+            <div class="formcenter">
+              <select name="c4" id="c4"><option value="1" selected>1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option></select>
+            </div>
+            <div class="formright" id="p_c4">
+                
+                  
+                
+            </div>
+</div>
+
+
+
+<div class="formouter">
+            <div class="formleft">施工：</div>
+            <div class="formcenter">
+              <select name="c5" id="c5"><option value="1" selected>1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option></select>
+            </div>
+            <div class="formright" id="p_c5">
+                
+                  
+                
+            </div>
+</div>
+
+
+
+<div class="formouter">
+            <div class="formleft">服务：</div>
+            <div class="formcenter">
+              <select name="c6" id="c6"><option value="1" selected>1</option><option value="2" >2</option><option value="3" >3</option><option value="4" >4</option><option value="5" >5</option></select>
+            </div>
+            <div class="formright" id="p_c6">
+                
+                  
+                
+            </div>
+</div>
+
+
+
+<div class="formouter">
+            <div class="formleft">评论内容：</div>
+            <div class="formcenter">
+              <textarea name="c7" id="c7" cols="60" rows="6"></textarea>
+            </div>
+            <div class="formright" id="p_c7">
+                
+                  
+                
+            </div>
+</div>
+
+
+
+    <div style="margin-left:100px;margin-top:15px;">
+      <input name="formid" type="hidden" value="<%=@formid%>" />
+       <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+
+</div>
+
+</form>
+
+
+<iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+
+</body>
+</html>

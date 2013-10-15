@@ -1,0 +1,30 @@
+<% title "活动参与者列表" %>
+<p>
+	<%= link_to '按耗时排序',participants_path( :order => :spent_time,:activity_id =>params[:activity_id] ) %> | 
+	<%= link_to '按完成日期排序',participants_path( :order => :created_at,:activity_id =>params[:activity_id] ) %>
+</p>
+<table>
+  <tr>
+    <th>姓名</th>
+    <th>活动</th>
+    <th>电话</th>
+    <th>身份证号</th>
+    <th>省份</th>
+    <th>城市</th>
+    <th>耗时</th>
+    <th>日期</th>
+  </tr>
+  <% for participant in @participants %>
+    <tr>
+      <td><%=h participant.name %></td>
+      <td><%=h participant.activity.name if participant.activity %></td>
+      <td><%=h participant.tel %></td>
+      <td><%=h participant.idcard_id %></td>
+      <td><%=h participant.province %></td>
+      <td><%=h participant.city %></td>
+      <td><%=h participant.spent_time %> 秒</td>
+	<td><%=h participant.created_at.to_s(:db) %></td>
+      <td><%= link_to "删除", participant_path(participant.id), :confirm => '确定要删除?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>

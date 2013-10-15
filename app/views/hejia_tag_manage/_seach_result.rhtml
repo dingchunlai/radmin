@@ -1,0 +1,22 @@
+<div>
+  <p>搜索结果：<% if @tag.TAGFATHERID.to_s != '15000' %><%= HejiaTag.find(@tag.TAGFATHERID).TAGNAME %>:<%= @tag.TAGNAME %><% end %></p>
+</div>
+<div>
+  <p>以下是其的子分类</p>
+  <table>
+    <tr>
+      <td>编号</td>
+      <td>名称</td>
+      <td>操作</td>
+    </tr>
+    <% @tag_subdirecotries.each do |tag| %>
+      <tr>
+        <td><%= tag.TAGID %></td>
+        <td><%= tag.TAGNAME %></td>
+        <td><%= link_to '修改', "hejia_tag_manage/edit_subdirectories?tagid=#{tag.TAGID}", :target => "_blank" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<%= render :partial => 'new' %>
+

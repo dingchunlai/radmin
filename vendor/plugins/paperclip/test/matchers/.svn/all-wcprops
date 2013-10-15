@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/matchers
+END
+have_attached_file_matcher_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/matchers/have_attached_file_matcher_test.rb
+END
+validate_attachment_presence_matcher_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/matchers/validate_attachment_presence_matcher_test.rb
+END
+validate_attachment_size_matcher_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/matchers/validate_attachment_size_matcher_test.rb
+END
+validate_attachment_content_type_matcher_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/matchers/validate_attachment_content_type_matcher_test.rb
+END

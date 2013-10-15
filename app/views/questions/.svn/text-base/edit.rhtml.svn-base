@@ -1,0 +1,23 @@
+<% title "编辑问题" %>
+
+<% form_for :question, @question , :url=>activity_question_path(@activity,@question) , :html => {:method=>:put} do |f| %>
+  <%=error_messages_for :question  %>
+  <p>
+  	活动: <%= @question.activity.name %>
+  </p>
+  <p>
+  	问题类别:<br />
+  	<%= f.select :category ,[ [get_question_category(1),1], [get_question_category(2) ,2 ]] %>
+  	</p>
+  <p>
+	问题内容:<br />
+    <%= f.text_field :title,:size=>100 %>
+  </p>
+  
+  <p><%= submit_tag "提交" %></p>
+<% end %>
+
+
+<p>
+<%= link_to "返回问题列表" ,activity_questions_path(@activity)%>
+</p>

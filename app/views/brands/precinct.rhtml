@@ -1,0 +1,74 @@
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="brands">
+    <tr>
+      <th>编号</th>
+      <th>品牌标志</th>
+      <th>品牌名称</th>
+      <th>体验指数</th>
+      <th>所属分类</th>
+      <th>相关店铺</th>
+      <th>是否合作</th>
+      <th>是否推荐</th>
+      <th>是否隐藏</th>
+      <th>有道理标准数</th>
+      <th>编辑评分</th>
+      <th>相关操作</th>
+    </tr>
+    <% @brands.each do |brand| %>
+      <% @brand = brand %>
+      <tr class="<%= cycle("odd", "even")%>">
+        <td><%= brand.id %></td>
+        <td class="thumb"><%= link_to image_tag(brand.logo, :alt => brand.name_zh), brand_path(brand), :title => brand.name_zh -%></td>
+        <td><%= link_to brand.name_zh, brand_path(brand) %>(<%= brand.products_count %>)<br /><%= brand.name_en %></td>
+        <td>
+          <% brand.experiences.each do |experience| %>
+            <%= experience.category_experience.name %>:<%= experience.value %>
+          <% end %>
+        </td>
+        <td>
+          <% brand.categories.each do |c| -%>
+            <%= link_to c.name_zh, category_path(:id => c.tagid), :title => c.name_zh -%>
+          <% end -%>
+        </td>
+        <td>
+          <% brand.vendors.each do |v| -%>
+            <%= link_to v.name_zh, vendor_path(v), :title => v.name_zh -%>(<%= v.products_count %>)
+          <% end -%>
+        </td>
+        <td>
+          <%= check_box_tag "brand_id", brand.id, brand.is_cooperation, {:onclick => remote_function( :url => is_cooperation_brand_path(brand), :with => "'cvalue='+this.checked", :method => "put")} -%>
+          <span id="cooperation_<%= brand.dom_id -%>"><%= brand.is_cooperation ? "<strong>合作</strong>" : "普通" %></span>
+        </td>
+        <td>
+          <%= check_box_tag "brand_id", brand.id, brand.is_recommend, {:onclick => remote_function( :url => is_recommend_brand_path(brand), :with => "'cvalue='+this.checked", :method => "put")} -%>
+          <span id="recommend_<%= brand.dom_id -%>"><%= brand.is_recommend ? "<strong>推荐</strong>" : "普通" %></span>
+        </td>
+        <td>
+          <%= check_box_tag "brand_id", brand.id, brand.is_hidden, {:onclick => remote_function( :url => is_hidden_brand_path(brand), :with => "'cvalue='+this.checked", :method => "put")} -%>
+          <span id="hidden_<%= brand.dom_id -%>"><%= brand.is_hidden ? "<strong>隐藏</strong>" : "显示" %></span>
+        </td>
+        <td>
+          <%= in_place_editor_field :brand, :truth_standard, {}, {:cancel_text => '取消', :save_text => '保存', :saving_text => "正在保存...", :external_control => "truth_standard-#{brand.id}"} %>
+        </td>
+        <td>
+          <%= in_place_editor_field :brand, :editor_point, {}, {:cancel_text => '取消', :save_text => '保存', :saving_text => "正在保存...", :external_control => "editor_point-#{brand.id}"} %>
+        </td>
+        <td>
+          <%#= link_to "设置指数", setup_brand_path(brand) if brand.categories.any? %>
+          <%#= link_to "新建体验项", setup_brand_experience_path(brand) if brand.categories.any? %>
+          <!--
+    <% unless brand.first? -%>
+      <%= link_to "顶部", {:action => "move", :id => brand.id, :method => "move_to_top"} -%>
+      <%= link_to "上移", {:action => "move", :id => brand.id, :method => "move_higher"} -%>
+    <% end -%>
+    <% unless brand.last? -%>
+      <%= link_to "下移", {:action => "move", :id => brand.id, :method => "move_lower"} -%>
+      <%= link_to "底部", {:action => "move", :id => brand.id, :method => "move_to_bottom"} -%>
+    <% end -%>
+                -->
+                <%= link_to "显示", brand_path(brand) %>
+                <%= link_to "编辑", edit_brand_path(brand) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @brands, :renderer => 'CustomPaginationRenderer' %>

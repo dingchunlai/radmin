@@ -1,0 +1,18 @@
+<%= image_tag "http://radmin.51hejia.com/images/icons/indicator.gif", :id => "indicator", :style => "display:none;" %><br />
+  案例标签类别：
+  <% @case_tags.each do |tag| %>
+  <%= link_to_remote tag.TAGNAME, :url => {:action => "tags_show", :id => tag.TAGID},
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" %>
+<%= link_to_remote image_tag("http://www.51hejia.com/css/newback/images/x.png"), :url => {:action => "delete_tag", :id => tag.TAGID},
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')", :confirm => "确定删除吗？" %>
+    <% end %>
+<br />
+<br />
+<% 
+      case_pic_tag_id = 6693
+      case_pic_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", case_pic_tag_id, -1])
+%>
+图片标签类别：
+<span id="show_option_tags">
+  <%= select_tag "0_level_tags", options_for_select(case_pic_tags.map{|t| [t.TAGNAME,t.TAGID]}), :onchange => "tags_show(this.value);" %>
+</span>

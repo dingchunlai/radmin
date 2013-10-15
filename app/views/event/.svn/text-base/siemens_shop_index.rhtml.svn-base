@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>西门子开关 欢乐谷 门店信息</title>
+<link href="http://www.51hejia.com/zhuanti/siemensgame/siemenspage/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body id="red">
+<div class="out">
+  <div class="in">
+    <div id="main">
+      <div class="box01"></div>
+      <div class="box02"></div>
+      <div class="box03"></div>
+      <div class="box04"></div>
+      <div class="box050">
+      <div class="text">
+        <div style="margin-bottom:10px;">
+            请选择您所在的省份(城市)：
+            <select onchange="window.open('/event/siemens_shop_index?shengfen='+this.value,'_self');this.disabled=true;">
+              <%for city in @cities%>
+                <option value="<%=u(city.shengfen)%>" <%="selected" if @shengfen == city.shengfen%>  ><%=city.shengfen%></option>
+              <%end%>
+            </select>
+        </div>
+        <table width="100%" border="0" cellpadding="0" cellspacing="1">
+          <tr>
+            <td width="100" class="td01"><span>专卖店商铺名称</span></td>
+            <td class="td01"><span>电话</span></td>
+            <td width="150" class="td01"><span>地址</span></td>
+          </tr>
+          <%for r in @rs%>
+          <tr>
+            <td><%=r.dianpu%></td>
+            <td><%=r.dianhua%></td>
+            <td><%=r.dizhi%></td>
+          </tr>
+          <%end%>
+        </table>
+      </div>
+      </div>
+      <div class="box06"></div>
+      <div class="box07"></div>
+      <div class="box08"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

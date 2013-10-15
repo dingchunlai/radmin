@@ -1,0 +1,66 @@
+<SCRIPT src="/javascripts/aies.js" type="text/javascript"></SCRIPT>
+
+<SCRIPT language="vbs">
+function g5(n)
+g5=asc(n)
+end function 
+</SCRIPT>
+
+<script type="text/javascript">
+window.onload = function(){
+    ge("initial").value = jjfy("<%=@cur_name%>").substr(0,1).toUpperCase();
+    hejiatag_form1.submit();
+}
+</script>
+<script type="text/javascript">
+function submitform(){
+    i = trim(hejiatag_form1.initial.value)
+    if (i==""){
+        hejiatag_form1.initial.focus();
+    }else{
+        var re = new RegExp("^[a-zA-Z]$");
+        if (i.toString().match(re)!=null){
+            if (i.toString().match(re)[0]==i){
+                //alert(i.toString().match(re));
+                hejiatag_form1.initial.value = i.toUpperCase();
+                hejiatag_form1.submit();
+                return true;
+            }
+        }
+        alert("您只能输入一个英文字母!");
+        hejiatag_form1.initial.select();
+    }
+}
+</script>
+        
+<style type="text/css">
+#pagelist{
+margin-top:15px;
+    font-family:Verdana;
+    font-weight: bold;
+    color:#999999;
+    font-size:12pt;
+    letter-spacing:1px;
+    vertical-align: middle;
+}
+#pagelist a{
+    font-weight: normal;
+    color:#000040;
+    text-decoration:none;
+}
+#pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;    
+}
+</style>
+
+<div id="div_main">
+<div style="font-family:Verdana; color:#7389A4; line-height:35px; font-size:14px; letter-spacing:1px; margin: 2px 0px 10px 5px; ">
+<form name="hejiatag_form1" method="post">
+ <input name="id" type="hidden" value="<%=@cur_id%>" />
+ 关键字: <%=@cur_name%> <br />
+ 首字母: <input name="initial" id="initial" OnKeyUp="submitform();" type="text" value="" size="1" />
+</form>
+</div>
+</div>

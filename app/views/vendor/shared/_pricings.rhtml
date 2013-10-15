@@ -1,0 +1,43 @@
+<div class="search">
+	<% form_tag "/vendor/search" do %>
+  <ul class="clearfix">
+  	<li><label>关键字：</label><%= text_field_tag :keywords, @keywords %><%= hidden_field_tag :type, "pricing" %></li>
+		<li><label>电话：</label><%= text_field_tag :phone, @phone, :size => 12 %></li>
+  	<li><label>日期：</label><%= text_field_tag :created_at_from, @created_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :created_at_to, @created_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+  	<li><label>状态：</label><%= select_tag :status, options_for_select([["所有核价单", ""], ["待审核", "0"], ["已处理", "1"], ["已发送", "2"], ["已作废", "3"], ["已成交", "4"], ["已放弃", "5"], ["已分配", "6"]], @status) %></li>
+		<li><%= submit_tag "提交查询" %></li>
+	</ul>
+	<% end %>
+</div>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>编号</th>
+		<th>姓名</th>
+		<th>电话</th>
+		<th>产品名称</th>
+		<th>品牌</th>
+		<th>型号</th>
+		<th>数量</th>
+		<th>希购地</th>
+		<th>状态</th>
+		<th>提交日期</th>
+		<th>操作</th>
+	</tr>
+	<% @pricings.each do |pricing| %>
+	<tr class="<%= cycle("odd", "even")%>">
+		<td><%= pricing.id %></td>
+		<td><%= pricing.username %></td>
+		<td><%= pricing.phone %></td>
+		<td><%= pricing.name %></td>
+		<td><%= pricing.brand %></td>
+		<td><%= pricing.xinghao %></td>
+		<td><%= pricing.num %></td>
+		<td><%= pricing.hopeaddress %></td>
+		<td><%= pricing_state(pricing.chulistate) %></td>
+		<td><%= pricing.createtime.to_s(:db) %></td>
+		<td><%= link_to "编辑", edit_vendor_pricing_path(pricing) %></td>
+	</tr>
+	<% end %>
+</table>
+<%= will_paginate @pricings, :renderer => 'CustomPaginationRenderer' -%>

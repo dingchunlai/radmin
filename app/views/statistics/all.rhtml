@@ -1,0 +1,146 @@
+<div id="div_main">
+  <form name="ftiwen" id="ftiwen" action="/statistics/all" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      日期：<input name="riqi1" type="text" size="6" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      <input type="submit"value="搜 索" />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>名称</th>
+        <th>总量</th>
+        <th>弹出量</th>
+        <th>点击量</th>
+        <th>关闭量</th>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">资讯频道弹出广告(d.51hejia.com)</td>
+        <% d_z_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "eject", "%d.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% d_z_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "open", "%d.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% d_z_close_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "close", "%d.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= d_z_eject_statistics + d_z_open_statistics + d_z_close_statistics %></td>
+        <td><%= d_z_eject_statistics %></td>
+        <td><%= d_z_open_statistics %></td>
+        <td><%= d_z_close_statistics %></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">图库频道弹出广告(tuku.51hejia.com)</td>
+        <% tuku_z_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "eject", "%tuku.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% tuku_z_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "open", "%tuku.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% tuku_z_close_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "close", "%tuku.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= tuku_z_eject_statistics + tuku_z_open_statistics + tuku_z_close_statistics %></td>
+        <td><%= tuku_z_eject_statistics %></td>
+        <td><%= tuku_z_open_statistics %></td>
+        <td><%= tuku_z_close_statistics %></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">品牌频道弹出广告(b.51hejia.com)</td>
+        <% b_z_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "eject", "%b.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% b_z_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "open", "%b.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% b_z_close_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "close", "%b.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= b_z_eject_statistics + b_z_open_statistics + b_z_close_statistics %></td>
+        <td><%= b_z_eject_statistics %></td>
+        <td><%= b_z_open_statistics %></td>
+        <td><%= b_z_close_statistics %></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">产品频道弹出广告(p.51hejia.com)</td>
+        <% p_z_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "eject", "%p.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% p_z_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "open", "%p.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% p_z_close_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "close", "%p.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= p_z_eject_statistics + p_z_open_statistics + p_z_close_statistics %></td>
+        <td><%= p_z_eject_statistics %></td>
+        <td><%= p_z_open_statistics %></td>
+        <td><%= p_z_close_statistics %></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">产品频道弹出广告(prod.51hejia.com)</td>
+        <% prod_z_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "eject", "%prod.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% prod_z_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "open", "%prod.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% prod_z_close_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "close", "%prod.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= prod_z_eject_statistics + prod_z_open_statistics + prod_z_close_statistics %></td>
+        <td><%= prod_z_eject_statistics %></td>
+        <td><%= prod_z_open_statistics %></td>
+        <td><%= prod_z_close_statistics %></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">居尚频道弹出广告(www.51hejia.com/jushang)</td>
+        <% jushang_z_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "eject", "%www.51hejia.com/jushang%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% jushang_z_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "open", "%www.51hejia.com/jushang%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% jushang_z_close_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "zb-ad-js", "close", "%www.51hejia.com/jushang%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= jushang_z_eject_statistics + jushang_z_open_statistics + jushang_z_close_statistics %></td>
+        <td><%= jushang_z_eject_statistics %></td>
+        <td><%= jushang_z_open_statistics %></td>
+        <td><%= jushang_z_close_statistics %></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">资讯通栏FLASH广告</td>
+        <td align="left"><%= Statistic.count(:conditions => ["code = ? and created_at > ? and created_at < ?", "zd-swf", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">资讯频道超级管家飘带广告(d.51hejia.com)</td>
+        <% tongji_d_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "gongyi_ad_gif", "open", "%d.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= d_z_eject_statistics + tongji_d_open_statistics %></td>
+        <td><%= d_z_eject_statistics %></td>
+        <td><%= tongji_d_open_statistics %></td>
+        <td></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">居尚频道超级管家飘带广告(www.51hejia.com/jushang)</td>
+        <% tongji_jushang_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "gongyi_ad_gif", "open", "%www.51hejia.com/jushang%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= jushang_z_eject_statistics + tongji_jushang_open_statistics %></td>
+        <td><%= jushang_z_eject_statistics %></td>
+        <td><%= tongji_jushang_open_statistics %></td>
+        <td></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">文章终端页超级管家飘带广告</td>
+        <% tongji_as_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "gongyi_ad_gif", "eject", "%www.51hejia.com/articles/show%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% tongji_as_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "gongyi_ad_gif", "open", "%www.51hejia.com/articles/show%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= tongji_as_eject_statistics + tongji_as_open_statistics %></td>
+        <td><%= tongji_as_eject_statistics %></td>
+        <td><%= tongji_as_open_statistics %></td>
+        <td></td>
+      </tr>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left">图库超级管家飘带广告</td>
+        <% tongji_tuku_eject_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "gongyi_ad_gif", "eject", "%tuku.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <% tongji_tuku_open_statistics = Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "gongyi_ad_gif", "open", "%tuku.51hejia.com%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+        <td align="left"><%= tongji_tuku_eject_statistics + tongji_tuku_open_statistics %></td>
+        <td><%= tongji_tuku_eject_statistics %></td>
+        <td><%= tongji_tuku_open_statistics %></td>
+        <td></td>
+      </tr>
+    </table>
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>名称</th>
+        <th>文章终端页(点击/开启)</th>
+        <th>列表专区(点击/开启)</th>
+      </tr>
+      <% keywords = [["地中海","dzh"],["简约","jy"],["田园","ty"],["欧式","os"],["中式","zs"],["宜家","yj"],["其它","qt"],["小户型","xhx"],
+        ["公寓装修","gyzx"],["别墅装修a","bszx_a"],["别墅装修b","bszx_b"],["别墅装修c","bszx_c"],["装修预算","zxys"],
+        ["装修流程","zxlc"],["装修用途","zxyt"],["空间类","kjl"],["装修公司","zxgs"],["设计师","sjs"],["样板间","ybj"]] %>
+      <% for baoming in keywords %>
+        <tr align="center" style="background-color:#FFFDE6">
+          <td align="left"><%= baoming[0] %></td>
+          <td>
+            <%= Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "ad_baoming_#{baoming[1]}_gif", "open", "%www.51hejia.com/article%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>/
+            <%= Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "ad_baoming_#{baoming[1]}_gif", "eject", "%www.51hejia.com/article%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+          </td>
+          <td>
+            <%= Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "ad_baoming_#{baoming[1]}_gif", "open", "%www.51hejia.com/zq%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>/
+            <%= Statistic.count(:conditions => ["code = ? and style = ? and source like ? and created_at > ? and created_at < ?", "ad_baoming_#{baoming[1]}_gif", "eject", "%www.51hejia.com/zq%", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </form>
+</div>

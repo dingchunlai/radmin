@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin
+END
+change_password.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/change_password.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/index.rhtml
+END
+validate_authority.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/validate_authority.rhtml
+END
+products.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/products.rhtml
+END

@@ -1,0 +1,5 @@
+<select id="city_area" name="case[PROVINCE2]">
+<%@area.each do |a|%>
+	<option value="<%=a[0]%>"><%=a[1]%></option>
+<%end%>
+</select>

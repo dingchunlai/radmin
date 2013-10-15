@@ -1,0 +1,36 @@
+<%= f.hidden_field :vendor_id %>
+<%= f.hidden_field :product_id %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+		<td class="label">产品价格</td>
+		<td><%= f.text_field :price, :size => 7 -%>元</td>
+	</tr>
+	<tr>
+		<td class="label">是否促销</td>
+		<td><%= f.check_box :is_special %></td>
+	</tr>
+	<tr>
+		<td class="label">促销时间</td>
+		<td><%= text_field_tag "quote[special_start]", (@quote.special_start ? @quote.special_start.to_date : ""), :onclick => "new Calendar().show(this);" -%> 至 <%= text_field_tag "product[special_end]", (@quote.special_end ? @quote.special_end.to_date : ""), :onclick => "new Calendar().show(this);" -%></td>
+	</tr>
+  <tr>
+		<td class="label">促销详情</td>
+		<td><%= f.text_area :special_detail, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">是否推荐</td>
+		<td><%= f.check_box :is_recommend %></td>
+	</tr>
+  <tr>
+		<td class="label">推荐理由</td>
+		<td><%= f.text_area :recommend_reason, :class => "mceEditor" -%></td>
+	</tr>
+  <tr>
+		<td class="label">相关备注</td>
+		<td><%= f.text_area :comment, :rows => 3, :cols => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建报价" : "更新报价") -%></td>
+	</tr>
+</table>

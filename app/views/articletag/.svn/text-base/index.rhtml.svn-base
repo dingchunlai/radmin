@@ -1,0 +1,24 @@
+<script language="javascript">
+	function chooseson(id,type){
+		var ac = "/articletag/index"+type;
+		ac = ac + "?fatherid="+id;
+		document.getElementById("index"+type).src = ac;
+		
+		if(type == '2')
+			document.getElementById("index3").src = '';
+	}
+	function cleanframe(i){
+		if(i=='1')
+			document.getElementById("index1").src = "/articletag/index1";
+		else
+			document.getElementById("index"+i).src = "/articletag/index"+i;
+	}
+	function refreshframe(i){
+		document.getElementById("index"+i).src = document.getElementById("index"+i).src;
+	}
+</script>
+
+<p align=center><iframe id="index1" src="/articletag/index1" width="250" height="1000" frameborder="0">
+<iframe id="index2" src="" width="250" height="1000" frameborder="0">
+<iframe id="index3" src="" width="250" height="1000" frameborder="0">
+

@@ -1,0 +1,1 @@
+<%= @case.DESIGNERID ? query_designer_name_by_id(@designer.ID) : "<font color='red'>未分配</font>" %>

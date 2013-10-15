@@ -1,0 +1,600 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 4400;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height + 26;
+}
+
+function submitForm(form){
+    ge("p_sort_name").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("zq_sort_name").value)==""){
+        ge("p_sort_name").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px; height:32px;
+}
+.formleft{
+  width:150px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:500px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+  
+<form action="/zhuanqu/sort_edit_save" name="form1" enctype="multipart/form-data" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+     <span style="color:#BF0000;"><%if @id ==0%>新建分类专区<%else%>编辑分类专区<%end%></span>
+     <input type="hidden" name="id" value="<%=@id%>" />
+    </div>
+      
+<div class="formouter">
+            <div class="formleft">分类专区名：</div>
+            <div class="formcenter">
+                <%=text_field("zq","sort_name",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_sort_name">请填写分类专区名称</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">所属板块：</div>
+            <div class="formcenter">
+                <%=select("zq","board_id",array_to_hash(ZHUANQU_BOARD,true))%>
+            </div>
+            <div class="formright" id="p_board_id">请选择所属板块</div>
+</div>
+
+<div class="formouter" style="height:105px;">
+            <div class="formleft">顶部导航链接：</div>
+            <div class="formcenter">
+                <%=text_area("zq","top_links",{:style=>"width:400px;height:100px;"})%>
+            </div>
+            <div class="formright">
+              标题1<回车><br/>
+              链接1<回车><br/>
+              标题2<回车><br/>
+              链接2<回车> ...
+            </div>
+</div>
+<!--
+<div class="formouter" style="height:25px;">
+    <%#for li in get_array_title_and_url(@zq.top_links)  #通过换行符切割文本后取得包含“title与url哈希组”的数组%>
+        <a href="<%#=li["url"]%>" target="_blank"><%#=li["title"]%></a>
+    <%#end%>
+</div>
+-->
+<div class="formouter" style="height:105px;">
+            <div class="formleft">专区推荐链接：</div>
+            <div class="formcenter">
+                <%=text_area("zq","xiangguan_links",{:style=>"width:400px;height:100px;"})%>
+            </div>
+            <div class="formright">
+              标题1<回车><br/>
+              链接1<回车><br/>
+              标题2<回车><br/>
+              链接2<回车> ...
+            </div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">图片更多链接：</div>
+            <div class="formcenter">
+                <%=text_field("zq","image_more_url",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<%if @id !=0%>
+  <div class="formouter" >
+            <div class="formleft">下级关键词：</div>
+            <div class="formcenter">
+                <%=text_field("zq","sub_kws",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+  </div>
+<%end%>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">推荐标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐简介1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_resume1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">推荐图片1：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.tuijian_image_url1) ? @zq.tuijian_image_url1 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="tuijian_image_url1" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐地址1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐简介2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_resume2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">推荐图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.tuijian_image_url2) ? @zq.tuijian_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="tuijian_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐地址2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐简介3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_resume3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">推荐图片3：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.tuijian_image_url3) ? @zq.tuijian_image_url3 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="tuijian_image_url3" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐地址3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐标题4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_title4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐简介4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_resume4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">推荐图片4：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.tuijian_image_url4) ? @zq.tuijian_image_url4 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="tuijian_image_url4" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">推荐地址4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","tuijian_url4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">焦点图标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","jiaodiantu_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">焦点图图片1：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.jiaodiantu_image_url1) ? @zq.jiaodiantu_image_url1 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="jiaodiantu_image_url1" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">焦点图地址1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","jiaodiantu_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">焦点图标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","jiaodiantu_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">焦点图图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.jiaodiantu_image_url2) ? @zq.jiaodiantu_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="jiaodiantu_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">焦点图地址2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","jiaodiantu_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">焦点图标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","jiaodiantu_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">焦点图图片3：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.jiaodiantu_image_url3) ? @zq.jiaodiantu_image_url3 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="jiaodiantu_image_url3" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">焦点图地址3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","jiaodiantu_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">关键词1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词简介1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_resume1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">关键词图片1：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.kw_image_url1) ? @zq.kw_image_url1 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="kw_image_url1" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词地址1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词简介2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_resume2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">关键词图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.kw_image_url2) ? @zq.kw_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="kw_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词地址2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+
+<div class="formouter">
+            <div class="formleft">关键词3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词简介3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_resume3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">关键词图片3：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.kw_image_url3) ? @zq.kw_image_url3 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="kw_image_url3" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词地址3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词标题4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_title4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词简介4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_resume4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">关键词图片4：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.kw_image_url4) ? @zq.kw_image_url4 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="kw_image_url4" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">关键词地址4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_url4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">专题标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题地址1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">专题图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.zt_image_url2) ? @zq.zt_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="zt_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题地址2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="height:80px;">
+            <div class="formleft">专题图片3：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.zt_image_url3) ? @zq.zt_image_url3 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="zt_image_url3" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题地址3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">图库关键词：</div>
+            <div class="formcenter">
+                <%=text_field("zq","image_keyword",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">TITLE：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_title",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">KEYWORDS：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_keywords",{:size=>60})%>
+            </div>
+            <div class="formright">多个关键字之间用逗号分隔</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">DESCRIPTION：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_description",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter" style="padding:30px 0px 0px 280px;">
+
+  <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+
+</div>
+     
+</form>
+</div>

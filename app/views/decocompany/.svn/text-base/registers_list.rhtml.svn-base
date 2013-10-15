@@ -1,0 +1,208 @@
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  #docom tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]);
+  }
+</style>
+<form action="/decocompany/registers_list" method=get id="fmid">
+  <table>
+    <tr>
+      <td>
+			工地名称:<input type="text" name="factory_name" value="<%=@factory_name%>"/>
+      </td>
+      <td>
+			公司全称:<input type="text" name="company_name" value="<%=@company_name%>"/>
+      </td>
+      <td>
+			备注内容:<input type="text" name="register_marker" value="<%=@register_marker%>"/>
+      </td>
+      <td>
+			来源类型:<%= select_tag :from_type,options_for_select([["请选择",""],["未知","0"],["首页预约送车费","1"],["工作室预约工地","2"],["右侧预约工地","3"],["工作室在建工地列表","4"],["在建工地大列表","5"],["首页预约参观样板房","6"]], params[:from_type].to_s) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+			状态：<select name='state'>
+          <option value='0'>请选择</option>
+          <option value='1' <%if @state.to_i == 1%>selected<%end%>>未删除</option>
+          <option value='2' <%if @state.to_i == 2%>selected<%end%>>已删除</option>
+        </select>
+      </td>
+      <td>
+			备注状态：<select name='marker'>
+          <option value='0'>请选择</option>
+          <option value='1' <%if @marker.to_i == 1%>selected<%end%>>未备注</option>
+          <option value='2' <%if @marker.to_i == 2%>selected<%end%>>已备注</option>
+        </select>
+      </td>
+      <td>
+			地区:<select name="city">
+          <option value="">请选择</option>
+          <%@cities.each do |c|%>
+            <option value="<%=c[0]%>" <%if c[0].to_i == @city.to_i%>selected<%end%>><%=c[1]%></option>
+          <%end%>
+        </select>
+      </td>
+      <td>
+        <input type="submit" value="搜索"/>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <!--| ID | 预约人 | 电话 | 工地ID | 工地名称 | 公司 | 城市 | 操作 -->
+  <table id="docom">
+    <tr>
+      <th ><div id="zhuangyong"><input type="checkbox" id="quanxuan" name="quanxuan" onclick="check(1)"/></div><div id="tongyong" style="display:none;"><input id="quanxuan1" type="checkbox" name="quanxuan1" checked onclick="check(0)"/></div></th>
+      <th >预约人</th>
+      <th >电话</th>
+      <th >工地ID</th>
+      <th >工地名称</th>
+      <th >公司</th>
+      <th >城市</th>
+      <th >报名时间</th>
+      <th >状态</th>
+      <th >来源类型</th>
+      <th >来源URL</th>
+      <th >备注处理</th>
+      <th >操作</th>
+    </tr>
+    <%@registers.each do |register|%>
+      <tr >
+        <td><%= check_box_tag "register[selected_ids][]", register.id %><%= register.id %></td>
+        <td><%= register.name %></td>
+        <td><%= register.phone ? register.phone : '' %></td>
+        <td><%= register.event_id %></td>
+        <td><%= register.factory.blank? ? '' : register.factory.NAME %></td>
+        <td><%= register.factory.blank? ? '' : register.factory.firm.name_zh %></td>
+        <td><% if register.factory.blank? %>
+            <%= '' %>
+          <% else %>
+            <%= register.factory.PROVINCE1 == 11910 ? CITIES[register.factory.PROVINCE1] : CITIES[register.factory.PROVINCE2] %>
+          <%end%></td>
+        <td><%= register.created_at.strftime("%Y-%m-%d") %></td>
+        <td><%= register.state == '-1'? "已被删除" : '正常' %></td>
+        <td><%= register.from_type.blank? ? '' : GONGDI_FROM_TYPE[register.from_type.to_i] %></td>
+        <td><%= register.from_url.last(13) unless register.from_url.blank? %></td>
+        <td width="100">
+          <input type='hidden' id="register<%=register.id%>" value="<%=register.id%>" />
+          <input type="text" size="20" id="marker<%=register.id%>" value="<%=register.marker%>"/><input type="button" onclick="return marker_edit(<%=register.id%>);" value="更新"/>
+        </td>
+        <!--<td><a href="#n" onclick="deleteregister('<%#= register.id %>')">删除</a></td>隐藏删除功能-->
+      </tr>
+    <%end%>
+  </table>
+  <br/>
+  <table>
+    <tr>
+      <td align="left">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <!--<a href="#n" onclick="delete_registers_selected()">批量删除</a>隐藏删除功能-->
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <table>
+    <tr>
+      <td align="right" style="font-size:16px;">
+				共<span style="color:red"> <%=@registers.total_entries %> </span>位预约客户
+      </td>
+      <td align="center" style="font-size:16px;">
+        <%= will_paginate @registers %>
+      </td>
+      <td>
+        <input type="submit" name="submit1" value="跳转"/><input type="text" name="page" size="4"/>页
+        <input type="hidden" id="registerid" name="registerid"/>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+</form>
+
+<script type="text/javascript">
+
+  function deleteregister(id){
+    if(window.confirm('确定删除该预约客户吗？')){
+      document.getElementById('registerid').value = id;
+      document.getElementById('fmid').action = '/decocompany/registers_del';
+      document.getElementById('fmid').submit();
+    }
+  }
+
+  function checkselected(){
+    var chs = document.getElementsByName("register[selected_ids][]");
+    if(chs.length > 0){
+      var count = 0;
+      for(var i=0;i<chs.length;i++){
+        if(chs[i].checked == true)
+          count++;
+      }
+    }else{
+      return false;
+    }
+    if(count == 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  function delete_registers_selected(){
+    if(!checkselected()){
+      alert('请选择预约人');
+      return false;
+    }
+    if(window.confirm('确定删除这些预约客户吗?')){
+      document.getElementById('fmid').action = '/decocompany/registers_del';
+      document.getElementById('fmid').submit();
+    }
+  }
+
+  function check(num){
+    var chs = document.getElementsByName("register[selected_ids][]");
+
+    if(chs.length > 0){
+      for(var i=0;i<chs.length;i++){
+        var ch = chs[i];
+        if(num == '1'){
+          ch.checked = true;
+          document.getElementById('quanxuan').checked = false;
+          document.getElementById('tongyong').style.display='block';
+          document.getElementById('zhuangyong').style.display='none';
+        }else{
+          ch.checked = false;
+          document.getElementById('quanxuan1').checked = true;
+          document.getElementById('zhuangyong').style.display='block';
+          document.getElementById('tongyong').style.display='none';
+        }
+      }
+    }
+  }
+
+  function marker_edit(mark){
+    register_mark = 'register' + mark;
+    marker_mark = 'marker' + mark;
+    status_mark='status' + mark;
+    register_id = document.getElementById(register_mark).value;
+    marker = document.getElementById(marker_mark).value;   
+    url = '/decocompany/update_register_marker';
+    $.post(url,{
+      register_id : register_id,
+      marker : marker
+    });
+
+    return false;
+  }
+  
+</script>

@@ -1,0 +1,106 @@
+<div id='list'>
+  <%if !(@beginnum && @allnum )%>
+  <p align=center><%= will_paginate @articles %> 共有<%=@articles.total_entries%>篇文章 </p>
+  <%end%>
+  <table align="center" border=1>
+  <tr style="background-color:#7389A4;">
+  	<th style="color:#FFFFFF;">选择</th>
+  	<th style="color:#FFFFFF;">排序</th>
+  	<th style="color:#FFFFFF;">文章</th>
+  	<th style="color:#FFFFFF;">标题</th>
+  	<th style="color:#FFFFFF;">品牌</th>
+  	<th style="color:#FFFFFF;">类别</th>
+  	<th style="color:#FFFFFF;">添加人</th>
+  	<th style="color:#FFFFFF;">添加时间</th>
+  	<th style="color:#FFFFFF;">状态</th>
+  	<th style="color:#FFFFFF;">操作</th>
+  	<!--<td>选择</td>
+  	<td>排序</td>
+  	<td>文章id</td>
+  	<td>标题</td>
+  	<td>品牌</td>
+  	<td>类别</td>
+  	<td>添加人</td>
+  	<td>添加时间</td>
+  	<td>状态</td>
+  	<td>操作</td>-->
+  </tr>
+  <% @articles.each do |article| -%>
+  <p>
+  <tr style="background-color:#FFFDE6">
+  	<td><%= check_box_tag "article[selected_ids][]", article.ID %></td>
+  	<td><input type="text" size=3 id="orid<%=article.id%>" value="<%if @third && @third != '0'%><%=article.THIRDORDERID%><%elsif @second && @second != '0'%><%=article.SECONDORDERID%><%else%><%=article.FIRSTORDERID%><%end%>" ><input type="button" value="确定" onclick="setorder(document.getElementById('orid<%=article.id%>').value,'<%=article.id%>')"></td>
+	<td><%= article.id %></td>
+	<td>
+	<%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+	<%= article.TITLE%>
+	<%else%>
+	<a href="/article/show/<%=article.ID%>" target="_blank"><%= article.TITLE%></a>
+	<%end%>
+	
+	</td>
+	<td><%if article.article_brand%>
+			<%= article.article_brand.name_zh%>
+		<%else%>
+			&nbsp;
+		<%end%>
+	</td>
+	<td>
+		<%if article.article_type1%>
+			<%= article.article_type1.TAGNAME%>
+		<%else%>
+			&nbsp;
+		<%end%>		
+	</td>
+	<td>
+		<%if article.article_author_new%>
+			<%=article.article_author_new.rname%>
+		<%elsif article.article_author%>
+			<%= article.article_author.USERBBSNAME%>
+		<%end%>
+	</td>
+	<td>
+		<%if article.CREATETIME%>
+			<%= article.CREATETIME.utc.strftime("%Y-%m-%d %H:%M:%S")%>
+		<%else%>
+			&nbsp;
+		<%end%>
+	</td>
+	<td>
+		<%if article.STATE == '0'%>已发布
+		<%elsif article.STATE == '2'%>未审核
+		<%elsif article.STATE == '3'%>已审核
+		<%elsif article.STATE == '-2'%>退回
+		<%end%>
+	</td>
+	<td>
+		<a href="<%if article.article_type1 && article.article_type1.TAGURL=='zhuangxiu'%>http://d.51hejia.com/<%elsif article.article_type1 && article.article_type1.TAGURL=='pinpaiku'%>http://b.51hejia.com/<%else%>http://www.51hejia.com/<%end%><%if article.article_type1%><%=article.article_type1.TAGURL%>/<%end%><%if article.CREATETIME%><%= article.CREATETIME.utc.strftime("%Y%m%d")%>/<%end%><%= article.id%>" target="_blank">预览</a> &nbsp;
+
+		<%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+		
+		<%else%>
+		
+		<a href="/article/show/<%=article.id%>" target="_blank">查看</a>
+		<a href="/wordmanager/artkey?articleid=<%=article.id%>" target="_blank">管理词</a>
+		<a href="/wordmanager/keyword?id=<%=article.id%>" target="_blank">提取词</a>
+			<!--
+			<a href="#n" onclick="checkarticle('3','<%=article.id%>')">审核</a> &nbsp;
+			
+			<%if article.STATE != '0'%>
+				<a href="#n" onclick="checkarticle('0','<%=article.id%>')">发布</a> &nbsp;
+			<%end%>
+			<%if article.STATE != '-2'%>
+				<a href="#n" onclick="window.open('/article/backarticle?articleid=<%=article.ID%>&stype=-2')">退回</a>
+			<%end%>-->
+		<%end%>
+	</td>
+	
+  </tr>
+  </p>
+  <% end -%>
+  </table>
+
+
+</div>
+<input type="hidden" name="delid" id="delid">
+<input type="hidden" name="page" id="pageid" value="<%=@page%>">

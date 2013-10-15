@@ -1,0 +1,16 @@
+<form action="/statistics/add" method="post">
+id:<input type="text" name="ids"/><br/>
+start:<input type="text" name="startnum"/><br/>
+end:<input type="text" name="endnum"/><br/>
+<input type="submit" value="增加PV"/>
+</form>
+<form action="/statistics/addcity" method="post">
+城市:<select name='city'>
+					<option value=''>选择</option>
+					<%CITIES.sort.each do |k,v|%>
+					<option value='<%=k%>'><%=v%></option>
+					<%end%>
+				</select><br/>
+随机数:<input type="text" name="startnum"/>~<input type="text" name="endnum"/>之间<br/>
+<input type="submit" value="增加PV"/>
+</form>

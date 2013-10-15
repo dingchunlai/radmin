@@ -1,0 +1,50 @@
+<script type="text/javascript">
+window.onload = function(){
+  setValue();
+  //load_fckeditor();
+  div_main_height = 350;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+function setValue(){
+}
+function set_action(){
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-top:5px; padding-bottom:5px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:255px; float:left;
+}
+.formcenter input{
+    width:235px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+<div id="div_main" style="padding:10px;">
+  
+<form action="lsbfm_new_save" name="form1" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                添加记录
+    </div>
+    
+    <%=render :partial => "lsbfm_form"%>
+    
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="添 加" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+</div>

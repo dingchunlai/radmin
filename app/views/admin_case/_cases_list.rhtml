@@ -1,0 +1,67 @@
+<form action="/admin_case/choose_designer" method="post" id="cases">
+  <table>
+    <tr>
+      <td>
+        <input type="button" value="全选" onclick="checkAll('cases[]')"/>
+        <input type="button" value="反选" onclick="clearAll('cases[]')"/>
+        <input type="button" class="btn" value="分配到当前设计师" onclick="checkBox('cases[]','cases')"/>
+      </td>
+    </tr>
+  </table>
+  <table style="width:100%;">
+    <tr style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:20px;">
+      <td>选择</td>
+      <td style="width:10%;">图片</td>
+      <td>案例名称</td>
+      <td>案例介绍</td>
+      <td>房型</td>
+      <td>设计师</td>
+      <td>操作</td>
+    </tr>
+    <% if @cases %>
+      <% @cases.each do |one_case| %>
+        <tr style="line-height:20px;" onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');">
+          <td>
+            <input type="checkbox" name="cases[]" id="cases" value="<%= one_case.ID %>">
+          </td>
+          <td>
+            <img src="<%= query_small_image_url(one_case.ID, one_case.MAINPHOTO) %>" height="70" width="100">
+          </td>
+          <td>
+            <a href="<%= one_case.ID %>" style="font-size:14px;">
+              <%= one_case.NAME %>
+            </a>
+          </td>
+          <td>
+            <%= one_case.INTRODUCE.chars[0, 40] %>
+          </td>
+          <td>
+            <%= one_case.HOUSETYPE %>
+          </td>
+          <td id="designer_<%= one_case.ID %>">
+            <%= one_case.DESIGNERID ? query_designer_name_by_id(one_case.DESIGNERID) : "<font color='red'>未分配</font>" %>
+          </td>
+          <%# if session[:action_name] == "search_case" %>
+            <td id="hand_<%= one_case.ID %>">
+              <% unless one_case.DESIGNERID %>
+                <%= link_to_remote "分配到当前设计师", :url => { :action => "allocate_case_to_designer", :case_id => one_case.ID, :designer_id => session[:designer_id] } %>
+              <% end %>
+              <% if one_case.DESIGNERID %>
+                <%= link_to_remote "取消", :url => { :action => "abolish_designer_case", :case_id => one_case.ID, :designer_id => session[:designer_id] } %>
+              <% end %>
+            </td>
+          <%# end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <table>
+    <tr>
+      <td>
+        <input type="button" value="全选" onclick="checkAll('cases[]')"/>
+        <input type="button" value="反选" onclick="clearAll('cases[]')"/>
+        <input type="button" class="btn" value="分配到当前设计师" onclick="checkBox('cases[]','cases')"/>
+      </td>
+    </tr>
+  </table>
+</form>

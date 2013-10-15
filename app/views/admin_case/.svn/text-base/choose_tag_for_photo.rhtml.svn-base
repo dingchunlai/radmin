@@ -1,0 +1,102 @@
+<style type="text/css">
+  * {
+    margin:0px;
+    padding:0px;
+  }
+  ul {
+    list-style-type:none;
+    width:960px;
+  }
+  li {
+    list-style-type:none;
+    line-height:30px;
+  }
+  .right {
+    float:right;
+  }
+  .left {
+    float:left;
+  }
+  .text_right {
+    text-align:right;
+  }
+  .text_left {
+    text-align:left;
+  }
+  #page {
+    margin:0 auto;
+    padding:0px;
+    width:960px;
+  }
+  #case_pics img{border:none}
+  #case_pics a{padding:0px;}
+  #case_pics a:hover{padding:0px;}
+</style>
+<script type="text/javascript">
+  function ch(id){
+    i = document.getElementById(id);
+    if(i.checked){
+      i.checked = false;
+    } else {
+      i.checked = true;
+    }
+  }
+  function ss(id){
+    if(document.getElementById(id).style.display == "inline"){
+      document.getElementById(id).style.display = "none";
+    } else {
+      document.getElementById(id).style.display = "inline"
+    }
+  }
+</script>
+
+<div id="page">
+  <h2 style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:28px;">
+    <a href="/admin_case/articles_to_cases_index" style="font-size:15px;">打标签首页</a>
+    <a href="/admin_case/choose_tag_for_case?id=<%= @case_id %>" style="font-size:15px;">上一级</a>
+  </h2>
+  <br>
+  <h3 style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:22px;margin-bottom:5px;">
+    <img src="<%= @photo.get_photo_url %>">
+  </h3>
+  <p>
+    <%= @photo.description %>
+  </p>
+  <br>
+  <div id="photo_tag">
+    <form action="/admin_case/save_pic_tag" method="post">
+      <input type="hidden" name="info[id]" value="<%= @id %>">
+      <input type="hidden" name="info[case_id]" value="<%= @case_id %>">
+      <ul>
+        <% link_photo_tags = PhotoPhotosTag.find(:all, :conditions => ["photo_id = ?", @id]) %>
+        <%
+        tagids = []
+        link_photo_tags.each{|x|tagids << PhotoTag.find(:first, :conditions => ["id = ? ",x.tag_id]).name}
+        tagids.uniq
+      %>
+        <% @tag_types.each do |t1| %>
+          <li style="background-color:<%= cycle("#fff", "#CCE8CF") -%>;">
+            <% g = t1.group_by { |x| x.TAGCOMMENT } %>
+            <% g.each do |key, t| %>
+              <% unless t.nil? %>
+                <%
+                tname = query_tag(t[0].TAGFATHERID).TAGNAME
+                turl = query_tag(t[0].TAGFATHERID).TAGURL
+              %>
+                <span style="color:#336699;width:150px;display:block;float:left;"><strong><%= tname+"：" %></strong><%= key %></span>
+                <% t.each do |tag| %>
+                  <input type="checkbox" name="<%= turl %>[]" value="<%= tag.TAGNAME %>" id="<%= turl %>" <%= is_checked_pic(tagids, tag.TAGID) %>>
+                  <span><%= tag.TAGNAME %></span>
+                <% end %><br>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <input type="submit" value="提交">
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+  font()
+</script>

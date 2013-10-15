@@ -1,0 +1,4 @@
+# TODO Operate on the page object
+page.replace_html "designer_#{@case_id}", :partial => "designer", :object => @designer
+page.replace_html "hand_#{@case_id}", :partial => "hand", :object => @case
+page.replace_html "designer_info", :partial => "designer_info"

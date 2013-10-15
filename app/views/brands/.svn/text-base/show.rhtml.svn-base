@@ -1,0 +1,70 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="vendors">
+  <tr>
+    <th>编号</th>
+    <th>品牌标志</th>
+    <th>品牌名称</th>
+    <th>所属商家</th>
+    <th>所属分类</th>
+    <th>是否合作</th>
+    <th>是否推荐</th>
+    <th>是否隐藏</th>
+    <th>有道理标准数</th>
+    <th>相关操作</th>
+  </tr>
+  <tr>
+    <td><%= @brand.id %></td>
+    <td class="thumb"><%= link_to image_tag(@brand.logo, :alt => @brand.name_zh), brand_path(@brand), :title => @brand.name_zh -%></td>
+    <td><%= link_to @brand.name_zh, brand_path(@brand), :title => @brand.name_zh %></td>
+    <td>
+      <% @brand.vendors.each do |v| -%>
+        <%= link_to v.name_zh, vendor_path(v), :title => v.name_zh -%>(<%= v.products_count %>)
+      <% end -%>
+    </td>
+    <td>
+      <% @brand.categories.each do |c| -%>
+        <%= link_to c.name_zh, category_path(:id => c.tagid), :title => c.name_zh -%>
+      <% end -%>
+    </td>
+    <td>
+      <%= check_box_tag "brand_id", @brand.id, @brand.is_cooperation, {:onclick => remote_function( :url => is_cooperation_brand_path(@brand), :with => "'cvalue='+this.checked", :method => "put")} -%>
+      <span id="cooperation_<%= @brand.dom_id -%>"><%= @brand.is_cooperation ? "<strong>合作</strong>" : "普通" %></span>
+    </td>
+    <td>
+    <%= check_box_tag "brand_id", @brand.id, @brand.is_recommend, {:onclick => remote_function( :url => is_recommend_brand_path(@brand), :with => "'cvalue='+this.checked", :method => "put")} -%>
+    <span id="recommend_<%= @brand.dom_id -%>"><%= @brand.is_recommend ? "<strong>推荐</strong>" : "普通" %></span>
+    <td>
+    <%= check_box_tag "brand_id", @brand.id, @brand.is_hidden, {:onclick => remote_function( :url => is_hidden_brand_path(@brand), :with => "'cvalue='+this.checked", :method => "put")} -%>
+    <span id="hidden_<%= @brand.dom_id -%>"><%= @brand.is_hidden ? "<strong>隐藏</strong>" : "显示" %></span>
+    <td>
+      <%= in_place_editor_field :brand, :truth_standard, {}, {:cancel_text => '取消', :save_text => '保存', :saving_text => "正在保存...",:external_control => "truth_standard-#{@brand.id}"} %>
+    </td>
+    <td>
+      <%= button_to "同步关联商家", :controller => "common", :action => "sync_brands_vendors", :id => @brand %>
+      <%= button_to "同步关联分类", :controller => "common", :action => "sync_brands_categories", :id => @brand %>
+    </td>
+  </tr>
+  <tr>
+    <td>下属系列：</td>
+    <td colspan="8">
+			<% @brand.series.each do |s| %>
+				<%= link_to s.name, serie_path(s) %>
+			<% end %>
+		</td>
+  </tr>
+	<tr>
+    <td>品牌简介：</td>
+    <td colspan="8"><%= @brand.description %></td>
+  </tr>
+  <tr>
+    <td>点评摘要：</td>
+    <td colspan="8"><%= @brand.comment %></td>
+  </tr>
+  <tr>
+    <td>厂商资料：</td>
+    <td colspan="8"><%= @brand.manufacturer %></td>
+  </tr>
+</table>
+
+<h3>旗下产品 <span>(总数：<%= @products.total_entries %>)</span></h3>
+<%= render :partial => "shared/search" %>
+<%= render :partial => "shared/products" unless @products.empty? -%>

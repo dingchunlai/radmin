@@ -1,0 +1,21 @@
+<% if brand.experiences.any? %>
+	<% brand.experiences.each do |experience| %>
+		<% fields_for_experience(experience) do |experience_form| %>
+		<tr>
+			<td class="label"><%= experience.category_experience.name %>
+			</td>
+			<td>
+				<%= experience_form.hidden_field :category_id %>
+				<%= experience_form.hidden_field :experience_id %>
+				<%= experience_form.text_field :value %>
+				所属类别：<%= link_to experience.category.name_zh, category_experiences_path(:category_id => experience.category.tagid) %>
+			</td>
+		</tr>
+		<% end %>
+	<% end %>
+	<% if brand.related_categories_experiences.size > brand.experiences.size %>
+		<%= render :partial => "new_experience", :collection => brand.new_category_experiences %>
+	<% end %>
+<% else %>
+	<%= render :partial => "new_experience", :collection => brand.related_categories_experiences %>
+<% end %>

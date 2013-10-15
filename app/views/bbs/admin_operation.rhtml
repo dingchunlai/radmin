@@ -1,0 +1,129 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 600;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/wenba/topic_del?id="+id;
+}
+
+function getids(){
+    var ids = "0";
+    if (document.form1.arid.length==undefined){
+        if (document.form1.arid.checked) ids = document.form1.arid.value;
+    }else{
+        for (i=0; i<document.form1.arid.length;i++){
+            if (document.form1.arid[i].checked) ids += ", " + document.form1.arid[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择记录！"); return "";} else return ids;
+}
+
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!="") hideiframe.location="/wenba/topic_del?ids="+ids;
+    }
+}
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+<style type="text/css">
+  .ellipsis{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap
+  }
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1">
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>操作类型</th>
+            <th>操作者</th>
+            <th>用户</th>
+            <th>主帖</th>
+            <th>回帖</th>
+            <th>原板块</th>
+            <th>目标板块</th>
+            <th>操作时间</th>
+
+    </tr>
+    <%for log in @logs%>
+    <tr align="center" style="background-color:#FFFDE6">
+      <td><%=log.id%></td>
+      <td><%=BBS_ADMIN_OPERATION[log.operation]%></td>
+      <td><a href="http://blog.51hejia.com/u/<%=log.editor_id%>" target="_blank"><%=log.editor.USERNAME rescue ""%></a></td>
+      <td><a href="http://blog.51hejia.com/u/<%=log.user_id%>" target="_blank"><%=log.user.USERNAME rescue ""%></a></td>
+      <td><a href="http://bbs.51hejia.com/btopic/<%=log.topic_id%>" target="_blank" title="<%=log.topic.subject rescue ""%>">
+          <%if log.operation.to_i != 2%><%=log.topic_id.to_s%>:<%end%>
+          <%=utf8_left(log.topic.subject,10,"...") rescue ""%></a></td>
+      <td><%=log.post_id%></td>
+      <td><%=log.old_tag_id%></td>
+      <td><%=log.new_tag_id%></td>
+      <td><%=log.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+    </tr>
+    <%end %>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+    <!--
+	<input onclick="SelectAll(document.form1.arid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+    -->
+	<span id="pagelist"></span>
+    <script type="text/javascript">
+    function gotopage(page){
+      window.open("/bbs/admin_operation?page="+page+"&recordcount=<%=@recordcount%>", "_self");
+    }
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+    </script>
+    </div>
+
+</form>
+</div>

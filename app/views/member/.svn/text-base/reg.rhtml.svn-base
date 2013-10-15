@@ -1,0 +1,464 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>和家网用户注册</title>
+    <meta name="keywords" content="家庭装修，室内装潢，房子装潢，房屋装修，室内装修设计图片，家居装修图片，家装效果图，室内装修效果图片，室内装饰效果图片，装修论坛" />
+    <meta name="description" content="中国最大最专业的装修家居信息服务网站，主要包括家庭装修，室内装潢，房子装潢，房屋装修，室内装修设计图片，家居装修图片，家装效果图，室内装修效果图片 室内装饰效果图片，装修论坛等" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="all" />
+    <meta name="author" content="linsongbo" />
+    <meta name="Copyright" content="Copyright©2005-2008 Hejia Net (shanghai) Information Technology Co. Ltd. All rights reserved." />
+    <link href="/stylesheets/reg.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="http://js.51hejia.com/js/area_city.js?23834"></script>
+    <script type="text/javascript">
+      function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+      function StrLenthByByte(str)	//计算字符串的字节长度，即英文算一个，中文算两个字节
+      {
+        var len;
+        var i;
+        len = 0;
+        for (i=0;i<str.length;i++)
+        {
+          if (str.charCodeAt(i)>255) len+=2; else len++;
+        }
+        return len;
+      }
+      function blank_filter(str){		//过滤空格
+        while (str.indexOf(" ")>=0||str.indexOf("　")>=0){
+          str = str.replace(" ","").replace("　","");
+        }
+        return str;
+      }
+      function Show(id,i_id){
+        var on_img="http://www.51hejia.com/images/Images_zhuce/Suo.gif";//打开时图片
+        var off_img="http://www.51hejia.com/images/Images_zhuce/Zhan.gif";//隐藏时图片
+        var obj=document.getElementById('c_'+id);
+        if(obj.style.display=="none"){
+          obj.style.display="";
+          i_id.src=on_img;
+          //将子菜单Id放入Cookies
+          var curShow = readCookie('curShow');
+          if(curShow!='')
+          {
+            var arr_curShow = curShow.split(',');
+            var found = false;
+            for(i=0;i<arr_curShow.length-1;i++)
+            {
+              if(arr_curShow[i].toString()==id) {found=true;}
+            }
+            if(!found){writeCookie('curShow',curShow+','+id,12)}
+          }
+          else {
+            writeCookie('curShow',id,12)
+          }
+          //将子菜单Id放入Cookies End
+        }else{
+          obj.style.display="none";
+          i_id.src=off_img;
+          //将子菜单Id从Cookies中移除
+          var curShow = readCookie('curShow');
+          if(curShow!='')
+          {
+            var arr_curShow = curShow.split(',');
+            for(i=0;i<arr_curShow.length;i++)
+            {
+              if(arr_curShow[i].toString()==id) {arr_curShow=arr_curShow.del(i--);}
+            }
+            curShow = arr_curShow.join(',');
+            //alert(curShow);
+            writeCookie('curShow',curShow,12)
+          }
+          //将子菜单Id从Cookies中移除 End
+        }
+      }
+      function readCookie(name)
+      {
+        var cookieValue = "";
+        var search = name + "=";
+        if(document.cookie.length > 0)
+        {
+          offset = document.cookie.indexOf(search);
+          if (offset != -1)
+          {
+            offset += search.length;
+            end = document.cookie.indexOf(";", offset);
+            if (end == -1) end = document.cookie.length;
+            cookieValue = unescape(document.cookie.substring(offset, end))
+          }
+        }
+        return cookieValue;
+      }
+      function writeCookie(name, value, hours)
+      {
+        var expire = "";
+        if(hours != null)
+        {
+          expire = new Date((new Date()).getTime() + hours * 3600000);
+          expire = "; expires=" + expire.toGMTString();
+        }
+        document.cookie = name + "=" + escape(value) + expire;
+      }
+      Array.prototype.del=function(n) {  //n表示第几项，从0开始算起。
+        //prototype为对象原型，注意这里为对象增加自定义方法的方法。
+        if(n<0)  //如果n<0，则不进行任何操作。
+          return this;
+        else
+          return this.slice(0,n).concat(this.slice(n+1,this.length));
+      }
+      window.onload = function a()
+      {
+        var curShow = readCookie('curShow');
+        var totalShow = 1;  //自己修改一共有多少个二级分类
+        if(curShow!=''&&curShow!=null)
+        {
+          for(i=1;i<=totalShow;i++)
+          {
+            document.getElementById('c_'+i).display="none";
+          }
+          var arr_curShow;
+          arr_curShow = curShow.split(',');
+          for(i=0;i<=arr_curShow.length-1;i++)
+          {
+            if(arr_curShow[i]!=''){document.getElementById('c_'+arr_curShow[i]).style.display="";}
+          }
+        }
+      }
+      function check_email_format(email){
+        var re = new RegExp("^[a-zA-Z0-9]+([\._-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*(\.[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)+$");
+        if (email.toString().match(re)!=null){
+          if (email.toString().match(re)[0]==email){
+            return true;
+          }
+        }
+        return false;
+      }
+      function check_email(){
+        if (trim(reg_form.userbbsemail.value)!=''){
+          reg_form.userbbsemail.value = blank_filter(reg_form.userbbsemail.value);
+          if (check_email_format(reg_form.userbbsemail.value)){
+            hideiframe_reg.location.href='/member/check_email?email='+trim(reg_form.userbbsemail.value);
+          }else{
+            p_userbbsemail.innerHTML='Email地址格式不正确!'; p_userbbsemail.className='wrongtips';
+          }
+        }
+      }
+      function check_username(){
+        if (trim(reg_form.username.value)!=''){
+          reg_form.username.value = blank_filter(reg_form.username.value);
+          if (StrLenthByByte(reg_form.username.value)<4 || StrLenthByByte(reg_form.username.value)>15){
+            p_username.innerHTML='用户名必须长于4个字符(或两个中文)且小于15个字符'; p_username.className='wrongtips';
+          }else{
+            hideiframe_reg.location.href='/member/check_username?username='+trim(reg_form.username.value);
+          }
+
+        }
+      }
+      function formCheck(f){
+        if (trim(f.userbbsemail.value)==""){
+          f.userbbsemail.select();
+          p_userbbsemail.innerHTML='请填写您的Email地址'; p_userbbsemail.className='wrongtips';
+          return false;
+        }
+        if (trim(f.username.value)==""){
+          f.username.select();
+          p_username.innerHTML='请填写您的用户名'; p_username.className='wrongtips';
+          return false;
+        }
+        if (f.gender[0].checked==false&&f.gender[1].checked==false){
+          p_gender.innerHTML='性别必须选择'; p_gender.className='wrongtips';
+          return false;
+        }else{
+          p_gender.innerHTML='请选择性别'; p_gender.className='tips1';
+        }
+        if (f.city.value==""){
+          p_area.innerHTML='请选择您所在的省份和城市'; p_area.className='wrongtips';
+          return false;
+        }else{
+          p_area.innerHTML='请选择您所在的地区'; p_area.className='tips1';
+        }
+        if (f.userpassword.value.length<6){
+          f.userpassword.select();
+          p_userpassword.innerHTML='密码必须长于6位字符'; p_userpassword.className='wrongtips';
+          return false;
+        }else{
+          p_userpassword.innerHTML='密码可以使用'; p_userpassword.className='tips1';
+        }
+        if (f.userpassword.value!=f.userpasswordconfirm.value){
+          f.userpasswordconfirm.select();
+          p_userpasswordconfirm.innerHTML='确认密码必须与密码保持一致'; p_userpasswordconfirm.className='wrongtips';
+          return false;
+        }else{
+          p_userpasswordconfirm.innerHTML='确认密码可以使用'; p_userpasswordconfirm.className='tips1';
+        }
+
+        if (trim(f.image_code.value)==""){
+          f.image_code.select();
+          alert("请输入验证码！");
+          return false;
+        }
+
+        if (p_userbbsemail.className=='wrongtips') return false;
+        if (p_username.className=='wrongtips') return false;
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+
+    <%=render :partial => "/share/public_header"%>
+
+    <form name="reg_form" target="hideiframe_reg" method="post" action="/member/reg_save" onSubmit="return formCheck(this);" style="width:802px; margin:10px auto;">
+      <input type="hidden" name="huodongId" value="1"/>
+      <input type="hidden" name="forward" value="<%=params[:forward]%>" />
+      <table width="802" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:15px;">
+        <tr>
+          <td height="33" background="http://www.51hejia.com/images/Images_zhuce/Top.gif">&nbsp;</td>
+        </tr>
+        <tr>
+          <td background="http://www.51hejia.com/images/Images_zhuce/Line.gif" align="center">
+            <table cellspacing="0" cellpadding="0" border="0" align="center" width="95%" class="zhuce6">
+              <tbody>
+                <tr>
+                  <td>
+                    <a style="cursor: pointer" onclick="Show(1,img1)"><img align="absmiddle" width="7" height="7" src="http://www.51hejia.com/images/Images_zhuce/Zhan.gif" id="img1" /><span> 注册为和家会员，记录分享你的装修日记!</span></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="zhuce1"><img src="http://www.51hejia.com/images/Images_zhuce/Icon.gif" width="12" height="12" hspace="10" />设置您的帐户信息</td>
+              </tr>
+            </table>
+            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="2">
+              <tr>
+                <td width="145" align="right" class="zhuce2 zhuce10"><span>*</span> E-Mail： </td>
+                <td><input class="zhuce3" name="userbbsemail" type="text" onblur="check_email();" /></td>
+                <td width="300"><div id="p_userbbsemail" class='tips1'>请您填写Email地址</div></td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10"><span>*</span> 用户名： </td>
+                <td><input class="zhuce3" name="username" type="text" onblur="check_username();" /></td>
+                <td><div id="p_username" class='tips1'>请您填写用户名,长度在4-15位之间</div></td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10"><span>*</span> 性别： </td>
+                <td>
+                  <input name="gender" type="radio" value="先生" />先生　
+                  <input name="gender" type="radio" value="小姐" />小姐
+                </td>
+                <td><div id="p_gender" class='tips1'>请选择性别</div></td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10"><span>*</span> 地区： </td>
+                <td>
+                  <select name="area" onchange="change_area(this.value);">
+                    <option value="">省份</option>
+                    <SCRIPT LANGUAGE="JavaScript">
+                      for (var i=0;i<area_text.length;i++)
+                      {
+                        document.write("<option value='" + area_value[i] + "'>" + area_text[i] + "</option>");
+                      }
+                    </SCRIPT>
+                  </select>
+                  <select name="city" id="reg_city">
+                    <option value="">城市</option>
+                  </select>
+                </td>
+                <td><div id="p_area" class='tips1'>请选择您所在的地区</div></td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10"><span>*</span> 密码： </td>
+                <td><input class="zhuce3" name="userpassword" type="password" /></td>
+                <td><div id="p_userpassword"><div class='tips1'>请您填写您的登录密码</div></div></td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10"><span>*</span> 确认密码： </td>
+                <td><input class="zhuce3" name="userpasswordconfirm" type="password" /></td>
+                <td><div id="p_userpasswordconfirm" class='tips1'>请您确认您的登录密码</div> </td>
+              </tr>
+            </table>
+            <table width="96%" border="0" align="center" cellpadding="0" cellspacing="0" class="zhuce4">
+              <tr>
+                <td height="1" background="http://www.51hejia.com/images/Images_zhuce/Line_Gray.gif"></td>
+              </tr>
+            </table>
+            <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="zhuce1"><img src="http://www.51hejia.com/images/Images_zhuce/Icon.gif" width="12" height="12" hspace="10" />选填内容</td>
+              </tr>
+            </table>
+            <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="right" class="zhuce2 zhuce10">您是否关注油漆施工质量：</td>
+                <td><input type="checkbox" name="concerned_paint" value="1" />&nbsp;选择是和家网将提供油漆施工工艺信息给您（<a href="http://www.yougong.51hejia.com" target="_blank" style="color:#f60;text-decoration:underline;" >油漆施工专区</a>）</td>
+              </tr>
+              <tr>
+                <td width="170" align="right" class="zhuce2 zhuce10">手机/固定电话：</td>
+                <td><input type="text" name="userBbsTel" class="zhuce5" /></td>
+                <td><div id="oddPropDivPhone"></div></td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10">您对那些信息感兴趣：</td>
+                <td>
+                  <input type="checkbox" name="repairEnjoy1" value="装潢公司" />
+		              装潢公司&nbsp;&nbsp;
+                  <input type="checkbox" name="repairEnjoy2" value="装潢建材" />
+		              装潢建材&nbsp;&nbsp;
+                  <input type="checkbox" name="repairEnjoy3" value="家居软装" />
+		              家居软装
+                </td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10">您计划在几个月内装修：</td>
+                <td>
+                  <input type="radio" name="repairTime" value="1月" />
+					1月
+                  <input type="radio" name="repairTime" value="3月" />
+					3月
+                  <input type="radio" name="repairTime" value="6月" />
+					6月
+                  <input type="radio" name="repairTime" value="6月以上" />
+					6月以上
+                </td>
+              </tr>
+              <tr>
+                <td align="right" class="zhuce2 zhuce10">您计划的装修方式为：</td>
+                <td>
+                  <input type="radio" name="repairType" value="全包" />
+		           		 全包
+                  <input type="radio" name="repairType" value="半包" />
+		            	半包
+                  <input type="radio" name="repairType" value="清包" />
+						清包
+                </td>
+              </tr>
+            </table>
+            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="zhuce6">
+              <tbody>
+                <tr>
+                  <td> <a style="cursor: pointer" onclick="Show(1,img1)"><img src="http://www.51hejia.com/images/Images_zhuce/Zhan.gif" width="7" height="7" align="absmiddle" id="img1"/><span> 和家网 装修媒体援助计划会员招募开始，填写以下信息，即可参加！</span></a></td>
+                </tr>
+              </tbody>
+            </table>
+            <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tbody id="c_1" style="display: none">
+                <tr>
+                  <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="zhuce9">
+                      <tr>
+                        <td>请您准确填写以下信息，我们会根据您所填写资料，定期通知您相关活动信息，并为您量身定制咨询服务。</td>
+                      </tr>
+                      <tr>
+                        <td>报名即可获得：</td>
+                      </tr>
+                      <tr>
+                        <td><img src="http://www.51hejia.com/images/Images_zhuce/Icon_1.gif" width="4" height="5" align="absmiddle" />　装潢情报最新期刊一本</td>
+                      </tr>
+                      <tr>
+                        <td><img src="http://www.51hejia.com/images/Images_zhuce/Icon_1.gif" width="4" height="5" align="absmiddle" />　还可享受验房、户型设计、参观样板房、装修知识讲堂等多项免费服务！</td>
+                      </tr>
+                    </table>
+                    <table width="96%" border="0" align="center" cellpadding="0" cellspacing="0" class="zhuce4">
+                      <tr>
+                        <td height="1" background="http://www.51hejia.com/images/Images_zhuce/Line_Gray.gif"></td>
+                      </tr>
+                    </table>
+                    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="zhuce7">
+                      <tr>
+                        <td align="right" class="zhuce2 zhuce10"><span>*</span> 真实姓名： </td>
+                        <td><input type="text" name="name"/>
+                          <div id="oddPropDivName"></div></td>
+                        <td align="right" class="zhuce2 zhuce10"><span>*</span> 性别： </td>
+                        <td><input type="radio" checked name="sex" value="男" />
+                          男
+                          <input type="radio" name="sex" value="女" />
+                          女</td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="zhuce2 zhuce10"><span>*</span> 手机/电话： </td>
+                        <td><input type="text" name="mobile" />
+                          <div id="oddPropDivMobile"></div></td>
+                        <td align="right" class="zhuce2 zhuce10"><span>*</span> 待装修房屋所在小区： </td>
+                        <td><input type="text" name="houseaddress" /></td>
+                      </tr>
+                      <tr>
+                        <td align="right" class="zhuce2 zhuce10"><span>*</span> 您的装修费用预算： </td>
+                        <td><input type="text" name="email" />
+                          万元左右</td>
+                        <td align="right" class="zhuce2 zhuce10">房屋面积： </td>
+                        <td><input type="text" name="housearea" /></td>
+                      </tr>
+                    </table>
+                    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="105" align="right" valign="top" class="zhuce2 zhuce10"><span>*</span> 房型： </td>
+                        <td><input type="radio" name="housemodel" value="别墅" />
+                          别墅<br />
+                          <input type="radio" checked name="housemodel" value="公寓" />
+                          公寓
+                          <input type="text" name="housemodel1" size="1"/>
+                          室
+                          <input type="text" name="housemodel2" size="1"/>
+                          厅
+                          <input type="text" name="housemodel3" size="1"/>
+                          卫 </td>
+                      </tr>
+                    </table>
+                    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td height="35" class="zhuce2"><span>*</span> 您对那类活动比较感兴趣？ </td>
+                      </tr>
+                      <tr>
+                        <td height="35"><input type="checkbox" name="userfavortag1" value="32942" />
+                          装修设计咨询会&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="userfavortag2" value="32939" />
+                          家电、家具、建材卖场逛店&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="userfavortag3" value="32944" />
+                          参观样板房&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="userfavortag4" value="32945" />
+                          免费验房&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="userfavortag5" value="32941" />
+                          免费户型设计</td>
+                      </tr>
+                      <tr>
+                        <td height="35"><input type="checkbox" name="userfavortag6" value="32940" />
+                          专家帮你免费审预算&nbsp;
+                          <input type="checkbox" name="userfavortag7" value="32943" />
+                          装修知识讲堂&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="userfavortag8" value="32938" />
+                          娱乐公益活动&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="userfavortag9" value="32946" />
+                          其他</td>
+                      </tr>
+                    </table></td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="70" align="center">
+                  验证码：<input name="image_code" type="text" size="6" style="font-size:12pt" />
+                  <img src="/user/get_image_code" id="image_code_area" />
+                  <input type="button" value="换一张" onclick="document.getElementById('image_code_area').src = '/user/get_image_code?' + Math.random();" />
+                </td>
+              </tr>
+              <tr>
+                <td height="70" class="zhuce11"><input type="submit" name="Submit" value="同意服务条款，提交注册信息" />
+
+                  <a href="http://www.51hejia.com/aboutus/priv.html" target="_blank" class="zhuce8">注册条款</a></td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr>
+          <td height="13" background="http://www.51hejia.com/images/Images_zhuce/Bottom.gif"></td>
+        </tr>
+      </table>
+    </form>
+
+    <%=render :partial => "/share/public_footer"%>
+
+    <iframe name="hideiframe_reg" width="0" height="0"></iframe>
+
+  </body>
+</html>

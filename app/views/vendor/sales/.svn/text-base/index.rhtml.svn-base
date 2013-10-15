@@ -1,0 +1,23 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>缩略图</th>
+		<th>标题</th>
+		<th>创建日期</th>
+		<th>更新日期</th>
+		<th>相关操作</th>
+	</tr>
+	<% @sales.each do |sale| %>
+	<tr>
+		<td><%= image_tag(sale.image.url(:thumb)) %></td>
+		<td><%= sale.title %></td>
+		<td><%= sale.created_at.to_s(:db) %></td>
+		<td><%= sale.updated_at.to_s(:db) %></td>
+		<td>
+			<%= link_to "查看", vendor_sale_path(sale) %>
+			<%= link_to "编辑", edit_vendor_sale_path(sale) %>
+			<%= link_to "删除", vendor_sale_path(sale), :method => :delete, :confirm => "确认删除吗？" %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<%= will_paginate @sales %>

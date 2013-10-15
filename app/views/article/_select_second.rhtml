@@ -1,0 +1,15 @@
+<% if params[:first] == '42092' && params[:ys] == '1' %>
+<select id="second" name="second" onchange="new Ajax.Updater('select_third', '/article/select_third', {asynchronous:true, evalScripts:true, parameters:'second='+this.value+'&show=1'})">
+	<option value="0">请选择</option>
+	<% for u in @secondlist %>
+		<option value="<%=u.TAGID%>"><%=u.TAGNAME%></option>
+	<% end %>
+</select>
+<% else %>
+<select id="second" name="second" onchange="new Ajax.Updater('select_third', '/article/select_third', {asynchronous:true, evalScripts:true, parameters:'second='+this.value})">
+	<option value="0">请选择</option>
+	<% for u in @secondlist %>
+		<option value="<%=u.TAGID%>"><%=u.TAGNAME%></option>
+	<% end %>
+</select>
+<% end %>

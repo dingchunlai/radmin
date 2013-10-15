@@ -1,0 +1,189 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 1200;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height + 26;
+}
+
+function submitForm(form){
+    ge("h_name").style.color="#999999";
+   
+    var valReturn = true;
+    if (trim(ge("hy_name").value)==""){
+        ge("h_name").style.color="red";
+        valReturn = false;
+    }
+ 
+    return valReturn;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px; height:32px;
+}
+.formleft{
+  width:180px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:500px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+<div id="div_main" style="padding:10px;">
+
+<form action="/zhuanqu/hangye_edit_save" name="form1" enctype="multipart/form-data" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+     <span style="color:#BF0000;"><%if @id ==0%>新建<%else%>编辑<%end%>行业专区</span>
+     <input type="hidden" name="id" value="<%=@id%>" />
+    </div>
+
+<div class="formouter">
+            <div class="formleft">专区名：</div>
+            <div class="formcenter">
+               <%if @id ==0%>
+                 <%=text_field("hy","name",{:size=>60})%>
+               <%else%>
+                 <%=text_field("hy","name",{:size=>60,:readonly=>true})%>
+               <%end%>
+             </div>
+            <div class="formright" id="h_name">专区名必须填写，比如：上海宜家 </div>
+</div>
+
+
+<div class="formouter">
+            <div class="formleft">TITLE：</div>
+            <div class="formcenter">
+                <%=text_field("hy","html_title",{:size=>60})%>
+            </div>
+            <div class="formright">HTML-TITLE</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">KEYWORDS：</div>
+            <div class="formcenter">
+                <%=text_field("hy","html_keywords",{:size=>60})%>
+            </div>
+            <div class="formright">HTML-KEYWORDS 多个关键字之间用;分隔</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">DESCRIPTION：</div>
+            <div class="formcenter">
+                <%=text_field("hy","html_description",{:size=>60})%>
+            </div>
+            <div class="formright">HTML-DESCRIPTION</div>
+</div>
+
+<div class="formouter" style="height:90px;">
+    <div class="formleft">专区主图：</div>
+    <div class="formcenter">
+        <%=get_image_area_by_column_name(@hy, "big_image_url")%>
+    </div>
+    <div class="formright">280 x 280</div>
+</div>
+<div class="formouter">
+            <div class="formleft">图库标题：</div>
+            <div class="formcenter">
+                <%=text_field("hy","tuku_title",{:size=>60})%>
+            </div>
+            <div class="formright">比如：宜家家居图片 </div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">图库关键字：</div>
+            <div class="formcenter">
+                <%=text_field("hy","tuku_kw",{:size=>60})%>
+            </div>
+            <div class="formright">比如：客厅 </div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">产品标题：</div>
+            <div class="formcenter">
+                <%=text_field("hy","chanpin_title",{:size=>60})%>
+            </div>
+            <div class="formright">比如：宜家家居产品 </div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">产品关键字：</div>
+            <div class="formcenter">
+                <%=text_field("hy","chanpin_kw",{:size=>60})%>
+            </div>
+            <div class="formright">比如：宜家 </div>
+</div>
+
+
+<%=show_big_hr%>
+
+<div class="formouter">
+            <div class="formleft">推荐标题：</div>
+            <div class="formcenter">
+                <%=text_field("hy","tj_title",{:size=>60})%>
+            </div>
+            <div class="formright">比如：宜家家居在中国</div>
+</div>
+
+<div class="formouter" style="height:110px;">
+            <div class="formleft">推荐内容：</div>
+            <div class="formcenter">
+                    <%=text_area("hy","tj_tags",{:style=>"width:390px;height:90px;"})%>
+            </div>
+            <div class="formright">
+              标题1<br />
+              链接1<br />
+              标题2<br />
+              链接2 ...
+            </div>
+</div>
+
+
+<div class="formouter">
+            <div class="formleft">相关专区标题：</div>
+            <div class="formcenter">
+                <%=text_field("hy","xg_title",{:size=>60})%>
+            </div>
+            <div class="formright">比如：宜家家居相关专区</div>
+</div>
+<div class="formouter">
+            <div class="formleft">专区简介标题：</div>
+            <div class="formcenter">
+                <%=text_field("hy","resume_title",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:110px;">
+            <div class="formleft">专区简介详情：</div>
+            <div class="formcenter">
+                <%=text_area("hy","resume",{:style=>"width:390px;height:90px;"})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">大事记标题：</div>
+            <div class="formcenter">
+                <%=text_field("hy","content_title",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:110px;">
+            <div class="formleft">大事记详情：</div>
+            <div class="formcenter">
+                <%=text_area("hy","content",{:style=>"width:390px;height:90px;"})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<%=show_big_hr%>
+
+</form>
+</div>

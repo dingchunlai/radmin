@@ -1,0 +1,69 @@
+<script type="text/javascript">
+window.onload = function(){
+  setValue();
+  //load_fckeditor();
+  div_main_height = 690;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+function setValue(){
+    ge("id1").value = "<%=@lsbfm.id%>";
+    ge("category").value = "<%=@lsbfm.category%>";
+    ge("lsbfmc1").value = "<%=@lsbfm.lsbfmc1%>";
+    ge("lsbfmc2").value = "<%=@lsbfm.lsbfmc2%>";
+    ge("lsbfmc3").value = "<%=@lsbfm.lsbfmc3%>";
+    ge("lsbfmc4").value = "<%=@lsbfm.lsbfmc4%>";
+    ge("lsbfmc5").value = "<%=@lsbfm.lsbfmc5%>";
+}
+function set_action(){
+    if (document.forms["form1"].elements["actionurl"][0].checked)
+        document.forms["form1"].action = document.forms["form1"].elements["actionurl"][0].value;
+    else
+        document.forms["form1"].action = document.forms["form1"].elements["actionurl"][1].value;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-top:5px; padding-bottom:5px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:255px; float:left;
+}
+.formcenter input{
+    width:235px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+<div id="div_main" style="padding:10px;">
+  
+<form action="lsbfm_edit_save" name="form1" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <input name="id" id="id1" type="text" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                编辑记录
+    </div>
+    
+    <%=render :partial => "lsbfm_form"%>
+
+    <div class="formouter">
+            <div class="formleft">保存方式:</div>
+            <div style="font-size:12px;padding-top:3px;">
+              <input name="actionurl" type="radio" value="lsbfm_edit_save" checked /> 更新记录
+              <input name="actionurl" type="radio" value="lsbfm_new_save" /> 另存为新记录
+            </div>
+    </div>
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+</div>

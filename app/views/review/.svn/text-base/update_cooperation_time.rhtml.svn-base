@@ -1,0 +1,27 @@
+<%if @message%>
+  <p><font color="red"><%=@message%></font></p>
+<%end%>
+<form action="/review/update_cooperation_time" method="post">
+  <input type="hidden" name="firmid" value="<%=@firm.id%>"/>
+  <table>
+    <tr>
+      <td>公司名称</td>
+      <td><%=@firm.name_zh%></td>
+    </tr>
+    <tr>
+      <td>口碑</td>
+      <td>
+        <%=@firm.praise%>
+      </td>
+    </tr>
+    <tr>
+      <td>合作时间(例：2010-01-01)</td>
+      <td>
+        <input type="text" name="cooperation_time" value="<%=@firm.cooperation_time.to_s(:db) if @firm.cooperation_time%>"/>
+      </td>
+    </tr>
+    <tr>
+      <td align=center colspan=2><input type="submit" value="确定"/></td>
+    </tr>
+  </table>
+</form>

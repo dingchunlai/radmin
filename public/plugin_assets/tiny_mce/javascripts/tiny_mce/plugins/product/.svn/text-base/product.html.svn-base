@@ -1,0 +1,5 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<form action="/article/relateproduct" method=post>
+	<input type="text" name="ids" size=50>
+	<input type="submit" value='确定'>
+</form>

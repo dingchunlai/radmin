@@ -1,0 +1,63 @@
+
+
+<style type="text/css" media="screen">
+  .error_em{border:1px solid red;padding:3px;color:red;}
+  .right_em{border:1px solid green;padding:3px;color:green;}
+  .detail_praise strong{line-height:16px;}
+</style>
+<h1><%= @diary.title %></h1>
+<% form_for :diary , @diary ,:url => decoration_diary_label_path(@diary), :html=>{:id=>"diary_form",:method => "PUT"} do |f| -%>
+  <ul>
+  
+    <% if staff_logged_in? %>
+      <style type="text/css">
+        #tags caption { text-align: left; }
+        #tags thead th { font-size: 16px; font-weight:bold; border-bottom: 1px dashed #AD6415; padding-top: 5px; color: #C4930A; }
+        #tags li { width:150px; display: block;float: left; }
+        #tags ul, #tags li { margin: 0; padding: 0; }
+        #tags tbody th { font-size: 14px; font-weight:bold; width: 13px; vertical-align: top; color: blue; }
+        #tags tbody th, #tags tbody td { padding: 3px 0; }
+      </style>
+        <table id="tags">
+          <caption>添加标签</caption>
+        <% Label.roots.each do |diary_type| %>
+          <thead>
+            <tr>
+              <th colspan="2"><%= Label["#{diary_type}"].title %></th>
+            </tr>
+          </thead>
+          <tbody>
+          <% array = Array.new
+          Label["#{diary_type}"].children.each do |attr|
+            array << Label["#{attr}"].index
+          end
+          array = array.uniq
+          attr_index = Hash.new
+          for i in array
+            attr_index[i] = Array.new
+          end
+          Label["#{diary_type}"].children.each do |attr|
+            attr_index[Label["#{attr}"].index] << Label["#{attr}"].title
+          end
+        %>
+          <% array.each do |index| %>
+            <tr>
+              <th><%= index %></th>
+              <td>
+                <ul>
+                  <% attr_index["#{index}"].each do |diary_attrbute|%>
+                    <li>
+                      <input name="diary[tags][]" type="checkbox" value="<%= Label["#{diary_attrbute}"].title %>" <%=@diary.tags && @diary.tags.include?("#{Label["#{diary_attrbute}"].title}") ? "checked":""%>/> <%= Label["#{diary_attrbute}"].title %>
+                    </li>
+                  <% end %>
+                </ul>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        <% end %>
+      </table>
+    <% end %>
+   <li><%=submit_tag "保存"%></li>
+  </ul>
+<% end -%> <!-- form END -->

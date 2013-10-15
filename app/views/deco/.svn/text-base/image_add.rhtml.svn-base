@@ -1,0 +1,223 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<DIV class="user_right">
+
+<DIV id=widebar>
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 装修案例</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以添加和维护装修案例信息。以下有*的为必填项&nbsp;&nbsp;<span style="color:red">注：单个上传图片不能超过100kb,至少上传5张案例图片</span>
+    </div>
+  </div>
+</DIV>
+<DIV id="div_2" class=mainbox>
+	<div class="same_cha">
+    <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/deco/case_edit?id=<%=params[:caseid]%>">基本信息</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/deco/image_list?id=<%=params[:caseid]%>">装修实图</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/deco/house_list?id=<%=params[:caseid]%>">户型图</a></li>
+          <li class="line" align="right"></li>
+          <li id="s1" class="menu_off" align="right"><a id="op_ta" onclick="open_tabs()">展开标签</a></li>
+          <li class="line" align="right"></li>
+	</ul>
+  </div>
+  
+  <script type="text/javascript">
+  var ud=function(id){return document.getElementById(id)}
+  window.onload=function(){
+  		ud('widebar').style.height = "auto";
+  		ud('div_2').style.height = "auto";
+  }
+  function open_tabs(){
+  	if(ud("tabs").style.display == "block"){
+  		ud("tabs").style.display = "none";
+  		ud("op_ta").innerHTML = "展开标签";
+  		ud('widebar').style.height = "auto";
+  		ud('div_2').style.height = "auto";
+  	}else{
+  		ud("tabs").style.display = "block";
+  		ud("op_ta").innerHTML = "隐藏标签";
+  		ud('widebar').style.height = "auto";
+  		ud('div_2').style.height = "auto";
+  	}
+  }
+  function onformssubmit(){
+  	var file_length = $(".myClass").length
+  	var flg=true;
+	var j = 0;
+	var loginType = ud("login_type").value;
+	for(var i=1 ;i<=file_length;i++){
+		if(ud('photo'+i+'[uploaded_data]').value.length != 0){
+			j++;
+		}
+	}
+	$("#file_size").val(file_length);
+	if((loginType == 2 || loginType == '2') && j<5){
+		alert("您必须上传5张及以上案例图片！");
+		return false;
+	}
+    return flg;
+  }
+  function clearFile(num){ 
+        var fileHTML = ud('photo'+num+'[uploaded_data]').outerHTML; 
+        var endIndex = fileHTML.indexOf("value"); 
+        if(endIndex!=-1){ 
+            ud('photo'+num+'[uploaded_data]').outerHTML = "<input type='file' id='photo"+num+"[uploaded_data]' name='photo"+num+"[uploaded_data]' size='50'  onchange='getFullPath("+num+",this)' />"; 
+        } 
+  }
+  function getFullPath(num,obj){
+  	var fileText =obj.value.substring(obj.value.lastIndexOf("."),obj.value.length);
+    if (fileText!='.jpg')
+    {
+        alert("对不起，系统仅支持标准格式(.jpg)的照片，请您调整格式后重新上传，谢谢 ！");
+	    ud('logoimg').src = "/images/nil.gif";
+	    if (window.navigator.userAgent.indexOf("MSIE")>=1) { 
+	        clearFile(num);
+	   	}else if(window.navigator.userAgent.indexOf("Firefox")>=1){ 
+	    	ud('image'+num+'_uploaded_data').value = "";
+	   	}
+    }else{
+	        var filesize = 0;
+	        if(obj) 
+	        { 
+	            if (window.navigator.userAgent.indexOf("MSIE")>=1) 
+	            { 
+	                obj.select(); 
+	                var filePath = obj.value;
+			        var image=new Image();      
+			        image.src=filePath;      
+			        filesize=image.fileSize;
+			        if(filesize >= 1024*100){
+			        	alert("对不起，请重新选择.jpg格式 | 且小于100K之后重新上传，谢谢 ！");
+			        	ud('logoimg').src = "/images/nil.gif";
+			        	clearFile(num)
+			        }else{
+			        	ud('logoimg').src = document.selection.createRange().text;	
+			        }
+	            }else if(window.navigator.userAgent.indexOf("Firefox")>=1){ 
+	                if(obj.files) 
+	                { 
+	                    filesize = obj.files[0].fileSize;
+	                    if(filesize >= 1024*100){
+	                        alert("对不起，请重新选择.jpg格式 | 且小于100K之后重新上传，谢谢 ！");
+	                        ud('logoimg').src = "/images/nil.gif";
+			        		ud('photo'+num+'[uploaded_data]').value = "";
+	                    }else{
+	                        ud('logoimg').src = obj.files.item(0).getAsDataURL();
+	                    }
+	                } 
+	            } 
+		    }
+		 }
+	 } 
+		function add_file(){
+			var file_length = $(".myClass").length +1
+			$("#more").before("<input type='file' class='myClass' id='photo"+file_length+"[uploaded_data]' name='photo"+file_length+"[uploaded_data]' size='50'  onchange='getFullPath("+file_length+",this)' style='margin:2px 0;' /><br/>")
+			$("#file_size").val(file_length);
+		}
+  </script>
+  <div id="same1" style="padding:10px;" class="clearfix">
+  <FORM action="/deco/image_add_save" method="post" enctype="multipart/form-data"  onsubmit="return onformssubmit();">
+  <input type="hidden" value="<%= @login_type %>" id="login_type">
+  <TABLE width="50%" cellPadding=0 cellSpacing=0>
+        <TBODY>
+          <TR>
+            <TD width="12%" align="center"><font color="red">*</font> 图 片：</TD>
+	        <TD id="file_image">
+	        <% for i in [1,2,3,4,5] %>
+            	<input type="file" class="myClass" id="photo<%=i %>[uploaded_data]" name="photo<%=i %>[uploaded_data]" size="50"  onchange="getFullPath(<%=i%>,this)" style="margin:2px 0;" /><br/>
+			<% end %>
+			<input id="more" type="button" value="更多..." onclick="add_file();" style="display:block;">
+            </TD>
+            <TD>
+                <img id="logoimg" src="/images/nil.gif" height="110"/>
+            </TD>
+            
+          </TR>
+		 <tr>
+		 </tr>
+		 <input type="hidden" value="5" id="file_size" name="file_size">
+        </TBODY>
+		
+  	</TABLE>   
+  	  
+  	<div id="tabs" style="display:none;height:auto;" class="clearfix">
+  	<TABLE width="50%" cellPadding=0 cellSpacing=0>
+        <TBODY>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center"> 手动标签：</TD>
+            <TD><input name="imageHandTags" size="90" type="text" value="<%= @imageHandTags%>" />　多个标签请用空格分隔</TD>
+          </TR>
+
+		  <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">区域：</TD>
+            <TD>
+            <% @tag1.each do |t1|  %>
+              	<input name="tag1[]" type="checkbox" value="<%=t1.tagname  %>" /><%=t1.tagname %>
+             <% end  %>
+            </TD>
+          </TR>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">颜色：</TD>
+            <TD>
+            <% @tag2.each do |t2|  %>
+              		<input name="tag2[]" type="checkbox" value="<%=t2.tagname %>" /><%=t2.tagname %>
+            <% end %>
+            </TD>
+          </TR>
+          <%if @coo.to_s=="7"%>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">区域产品：</TD>
+            <TD>
+            <% @tag3.each do |t3|  %>
+            	<input name="tag3[]" type="checkbox" value="<%=t3.tagname %>"/><%=t3.tagname %>
+            <% end %>
+            </TD>
+          </TR>
+          <%end%>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">图片属性：</TD>
+            <TD>
+            <% @tag4.each do |t4|  %>
+              	<input name="tag4[]" type="checkbox" value="<%=t4.tagname %>" /> <%=t4.tagname %>
+             <% end %>
+            </TD>
+          </TR>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">风格：</TD>
+            <TD>
+            <% @tag5.each do |t5|  %>
+              	<input name="tag5[]" type="checkbox" value="<%=t5.tagname %>"/> <%=t5.tagname %>
+             <% end %>
+            </TD>
+          </TR>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">介 绍：</TD>
+            <TD><textarea cols="40" id="description" name="description" rows="20" style="height:80px;"></textarea></TD>
+          </TR>
+           </TBODY>
+      </TABLE>  
+	</div>
+	<DIV id="btn_div" style="padding-left:300px;">
+            <BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON>
+            <input type="hidden" name="caseid" value="<%=params[:caseid]%>" />
+	</DIV>
+	</FORM>
+  </div>
+</DIV>
+</DIV>
+</DIV>
+ 

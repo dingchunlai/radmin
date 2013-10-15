@@ -1,0 +1,7 @@
+<select id="firm_district" name="firm[district]" onchange="new Ajax.Updater('area2', '/decos/select_area2', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+					<option value="0">请选择</option>
+					<%if @area %>
+						<%@area.each do |a|%>
+							<option value="<%=a[0]%>" <%if @firm.district.to_i==a[0].to_i%>selected<%end%> ><%=a[1]%></option>
+						<%end%>
+					<%end%>

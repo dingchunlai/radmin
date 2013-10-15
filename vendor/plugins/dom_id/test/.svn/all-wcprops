@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/dom_id/test
+END
+test_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/dom_id/test/test_helper.rb
+END
+schema.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/dom_id/test/schema.rb
+END
+database.yml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/dom_id/test/database.yml
+END
+test_dom_id.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/dom_id/test/test_dom_id.rb
+END

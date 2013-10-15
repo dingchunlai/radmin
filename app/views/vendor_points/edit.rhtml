@@ -1,0 +1,3 @@
+<% form_for :vendor_point, @vendor_point, :url => vendor_point_path(@vendor_point), :html => {:method => "put", :multipart => true} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>

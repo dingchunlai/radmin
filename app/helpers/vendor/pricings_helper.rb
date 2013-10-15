@@ -1,0 +1,2 @@
+module Vendor::PricingsHelper
+end

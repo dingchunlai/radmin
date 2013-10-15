@@ -1,0 +1,63 @@
+<div class="user_right">
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id="userprofile">
+        <div class="top">
+          <div class="profile_name">我的和家 - 装修活动</div>
+        </div>
+        <div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护装修活动信息。<font color="red">(↑↓进行拖动排序)</font></div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/decos/events">活动列表</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/decos/events/new">新建活动</a></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+      <style type="text/css">
+        .yhjlist{margin-left:7px; width:98%;}
+        .yhjlist li{border-bottom: 1px solid #dbdbdb;padding:5px 0;}
+        .yhjlist li span{padding:0 5px;display: block;float:left;}
+        .yhjlist li input{vertical-align: middle;}
+        .yhjlist_span01{width:140px;}
+        .yhjlist_span02{width:255px;height:106px}
+        .yhjlist_span04{width:255px;}
+        .yhjlist_span03{width:40px;}
+      </style>
+      <div class="yhjlist" id="datalist">
+        <ul>
+          <li class="clearfix">
+            <span class="yhjlist_span04">图片</span>
+            <span class="yhjlist_span01">标题</span>
+            <span class="yhjlist_span01">起始/结束时间</span>
+            <span class="yhjlist_span01">地址</span>
+            <span class="yhjlist_span03">操作</span>
+          </li>
+        </ul>
+        <ul id="events">
+          <% @events.each do |event| %>
+            <li class="clearfix" id="case_<%=event.id%>" align="center" style="background-color:#FFFDE6">
+              <span class="yhjlist_span02"><%= image_tag(event.banner.url, :alt => event.title) %></span>
+              <span class="yhjlist_span01"><%=h event.title %></span>
+              <span class="yhjlist_span01"><%=h event.starts_at %> - <%=h event.ends_at %></span>
+              <span class="yhjlist_span01"><%=h event.city %> <%=h event.district %> <%=h event.address %></span>
+              <span class="yhjlist_span03">
+                <%= link_to "查看", deco_event_path(event) %><br/>
+                <%= link_to "编辑", edit_deco_event_path(event) %><br/>
+                <%= link_to "删除", deco_event_path(event), :confirm => '确认删除吗？', :method => :delete %><br/>
+                ↑↓
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <%= will_paginate @events %>
+    </div>
+  </div>
+</div>
+<%= sortable_element('events', :url => {:action => "sort"}) %>

@@ -1,0 +1,59 @@
+<div class="user_right">
+<% p current_staff, current_user %>
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id="userprofile">
+        <div class="top">
+          <div class="profile_name">我的和家 - 活动报名</div>
+        </div>
+        <div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以查看活动报名信息。</div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/decos/registers">活动报名</a></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>所在城市</td>
+          <td>电话</td>
+          <td>电子邮件</td>
+          <td>参观工地</td>
+          <td>创建日期</td>
+          <td>备注</td>
+          <td>相关操作</td>
+        </tr>
+        <% @registers.each do |register| %>
+          <tr>
+            <td><%= register.name %></td>
+            <td><%if register.sex.to_i == 1 %>男<%elsif register.sex.to_i == 2 %>女<%end%></td>
+            <td><%= register.in_city ? register.in_city : '--' %></td>
+            <td><% if (current_staff.nil? && current_user.deco_id == current_deco_id) || (current_staff && (isrole("管理员") || isrole("会员管理"))) %><%= register.phone %><% end %></td>
+            <td><%= register.email %></td>
+            <td><%= register.factory.blank? ? '' : register.factory.NAME %></td>
+            <td><%= register.created_at.utc.strftime("%Y-%m-%d %X") %></td>
+            <td><%= register.remark %></td>
+            <td><%= link_to "编辑", edit_deco_register_path(register) %> <a href="/decos/registers/destory/<%=register.id%>">删除</a></td>
+          </tr>
+        <% end %>
+        <% if @registers.size == 0 %>
+          <tr>
+            <td colspan="5">暂时没有预约.</td>
+          </tr>
+        <% end %>
+      </table>
+
+      <%= will_paginate @registers %>
+
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,14 @@
+<%if @message == '1'%>
+<p align=center><font color=red>回复成功</font></p>
+<%elsif @message == '2'%>
+<p align=center><font color=red>修改成功</font></p>
+<%end%>
+<form action="/review/back_reply_edit" method="post">
+<input type="hidden" name="replyid" value="<%=@replyid%>">
+<p align=center>
+	内容：<textarea name="content" cols=50 rows=10><%=@reply.content%></textarea>
+</p>
+<p align=center>
+	<input type="submit" value="确定">
+</p>
+</form>

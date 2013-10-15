@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>用户详情</title>
+    <link rel="stylesheet" type="text/css" href="/images/linxx_form/view.css" media="all" />
+    <script type="text/javascript" src="/images/linxx_form/view.js"></script>
+    <script type="text/javascript" src="/javascripts/WebCalendar.js" charset="utf8"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function freeze_css(){
+        $("#freeze").css({display:"block"});
+        $("#undo_freeze").css({display:"none"});
+      }
+      function undo_freeze_css(){
+        $("#undo_freeze").css({display:"block"});
+        $("#freeze").css({display:"none"});
+      }
+      function ajax_freeze_user(){
+        radioGroup = $(":radio[checked = true]").val();
+        if (radioGroup == 'freeze_other') {
+          if ($("#freeze_date").val() == '') {
+            alert("请选择冻结时间");
+            return false;
+          }else if($("#freeze_date").val() <= $("#now_date").val()){
+            alert("冻结时间不能小于或等于当前时间");
+            return false;
+          }
+        }
+        $("#dj_t").text("正在提交...");
+        $.ajax({
+          type: "POST",
+          url: "/hejia_member/freeze_user",
+          data: "user_id="+$("#user_id").val() + "&freeze_type=" + radioGroup + "&date_time=" + $("#freeze_date").val(),
+          success: function(msg){
+            if(msg == 'error'){
+              alert("出错了");
+              return false;
+            }else{
+              $("#end_freeze").text(msg);
+              //$("#undo_freeze").css({display:"block"});
+              $("#freeze").css({display:"none"});
+              $("#dj_t").text("确定");
+              $("#msg1").text("冻结成功");
+              $("#msg1").fadeIn(2000);
+              $("#msg1").fadeOut(2000,function(){
+                $("#undo_freeze").show();
+                $("#dj_t_2").css({display:"block"});
+              });
+            }
+          }
+        });
+        return false;
+      }
+
+      function ajax_undo_freeze(){
+        $("#dj_t_2").text("正在提交...");
+        $.ajax({
+          type: "POST",
+          url: "/hejia_member/undo_freeze_user",
+          data: "user_id="+$("#user_id").val(),
+          success: function(msg){
+            $("#end_freeze").text('正常');
+            $("#undo_freeze").css({display:"none"});
+            $("#dj_t_2").text("点击撤消冻结");
+            $("#dj_t_2").css({display:"none"});
+            $("#msg1").text("撤消冻结成功");
+            $("#msg1").fadeIn(2000);
+            $("#msg1").fadeOut(2000,function(){
+              $("#undo_freeze").show();
+            });
+          }
+        });
+        return false;
+      }
+    </script>
+  </head>
+  <style type="text/css">
+    form li div{ padding:4px 0;}
+    form li div label{*float:left;}
+    form li div.dongj{ float:left; cursor:pointer; border:1px solid #ccc; height:24px; line-height:24px; padding:0 5px; margin-bottom:5px;}
+    form li div.dongj span{color:red; padding:0; margin:0;}
+    form li div.dongj_time{ border:1px solid #ccc; background:#efefef; clear:both; margin:0; padding:0;}
+    form li div.dongj_time ul{ padding:2px;clear:both;}
+    form li div.dongj_time li{ width:auto;}
+    form li span.dj_t_btn{ cursor:pointer; border:1px solid #ccc; background:#fff; height:24px; line-height:24px; padding:0 10px;}
+    form li div.dj_t_ok{color:red; clear:both; border:1px solid #ccc; background:#efefef; clear:both; margin:0; padding:10px; font-size:14px; font-weight:bolder;}
+    form li div.jc_time{ clear:both; border:1px solid #ccc; background:#efefef; margin:0; padding:10px;}
+    form li div.jc_time div{ padding:0; margin:0; clear:both;}
+    form li div.jc_time div span{ display:block;}
+    form li div.jc_time div span.jc_t_btn{ cursor:pointer; border:1px solid #ccc; background:#fff; *width:80px; height:24px; line-height:24px; padding:0 10px; clear:both;}
+    form li div.jc_t_clear{ clear:both;}
+
+    form ul.menu li{float: left;width: 31%;}
+    form ul.menu li.current{background-color: #4B75B3;}
+  </style>
+  <body id="main_body" >
+
+    <img id="top" src="/images/linxx_form/top.png" alt="" />
+    <div id="form_container">
+      <form id="form_68775" class="appnitro"  method="post" action="">
+        <div class="form_description">
+          <%= render :partial => "menu" %>
+        </div>
+
+        <div class="form_description">
+          <ul class="menu">
+            <% if @wenba_type.blank? %>
+              <li width="50%">
+                <%= link_to("<span style='background-color: rgb(151, 0, 0); color: white;'>会员问吧创建帖子</span>","/hejia_member/wenba_detail?user_id=#{@member.id}") %>
+              </li>
+              <li width="50%">
+                <%= link_to("<span>会员问吧回复帖子</span>","/hejia_member/wenba_detail?user_id=#{@member.id}&wenba_type=posts") %>
+              </li>
+            <% else %>
+              <li width="50%">
+                <%= link_to("<span>会员问吧创建帖子</span>","/hejia_member/wenba_detail?user_id=#{@member.id}") %>
+              </li>
+              <li width="50%">
+                <%= link_to("<span style='background-color: rgb(151, 0, 0); color: white;'>会员问吧回复帖子</span>","/hejia_member/wenba_detail?user_id=#{@member.id}&wenba_type=posts") %>
+              </li>
+            <% end %>
+          </ul>
+          <p style="clear:both;" />
+        </div>
+        <% if @wenba_type.blank? %>
+          <table id="datalist" style="width: 100%;" summary="这个表格是...">
+            <tr>
+              <th width="35%">标题</th>
+              <th width="55%">描述</th>
+              <th width="10%">时间</th>
+            </tr>
+            <% for topic in @topics %>
+              <tr align="center" style="background-color:#FFFDE6">
+                <td align="left"><%= link_to(truncate_u(topic.subject, 14, "..."), "http://wb.51hejia.com/q/#{topic.id}.html", :popup => true) %></td>
+                <td><%= truncate_u(topic.description, 21, "...") %></td>
+                <td><%= topic.created_at.strftime("%Y-%m-%d") %></td>
+              </tr>
+            <% end %>
+          </table>
+          <%= will_paginate @topics, :param_name => "page" %>
+        <% else %>
+          <table id="datalist" style="width: 100%;" summary="这个表格是...">
+            <tr>
+              <th width="35%">主帖标题</th>
+              <th width="55%">回帖内容</th>
+              <th width="10%">回帖时间</th>
+            </tr>
+            <% for post in @posts %>
+              <tr align="center" style="background-color:#FFFDE6">
+                <td align="left">
+                  <%= link_to(truncate_u(AskZhidaoTopic.find(post.zhidao_topic_id).subject, 14, "..."), "http://wb.51hejia.com/q/#{post.zhidao_topic_id}.html", :popup => true) %>
+                </td>
+                <td><%= truncate_u(post.content, 21, "...") %></td>
+                <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
+              </tr>
+            <% end %>
+          </table>
+          <%= will_paginate @posts, :param_name => "p_page" %>
+        <% end %>
+
+        <div id="footer">
+          Generated by <a href="http://www.51hejia.com">51hejia.com</a>
+        </div>
+      </form>
+    </div>
+    <img id="bottom" src="/images/linxx_form/bottom.png" alt="" />
+    <iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

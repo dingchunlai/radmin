@@ -1,0 +1,149 @@
+<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 密码修改</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以修改您的登录密码。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:480px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on">密码修改</li>
+    <li class="line"></li>
+    <li class="more"></li>
+	</ul>
+  </div>
+
+<script type="text/javascript">
+window.onload = function(){
+  //ge("area").value = "";
+}
+
+function submitForm(){
+    ge("p_old_pw").style.color="#999999";
+    ge("p_password1").style.color="#999999";
+    ge("p_password2").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("old_pw").value)==""){
+        ge("p_old_pw").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("password1").value)==""){
+        ge("p_password1").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("password1").value)!=trim(ge("password2").value)){
+        ge("p_password2").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #4B4B4B; padding-top: 4px;
+}
+.formcenter{
+    width:180px; float:left;
+}
+.formcenter input{
+    width:150px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+  <div id="same1" style="padding-top:50px;padding-left:100px;">
+  <form action="/member/userpw_save" name="form1" target="hideiframe" method="post" onsubmit="return submitForm();">
+    <div class="formouter">
+            <div class="formleft">用 户 名：</div>
+            <div class="formcenter"><input name="name1" id="name1" type="text" value="<%=@username%>" disabled /></div>
+            <div class="formright" id="p_name"></div>
+    </div>
+    <div class="formouter">
+            <div class="formleft">原 密 码：</div>
+            <div class="formcenter"><input name="old_pw" id="old_pw" type="password" /></div>
+            <div class="formright" id="p_old_pw">请输入原用户密码</div>
+    </div>
+    <div class="formouter">
+                <div class="formleft">密　　码：</div>
+                <div class="formcenter"><input name="password1" id="password1" type="password" /></div>
+                <div class="formright" id="p_password1">请输入新用户密码</div>
+    </div>
+    <div class="formouter">
+                <div class="formleft">重复密码：</div>
+                <div class="formcenter"><input name="password2" id="password2" type="password" /></div>
+                <div class="formright" id="p_password2">请与密码填写一致</div>
+    </div>
+
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="修 改" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+    </div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+
+
+<%=render :partial => "/share/public_footer"%>

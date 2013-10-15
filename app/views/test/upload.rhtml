@@ -1,0 +1,6 @@
+  <h1>Upfile#upload</h1>  
+<% form_for(:image,@image, :url => {:action=>"upload"}, :html => {:multipart=>true}) do |form| -%>  
+<%= file_field 'image', :uploaded_data %>
+ 
+<%= submit_tag "upload now" %>  
+ <% end -%>  

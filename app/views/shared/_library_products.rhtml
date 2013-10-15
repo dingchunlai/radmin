@@ -1,0 +1,91 @@
+<div id="products_list">
+
+	<% form_tag "/products/operate", :id => "products_form" do %>
+		<ul class="button_list clearfix">
+			<li><%= submit_tag "上架", :name => "do_up" if has_role?("产品组长") %></li>
+			<li><%= submit_tag "下架", :name => "do_down" if has_role?("产品组长") %></li>
+			<li><%= submit_tag "申请上架", :name => "apply_up" %></li>
+			<li><%= submit_tag "申请下架", :name => "apply_down" %></li>
+		</ul>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="products" id="products_table">
+			<tr>
+				<th><input id="checkbox_selector" type="checkbox" value="0" /></th>
+				<th>缩略图</th>
+				<th>产品名称</th>
+				<th>所属商铺</th>
+				<th>所属品牌</th>
+				<th>所属分类</th>
+				<th>型号/单位/价格</th>
+                <th>品牌库热门</th>
+				<th>口碑值</th>
+				<th>状态</th>
+				<th>上架时间</th>
+				<th>操作</th>
+			</tr>
+			<% @products.each do |product| -%>
+			<% @product = product %>
+			<tr class="<%= cycle("odd", "even")%>" id="<%= product.dom_id-%>">
+              <td><%= check_box_tag "product_ids[]", product.id, false, :class => "checkbox" %></td>
+				<td class="thumb"><%= link_to image_tag(product.primary_image_path(:small), :alt => product.name), product_path(:id => product.productid), :title => product.name -%></td>
+				<td>
+					<%= link_to product.name, edit_product_path(:id => product.productid), :title => product.name, :target => "_blank" %> <i><%= label_string(product.label) %></i><br />
+					<% if product.special_price != 888888 %>
+						促销价：<%= product.special_price %>元 <br />
+						有效期：<%= product.special_start.to_date if product.special_start %>至<%= product.special_end.to_date if product.special_end %>
+					<% end %>
+				</td>
+				<td><%= link_to product.vendor.name_zh, vendor_path(product.vendor) if product.vendor %></td>
+				<td><%= link_to product.brand.name_zh, brand_path(product.brand) if product.brand %></td>
+				<td><%= link_to product.category.name_zh, category_path(product.category.tagid) if product.category %></td>
+				<td>
+					<% if product.model == "" || product.model.nil? %>
+						<input type="button" id="model-<%= product.id %>" value="型号">
+					<% end %>
+					<%= in_place_editor_field :product, 'model', {}, {:cancel_text => '取消', :save_text => '保存',:external_control => "model-#{product.id}"} %>
+					
+					<% if product.unit == "" || product.unit.nil? %>
+						<input type="button" id="unit-<%= product.id %>" value="单位">
+					<% end %>
+					<%= in_place_editor_field :product, 'unit', {}, {:cancel_text => '取消', :save_text => '保存',:external_control => "unit-#{product.id}"} %>
+					
+					<% if product.now_price == "" || product.now_price.nil? %>
+						<input type="button" id="now_price-<%= product.id %>" value="价格">
+					<% end %>
+					<%= in_place_editor_field :product, 'now_price', {}, {:cancel_text => '取消', :save_text => '保存',:external_control => "now_price-#{product.id}"} %>
+				</td>
+                <td>
+          <%= check_box_tag "product_is_precinct", product.is_precinct, product.is_precinct, {:onclick => remote_function( :url => is_precinct_product_path(product), :with => "'cvalue='+this.checked", :method => "put")} -%>
+      <span id="is_precinct_<%= product.dom_id -%>"><%= product.is_precinct ? "<strong>是</strong>" : "否" %></span>
+        </td>
+				<td><%= product.public_praise %></td>
+				<td id="<%= product.dom_id("status")-%>">
+					<%= product_status(product.status) %>
+					<% if product.status == 0 %>
+						<br /><%= link_to_remote "更新为已审核", :url => update_status_product_path(product), :method => "put" %>
+					<% end %>
+				</td>
+				<td><%= product.updated_at.to_date if product.status == 1 %></td>
+				<td>
+					<%= link_to "显示", product_path(:id => product.productid) -%>
+					<%= link_to "编辑", edit_product_path(:id => product.productid) -%>
+					<%= link_to_remote((product.is_delete ? "恢复" : "删除"), {:url => is_delete_product_path(product), :method => :put, :confirm => "确定删除吗？"}, :id => product.dom_id("delete")) if has_role?("产品组长") %>
+					<%= link_to "编辑属性", edit_json_path(product), :target => "_blank" if product.source == 1 %>
+				</td>
+			</tr>
+			<% end -%>
+		</table>
+	<% end %>
+	<%= will_paginate @products, :renderer => 'CustomPaginationRenderer' -%>
+</div>
+<script type="text/javascript" charset="utf-8">
+	
+	var checkboxes = $$("#products_form input[class=checkbox]");
+	var cbControl = $("checkbox_selector");
+	
+	cbControl.observe("click", function(){
+		checkboxes.each(function(box){
+			box.checked = cbControl.checked;
+		});
+	});
+	
+</script>

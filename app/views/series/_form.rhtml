@@ -1,0 +1,25 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<% if @brand %>
+	<tr>
+		<td class="label">所属品牌</td>
+		<td><%= @brand.name_zh %></td>
+	</tr>
+	<% end %>
+	<%= f.hidden_field :brand_id %>
+  <tr>
+		<td class="label">所属分类</td>
+		<td><%= f.collection_select :category_id, @categories, :id, :name_zh -%></td>
+	</tr>
+	<tr>
+		<td class="label">系列名称</td>
+		<td><%= f.text_field :name -%></td>
+	</tr>
+  <tr>
+		<td class="label">系列描述</td>
+		<td><%= f.text_area :description, :rows => 10 -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建系列" : "更新系列") -%></td>
+	</tr>
+</table>

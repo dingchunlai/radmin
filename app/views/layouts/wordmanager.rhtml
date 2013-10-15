@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>关键字管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+<script type="text/javascript" src="/javascripts/WebCalendar.js"></script>
+<link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#datalist {
+    border-collapse:collapse;
+    border:1px solid #BED0E2;
+}
+#datalist th 
+{
+text-align:center;
+    font-family:Verdana;
+    padding: 5px 15px 3px 15px;
+    letter-spacing: 2px;
+    background-color: #45719C;
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
+    border:1px solid white;
+}
+#datalist td {
+    color: #757575;
+    font-family:Verdana;
+    padding: 5px 8px 5px 8px;
+    letter-spacing: 1px;
+    font-size: 9pt;
+    border:1px solid #D9E3EE;
+}
+#datalist a {
+    color: #2853FF;
+    text-decoration: none;
+}
+#datalist a:hover {
+    color: #FD352B;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+	<div id="H_wrapper">
+            <%=render :file => "/bgmenu.rhtml"%>
+	</div>
+
+	<div id="L_wrapper">
+	       <input onclick="location.href='/wordmanager/list'" style="width:83px" type="button" value="关键词" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+           <input onclick="location.href='/wordmanager/new'" style="width:83px" type="button" value="添加关键词" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />  
+           <input onclick="location.href='/wordmanager/articlekey'" style="width:83px" type="button" value="文章关键词" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />                
+	</div>
+
+	<div id="R_wrapper">
+		<style type="text/css">
+            .nav{ 
+			background:url(http://www.51hejia.com/images/zhuangxiu805/iconav.png) left center no-repeat; 
+			line-height:27px; 
+			color:#666666; 
+			padding-left:15px; 
+			margin:10px 12px 0 12px; 
+			}
+		</style>
+		<div class="nav"><strong></strong><%= location -%></div>
+            <%=yield%>
+	</div>
+        
+<iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+</body>
+</html>

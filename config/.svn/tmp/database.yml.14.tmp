@@ -1,0 +1,88 @@
+#development #######################################
+development:
+  adapter: mysql
+  database: 51hejia
+  encoding: utf8
+  username: 51hejia
+  password: ruby
+  host: 192.168.0.2
+#  username: hejiasql
+#  password: sql2009
+#  host: 192.168.0.14
+  port: 3306
+
+
+#development:
+#  adapter: mysql
+#  database: 51hejia
+#  encoding: utf8
+#  username: 51hejia
+#  password: ruby
+#  host: 192.168.0.13
+#  port: 3306
+
+forum_development:
+  adapter: mysql
+  database: 51hejia
+  encoding: utf8
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  port: 3306
+
+
+product_development:
+  adapter: mysql
+  database: 51hejia
+  encoding: utf8
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  port: 3306
+
+index_development:
+  adapter: mysql
+  database: 51hejia_index
+  encoding: utf8
+  username: 51hejia
+  password: ruby
+  host: 192.168.0.13
+  port: 3306
+
+
+#production ########################################
+index_production:
+  adapter: mysql
+  database: 51hejia_index
+  encoding: utf8
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  port: 3306
+
+production:
+  adapter: mysql
+  database: 51hejia
+  encoding: utf8
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  port: 3306
+
+forum_production:
+  adapter: mysql
+  database: 51hejia_forum
+  encoding: utf8
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  port: 3306
+
+product_production:
+  adapter: mysql
+  database: product
+  encoding: utf8
+  username: 51hejia
+  password: hejiasql
+  host: 192.168.1.13
+  port: 3306

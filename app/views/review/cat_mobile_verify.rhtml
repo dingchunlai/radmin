@@ -1,0 +1,86 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<h2>手机验证码查看</h2>
+<form action="/review/cat_mobile_verify" method="get" id="fmid">
+  <p align=center>
+    手机号：<input type="text" name="mob_tel" value="<%=@mob_tel%>"/>
+    用户名：<input type="text" name="user_name" value="<%=@user_name%>"/>
+    验证状态：<select name='is_verified'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @is_verified.to_i == 1%>selected<%end%>>成功</option>
+      <option value='2' <%if @is_verified.to_i == 2%>selected<%end%>>失败</option>
+    </select>
+    开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>/>
+	结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>/>
+    <input type=submit value="搜索"/>
+  </p>
+</form>
+<div>
+  <table width="98%" align="center" border="0" cellspacing="1" cellpadding="1" style="text-align:center;">
+    <tr >
+      <td>编号</td>
+      <td>用户名</td>
+      <td>城市</td>
+      <td>手机号</td>
+      <td>验证分类</td>
+      <td>验证码</td>
+      <td>发送状态</td>
+      <td>发送时间</td>
+      <td>验证状态</td>
+      <td>验证时间</td>
+    </tr>
+    <% @mobile_code_verifis.each do |code| -%>
+      <tr >
+        <td><%= code.id%></td>
+        <td><%= HejiaUserBbs.find_by_USERBBSID(code.user_id) && HejiaUserBbs.find_by_USERBBSID(code.user_id).USERNAME || '--' %></td>
+        <td><%=city_name(code.user_id)%></td>
+        <td><%= code.user_mobile %></td>
+        <td><%= code.resource_type == 'DecorationDiary' ? "日记" : "公司留言" %></td>
+        <td><%= code.verify_code %></td>
+        <td><%= code.send_status ? "成功" : "失败" %></td>
+        <td>
+          <% unless code.created_at.blank? %>
+            <%= code.created_at.to_s(:db) %>
+          <% end %>
+        </td>
+        <td><%= code.verify_status ? "成功" : "失败" %></td>
+        <td>
+          <% if code.created_at == code.updated_at %>
+            --
+          <% else %>
+            <%= code.updated_at.to_s(:db) unless code.updated_at.blank? %>
+          <% end %>
+        </td>
+      </tr>
+    <%end -%>
+  </table>
+</div>
+<br />
+<div>
+  <p align=center>搜索到 <%=@mobile_code_verifis.total_entries%> 条留言</p>
+  <div style="text-align:center"><%= will_paginate @mobile_code_verifis %></div>
+</div>
+<style type="text/css">
+  /* <![CDATA[ */
+
+  table, td
+  {
+    border-color: #7EBF4F;
+    border-style: solid;
+  }
+
+  table
+  {
+    border-width: 0 0 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td
+  {
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+  }
+
+  /* ]]> */
+</style>

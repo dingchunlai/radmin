@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company
+END
+chpass.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/chpass.rhtml
+END
+form_save.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/form_save.rhtml
+END
+companyscore.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/companyscore.rhtml
+END
+companyping.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/companyping.rhtml
+END
+findform.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/findform.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/index.rhtml
+END
+new.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/new.rhtml
+END
+show.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/company/show.rhtml
+END

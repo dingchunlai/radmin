@@ -1,0 +1,80 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="form">
+  <tr>
+		<td class="label">中文名称</td>
+		<td><%= f.text_field :name_zh, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">英文名称</td>
+		<td><%= f.text_field :name_en -%></td>
+	</tr>
+	<tr>
+		<td class="label">永久链接</td>
+		<td><%= f.text_field :permalink -%></td>
+	</tr>
+	<tr>
+		<td class="label">官方网站</td>
+		<td><%= f.text_field :website -%></td>
+	</tr>
+	<tr>
+		<td class="label">营业时间</td>
+		<td><%= f.text_field :open_time -%></td>
+	</tr>
+	<tr>
+		<td class="label">商家地址</td>
+		<td><%= f.text_field :address, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">所在省市</td>
+		<td><%= f.text_field :province, :size => "10" -%> <%= f.text_field :city, :size => "10" -%></td>
+	</tr>
+	<tr>
+		<td class="label">邮政编码</td>
+		<td><%= f.text_field :zip_code, :size => 10 -%></td>
+	</tr>
+	<tr>
+		<td class="label">联&nbsp;系&nbsp;人</td>
+		<td><%= f.text_field :contact -%></td>
+	</tr>
+	<tr>
+		<td class="label">电话号码</td>
+		<td><%= f.text_field :telephone -%></td>
+	</tr>
+	<tr>
+		<td class="label">传真号码</td>
+		<td><%= f.text_field :fax -%></td>
+	</tr>
+	<tr>
+		<td class="label">400电话</td>
+		<td><%= f.text_field :service_telephone -%></td>
+	</tr>
+	<tr>
+		<td class="label">电子邮件</td>
+		<td><%= f.text_field :email -%></td>
+	</tr>
+	<tr>
+		<td class="label">选择LOGO</td>
+		<td>
+			<%= image_tag(@vendor.logo, :alt => @vendor.name_zh) %><br />
+			<%= file_field 'image', :uploaded_data %> (注意：图片大小请控制在2M以内！支持JPG、JPEG和GIF图片格式！)
+		</td>
+	</tr>
+	<tr>
+		<td class="label">商家简介</td>
+		<td><%= f.text_area :description, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">店铺主题</td>
+		<td><%= f.select :theme, ProductVendor::THEMES.map{|k, v| [v, k]}, { :include_blank => true } %></td>
+	</tr>
+	<tr>
+		<td class="label">顶部横幅</td>
+		<td>
+			<%= image_tag(@vendor.banner.url(:thumb)) %><br />
+			<%= f.file_field :banner -%> <span>注意：标准横幅大小为950x200像数！</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag("更新商家") -%></td>
+	</tr>
+</table>

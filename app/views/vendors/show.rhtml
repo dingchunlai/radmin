@@ -1,0 +1,64 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="vendors">
+  <tr>
+    <th>编号</th>
+    <th>店铺标志</th>
+    <th>店铺名称</th>
+    <th>经营品牌</th>
+    <th>所属分类</th>
+    <th>二级域名</th>
+    <th>等级</th>
+    <th>配合度</th>
+    <th>服务指数</th>
+    <th>品牌知名度</th>
+    <th>价格诚信度</th>
+    <th>售后服务度</th>
+    <th>品牌库</th>
+    <th>相关操作</th>
+  </tr>
+  <tr>
+    <td><%= @vendor.companyid %></td>
+    <td class="thumb"><%= link_to image_tag(@vendor.logo, :alt => @vendor.name_zh), vendor_path(@vendor), :title => @vendor.name_zh -%></td>
+    <td class="name"><%= @vendor.name_zh %> <%= "<i>合作商铺</i>" if @vendor.is_cooperation %></td>
+    <td>
+      <% @vendor.brands.each do |b| -%>
+        <%= link_to b.name_zh, brand_path(b), :title => b.name_zh -%>
+      <% end -%>
+    </td>
+    <td>
+      <% @vendor.categories.each do |c| -%>
+        <%= link_to c.name_zh, category_path(:id => c.tagid), :title => c.name_zh -%>
+      <% end -%>
+    </td>
+    <td><%= @vendor.subdomain %></td>
+    <td><%= class_index_string(@vendor.class_index) %></td>
+    <td><%= cooperation_string(@vendor.cooperation) %></td>
+    <td><%= service_index_string(@vendor.service_index) %></td>
+    <td><%= @vendor.brand_awareness %></td>
+    <td><%= @vendor.price_faith %></td>
+    <td><%= @vendor.after_service %></td>
+    <td>
+      <%= check_box_tag "vendor_is_precinct", @vendor.is_precinct, @vendor.is_precinct, {:onclick => remote_function( :url => is_precinct_vendor_path(@vendor), :with => "'cvalue='+this.checked", :method => "put")} -%>
+      <span id="is_precinct_<%= @vendor.dom_id -%>"><%= @vendor.is_precinct ? "<strong>是</strong>" : "否" %></span>
+    </td>
+    <td>
+      <%= button_to "同步关联品牌", :controller => "common", :action => "sync_vendors_brands", :id => @vendor %>
+      <%= button_to "同步关联分类", :controller => "common", :action => "sync_vendors_categories", :id => @vendor %>
+    </td>
+  </tr>
+  <tr>
+    <td>店铺简介：</td>
+    <td colspan="12"><%= @vendor.description %></td>
+  </tr>
+  <tr>
+    <td>最新消息：</td>
+    <td colspan="12"><%= @vendor.latest_news %></td>
+  </tr>
+  <tr>
+    <td>推荐理由：</td>
+    <td colspan="12"><%= @vendor.selected_reason %></td>
+  </tr>
+</table>
+
+<h3>经销产品 <span>(总数：<%= @products.total_entries %>)</span></h3>
+<%= render :partial => "shared/search" %>
+<%= render :partial => "shared/products" unless @products.empty? -%>

@@ -1,0 +1,27 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label required">商家</td>
+    <td>
+      <%= @vendor.name_zh -%>
+      <%= hidden_field_tag "vendor_point[vendor_id]", @vendor.id %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label required">分数</td>
+    <td>
+      <%= f.select :point, { -1 => -1, 0 => 0, 1 => 1 }.collect {|c| [c[0], c[1]]} -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">总结评论</td>
+    <td><%= f.text_area :reason, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label">问答</td>
+    <td><%= f.text_area :answer, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建" : "更新") -%></td>
+  </tr>
+</table>

@@ -1,0 +1,326 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 2700;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height + 26;
+}
+
+function submitForm(form){
+    ge("p_kw_name").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("zq_kw_name").value)==""){
+        ge("p_kw_name").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px; height:32px;
+}
+.formleft{
+  width:150px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:500px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+  
+<form action="/zhuanqu/kw_edit_save" name="form1" enctype="multipart/form-data" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+     <span style="color:#BF0000;"><%if @id ==0%>新建列表专区<%else%>编辑列表专区<%end%></span>
+     <input type="hidden" name="id" value="<%=@id%>" />
+    </div>
+      
+<div class="formouter">
+            <div class="formleft">关 键 词：</div>
+            <div class="formcenter">
+                <%=text_field("zq","kw_name",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_kw_name">请填写关键词</div>
+</div>
+<div class="formouter">
+            <div class="formleft">分　类：</div>
+            <div class="formcenter"><%=select("zq","sort_id",get_zhuanqu_sorts)%></div>
+            <div class="formright" id="p_sort_id">请选择分类</div>
+</div>
+<div class="formouter" style="height:85px;">
+            <div class="formleft">专区描述：</div>
+            <div class="formcenter"><%=text_area("zq","description",{:style=>"width:400px;height:80px;"})%></div>
+            <div class="formright" id="p_description">请填写专区描述</div>
+</div>
+<div class="formouter">
+            <div class="formleft">最热文章标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","ha_title1",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_ha_title1">请填写最热文章标题1</div>
+</div>
+<div class="formouter">
+            <div class="formleft">最热文章链接1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","ha_url1",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_ha_url1">请填写最热文章链接1</div>
+</div>
+<div class="formouter">
+            <div class="formleft">最热文章标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","ha_title2",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_ha_title2">请填写最热文章标题2</div>
+</div>
+<div class="formouter">
+            <div class="formleft">最热文章链接2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","ha_url2",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_ha_url2">请填写最热文章链接2</div>
+</div>
+<div class="formouter">
+            <div class="formleft">最热文章标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","ha_title3",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_ha_title3">请填写最热文章标题3</div>
+</div>
+<div class="formouter">
+            <div class="formleft">最热文章链接3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","ha_url3",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_ha_url3">请填写最热文章链接3</div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">相关专区1标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1链接1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1简介2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_resume2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:80px;">
+            <div class="formleft">相关专区1图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.hot1_image_url2) ? @zq.hot1_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="hot1_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1链接2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1链接3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1标题4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_title4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1链接4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_url4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1标题5：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_title5",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区1链接5：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot1_url5",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">相关专区2标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2链接1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2简介2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_resume2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:80px;">
+            <div class="formleft">相关专区2图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.hot2_image_url2) ? @zq.hot2_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="hot2_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2链接2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2链接3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2标题4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_title4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2链接4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_url4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2标题5：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_title5",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">相关专区2链接5：</div>
+            <div class="formcenter">
+                <%=text_field("zq","hot2_url5",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">图库关键词：</div>
+            <div class="formcenter">
+                <%=text_field("zq","image_keyword",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">图片相关链接：</div>
+            <div class="formcenter">
+                <%=text_field("zq","about_image_url",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">TITLE：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_title",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">KEYWORDS：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_keywords",{:size=>60})%>
+            </div>
+            <div class="formright">多个关键字之间用;分隔</div>
+</div>
+<div class="formouter">
+            <div class="formleft">DESCRIPTION：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_description",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter" style="padding:30px 0px 0px 280px;">
+
+  <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+
+</div>
+     
+</form>
+</div>

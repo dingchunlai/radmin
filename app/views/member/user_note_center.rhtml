@@ -1,0 +1,64 @@
+	<link href="http://js.51hejia.com/css/ucenter.css?53452345" rel="stylesheet" type="text/css" />
+<%=render :partial => "/share/public_header"%>
+<DIV id=usermain class="clearfix" style="margin-top:5px;">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+<div class="titlebox">
+      <h2>装修日记</h2>
+      <ul>
+        <li class="hoveron"><a href="/member/user_note_list">日记列表</a></li>
+      </ul>
+</div>
+<div class="diary_tis">
+<div class="diary_wenz">
+<p>恭喜您已成功提交装修日记，请继续下一步！</p>
+<%if @notemodel.dianping_id.to_i==0%>
+	<a href="http://z.51hejia.com/dianping/newdp/<%=@notemodel.firm_id%>?storyid=<%=@notemodel.id%>" target="_self" class="diary_dianp">为该装修公司点评</a>
+<%else%>
+	<a href="http://z.51hejia.com/dianping/editnew?id=<%=@notemodel.dianping_id%>" target="_self" class="diary_dianp">修改点评</a>
+<%end%>
+<a href="/member/user_photo_new/<%=@notemodel.id%>" target="_self" class="diary_jix">继续上传图片</a><a href="/member/user_note_list" target="_self" class="diary_fanh">返回</a>
+</div>
+</div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+<%=render :partial => "/share/public_footer"%>

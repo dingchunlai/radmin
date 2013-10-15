@@ -1,0 +1,47 @@
+<%if @message%>
+	<p><font color="red"><%=@message%></font></p>
+<%end%>
+<form action="/decocompany/update" method="post">
+	<input type="hidden" name="companyid" value="<%=@companyid%>">
+	<table border=1>
+		<tr>
+			<td>公司名</td>
+			<td><%=@company.name_zh%></td>
+		</tr>
+		<tr>
+			<td>合作商家</td>
+			<td><input type="radio" name="is_cooperation" value="1" <%if @company.is_cooperation == 1%>checked<%end%>>是 &nbsp;
+				<input type="radio" name="is_cooperation" value="0" <%if @company.is_cooperation == 0%>checked<%end%>>否 &nbsp;
+                                <input type="radio" name="is_cooperation" value="-1" <%if @company.is_cooperation == -1%>checked<%end%>>意向 &nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td>预约数</td>
+			<td>
+				<input type="text" name="bookings_count" value="<%=@company.bookings_count.to_i%>">
+			</td>
+		</tr>	
+		<tr>
+		<td>星级(0.5的倍数，不能超过5)</td>
+			<td>
+				<input type="text" name="star_lest" value="<%=@company.star_lest%>">
+			</td>
+		</tr>	
+		<td>指定公司浏览量</td>
+			<td>
+				<input type="text" name="pv_count" value="<%if !params[:pv_count].nil?%><%=params[:pv_count].to_i%><%else%><%=@pv_count.to_i%><%end%>">
+			</td>
+		</tr>		
+		<tr>
+			<td>是否下架</td>
+			<td>
+				<input type="radio" name="shangjia" value='1' <%if @company.state != '-99'%>checked<%end%>> 上架
+				<input type="radio" name="shangjia" value='0' <%if @company.state == '-99'%>checked<%end%>> 下架
+			</td>
+		</tr>
+		<tr>
+			<td align=center colspan=2><input type="submit" value="确定"></td>
+			
+		</tr>
+	</table>
+</form>

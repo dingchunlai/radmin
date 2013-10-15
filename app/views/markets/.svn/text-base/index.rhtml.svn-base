@@ -1,0 +1,21 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="markets">
+	<tr>
+		<th>编号</th>
+		<th>中文名称</th>
+		<th>英文名称</th>
+		<th>当前序号</th>
+		<th>是否精选</th>
+		<th>相关操作</th>
+	</tr>
+	<% @markets.each do |market| %>
+	<tr class="<%= cycle("odd", "even")%>">
+		<td><%= market.id %></td>
+		<td><%= link_to market.name_zh, market_path(market) %></td>
+		<td><%= market.name_en %></td>
+		<td><%= market.position %></td>
+		<td><%= market.is_good ? "是" : "不是" %></td>
+		<td><%= link_to "显示", market_path(market) %> <%= link_to "编辑", edit_market_path(market) %></td>
+	</tr>
+	<% end %>
+</table>
+<%= will_paginate @markets %>

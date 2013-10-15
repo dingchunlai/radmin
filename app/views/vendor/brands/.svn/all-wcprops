@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/brands
+END
+edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/brands/edit.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/brands/index.rhtml
+END
+new.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/brands/new.rhtml
+END
+show.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/brands/show.rhtml
+END
+_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/brands/_form.rhtml
+END

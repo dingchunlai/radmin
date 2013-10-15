@@ -1,0 +1,6 @@
+<select id="type2" name="type2" onchange="new Ajax.Updater('select_brand', '/article/select_brand', {asynchronous:true, evalScripts:true, parameters:'type2='+this.value})">
+	<option value="0">请选择</option>
+	<% for u in @tagsonlist %>
+		<option value="<%=u.id%>"><%=u.name_zh%></option>
+	<% end %>
+</select>

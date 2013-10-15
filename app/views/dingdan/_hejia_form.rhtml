@@ -1,0 +1,81 @@
+<script type="text/javascript">
+function submitForm(form){
+    ge("p_name").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("name1").value)==""){
+        ge("p_name").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<div class="formouter">
+            <div class="formleft">客户姓名：</div>
+            <div class="formcenter"><input name="username" id="username" type="text" value="<%=@pricing.username%>" disabled /></div>
+            <div class="formright" id="p_username">您不能修改客户姓名</div>
+</div>
+<div class="formouter">
+            <div class="formleft">客户电话：</div>
+            <div class="formcenter"><input name="phone" id="phone" type="text" value="<%=@pricing.phone%>" disabled /></div>
+            <div class="formright" id="p_phone">您不能修改客户电话</div>
+</div>
+<div class="formouter">
+            <div class="formleft">日期：</div>
+            <div class="formcenter"><input name="createtime" id="createtime" type="text" value="<%=@pricing.createtime.utc.strftime("%Y-%m-%d %H:%M")%>" disabled /></div>
+            <div class="formright" id="p_createtime">您不能修改日期</div>
+</div>
+<div class="formouter">
+            <div class="formleft">产品名称：</div>
+            <div class="formcenter"><input name="name1" id="name1" type="text" value="<%=@pricing.name%>" /></div>
+            <div class="formright" id="p_name">产品名称必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">品牌：</div>
+            <div class="formcenter"><input name="brand" id="brand" type="text" value="<%=@pricing.brand%>" /></div>
+            <div class="formright" id="p_brand">请填写品牌</div>
+</div>
+<div class="formouter">
+            <div class="formleft">型号：</div>
+            <div class="formcenter"><input name="xinghao" id="xinghao" type="text" value="<%=@pricing.xinghao%>" /></div>
+            <div class="formright" id="p_xinghao">请填写型号</div>
+</div>
+<div class="formouter">
+            <div class="formleft">希购地：</div>
+            <div class="formcenter"><input name="hopeaddress" id="hopeaddress" type="text" value="<%=@pricing.hopeaddress%>" /></div>
+            <div class="formright" id="p_hopeaddress">请填写希望购买地</div>
+</div>
+<div class="formouter">
+            <div class="formleft">数量：</div>
+            <div class="formcenter"><input name="num" id="num" type="text" value="<%=@pricing.num%>" /></div>
+            <div class="formright" id="p_num">请填写数量(包含单位) 如：50平方米</div>
+</div>
+<div class="formouter">
+            <div class="formleft">招商1：</div>
+            <div class="formcenter"><input name="zhaoshang" id="zhaoshang" type="text" value="<%=@pricing.pricing_bill.zhaoshang rescue ""%>" /></div>
+            <div class="formright" id="p_zhaoshang">请填写招商1</div>
+</div>
+<div class="formouter">
+            <div class="formleft">价格1：</div>
+            <div class="formcenter"><input name="sendprice" id="sendprice" type="text" value="<%=@pricing.pricing_bill.sendprice rescue ""%>" /></div>
+            <div class="formright" id="p_sendprice">请填写价格1</div>
+</div>
+<div class="formouter">
+            <div class="formleft">招商2：</div>
+            <div class="formcenter"><input name="zhaoshang2" id="zhaoshang2" type="text" value="<%=@pricing.pricing_bill.zhaoshang2 rescue ""%>" /></div>
+            <div class="formright" id="p_zhaoshang2">请填写招商2</div>
+</div>
+<div class="formouter">
+            <div class="formleft">价格2：</div>
+            <div class="formcenter"><input name="sendprice2" id="sendprice2" type="text" value="<%=@pricing.pricing_bill.sendprice2 rescue ""%>" /></div>
+            <div class="formright" id="p_sendprice2">请填写价格2</div>
+</div>
+<div class="formouter">
+            <div class="formleft">短信：</div>
+            <div class="formcenter"><textarea name="result" id="result" style="width:320px;" rows="4"><%=trim(@pricing.pricing_bill.result) rescue ""%></textarea></div>
+            <div class="formright" id="p_result">请填写短信内容</div>
+</div>
+<div class="formouter">
+            <div class="formleft">备注：</div>
+            <div class="formcenter"><textarea name="beizhu" id="beizhu" style="width:320px;" rows="5"><%=trim(@pricing.pricing_bill.beizhu) rescue ""%></textarea></div>
+            <div class="formright" id="p_beizhu">请填写备注信息</div>
+</div>

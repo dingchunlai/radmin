@@ -1,0 +1,56 @@
+<form id="fmid" action="/article/changetype" method=post>
+<p>
+原始分类：
+<select id="first" name="first" onchange="new Ajax.Updater('select_second', '/article/select_second', {asynchronous:true, evalScripts:true, parameters:'first='+this.value})">
+	<option value="0">请选择</option>
+	  <% ArticleTag.article_categories.each do |t1| -%>
+		<option value="<%=t1.TAGID%>"><%=t1.TAGNAME%></option>
+	<% end %>
+</select>
+<!-- 小类 -->
+<span id='select_second'>
+	<select name="second" id="second" onchange="new Ajax.Updater('select_third', '/article/select_third', {asynchronous:true, evalScripts:true, parameters:'second='+this.value})">
+		<option value="0">请选择</option>
+	</select>
+</span>
+
+<span id='select_third'>
+	<select name="third" id="third">
+		<option value="0">请选择</option>
+	</select>
+</span>
+
+<input type="text" name="authorname" >
+</p>
+
+<p>
+目标分类：
+<select id="first2" name="first2" onchange="new Ajax.Updater('select_second2', '/article/select_second2', {asynchronous:true, evalScripts:true, parameters:'first='+this.value})">
+	<option value="0">请选择</option>
+	  <% ArticleTag.article_categories.each do |t1| -%>
+		<option value="<%=t1.TAGID%>"><%=t1.TAGNAME%></option>
+	<% end %>
+</select>
+<!-- 小类 -->
+<span id='select_second2'>
+	<select name="second2" id="second2" onchange="new Ajax.Updater('select_third2', '/article/select_third2', {asynchronous:true, evalScripts:true, parameters:'second='+this.value})">
+	<option value="0">请选择</option>
+	</select>
+</span>
+
+<span id='select_third2'>
+	<select name="third2" id="third2">
+		<option value="0">请选择</option>
+	</select>
+</span>
+</p>
+<p><input type="button" value="确定" onclick="checksub();"></p>
+</form>
+<script language="javascript">
+	function checksub(){
+		if (window.confirm("确定分类迁移吗，请慎重检查，修改后数据无法恢复"))
+		{
+			document.getElementById("fmid").submit();
+		}
+	}
+</script>

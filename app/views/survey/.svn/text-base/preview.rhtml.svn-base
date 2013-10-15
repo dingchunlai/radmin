@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>新闻调查_和家网</title>
+<style type="text/css">
+.main {width:960px; margin:0 auto;}
+.ad {margin:0 0 4px 0; float:left}
+.ad img {width:960px; height:85px;}
+.left {width:713px; float:left;}
+.right {width:242px; float:right;}
+a{color:#000;text-decoration:none;}
+a:hover {color:#f60; text-decoration:underline}
+</style>
+<!--header_head-->
+<link href="http://www.51hejia.com/css/News107/NewsIndex.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<!--header-->
+<div id="Login" style="display:none;border:0">
+	<a href="#guanbi" title="关闭" class="Divopop-nonenei"><img src="http://www.51hejia.com/css/newback/images/x.png" alt="关闭" /></a>
+	<iframe id="dengluiframe" style="width:222px;height:224px;border:0;overflow:hidden" frameborder="0" scrolling="no"></iframe>
+  <script>
+	function denglula()
+	{
+		var time = Math.random();
+		document.getElementById('dengluiframe').src='/usersLogin!returnGo.jhtml?time='+time;
+	}
+	</script>
+</div>
+<script language="javascript">
+doMyAjaxlogin();
+var BgDiv=document.createElement("div");
+function Divopop(ID){
+	denglula();
+	var Moled=document.getElementById(ID);
+	Moled.style.display="block";
+	var bodyw=document.body.scrollWidth;
+	var bodyh=document.body.scrollHeight;
+	var firefox = document.getElementById && !document.all;
+	BgDiv.style.position="absolute";
+	BgDiv.style.left="0";
+	BgDiv.style.top="0";
+	BgDiv.style.width=bodyw+"px";
+	BgDiv.style.height=bodyh+"px";
+	BgDiv.style.zindex="50";
+	if(firefox==false){
+		BgDiv.style.background="url(http://www.51hejia.com/css/newback/images/divbg.png)";
+		BgDiv.style.filter="Alpha(Opacity=50)";
+	}else{
+		BgDiv.style.background="url(http://www.51hejia.com/css/newback/images/divbg.png)";
+	}
+	document.body.appendChild(BgDiv);
+	BgDiv.style.display="";
+	var As=document.getElementsByTagName("a");
+	for (var i=0;i<As.length;i++){
+	if(As[i].className=="Divopop-none"){
+	As[i].onclick=function(){Moled.style.display="none";BgDiv.style.display="none";return false;};
+	}
+	else if(As[i].className=="othen"){
+	As[i].onclick=function(){
+	var othenId=this.getAttribute("toid");
+	var othenDiv=document.getElementById(othenId);
+	Moled.style.display="none";
+	othenDiv.style.display="block";
+	return false;
+	};
+	}
+	else if(As[i].className=="Divopop-nonenei"){
+	As[i].onclick=function(){this.parentNode.style.display="none";BgDiv.style.display="none";return false;};
+	}
+	}
+	}
+ </script>
+<script language="javascript">
+	changecolor();
+</script>
+<div class="Div_center">
+	<div class="NewsTB">
+		<div id="Layer1" class="NavNews"> 
+			<div id="Layer2" class="NavNews1">
+				  <ul>
+					<li><a href="http://www.51hejia.com/" title="首页">首页</a>&nbsp;|&nbsp;</li>
+					<li><a href="http://p.51hejia.com/" title="产品报价">产品</a>&nbsp;|&nbsp;</li>
+					<li><a href="http://www.51hejia.com/zhuangxiu/" title="装修">装修</a>&nbsp;|&nbsp;</li>
+					<li><a href="http://www.51hejia.com/jushang/" title="居尚">居尚</a>&nbsp;|&nbsp;</li>
+					<li><a href="http://tuku.51hejia.com/" title="图库">图库</a>&nbsp;|&nbsp;</li>
+					<li><a href="http://ask.51hejia.com/" title="俱乐部">俱乐部</a>&nbsp;|&nbsp;</li>
+				  </ul>
+			</div>
+			<div id="Layer2" class="NavNews3">
+				  		<form id="urlForm" name="urlForm" method="post" action="">
+		<div id="News_hdsearch">
+		
+			<select name="t">
+			  <option>资讯</option>
+			  <option>图片</option>
+			  <option>产品</option>
+			  <option>公司</option>
+			</select>
+			<input id="wd" name="wd" type="text"/>
+			<a href="#" onclick="submitForm()"><img src="http://www.51hejia.com/images/Common/Search.gif" width="36" height="20" border="0" align="absmiddle" /></a>
+		</div>	
+		</form>	
+			</div>
+			<div id="Layer3" class="NavNews2">
+				<div class="BackTyuan">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="Div_center">
+  <table align="center" class="ttp">
+    <form action='/survey/survey_save' method='post'>
+      <tr>
+        <td class="nom">
+        <h3><%=@form.title%></h3>
+        <p><%=@form.remark%></p></td>
+      </tr>
+      <%for col in @columns%>
+      <tr>
+        <th><strong><%=col.cname%></strong>&nbsp;&nbsp;</th>
+      </tr>
+      <tr>
+        <td valign="top">
+        <%=get_form_element(col.sn, col.ctype, col.ovalue, col.dvalue)%>
+       </td>
+      </tr>
+      <%end%>
+      
+      <tr>
+        <td align="center">
+          <input type="submit" value=' 提交 ' />
+          &nbsp;&nbsp;<a href="/survey/survey_result?formid=<%=params[:id]%>" target="_blank">查看结果 </a> 
+          
+          </td>
+      </tr>
+      <input name="formid" type="hidden" value="<%=params[:id]%>" />
+    </form>
+    
+  </table>
+  <p><span ><font color='white'><%=@count%></font></span></p>
+</div>
+<div id="footer">
+<TABLE style="margin:0 auto;MARGIN-TOP: 10px;clear:both" cellSpacing=0 cellPadding=0 width="900"
+      border=0>
+
+        <TBODY>
+        <TR>
+
+          <TD style="text-align:center;margin:0 auto"><SPAN class=font_link_s2><A
+            href="http://corp.51hejia.com/login.jhtml" target=_blank>企业用户登录</A>
+            | <A href="http://www.51hejia.com/aboutus/about.html"
+            target=_blank>关于我们</A> | <A
+            href="http://www.51hejia.com/aboutus/contactus.html"
+            target=_blank>联系我们</A> | <A
+            href="#top" onclick="Divopop('Login');return true;"
+            >会员登陆</A> | <A
+            href="http://www.51hejia.com/aboutus/priv.html"
+            target=_blank>版权声明</A> | <A href="http://www.51hejia.com/link/link/index.htm"
+            target=_blank>友情链接</A> | <A href="http://www.51hejia.com/siteindex/"
+            target=_blank>网站地图</A></SPAN><BR>
+            <SPAN class=font_link_s2>Copyright&copy;2005-2008 Hejia Net (shanghai) Information Technology Co. Ltd. All rights reserved <br />
+            <a href="http://www.51hejia.com">和家网</a>(上海)信息技术有限公司 版权所有
+<BR>
+          违法及不良信息举报&nbsp;<A
+            href="mailto:webmaster@51hejia.com">webmaster@51hejia.com</A>&nbsp;沪ICP备<A
+            href="http://www.miibeian.gov.cn/"
+          target=_blank>06009042</A>号</SPAN></TD>
+        </TR></TBODY></TABLE></TD></TR>
+        </TBODY>
+       </TABLE>
+</div>
+</body>
+</html>

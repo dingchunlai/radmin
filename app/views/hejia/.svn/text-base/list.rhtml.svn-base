@@ -1,0 +1,101 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 1450;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  <%if pp(@state)%>ge("state").value = "<%=@state%>";<%end%>
+  <%if pp(@executor)%>ge("executor").value = "<%=@executor%>";<%end%>
+  <%if pp(@area)%>ge("area").value = "<%=@area%>";<%end%>
+}
+</script>
+<style type="text/css">
+  .t1 {color:#757575}
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" action="/hejia/list" method="get">
+
+    <%=render :partial => "operation" %>
+
+    <div style="font-family:Verdana; padding:0px 10px 0px 10px; background-color:#EEEEEE; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 10px 0px; ">
+        <span style="color:#CE0000">核价单管理</span>
+        总共搜索到<B><%=@recordcount%></B>条满足条件的核价单 当前显示第
+        <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+        页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <%for pricing in @pricings%>
+    <table id="datalist" style="width:870px; margin-bottom:20px;">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>客户姓名</th>
+            <th>客户电话</th>
+            <th>日期</th>
+            <th>产品名称</th>
+            <th>品牌</th>
+            <th>型号</th>
+            <th>数量</th>
+            <th>地域</th>
+            <th>状态</th>
+    </tr>
+    <tr align="center">
+      <td><input type="checkbox" name="userid" value="<%=pricing.id%>" /> <%=pricing.id%></td>
+      <td><%=pricing.username%></td>
+      <td><%=pricing.phone%></td>
+      <td><%=pricing.createtime.utc.strftime("%Y-%m-%d %H:%M")%></td>
+      <td><%=pricing.name%></td>
+      <td><%=pricing.brand%></td>
+      <td><%=pricing.xinghao%></td>
+      <td><%=pricing.num%></td>
+      <td><%=pricing.area%></td>
+      <td><%=HEJIA_STATE[pricing.chulistate]%></td>
+    </tr>
+    <tr>
+      <td colspan="9">
+        <span class="t1">处理人员：</span><%=pricing.user.rname rescue "---"%>　
+        <span class="t1">招商1：</span><%=pricing.pricing_bill.zhaoshang rescue "---"%>　
+        <span class="t1">价格1：</span><%=pricing.pricing_bill.sendprice rescue "---"%>　
+        <span class="t1">招商2：</span><%=pricing.pricing_bill.zhaoshang2 rescue "---"%>　
+        <span class="t1">价格2：</span><%=pricing.pricing_bill.sendprice2 rescue "---"%>　
+        <span class="t1">希购地：</span><%=pricing.hopeaddress%>　
+      </td>
+      <td align="center"><a href="/hejia/edit?id=<%=pricing.id%>" target="_blank">编辑</a></td>
+    </tr>
+    <tr>
+      <td colspan="10"><span class="t1">短信：</span><%=pricing.pricing_bill.result rescue "---"%></td>
+    </tr>
+    <tr>
+      <td colspan="10"><span class="t1">备注：</span><%=pricing.pricing_bill.beizhu rescue "---"%></td>
+    </tr>
+    </table>
+    <% end %> 
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.userid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

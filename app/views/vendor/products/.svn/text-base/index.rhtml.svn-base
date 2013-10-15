@@ -1,0 +1,1 @@
+<%= render :partial => "vendor/shared/products" if @products %>

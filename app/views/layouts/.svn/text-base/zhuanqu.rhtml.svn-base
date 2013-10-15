@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>用户管理 - <%=WEBSITE_NAME%>[<%=WEBSITE_DOMAIN%>]</title>
+<meta name="keywords" content="<%=WEBSITE_NAME%>" />
+<meta name="description" content="<%=WEBSITE_NAME%>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<meta name="author" content="MSN: qq1713173@hotmail.com" />
+<script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+<link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#datalist {
+    border-collapse:collapse;
+    border:1px solid #BED0E2;
+}
+#datalist th 
+{
+text-align:center;
+    font-family:Verdana;
+    padding: 5px 15px 3px 15px;
+    letter-spacing: 12px;
+    background-color: #45719C;
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
+    border:1px solid white;
+}
+#datalist td {
+    color: #757575;
+    font-family:Verdana;
+    padding: 5px 8px 5px 8px;
+    letter-spacing: 1px;
+    font-size: 9pt;
+    border:1px solid #D9E3EE;
+}
+#datalist a {
+    color: #2853FF;
+    text-decoration: none;
+}
+#datalist a:hover {
+    color: #FD352B;
+    text-decoration: none;
+}
+.nav{
+    background:url(http://www.51hejia.com/images/zhuangxiu805/iconav.png) left center no-repeat;
+    line-height:27px;
+    color:#666666;
+    padding-left:15px;
+    margin:10px 12px 0 12px;
+    }
+</style>
+</head>
+<body>
+	<div id="H_wrapper">
+            <%=render :file => "/bgmenu.rhtml"%>
+	</div>
+
+	<div id="L_wrapper">
+          <%=gmb("典型频道","/zhuanqu/dianxing_list","","")%> <br />
+          <%=gmb("品类频道","/zhuanqu/pinlei_list","","")%> <br />
+          <%=gmb("栏目专区","/zhuanqu/sort_list","","")%> <br />
+          <%=gmb("行业专区","/zhuanqu/hangye_list","","")%> <br />
+          <%=gmb("列表专区","/zhuanqu/kw_list","","")%> <br />
+          <%=gmb("单图专区","/zhuanqu/dantu_list","","")%> <br />
+
+          <%=gmb("新建典型","","window.open('/zhuanqu/dianxing_edit','_blank');","margin-top:20px;")%> <br />
+          <%=gmb("新建品类","","window.open('/zhuanqu/pinlei_edit','_blank');","")%> <br />
+          <%=gmb("新建栏目","","window.open('/zhuanqu/sort_edit','_blank');","")%> <br />
+          <%=gmb("新建行业","","window.open('/zhuanqu/hangye_edit','_blank');","")%> <br />
+          <%=gmb("新建列表","","window.open('/zhuanqu/kw_edit','_blank');","")%> <br />
+          <%=gmb("新建单图","","window.open('/zhuanqu/dantu_edit','_blank');","")%> <br />
+
+          <%=gmb("案例复合词","/zhuanqu/fuheci","","margin-top:20px;")%> <br />
+          <%=gmb("缓存管理","/zhuanqu/memcache","","")%> <br />
+	</div>
+
+	<div id="R_wrapper">
+		<div class="nav"><strong></strong><%= location -%></div>
+            <%=yield%>
+	</div>
+        
+<iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+</body>
+</html>

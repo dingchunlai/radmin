@@ -1,0 +1,20 @@
+<style type="text/css">
+  #upload_glory_certificate {padding:0 10px;}
+  #upload_glory_certificate li{padding:10px 0}
+</style>
+<% is_new = @glory_certificate.id.nil? ? true : false%>
+<ul id="upload_glory_certificate">
+  <li>上传图片 </li>
+  <li><img src="<%= is_new ? 'http://js.51hejia.com/img/nopic.gif' : @glory_certificate.picture.url %>" id="glory_certificate_show" />
+    <input type="hidden" name="picture[image_id]" id="picture_image_id" value="<%= @glory_certificate.picture.image_id unless is_new %>" />
+    <input type="hidden" name="picture[image_md5]" id="picture_image_md5" value="<%= @glory_certificate.picture.image_md5 unless is_new %>"/>
+    <input type="hidden" name="picture[image_ext]" id="picture_image_ext" value="<%= @glory_certificate.picture.image_ext unless is_new %>"/>
+    <input type="hidden" name="picture[file_name]" id="picture_file_name"  value="<%= @glory_certificate.picture.file_name unless is_new %>"/>
+    <input type="hidden" name="picture_id" value="<%= @glory_certificate.picture.id unless is_new %>"/>
+  </li>
+  <li>
+    <span id="main_image_upload_button"></span>
+  </li>
+   <li>荣誉证书描述：<%= f.text_area :description, :maxlength => '1000'%><br/>提示：请限制内容在1000个字符以内</li>
+  <li><%= submit_tag "提交" %></li>
+</ul>

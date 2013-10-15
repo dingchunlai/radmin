@@ -1,0 +1,36 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<p align=center>
+<form action="/form/decohuodong" method=get>
+开始时间:<input type="input" name="begindate" onclick="new Calendar().show(this);" <%if @begindate%>value="<%=@begindate%>"<%end%>>
+结束时间:<input type="input" name="enddate" onclick="new Calendar().show(this);" <%if @enddate%>value="<%=@enddate%>"<%end%>>
+<input type="submit" value="确定">
+</form>
+</p>
+<table align=center border=1>
+	<tr>
+		<td>公司名</td>
+		<td>活动名</td>
+		<td>姓名</td>
+		<td>电话</td>
+		<td>邮件</td>
+		<td>兴趣</td>
+		<td>时间</td>
+	</tr>
+	<%@baoming.each do |bm|%>
+		<tr>
+			<td><%if bm.event.firms && bm.event.firms.size>0%><%=bm.event.firms[0].name_zh%><%end%></td>
+			<td><%=bm.event.title%></td>
+			<td><%=bm.name%></td>
+			<td><%=bm.phone%></td>
+			<td><%=bm.email%></td>
+			<td>
+				<%if bm.receive_sms%>接受短信,<%end%>
+				<%if bm.interest_in_material%>建材,<%end%>
+				<%if bm.interest_in_design%>装修设计,<%end%>
+				<%if bm.interest_in_furniture%>家具<%end%>
+			</td>
+			<td><%=bm.created_at.strftime("%Y-%m-%d")%></td>
+		</tr>
+	<%end%>
+</table>
+<p align=center><%= will_paginate @baoming %></p>

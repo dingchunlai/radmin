@@ -1,0 +1,2 @@
+module PinleiHelper
+end

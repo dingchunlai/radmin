@@ -1,0 +1,2 @@
+module Vendor::ProductsHelper
+end

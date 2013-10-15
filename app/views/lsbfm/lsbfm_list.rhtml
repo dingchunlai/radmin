@@ -1,0 +1,123 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 440;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/lsbfm/lsbfm_list?page="+page+"&recordcount=<%=@recordcount%>&category=<%=params[:category]%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/lsbfm/lsbfm_del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+        var ids = "0";
+        if (document.lsbfm_form.id.length==undefined){
+            if (document.lsbfm_form.id.checked) ids = document.lsbfm_form.id.value;
+        }else{
+            for (i=0; i<document.lsbfm_form.id.length;i++){
+                if (document.lsbfm_form.id[i].checked) ids += ", " + document.lsbfm_form.id[i].value;
+            }  
+        }
+        if (ids!="0") hideiframe.location="/lsbfm/lsbfm_del?ids="+ids;  //删除记录
+    }
+}
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+        for (i = 0; i < field.length; i++) {
+           field[i].checked = true;
+        }
+        checkflag = "true";
+        return "false"; 
+    }
+    else {
+        for (i = 0; i < field.length; i++) {
+            field[i].checked = false; 
+        }
+        checkflag = "false";
+        return "true"; 
+    }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+<form name="lsbfm_form">
+
+<div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+  
+<table id="datalist" style="width:auto;" summary="这个表格是...">
+  <caption align="left"></caption>
+  <tr>
+      <th>编号</th>
+      <th>类别</th>
+      <th>字段一</th>
+      <th>字段三</th>
+      <th>字段四</th>
+      <th>字段五</th>
+      <th>创建时间</th>
+      <th>最后更新</th>
+      <th>操作</th>
+  </tr>
+  <%
+  i = 0
+  for lsbfm in @lsbfms
+  %>
+  <tr align="center" <%=(i%2==0)?"style='background-color:#FFFDE6'":""%>>
+      <td align="left"><input name="id" type="checkbox" value="<%=lsbfm.id%>" /><%=lsbfm.id%></td>
+      <td><%=lsbfm.category%></td>
+      <td><%=lsbfm.lsbfmc1%></td>
+      <td><%=lsbfm.lsbfmc3%></td>
+      <td><%=lsbfm.lsbfmc4%></td>
+      <td><%=lsbfm.lsbfmc5%></td>
+      <td><%=lsbfm.cdate.strftime("%Y-%m-%d") rescue ""%></td>
+      <td><%=lsbfm.udate.strftime("%Y-%m-%d") rescue ""%></td>
+      <td>
+          <a href="/lsbfm/lsbfm_edit?id=<%=lsbfm.id%>" target="_blank">修改</a> 
+          <a href="javascript:del(<%=lsbfm.id%>);">删除</a>
+      </td>     
+  </tr>
+  <%
+  i += 1
+  end
+  %> 
+</table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.lsbfm_form.id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+    <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

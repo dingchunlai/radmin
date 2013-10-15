@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>室内装修设计,家庭室内装潢,家居装饰图片,家装效果图库-和家网</title>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="0">
+<link href="http://js.51hejia.com/css/sdeco.css?55556" rel="stylesheet" type="text/css" />
+<link href="http://js.51hejia.com/css/ucenter.css?34444555" rel="stylesheet" type="text/css" />
+</head>
+<style type="text/css">
+.inputbox .sub td ol li a{color:#666;}
+.inputbox .sub td ol li a:hover{color:#f60;}
+</style>
+<body>
+<%= javascript_include_tag :defaults %>
+<div class="inputbox">
+<div class="sub">
+	  <form action="/member/companylist" method="get">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><strong>查找装修公司</strong>
+				<select id="diary_city" name="diary_city">
+					<option value="">请选择</option>
+					<%@cities.each do |c|%>
+						 <option value="<%=c[0]%>" <%if @city.to_s==c[0].to_s%>selected<%end%>><%=c[1]%></option> 
+						
+					<%end%>
+				</select>市
+            <input id="name" name="name" type="text" value="<%=@name%>"/>
+            <input type="submit" name="button3" id="button3" value="搜 索" /></td>
+        </tr>
+        <tr>
+          <td class="fontr"><span style="float:left;">查找你需要的装修公司，找到后点击即可添加。如没有您找到您需要的装修公司，点击</span>
+          <span class="tianjxgs" id="st1"><a href="http://member.51hejia.com/member/reg_company" target="_blank">添加新装修公司</a></span>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+          <script language="JavaScript">
+ 
+            function showproductlist(){
+                document.getElementById("productselectlist").style.display = "block";
+	cate();
+            }
+            
+ 
+            function cate(){
+                var proc = document.getElementById("productselectlist");
+                var proc_a = proc.getElementsByTagName("a");
+                for(i = 0;i < proc_a.length; i++) {
+                    proc_a[i].index=i
+                    proc_a[i].onclick = function(){insermy(this)}
+				}
+             }
+            function insermy(o){
+                  var abc = o.innerHTML;
+						parent.document.getElementById("selectproductinput").value = abc;
+						parent.document.getElementById("deco_firm_id").value = o.getAttribute('title');
+             } 
+                  
+        </script>
+          <div id="productselectlist">
+          <ol>
+          <%@decofirms.each do |firm|%>
+            <li><a onclick="showproductlist()" title="<%= firm.id%>"><%=firm.name_zh.split(//u)[0,18]%></a></li>
+          <%end%>
+          </ol>
+          </div>
+          </td>
+        </tr>
+      </table>
+      </form>
+      <div class="pagination margin10">
+<ul>
+<%= will_paginate @decofirms,:prev_label=> "上一页",:next_label=> "下一页" %>
+</ul>
+</div>
+<div class="clear"></div>
+      </div>
+      </div>
+</body>
+</html>

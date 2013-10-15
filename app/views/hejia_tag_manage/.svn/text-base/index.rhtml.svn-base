@@ -1,0 +1,30 @@
+<script>
+  $(document).ready(function(){
+    $(".search_hejia_tag").click(function(){
+      $.post("/hejia_tag_manage/index",{
+        'city_name': $("#city").val()
+      },function(data){
+        if(data == "sorry"){
+          alert("无相关项");
+        }else{
+          $("#show_new_or_result").html(data);
+        }
+        
+      });
+    });
+  });
+</script>
+<div>
+  <p>HEJIA_TAG地区管理</p>
+</div>
+<div>
+  <div>
+    <p>查询:</p>
+    <form action="">
+      请输入省/市/县/区:<input name="city_name" id ="city" type="text" value="" size="10"/><input name="" type="button" value="查找" class="search_hejia_tag" />
+    </form>
+  </div>
+</div>
+<div id="show_new_or_result">
+
+</div>

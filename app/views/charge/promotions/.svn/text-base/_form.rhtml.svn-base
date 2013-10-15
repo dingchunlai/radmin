@@ -1,0 +1,22 @@
+<%= f.hidden_field :vendor_id %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+		<td class="label">促销标题</td>
+		<td><%= f.text_field :title, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">选择图片</td>
+		<td>
+			<div id="images"><%= render :partial => "image", :locals => {:promotion => @promotion} unless @promotion.images.empty? %></div>
+			<div><%= add_image_link "添加新图片" %></div>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">促销简介</td>
+		<td><%= f.text_area :body, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建促销" : "更新促销") -%></td>
+	</tr>
+</table>

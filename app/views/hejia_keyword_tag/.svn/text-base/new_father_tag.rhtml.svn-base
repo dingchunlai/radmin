@@ -1,0 +1,7 @@
+<div>
+  <p>新建标签对应</p>
+</div>
+<form action="" method="post">
+  请输入标签内别:<input name="father_name" id ="father_tag" type="text" value="" size="20"/>
+  <input name="submit" type="submit" value="新建" />
+</form>

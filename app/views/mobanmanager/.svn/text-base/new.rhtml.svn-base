@@ -1,0 +1,5 @@
+<form method="post" action="/mobanmanager/new" enctype="multipart/form-data">
+	<p>名字：<input type="text" name="mobanname"></p>
+	<p>模版：<input type="file" name="file[myfile]"></p>
+    <p><input type="submit" /></p>
+</form>

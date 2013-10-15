@@ -1,0 +1,39 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+  <tr>
+    <th>编号</th>
+    <th>品牌</th>
+    <th>类别</th>
+    <th>名称</th>
+    <th>排序</th>
+    <th>是否可检索</th>
+    <th>相关操作</th>
+  </tr>
+  <% @brand_experiences.each do |p| -%>
+    <tr class="<%= cycle("odd", "even")%>">
+      <td><%= p.id -%></td>
+      <td><%= link_to p.brand.name_zh, brand_brand_experiences_path(:brand_id => p.brand_id) if p.brand -%></td>
+      <td><%= link_to p.category.name_zh, brand_experiences_path(:category_id => p.category_id) if p.category -%></td>
+      <td><%= link_to p.name, edit_brand_experience_path(p) -%></td>
+      <td><%= p.position -%></td>
+      <td id="is_disabled_<%= p.id %>"><%= check_box_tag "brand_experience_id", p.id, p.is_disabled, {:onclick => remote_function( :url => is_disabled_brand_experience_path(p), :with => "'cvalue='+this.checked", :method => "put")} -%> 禁用</td>
+      <td>
+        <%= link_to "编辑", edit_brand_experience_path(p.id) -%>
+        <!--
+  <% unless p.first? -%>
+    <%= link_to "顶部", {:action => "move", :id => p.id, :method => "move_to_top"} -%>
+    <%= link_to "上移", {:action => "move", :id => p.id, :method => "move_higher"} -%>
+  <% end -%>
+  <% unless p.last? -%>
+    <%= link_to "下移", {:action => "move", :id => p.id, :method => "move_lower"} -%>
+    <%= link_to "底部", {:action => "move", :id => p.id, :method => "move_to_bottom"} -%>
+  <% end -%>
+        -->
+      </td>
+    </tr>
+  <% end -%>
+  <tr>
+    <%= link_to "新建体验项", setup_brand_experience_path(@brand) if @brand %>
+  </tr>
+</table>
+
+<%= will_paginate @brand_experiences %>

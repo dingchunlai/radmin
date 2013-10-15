@@ -1,0 +1,39 @@
+<%if @message%>
+  <p><font color="red"><%=@message%></font></p>
+<%end%>
+<form action="/review/update_diary_praise" method="post">
+  <input type="hidden" name="diaryid" value="<%=@diary.id%>"/>
+  <table border=1>
+    <tr>
+      <td>日记标题</td>
+      <td><%=@diary.title%></td>
+    </tr>
+    <tr>
+      <td>总口碑</td>
+      <td>
+        <input type="text" name="praise" value="<%if !params[:praise].nil?%><%=params[:praise].to_i%><%else%><%=@diary.praise.to_i%><%end%>"/>
+      </td>
+    </tr>
+    <tr>
+      <td>设计口碑</td>
+      <td>
+        <input type="text" name="design_praise" value="<%if !params[:design_praise].nil?%><%=params[:design_praise].to_i%><%else%><%=@diary.design_praise.to_i%><%end%>"/>
+      </td>
+    </tr>
+    <tr>
+      <td>施工口碑</td>
+      <td>
+        <input type="text" name="construction_praise" value="<%if !params[:construction_praise].nil?%><%=params[:construction_praise].to_i%><%else%><%=@diary.construction_praise.to_i%><%end%>"/>
+      </td>
+    </tr>
+    <tr>
+      <td>服务口碑</td>
+      <td>
+        <input type="text" name="service_praise" value="<%if !params[:service_praise].nil?%><%=params[:service_praise].to_i%><%else%><%=@diary.service_praise.to_i%><%end%>"/>
+      </td>
+    </tr>
+    <tr>
+      <td align=center colspan=2><input type="submit" value="确定"/></td>
+    </tr>
+  </table>
+</form>

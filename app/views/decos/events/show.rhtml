@@ -1,0 +1,54 @@
+<div class="user_right">
+
+	<div id="widebar">
+		<div id="nav_bottom"></div>
+		<div id="widebar_content">
+			<div id="userprofile">
+				<div class="top">
+					<div class="profile_name">我的和家 - 装修活动</div>
+				</div>
+				<div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护装修活动信息。</div>
+			</div>
+		</div>
+		<div class="mainbox">
+			<div class="same_cha">
+				<ul>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/events">活动列表</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/events/new">新建活动</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_on">活动详情</li>
+					<li class="line"></li>
+				</ul>
+			</div>
+
+			<div id="same1" style="padding:10px;">
+				<h2><%= @event.title %></h2>
+				<ul>
+					<li><label>活动名称：</label><%= @event.title %></li>
+					<li><label>活动主办方：</label><%= @event.firms.map{|f| f.name_zh} %></li>
+					<li><label>活动时间：</label><%= @event.starts_at %> - <%= @event.ends_at %></li>
+					<li><label>活动地点：</label><%= @event.city %> <%= @event.district %> <%= @event.address %></li>
+					<li><label>联系方式：</label><%= @event.contact %></li>
+					<li><label>交通路线：</label><%= @event.traffic %></li>
+				</ul>
+				<%= image_tag(@event.banner.url) %>
+				<dl>
+					<dt>活动介绍</dt>
+					<dd><%= @event.summary %></dd>
+					<dt>活动提示</dt>
+					<dd><%= @event.prompt %></dd>
+					<dt>免责声明</dt>
+					<dd><%= @event.disclaimer %></dd>
+				</dl>
+
+				<div><%= link_to "编辑活动", edit_deco_event_path(@event) %></div>
+
+			</div>
+
+		</div>
+		
+	</div>
+
+</div>

@@ -1,0 +1,7 @@
+<div class="body">
+	<%= @promotion.body %>
+</div>
+<div>
+	<%= image_tag(@promotion.image.url, :alt => @promotion.title) if @promotion.image %>
+</div>
+<div class="action"><%= link_to "返回促销列表", vendor_promotions_path %> | <%= link_to "编辑", edit_vendor_promotion_path(@promotion) %></div>

@@ -1,0 +1,47 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>类别添加</title>
+<link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<script language="javascript" type="text/javascript">
+function showOrDisplay(theObj)
+{
+ 	document.getElementById('fm').submit();
+}
+
+</script>
+
+<form name="fm" id="fm" action="/casemanager/casecolorsave" method="post" enctype="multipart/form-data">
+<input type="hidden" name="caseid" value="<%=@caseid%>"/>
+<table width="545" border="1" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td width="545"><label></label>
+      <div align="left">选择模板：
+        <label>
+        <select name="libangCount" id="libangCount" onchange='showOrDisplay(this);'>
+        	<option value="">请选择</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+		</select>
+        </label>
+    </div></td>
+    
+  </tr>
+  
+  <tr>
+    <td align="center">
+	<input type="submit" value="添 加 色 卡" onClick="javascript:return window.confirm('您确定要添加吗?');"/>
+  </tr>
+</table>
+</form>
+</body>
+</html>

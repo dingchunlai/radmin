@@ -1,0 +1,14 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>报价单实例：</td>
+			<td colspan="3"><%= f.text_field :title, :size => 60 %></td>
+		</tr>
+		<tr>
+			<td>报价单内容：</td>
+			<td colspan="3"><%= f.text_area :textarea, :class => "mceEditor" %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><%= submit_tag(controller.action_name == "new" ? "创建报价单" : "更新报价单") -%></td>
+		</tr>
+</table>

@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>和家网调查</title>
+<link rel="stylesheet" href="http://p.51hejia.com/stylesheets/main.css" type="text/css" media="screen, projection" />
+<style type="text/css">
+.main {width:960px; margin:0 auto;}
+.ad {margin:0 0 4px 0; float:left}
+.ad img {width:960px; height:85px;}
+.left {width:713px; float:left;}
+.right {width:242px; float:right;}
+a{color:#000;text-decoration:none;}
+a:hover {color:#f60; text-decoration:underline}
+</style>
+<!--header_head-->
+<link href="http://www.51hejia.com/css/News107/NewsIndex.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+
+
+
+
+<body id="body-home">
+<div class="main">
+<!-- Header Begin -->
+<div id="global_head" class="clearfix">
+	<div class="glogo"><a href="http://www.51hejia.com/" target="_blank"><img src="http://js.51hejia.com/img/Logo.gif" /></a></div>
+	<div class="navigation clearfix">
+		<ul class="main_nav clearfix">
+			<li><a href="http://tuku.51hejia.com/">看图片</a></li>
+			<li><a href="http://d.51hejia.com/">选装修</a></li>
+			<li><a href="http://p.51hejia.com/">找低价</a></li>
+			<li><a href="http://www.51hejia.com/jushang/">居&nbsp;尚</a></li>
+			<li class="last"><a href="http://bbs.51hejia.com/">论&nbsp;坛</a></li>
+		</ul>
+		<ul class="account clearfix">
+			<li class="users clearfix"><script type="text/javascript" src="http://p.51hejia.com/account/logininfo"></script></li>
+		</ul>
+	</div>
+</div>
+
+<div class="menu_ad">
+	
+		<a href="http://p.51hejia.com/cuxiao/NO7/index.html" target="_blank" title="橱柜专家"><img alt="橱柜专家" src="http://d.51hejia.com/api/images/0000/0586/menu_ad01.gif" /></a>
+	
+		<a href="http://p.51hejia.com/cuxiao/zhuangx/index.html" target="_blank" title="装修促销"><img alt="装修促销" src="http://d.51hejia.com/api/images/0000/0597/menu_ad02.gif" /></a>
+	
+</div>
+<div class="menu_b">
+	<ul>
+		<li class="nbg"><div class="l"><img src="http://p.51hejia.com/images/index_08.gif"/></div><div style="padding: 0pt 5px;" class="l"><strong><a title="整套预算报低价" class="red" href="http://p.51hejia.com">找低价首页</a></strong></div><div class="l"><img src="http://p.51hejia.com/images/index_11.gif"/></div></li>
+		<li class="nbg"><div class="l"><img src="http://p.51hejia.com/images/index_08.gif"/></div><div style="padding: 0pt 5px;" class="l"><strong><a title="直销商城" class="black" href="http://p.51hejia.com/mall/">直销商城</a></strong></div><div class="l"><img src="http://p.51hejia.com/images/index_11.gif"/></div></li>
+		<li class="menu_market"><a title="卖场查询" class="black" href="http://p.51hejia.com/markets/">卖场查询</a></li>
+		<li><a title="商家查询" class="black" href="http://p.51hejia.com/vendors/">商家查询</a></li>
+		<li><a title="品牌查询" class="black" href="http://p.51hejia.com/brands/">品牌查询</a></li>
+	</ul>
+</div> 
+<div class="c" />
+<div class="menu_c">
+<div class="l"><img src="http://p.51hejia.com/images/index_14.gif"/></div>
+<div style="width: 943px;" class="l">
+<div class="keywords l">
+	<strong>热门关键字：</strong>
+	
+		<a href="http://p.51hejia.com/categories/8143" target="_blank" title="中央空调">中央空调</a>
+	
+		<a href="http://p.51hejia.com/cuxiao/meida/index.html" target="_blank" title="厨房电器">厨房电器</a>
+	
+		<a href="http://p.51hejia.com/categories/7702" target="_blank" title="橱柜">橱柜</a>
+	
+		<a href="http://p.51hejia.com/products/0.289.0.1.0.0.html" target="_blank" title="卫浴">卫浴</a>
+	
+		<a href="http://p.51hejia.com/cuxiao/NO8/index.html" target="_blank" title="阳台窗">阳台窗</a>
+	
+</div>
+<div style="margin: 6px 10px 0pt 0pt; color: #FFF; font-size: 14px;" class="r">服务热线<strong>：400-706-5511转8888</strong> （9：00-21：00）</div>
+<div class="menu_search"></div>
+</div>
+<div class="r"><img src="http://p.51hejia.com/images/index_20.gif"/></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="Div_center">
+  <table cellpadding="0" cellspacing="0" border="0" align="center" class="ttps">
+    <tr>
+      <td align="center">
+      <table width="98%" cellpadding="0" cellspacing="0">
+        <tr>
+        <td class="nom">
+        <h3><%=@form.title%></h3>
+        <p><%=@form.remark%></p></td>
+      </tr>
+      </table>
+      	<%@result.each do |r| %>
+        <table width="98%" cellpadding="0" cellspacing="0">
+          <tr>
+            <th colspan="5"><%=r[0]%></th>
+          </tr>
+          <%i=0%>
+          <%r[1].each do |item|%>
+	          <tr>
+	            <td bgcolor="#EEEEEE" width="35%" class="p9" style='padding-left:5px'><%=item%></td>
+	            <td width="50%"><img src="http://www.51hejia.com/images/diaocha/bar<%=i%>.gif" width='<%=r[2][i]%>%' height="20" border="0" /></td>
+	            <td width="1%"></td>
+	            <td class="p9"> <%=r[2][i]%>% </td>
+	          </tr>
+	      <%i = i + 1%>
+          <%end%>
+          <tr>
+            <td height="10" colspan="5"></td>
+          </tr>
+        </table>
+        <%end%>
+        </td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+  </table>
+</div>
+<span ><font color='white'><%=@count%></font></span>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer Begin -->
+  <div id="footer" class="span-24" style="width:950px; text-align:center; margin:0 auto;">
+    <div  style="text-align:center;">
+      <a href="http://www.51hejia.com/siteindex/" target="_blank">全站索引</a> -&gt;
+      <a href="http://www.51hejia.com/siteindex/letter/A.html" target="_blank">A</a>
+      <a href="http://www.51hejia.com/siteindex/letter/B.html" target="_blank">B</a>
+      <a href="http://www.51hejia.com/siteindex/letter/C.html" target="_blank">C</a>
+      <a href="http://www.51hejia.com/siteindex/letter/D.html" target="_blank">D</a>
+      <a href="http://www.51hejia.com/siteindex/letter/E.html" target="_blank">E</a>
+      <a href="http://www.51hejia.com/siteindex/letter/F.html" target="_blank">F</a>
+      <a href="http://www.51hejia.com/siteindex/letter/G.html" target="_blank">G</a>
+      <a href="http://www.51hejia.com/siteindex/letter/H.html" target="_blank">H</a>
+      <a href="http://www.51hejia.com/siteindex/letter/I.html" target="_blank">I</a>
+      <a href="http://www.51hejia.com/siteindex/letter/J.html" target="_blank">J</a>
+      <a href="http://www.51hejia.com/siteindex/letter/K.html" target="_blank">K</a>
+      <a href="http://www.51hejia.com/siteindex/letter/L.html" target="_blank">L</a>
+      <a href="http://www.51hejia.com/siteindex/letter/M.html" target="_blank">M</a>
+      <a href="http://www.51hejia.com/siteindex/letter/N.html" target="_blank">N</a>
+      <a href="http://www.51hejia.com/siteindex/letter/O.html" target="_blank">O</a>
+      <a href="http://www.51hejia.com/siteindex/letter/P.html" target="_blank">P</a>
+      <a href="http://www.51hejia.com/siteindex/letter/Q.html" target="_blank">Q</a>
+      <a href="http://www.51hejia.com/siteindex/letter/R.html" target="_blank">R</a>
+      <a href="http://www.51hejia.com/siteindex/letter/S.html" target="_blank">S</a>
+      <a href="http://www.51hejia.com/siteindex/letter/T.html" target="_blank">T</a>
+      <a href="http://www.51hejia.com/siteindex/letter/U.html" target="_blank">U</a>
+      <a href="http://www.51hejia.com/siteindex/letter/V.html" target="_blank">V</a>
+      <a href="http://www.51hejia.com/siteindex/letter/W.html" target="_blank">W</a>
+      <a href="http://www.51hejia.com/siteindex/letter/X.html" target="_blank">X</a>
+      <a href="http://www.51hejia.com/siteindex/letter/Y.html" target="_blank">Y</a>
+      <a href="http://www.51hejia.com/siteindex/letter/Z.html" target="_blank">Z</a>
+    </div>
+    <div style="text-align:center;">
+      <a href="http://corp.51hejia.com/login.jhtml" target="_blank">企业用户登录</a>
+      <a href="http://www.51hejia.com/aboutus/about.html" target="_blank">关于我们</a>
+      <a href="http://www.51hejia.com/aboutus/contactus.html" target="_blank">联系我们</a>
+      <a href="#top" onclick="Divopop('Login');return true;">会员登陆</a>
+      <a href="http://www.51hejia.com/aboutus/priv.html" target="_blank">版权声明</a>
+      <a href="http://www.51hejia.com/link/link/index.htm" target="_blank">友情链接</a>
+      <a href="http://www.51hejia.com/siteindex/" target="_blank">网站地图</a>
+    </div>
+    <div style="text-align:center;">和家网(上海)信息技术有限公司 版权所有</div>
+    <div style="text-align:center;">违法及不良信息举报 webmaster@51hejia.com <br />沪ICP备06009042号</div>
+  </div>
+
+<!-- Footer End -->
+
+</div>
+</body>
+</html>

@@ -1,0 +1,437 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers
+END
+charge_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/charge_helper.rb
+END
+deposits_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/deposits_helper.rb
+END
+applicants_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/applicants_helper.rb
+END
+pictures_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/pictures_helper.rb
+END
+dingdan_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/dingdan_helper.rb
+END
+member_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/member_helper.rb
+END
+brands_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/brands_helper.rb
+END
+webpm_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/webpm_helper.rb
+END
+custom_pagination_renderer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/custom_pagination_renderer.rb
+END
+deco_ideas_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/deco_ideas_helper.rb
+END
+bid_records_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/bid_records_helper.rb
+END
+pinlei_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/pinlei_helper.rb
+END
+hejia_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/hejia_helper.rb
+END
+ad_spaces_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/ad_spaces_helper.rb
+END
+params_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/params_helper.rb
+END
+article_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/article_helper.rb
+END
+ad_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/ad_helper.rb
+END
+vendor_points_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/vendor_points_helper.rb
+END
+zhuanqu_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/zhuanqu_helper.rb
+END
+binaries_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/binaries_helper.rb
+END
+admin_applications_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/admin_applications_helper.rb
+END
+param_items_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/param_items_helper.rb
+END
+products_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/products_helper.rb
+END
+form_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/form_helper.rb
+END
+application_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/application_helper.rb
+END
+bbs_user_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/bbs_user_helper.rb
+END
+bad_words_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/bad_words_helper.rb
+END
+remarks_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/remarks_helper.rb
+END
+quoted_prices_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/quoted_prices_helper.rb
+END
+wordmanager_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/wordmanager_helper.rb
+END
+ruser_huser_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/ruser_huser_helper.rb
+END
+deco_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/deco_helper.rb
+END
+stat_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/stat_helper.rb
+END
+quotes_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/quotes_helper.rb
+END
+firms_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/firms_helper.rb
+END
+event_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/event_helper.rb
+END
+admin_case_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/admin_case_helper.rb
+END
+upload_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/upload_helper.rb
+END
+bardiss_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/bardiss_helper.rb
+END
+firm_impressions_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/firm_impressions_helper.rb
+END
+series_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/series_helper.rb
+END
+brand_comments_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/brand_comments_helper.rb
+END
+wenba_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/wenba_helper.rb
+END
+comment_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/comment_helper.rb
+END
+lsbfm_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/lsbfm_helper.rb
+END
+events_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/events_helper.rb
+END
+deco_impressions_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/deco_impressions_helper.rb
+END
+hejia_member_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/hejia_member_helper.rb
+END
+json_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/json_helper.rb
+END
+experiences_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/experiences_helper.rb
+END
+radmin_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/radmin_helper.rb
+END
+layout_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/layout_helper.rb
+END
+brand_experiences_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/brand_experiences_helper.rb
+END
+caseexcel_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/caseexcel_helper.rb
+END
+decos_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/decos_helper.rb
+END
+library_brands_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/library_brands_helper.rb
+END
+survey_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/survey_helper.rb
+END
+vendor_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/vendor_helper.rb
+END
+hejia_index_keywords_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/hejia_index_keywords_helper.rb
+END
+review_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/review_helper.rb
+END
+mobile_verifiy_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/mobile_verifiy_helper.rb
+END
+note_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/note_helper.rb
+END
+features_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/features_helper.rb
+END
+user_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/user_helper.rb
+END
+articlelist_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/articlelist_helper.rb
+END
+photo_ads_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/photo_ads_helper.rb
+END
+quotation_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/quotation_helper.rb
+END
+deco_firms_statistics_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/deco_firms_statistics_helper.rb
+END
+comments_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/comments_helper.rb
+END
+decoration_diaries_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/decoration_diaries_helper.rb
+END
+ruser_channel_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/ruser_channel_helper.rb
+END
+admin_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/helpers/admin_helper.rb
+END

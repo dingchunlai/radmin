@@ -1,0 +1,15 @@
+<table style="width:100%;">
+  <tr>
+    <td style="font-weight:bold;color:#336699;text-align:left;line-height:25px;font-size:14px;width:50%;">
+      <strong> <a href="/admin_case" style="font-size:14px;">搜索</a> </strong>
+    </td>
+  </tr>
+</table><br>
+<form action="/admin_case/search_company" method="post" style="display:inline;">
+  公司关键字:<input type="text" name="company_name" size="40">
+  <input type="submit" value="搜索">
+</form>
+<form action="/admin_case/search_designer" method="post" style="display:inline;">
+  设计师:<input type="text" name="designer_name" size="40">
+  <input type="submit" value="搜索">
+</form>

@@ -1,0 +1,61 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<form action='/review/note_edit' method=post>
+	<input type='hidden' name='id' value='<%=@note.id%>'>
+	<table align=center border=1>
+		<tr>
+			<td>标题</td><td><input type=text name='title' value='<%=@note.title%>' size=50></td>
+		</tr>
+		<tr>
+			<td>图片<img src='<%=@note.main_photo%>' width=200 height=200></td><td><input type=text name='main_photo' value='<%=@note.main_photo%>' size=50></td>
+		</tr>
+		<tr>
+			<td>内容</td><td><textarea name='content' rows=10 cols=50><%=@note.content%></textarea></td>
+		</tr>
+		<tr>
+			<td>时间</td><td><input type='text' name='date' <%if @note.created_at%>value='<%=@note.created_at.strftime('%Y-%m-%d')%>'<%end%> onclick="new Calendar().show(this);"></td>
+		</tr>
+		<tr>
+			<td>房型</td><td>
+				<select name='room'>
+					<option value=''>选择</option>
+					<%ROOM.sort.each do |k,v|%>
+					<option value='<%=k%>' <%if @note.room.to_i == k%>selected<%end%>><%=v%></option>
+					<%end%>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>价格</td><td>
+				<select name='price'>
+					<option value=''>选择</option>
+					<%PRICE.sort.each do |k,v|%>
+					<option value='<%=k%>' <%if @note.price.to_i == k%>selected<%end%>><%=v%></option>
+					<%end%>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>方式</td><td>
+				<select name='methodtype'>
+					<option value=''>选择</option>
+					<%MODELS.sort.each do |k,v|%>
+					<option value='<%=k%>' <%if @note.methodtype.to_i == k%>selected<%end%>><%=v%></option>
+					<%end%>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>风格</td><td>
+				<select name='style'>
+					<option value=''>选择</option>
+					<%STYLES.sort.each do |k,v|%>
+					<option value='<%=k%>' <%if @note.style.to_i == k%>selected<%end%>><%=v%></option>
+					<%end%>
+				</select>
+			</td>
+		</tr>						
+		<tr>
+			<td></td><td><input type='submit' value='确定'></td>
+		</tr>
+	</table>
+</form>

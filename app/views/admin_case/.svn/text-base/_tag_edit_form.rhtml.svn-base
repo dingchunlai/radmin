@@ -1,0 +1,31 @@
+<%
+def s(id1, id2)
+  if id1 == id2
+    return "selected"
+  end
+end
+%>
+<div id="tag" style="display:inline;">
+  编辑：
+  <% form_remote_tag :url => '/admin_case/save_tag',
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" do -%>
+    父标签：
+    <span id="option_tags">
+      <%= render :partial => "admin_case/parent_option_tags", :locals => { :tags => @array.reverse, :tag => @tag} %>
+    </span>
+    <br />
+    <!--select name="tag[TAGFATHERID]">
+      <%# @case_tags.each do |tag| %>
+        <option value="<%#= tag.TAGID %>" <%#= s(tag.TAGID, @tag.TAGFATHERID) %>><%#= tag.TAGNAME %>
+      <%# end %>
+    </select-->
+    <input id="tag_TAGFATHERID" name="tag[TAGFATHERID]" type="hidden" value="<%= @tag.TAGFATHERID %>" />
+    <input name="tag[TAGID]" value="<%= @tag.TAGID %>" type="hidden" />
+    标签名字：<input name="tag[TAGNAME]" value="<%= @tag.TAGNAME %>" />
+    标签url：<input name="tag[TAGURL]" value="<%= @tag.TAGURL %>" />
+    标签分类：<input name="tag[TAGCOMMENT]" value="<%= @tag.TAGCOMMENT %>" />
+    重要？<input name="tag[ISIMPORTANT]" type="checkbox" value="1" <%= "checked" if @tag.ISIMPORTANT %> />
+    <%= submit_tag '提交' %>
+    <%= button_to_function "移除", "$(this).up('#tag').remove()" %>
+  <% end -%>
+</div>

@@ -1,0 +1,14 @@
+<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+<p>一级分类
+<a href="/articletag/create?type=1&fatherid=14025" target=_blank>新增</p>
+<table border=1>
+<% @firstlist.each do |tag| -%>
+	<tr><td>
+	<a href="#n" onclick="parent.chooseson('<%=tag.TAGID%>','2')"><%=tag.TAGNAME%></a> 
+	</td><td>
+	<a href="/articletag/show/<%=tag.TAGID%>" target=_blank>修改</a>
+	<!--<a href="/articletag/delete/<%=tag.TAGID%>" >删除</a>-->
+	</td></tr>
+<% end %>
+</table>
+</div>

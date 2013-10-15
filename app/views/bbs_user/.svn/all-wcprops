@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs_user
+END
+show.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs_user/show.rhtml
+END
+_select_city.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs_user/_select_city.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs_user/index.rhtml
+END
+manager.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs_user/manager.rhtml
+END

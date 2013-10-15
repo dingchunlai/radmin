@@ -1,0 +1,319 @@
+require "active_support"
+include ActiveSupport
+
+class ExportsController < ApplicationController
+
+  def index
+    @riqi1 = params[:riqi1].blank? ? (Date.today - 7) : params[:riqi1]
+    @riqi2 = params[:riqi2].blank? ? Date.today : params[:riqi2]
+  end
+
+  def paint_questionnaires
+    @riqi1 = params[:riqi1].blank? ? (Date.today - 7) : params[:riqi1]
+    @riqi2 = params[:riqi2].blank? ? Date.today : params[:riqi2]
+    @pqs = PaintQuestionnaire.find(:all, :conditions => ["created_at > ? and created_at < ?", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day])
+    excel_name = "油工问卷调查数据导出"
+    unless @pqs.blank?
+      e = Excel::Workbook.new
+      sheetname = excel_name
+
+      array = Array.new
+      @pqs.each do |pq|
+        item = OrderedHash.new
+        item["性别"] = pq.gender
+        item["年龄"] = pq.age
+        item["学历"] = pq.education
+        item["省份"] = pq.province
+        item["城市"] = pq.city
+        item["家庭人数"] = pq.family_number
+        item["家庭月收入"] = pq.income
+        item["邮箱地址"] = pq.email
+        item["您近期是否有装修计划？"] = pq.c1
+        item["您最近即将/正在进行墙面涂刷工程吗？"] = pq.c2
+        item["您最近即将/正在进行家具涂刷工程吗？"] = pq.c3
+        item["在墙面/木器涂刷方面，您最想从网络了解的信息是什么？（多选）"] = pq.c4
+        item["您在选择油漆工时，通常会通过以下哪种途径？（多选）"] = pq.c5
+        item["如果您要在网上寻找油漆工，您通常会关注哪些信息？（多选）"] = pq.c6
+        item["在您选择油漆工时，您比较看重以下哪些方面？（多选）"] = pq.c7
+        item["您对经过职业认证的油工感兴趣吗？"] = pq.c8
+        item["如果有一个通过职业考核认证的油工，您会优先雇佣吗？"] = pq.c9
+        item["您认为油漆工职业考试，应该通过哪几项才有一定保障？（多选）"] = pq.c10
+        item["请问您知道水性木器漆吗？"] = pq.c11
+        item["您在最终决定选择了水性木器漆或油性木器漆中的一种时候，以下哪些是您主要考虑的因素？（多选）"] = pq.c12
+        item["请问您觉得在专卖店里的哪些木器漆的产品演示工具能够增加您对产品的可信度？"] = pq.c13
+        item["除了油漆产品之外，您还希望从油漆专卖店得到哪些相关服务呢？（多选）"] = pq.c14
+        item["是否选择金刷子油工"] = pq.c15
+        array << item
+      end
+      e.addWorksheetFromArrayOfHashes(sheetname, array)
+      headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+      headers['Content-Disposition'] = "attachment; filename=#{excel_name}.xls"
+      headers['Cache-Control'] = ''
+      render :text => e.build
+    else
+      flash[:notice] = "没有符合条件的结果！"
+      render :action => "index"
+    end
+
+  end
+
+  def guanzhu_dfs
+    city = params[:city]
+    city_conditions = (city.to_i == 11910 || city.to_i == 11905 || city.to_i == 31959) ? "city=#{city.to_i}" : "district=#{city.to_i}"
+
+    @dfs = DecoFirm.find_by_sql("select d.id, d.name_abbr, count(a.id) as c from deco_firms d,decoration_diaries c,decoration_diary_posts b,remarks a where d." + city_conditions + " and c.deco_firm_id=d.id and c.is_verified = 1 and b.decoration_diary_id=c.id and a.resource_id=b.id and a.resource_type='DecorationDiaryPost' group by d.id order by d.is_cooperation desc, c desc limit 10")
+
+    excel_name = "#{CITIES[city.to_i]}网友关注最多TOP10"
+    unless @dfs.blank?
+      e = Excel::Workbook.new
+      sheetname = excel_name
+
+      array = Array.new
+      @dfs.each do |df|
+        item = OrderedHash.new
+        item["名称"] = df.name_abbr
+        item["关注度"] = df.c
+        item["链接"] = "http://z.#{TAGURLS[city.to_i]}.51hejia.com/#{df.id}"
+        array << item
+      end
+      e.addWorksheetFromArrayOfHashes(sheetname, array)
+      headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+      headers['Content-Disposition'] = "attachment; filename=#{excel_name}.xls"
+      headers['Cache-Control'] = ''
+      render :text => e.build
+    else
+      flash[:notice] = "没有符合条件的结果！"
+      render :action => "index", :city => params[:city]
+    end
+
+  end
+
+
+  def huoyue_dfs
+    city = params[:city]
+
+    if city.to_i == 12301
+      @dfs = DecoFirm.find_by_sql("select d.id, d.name_abbr, count(c.id) as c from deco_firms d,decoration_diaries c where d.district=12301 and c.deco_firm_id=d.id and c.is_verified=1 group by d.id order by d.is_cooperation desc, c desc limit 10")
+    else
+      city_conditions = (city.to_i == 11910 || city.to_i == 11905 || city.to_i == 31959) ? "city=#{city.to_i}" : "district=#{city.to_i}"
+      @dfs = DecoFirm.find_by_sql("select d.id, d.name_abbr, count(b.id) as c from deco_firms d,decoration_diaries c,decoration_diary_posts b where d." + city_conditions + " and c.deco_firm_id=d.id and c.is_verified = 1 and b.decoration_diary_id=c.id and b.state=1 group by d.id order by d.is_cooperation desc, c desc limit 10")
+    end
+
+    excel_name = "#{CITIES[city.to_i]}活跃装修日记TOP10"
+
+    unless @dfs.blank?
+      e = Excel::Workbook.new
+      sheetname = excel_name
+
+      array = Array.new
+      @dfs.each do |df|
+        item = OrderedHash.new
+        item["名称"] = df.name_abbr
+        item["活跃度"] = df.c
+        item["链接"] = "http://z.#{TAGURLS[city.to_i]}.51hejia.com/#{df.id}"
+        array << item
+      end
+      e.addWorksheetFromArrayOfHashes(sheetname, array)
+      headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+      headers['Content-Disposition'] = "attachment; filename=#{excel_name}.xls"
+      headers['Cache-Control'] = ''
+      render :text => e.build
+    else
+      flash[:notice] = "没有符合条件的结果！"
+      render :action => "index", :city => params[:city]
+      return false
+    end
+
+  end
+
+  ##
+  def diary_votes_summary
+    excel_name = "#{Date.today.month - 1}月日记投票数汇总.csv"
+    e = Excel::Workbook.new
+    sheetname = excel_name
+    array = Array.new
+
+    shanghai_array = DecorationDiary.find_by_sql("SELECT d.id,b.USERNAME,d.title,d.votes_sum,d.votes_current_month,f.name_zh FROM decoration_diaries d, deco_firms f, HEJIA_USER_BBS b where d.deco_firm_id=f.id and d.is_verified=1 and f.city=11910 and b.USERBBSID=d.user_id order by d.votes_current_month desc limit 20")
+
+    other_array = DecorationDiary.find_by_sql("SELECT d.id,b.USERNAME,d.title,d.votes_sum,d.votes_current_month,f.name_zh FROM decoration_diaries d, deco_firms f, HEJIA_USER_BBS b where d.deco_firm_id=f.id and d.is_verified=1 and f.city<>11910 and b.USERBBSID=d.user_id order by d.votes_current_month desc limit 20")
+
+
+    shanghai_array.each do |df|
+      item = OrderedHash.new
+      item["日记ID"] = df.id
+      item["作者"] = df.USERNAME
+      item["标题"] = df.title
+      item["总投票"] = df.votes_sum
+      item["当月投票"] = df.votes_current_month
+      item["所属公司"] = df.name_zh
+      array << item
+    end
+
+    other_array.each do |df|
+      item = OrderedHash.new
+      item["日记ID"] = df.id
+      item["作者"] = df.USERNAME
+      item["标题"] = df.title
+      item["总投票"] = df.votes_sum
+      item["当月投票"] = df.votes_current_month
+      item["所属公司"] = df.name_zh
+      array << item
+    end
+    e.addWorksheetFromArrayOfHashes(sheetname, array)
+    headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+    headers['Content-Disposition'] = "attachment; filename=#{excel_name}.xls"
+    headers['Cache-Control'] = ''
+    render :text => e.build
+  end
+
+
+  def building_names_summary
+    excel_name = "小区名称汇总.csv"
+    e = Excel::Workbook.new
+    sheetname = excel_name
+    array = Array.new
+
+    @deco_cases = DecoCase.find(:all, :select => "distinct BUILDINGNAME")
+    @decoration_diaries = DecorationDiary.find(:all, :select => "distinct building_name")
+    @deco_factories = DecoFactory.find(:all, :select => "distinct NAME")
+
+    @deco_cases.each do |dc|
+      item = OrderedHash.new
+      item["案例小区"] = dc.BUILDINGNAME
+      array << item
+    end
+
+    @decoration_diaries.each do |dd|
+      item = OrderedHash.new
+      item["日记小区"] = dd.building_name
+      array << item
+    end
+    @deco_factories.each do |df|
+      item = OrderedHash.new
+      item["在建工地小区"] = df.NAME
+      array << item
+    end
+
+    e.addWorksheetFromArrayOfHashes(sheetname, array)
+    headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+    headers['Content-Disposition'] = "attachment; filename=#{excel_name}.xls"
+    headers['Cache-Control'] = ''
+    render :text => e.build
+  end
+
+
+  ## 导出网站有效用户
+  def users
+    @users = User.find(:all, :conditions => ["state is null or state = 0"])
+
+    e = Excel::Workbook.new
+    sheetname = "后台有效用户"
+    unless @users.blank?
+      array = Array.new
+      @users.each do |user|
+        item = OrderedHash.new
+        item["编号"] = user.id
+        item["用户名"] = user.name
+        item["用户角色"] = user.role.to_s.split(",").map { |v| get_webpm("role")[v.to_i] }.join(",")
+        item["部门"] = get_webpm("department")[user.department]
+        item["真实姓名"] = user.rname
+        item["最后登录"] = user.last_login.strftime("%Y-%m-%d") rescue ""
+        array << item
+      end
+      e.addWorksheetFromArrayOfHashes(sheetname, array)
+      headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+      headers['Content-Disposition'] = "attachment; filename=后台有效用户.xls"
+      render :text => e.build
+    else
+      flash[:notice] = "没有后台有效用户！"
+      render :action => "export_users"
+    end
+  end
+  
+  
+  def export_by_sql
+    e = Excel::Workbook.new
+    if params[:excel_name] and params[:model_name] and params[:sql]
+      sheetname = params[:excel_name]
+      @datas = eval(params[:model_name]).find_by_sql(params[:sql])
+      array = Array.new
+      @datas.each do |data|
+        item = OrderedHash.new
+        
+        item["用户名"] = data.USERNAME
+        item["EMAIL"] = data.USERBBSEMAIL
+        item["地区"] = Tag.get_tagname_by_tagid(data.AREA)
+        item["城市"] = Tag.get_tagname_by_tagid(data.CITY)
+        item["电话"] = data.USERBBSTEL
+        item["MSN/QQ"] = data.MSN.nil? ? data.QQ : data.MSN
+        item["注册时间"] = data.CREATTIME
+        item["最后登录时间"] = data.LOGINDATE.blank? ? "" : data.LOGINDATE
+
+        
+=begin
+        eval(params[:model_name]).column_names.each do |column_name|
+          item["#{column_name}"] = data[column_name]
+        end
+=end
+        array << item
+      end
+      e.addWorksheetFromArrayOfHashes(sheetname, array)
+      headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+      headers['Content-Disposition'] = "attachment; filename=#{params[:excel_name]}.xls"
+      render :text => e.build
+    else
+      flash[:notice] = "没有有效数据！"
+      render :action => "index"
+      return false
+    end
+  end
+
+  def export_articles
+    @riqi1 = params[:riqi1].blank? ? (Date.today) : params[:riqi1]
+    @riqi2 = params[:riqi2].blank? ? Date.today : params[:riqi2]
+    @articles = Article.find(:all, :conditions => ["LASTMODIFYTIME > ? and LASTMODIFYTIME < ? and STATE=0", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day])
+
+    e = Excel::Workbook.new
+    sheetname = "文章数据导出"
+    unless @articles.blank?
+      array = Array.new
+      @articles.each do |article|
+        item = OrderedHash.new
+        item["编号"] = article.ID
+
+        url = ""
+        if article.article_type1 && article.article_type1.TAGURL=='zhuangxiu'
+          url += "http://d.51hejia.com/"
+        elsif article.article_type1 && article.article_type1.TAGURL=='pinpaiku'
+          url += "http://b.51hejia.com/"
+        elsif article.article_type1 && article.article_type1.TAGURL=='youqigongzhishi'
+          url += "http://www.yougong.51hejia.com/"
+        else
+          url += "http://www.51hejia.com/"
+        end
+        if article.article_type1 && article.article_type1.TAGURL=='youqigongzhishi'
+          url += "youqishigong/"
+        else
+          url += article.article_type1.TAGURL + "/" unless article.article_type1.blank?
+        end
+        if article.CREATETIME
+          url += article.CREATETIME.strftime("%Y%m%d") + "/"
+        end
+        url += article.id.to_s
+
+        item["url"] = url
+        item["发布时间"] = article.LASTMODIFYTIME.strftime("%Y-%m-%d") rescue ""
+        array << item
+      end
+      e.addWorksheetFromArrayOfHashes(sheetname, array)
+      headers['Content-Type'] = "application/vnd.ms-excel;charset=GBK"
+      headers['Content-Disposition'] = "attachment; filename=文章数据导出.xls"
+      render :text => e.build
+    else
+      flash[:notice] = "没有数据！"
+      render :action => "index"
+    end
+
+  end
+
+end

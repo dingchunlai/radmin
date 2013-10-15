@@ -1,0 +1,28 @@
+<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+<form action="/mobanmanager/index" method="get">
+	<p align=center> <input type="text" name="mobanname" value="<%=@mobanname%>">
+		<input type="submit" value="查询">
+	</p>
+	
+	<table align=center border=1>
+		<tr style="background-color:#7389A4;">
+  			<th style="color:#FFFFFF;">名字</th>
+			<th style="color:#FFFFFF;">时间</th>
+			<th style="color:#FFFFFF;">操作</th>
+		</tr>
+		<%if @mobanlist%>
+		<%@mobanlist.each do |moban| %>
+		<tr  style="background-color:#FFFDE6">
+			<td><%=moban.name%></td>
+			<td><%=moban.created_at.utc.strftime("%Y-%m-%d %H:%M:%S")%></td>
+			<td><a href="/mobanmanager/addzhuanti?mobanid=<%=moban.id%>">添加专题</a></td>
+			<td><a href="/mobanmanager/addzhuantinew?mobanid=<%=moban.id%>">添加专区</a></td>
+		</tr>			
+		<%end%>
+		<%end%>
+	</table>
+	<%if @mobanlist%>
+	<p align=center><%= will_paginate @mobanlist %></p>
+	<%end%>
+</form>
+</div>

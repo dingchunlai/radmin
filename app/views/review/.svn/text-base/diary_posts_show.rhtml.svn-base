@@ -1,0 +1,117 @@
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+    font-size:12px;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]);
+  }
+</style>
+<h4>日记标题：：<%= @diary.title %></h4>
+<form action="/review/diary_posts_show" method="get" id="fmid">
+  <p align=center>
+		是否审核：<select name='state'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @state.to_i == 1%>selected<%end%>>已审核</option>
+      <option value='2' <%if @state.to_i == 2%>selected<%end%>>未审核</option>
+    </select>
+    <input type="hidden" name="diaryid" value="<%= @diary.id %>"/>
+    <input type="button" name="sub" value="搜索" onclick='selectnotes();'/>
+  </p>
+
+  <table align=center border=1>
+    <tr>
+      <td><input type='checkbox' id='all_check_id' onclick='all_check();'/>全选</td>
+      <td width="580">描述</td>
+      <td>状态</td>
+      <td>更新时间</td>
+    </tr>
+    <%@posts.each do |post|%>
+      <tr>
+        <td><input type='checkbox' value='<%=post.id%>' name='note[selected_ids][]'/><%= post.id %></td>
+        <td width="580"><a href="/review/diary_post_content?post_id=<%=post.id%>" target="_blank"><%= remove_external_links(whitelist_strip_tags(post.body, :tags => ["img","p"], :include => false)) %></a></td>
+        <td><%= post.state ? "已审核" : "未审核" %></td>
+        <td><%= post.updated_at.utc.strftime("%Y-%m-%d %X")%></td>
+      </tr>
+    <%end%>
+  </table>
+  <p align=center>
+
+    <a href='#n' onclick='shenhe();'>审核</a>&nbsp;&nbsp;
+    <a href='#n' onclick='quxiaoshenhe();'>取消审核</a>&nbsp;&nbsp;
+  </p>
+  <script type="text/javascript">
+    function selectnotes(){
+      document.getElementById('fmid').submit();
+    }
+    function all_check(){
+      if(document.getElementById('all_check_id').checked == true)
+        check(1);
+      else
+        check(0);
+
+    }
+    function check(num){
+      var chs = document.getElementsByName("note[selected_ids][]");
+
+      if(chs.length > 0){
+        for(var i=0;i<chs.length;i++){
+          var ch = chs[i];
+          if(num == '1')
+            ch.checked = true;
+          else
+            ch.checked = false;
+        }
+      }
+    }
+
+    function checkselected(){
+      var chs = document.getElementsByName("note[selected_ids][]");
+      if(chs.length > 0){
+        var count = 0;
+        for(var i=0;i<chs.length;i++){
+          if(chs[i].checked == true)
+            count++;
+        }
+      }else{
+        return false;
+      }
+      if(count == 0){
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    function quxiaoshenhe(){
+
+      if (!checkselected()){
+        alert('请选择要取消审核内容');
+        return false;
+      }
+      if(window.confirm('确定操作吗？')){
+        document.getElementById('fmid').action = '/review/post_update_quxiaoshenhe';
+        document.getElementById('fmid').submit();
+      }
+    }
+    function shenhe(){
+
+      if (!checkselected()){
+        alert('请选择要取消审核内容');
+        return false;
+      }
+      if(window.confirm('确定操作吗？')){
+        document.getElementById('fmid').action = '/review/post_update';
+        document.getElementById('fmid').submit();
+      }
+    }   
+  </script>

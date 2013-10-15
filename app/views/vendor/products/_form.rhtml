@@ -1,0 +1,87 @@
+<%= hidden_field_tag "product[vendor_id]", @vendor.id %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label required">产品名称</td>
+		<td><%= f.text_field :name, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品型号</td>
+		<td><%= f.text_field :model -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品标签</td>
+		<td><%= f.text_field :tags, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label required">所属类别</td>
+		<td>
+		<%= f.select :category_id, @vendor.categories.collect {|c| [c.name_zh, c.id]}, { :include_blank => true } %>
+		<%= observe_field "product_category_id", {:url => {:controller => 'common', :action => 'second_class_update'}, :with => "second_class_id"} %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">所属品牌</td>
+		<td><%= f.collection_select :brand_id, @vendor.brands.find(:all), :id, :name_zh -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品属性</td>
+		<td>
+			<div id="product_params">
+				<%= (render :partial => "param", :collection => @product.params) unless @product.params.empty? %>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">产品现价</td>
+		<td><%= f.text_field :now_price, :size => 7 -%>元</td>
+	</tr>
+	<tr>
+		<td class="label">产品单位</td>
+		<td><%= f.text_field :unit, :size => 7 -%></td>
+	</tr>
+<!--
+	<tr>
+		<td class="label">产品原价</td>
+		<td><%= f.text_field :price, :size => 7 -%>元</td>
+	</tr>
+	<tr>
+		<td class="label">价格时间</td>
+		<td><%= text_field_tag "product[price_start]", (@product.price_start.to_date if @product.price_start), :onclick => "new Calendar().show(this);" -%> 至 <%= text_field_tag "product[price_end]", (@product.price_end.to_date if @product.price_end), :onclick => "new Calendar().show(this);" -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品口碑</td>
+		<td><%= f.text_field :public_praise, :size => 7 -%></td>
+	</tr>
+	<tr>
+		<td class="label">核价活跃度</td>
+		<td><%= f.text_field :liveness, :size => 7 -%></td>
+	</tr>
+	<tr>
+		<td class="label">综合评分</td>
+		<td><%= f.text_field :marking, :size => 7 -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品类型</td>
+		<td><%= f.radio_button(:typehood, "0") -%>核价 <%= f.radio_button(:typehood, "1") -%>超低价 <%= f.radio_button(:typehood, "2") -%>陪购 <%= f.radio_button(:typehood, "3") -%>电询</td>
+	</tr>
+-->
+	<tr>
+		<td class="label required">选择图片</td>
+		<td>
+			<div id="images"><%= render :partial => "image", :locals => {:product => @product} unless @product.images.empty? %></div>
+			<div><%= add_image_link "添加新图片" %> (注意：图片大小请控制在2M以内！支持JPG、JPEG和GIF图片格式！)</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">产品详情</td>
+		<td><%= f.text_area :detail, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td>
+			<%= submit_tag(controller.action_name == "new" ? "创建产品" : "更新产品", :class => "btn") -%>&nbsp;&nbsp;
+			<%= submit_tag "申请上架", :name => "apply_up" if @product.status == 2 %>
+			<%= submit_tag "申请下架", :name => "apply_down" if @product.status == 1 %>
+		</td>
+	</tr>
+</table>

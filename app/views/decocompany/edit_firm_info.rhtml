@@ -1,0 +1,217 @@
+
+<script src="/javascripts/tiny_mce/tiny_mce_src.js?1241055414" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+tinyMCE.init({
+convert_urls : false,
+editor_selector : 'mceEditor',
+language : 'zh',
+mode : 'textareas',
+plugins : "table,fullscreen,upload",
+relative_urls : false,
+theme : 'advanced',
+theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontselect,fontsizeselect,|,outdent,indent,blockquote,|,undo,redo',
+theme_advanced_buttons2 : 'tablecontrols,|,hr,removeformat,visualaid,code |,hr,removeformat,visualaid,|,link,unlink,anchor,image,upload,cleanup,|,forecolor,backcolor,code',
+theme_advanced_buttons3 : '',
+theme_advanced_resize_horizontal : false,
+theme_advanced_resizing : true,
+theme_advanced_statusbar_location : 'bottom',
+theme_advanced_toolbar_align : 'left',
+theme_advanced_toolbar_location : 'top',
+visual : false,
+width : '500px',
+height : '500px'
+});
+//]]>
+</script>
+<div class="user_right">
+  企业信息更新
+  <h3>公司：<%= @firm.name_zh %></h3>
+  <div id="widebar">
+    <div class="mainbox">
+      <div id="same1">
+        <%= error_messages_for :firm %>
+        <% form_for( :firm, :url => "/decocompany/update_firm_info", :html => {:method => :put, :multipart => true}) do |f| -%>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td><%= f.hidden_field :id %></td></tr>
+            <tr>
+              <td width="110">中文名称：</td>
+              <td><%= f.text_field :name_zh %></td>
+              <!--<td width="110"><span style="display:none;">英文名称：</span></td>
+                                          <td><span style="display:none;"><%#= f.text_field :name_en %></span></td>-->
+              <td width="110">优先级：</td>
+              <td><%= f.text_field :priority, :size => 8 %>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;">注：优先级必须为纯数字</span></td>
+            </tr>
+            <tr>
+              <td>公司简称：</td>
+              <td><%= f.text_field :name_abbr %></td>
+              <td>在线联系：</td>
+              <td><%= f.text_field :business_hours %></td>
+            </tr>
+            <tr>
+              <td>主打方式：</td>
+              <td><%= f.select :model, DecoFirm::MODELS.map{|k, v| [v, k]}, { :include_blank => true } %></td>
+              <td>主打风格：</td>
+              <td><%= f.select :style, DecoFirm::STYLES.map{|k, v| [v, k]}, { :include_blank => true } %></td>
+            </tr>
+              <tr>
+                <td>装修种类</td>
+                <td><%= f.check_box :category, :value => 1 %>工装</td>
+                <td>在线QQ</td>
+                <td><%= f.text_field :web_qq %></td>
+              </tr>
+            <tr>
+              <td>公司电话：</td>
+              <td><%= f.text_field :telephone %></td>
+              <td>工作室显示地址：</td>
+              <td><%= f.text_field :address2 %></td>
+            </tr>
+            <tr>
+              <td colspan="4"><span style="color:red;">温馨提示：有多个公司电话或多个工作室显示地址请用逗号隔开。</span></td>
+            </tr>
+            <tr>	<%= javascript_include_tag :defaults %>
+              <td>公司区域：</td>
+              <td>
+                <select id="firm_city" name="firm[city]" onchange="new Ajax.Updater('area', '/decos/select_area', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+                  <option value="0">请选择</option>
+                  <%@cities.each do |c|%>
+                      <% if c[1] != '深圳' %>
+                          <option value="<%= c[0] %>"
+                                  <% if @firm.city.to_i==c[0].to_i %>selected
+                                  <% end %>><%= c[1] %></option>
+                      <% end %>
+                  <%end%>
+                </select>
+                <span id="area">
+                  <select id="firm_district" name="firm[district]" onchange="new Ajax.Updater('area2', '/decos/select_area2', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+                    <option value="0">请选择</option>
+                    <%if @areas %>
+                      <%@areas.each do |a|%>
+                        <option value="<%=a[0]%>" <%if @firm.district.to_i==a[0].to_i%>selected<%end%> ><%=a[1]%></option>
+                      <%end%>
+                    <%end%>
+                  </select>
+                  <!--<%= f.select :district, @areas.invert %>-->
+                </span>
+                <span id="area2">
+                  <select id="firm_area" name="firm[area]">
+                    <option value="0">请选择</option>
+                    <%if @areas2 %>
+                      <%@areas2.each do |a|%>
+                        <option value="<%=a[0] %>" <%if @firm.area.to_i==a[0].to_i%>selected<%end%> ><%=a[1]%></option>
+                      <%end%>
+                    <%end%>
+                  </select>
+                  <!--<%= f.select :area, @areas2.invert %></td>-->
+                  <td>地图地址：</td>
+                  <td><%= f.text_field :address %></td>
+            </tr>
+            <tr>
+              <td colspan="4"><span style="color:red;">温馨提示：正确的地图地址为   ***市**区**路**号。不规范的地址如：标点符号、大厦名称、“5*0室”等都会引起前台地图显示错误！</span></td>
+            </tr>
+            <tr>
+              <td>主打价位：</td>
+			  <td>
+              <%if @firm.district.to_i ==12301%>
+                <%= f.select :price, DecoFirm::NINBO_PRICE.map{|k, v| [v, k]}, { :include_blank => true } %>
+              <%else%>
+                <%= f.select :price, DecoFirm::PRICE.sort.map{|k, v| [v, k]}, { :include_blank => true } %>
+              <% end %>
+			  <%= f.check_box :villa, :value => 1 %>别墅</td>
+              <td>公司传真：</td>
+              <td><%= f.text_field :fax %></td>
+            </tr>
+            <tr>
+              <td>邮政编码：</td>
+              <td><%= f.text_field :postcode %></td>
+              <td>联系人：</td>
+              <td><%= f.text_field :linkman %></td>
+            </tr>
+            <tr>
+              <td>公司网站：</td>
+              <td><%= f.text_field :website %></td>
+              <td>电子邮件：</td>
+              <td><%= f.text_field :email %></td>
+            </tr>
+						<tr>
+              <td>监理页面：</td>
+              <td><%= f.text_field :supervisor_url %></td>
+              <td>免费贷款：</td>
+              <td><%= f.check_box :free_loan%></td>
+            </tr>
+            <tr>
+              <%
+              free = {0 => '否',1 => '是'}
+            %>
+              <td>最低报价：</td>
+              <td><%= f.text_field :lowest_quotation %></td>
+              <td>是否免费设计：</td>
+              <td><%= f.select :freedesign, free.map{|k, v| [v, k]}, { :include_blank => true } %></td>
+            </tr>
+            <tr>
+              <td>是否免费看样板房：</td>
+              <td><%= f.select :freelook, free.map{|k, v| [v, k]}, { :include_blank => true } %></td>
+              <td>是否免费量房：</td>
+              <td><%= f.select :freedo, free.map{|k, v| [v, k]}, { :include_blank => true } %></td>
+            </tr>
+            <tr style='display:none;'>
+              <td>公司标志：</td>
+              <td colspan="3"><img src="http://image.51hejia.com<%=@firm.logo.url%>" alt="" height="140" width="185" onerror="javascript:this.src='http://www.51hejia.com/api/images/none.gif'"/><%= f.file_field :logo %> <%= @firm.logo_file_name ? link_to("查看标志", @firm.logo.url, :target => "_blank") : "暂无标志"  %></td>
+            </tr>
+            <tr>
+              <td>地图位置：</td>
+              <td colspan="3">
+                <label for="firm[lat]">纬度：</label><%= f.text_field :lat %>
+                <label for="firm[lng]">经度：</label><%= f.text_field :lng %>
+                <span>（可从<a href="http://ditu.google.cn/" style="text-decoration: underline;" target="_blank">google地图</a>上查找）</span>
+              </td>
+            </tr>
+            <tr style="display:none;">
+              <td>预算文件：</td>
+              <td colspan="3"><%= f.file_field :budget %> <%= @firm.budget_file_name ? link_to("查看预算", @firm.budget.url, :target => "_blank") : "暂无预算文件"  %></td>
+            </tr>
+            <tr style="display:none;">
+              <td>交通情况：</td>
+              <td colspan="3"><%= f.text_field :traffic, :size => 100 %></td>
+            </tr>
+            <tr style="display:none;">
+              <td>编辑采访：</td>
+              <td colspan="3"><%= f.text_area :summary, :class => "mceEditor" %></td>
+            </tr>
+            <tr>
+              <td colspan="4"><span style="color:red;">温馨提示：上传的图片宽度不能超过660px</span></td>
+            </tr>
+            <tr>
+              <td>商户简介：</td>
+              <td colspan="3"><%= f.text_area :detail, :class => "mceEditor" %></td>
+            </tr>
+            <tr style="display:none;">
+              <td>服务内容：</td>
+              <td colspan="3"><%= f.text_area :service_content, :class => "mceEditor" %></td>
+            </tr>
+            <tr style="display:none;">
+              <td>优惠标题：</td>
+              <td colspan="3"><%= f.text_field :offer_title, :size => 80 %></td>
+            </tr>
+            <tr style="display:none;">
+              <td>优惠内容：</td>
+              <td colspan="3"><%= f.text_area :offer_content, :class => "mceEditor" %></td>
+            </tr>
+            <tr style="display:none;">
+              <td>分支机构：</td>
+              <td colspan="3"><%= f.text_area :subbranch, :class => "mceEditor" %></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><%= submit_tag "更新公司信息" -%> <input type="button" name="btn" value="重置" onClick="javascript:window.location.reload()"</td>
+            </tr>
+          </table>
+        <% end -%>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+

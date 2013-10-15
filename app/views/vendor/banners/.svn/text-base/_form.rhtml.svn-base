@@ -1,0 +1,19 @@
+<%= f.hidden_field :vendor_id %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label">店铺头部图标题</td>
+    <td><%= f.text_field :title, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label">店铺头部图链接</td>
+    <td><%= f.text_field :link, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label">选择图片</td>
+    <td><%= f.file_field :image %> <span>注意：尺寸960*197！</span></td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建店铺头部图" : "更新店铺头部图") -%></td>
+  </tr>
+</table>

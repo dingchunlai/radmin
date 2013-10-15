@@ -1,0 +1,13 @@
+<div id="div_main">
+  <% form_for :time_mechanism, @time_mechanism, :url => {:action => "tm_save"} do |f| %>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      开始日期：<%= f.text_field :s_date, :onfocus => "return SelectDate(this,'yyyy-MM-dd');" %>
+      结束日期：<%= f.text_field :e_date, :onfocus => "return SelectDate(this,'yyyy-MM-dd');" %><br />
+      开始时间：<%= f.time_select :s1_time, :include_seconds => true %>
+      结束时间：<%= f.time_select :e1_time, :include_seconds => true %><br />
+      开始时间：<%= f.time_select :s2_time, :include_seconds => true %>
+      结束时间：<%= f.time_select :e2_time, :include_seconds => true %><br />
+      <%= submit_tag "保 存" %>
+    </div>
+  <% end %>
+</div>

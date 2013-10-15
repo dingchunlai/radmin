@@ -1,0 +1,32 @@
+<td><%= @u.rname %></td>
+<td style="text-align:center;">
+  <span style="font-weight:bold;"><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo = 0") %></span>
+</td>
+<td style="text-align:center;background-color:#ffd850;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo = 0 and state = 1") %></span>
+</td>
+<td style="text-align:center;background-color:#c8c8ff;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo = 0 and state = 2") %></span>
+</td>
+<td style="text-align:center;background-color:#ff50a8;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo = 0 and state = 3") %></span>
+</td>
+<td style="text-align:center;background-color:#cceedd;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo = 0 and state = 4") %></span>
+</td>
+
+<td style="text-align:center;">
+  <span style="font-weight:bold;"><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo != 0") %></span>
+</td>
+<td style="text-align:center;background-color:#ffd850;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo != 0 and state = 1") %></span>
+</td>
+<td style="text-align:center;background-color:#c8c8ff;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo != 0 and state = 2") %></span>
+</td>
+<td style="text-align:center;background-color:#ff50a8;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo != 0 and state = 3") %></span>
+</td>
+<td style="text-align:center;background-color:#cceedd;">
+  <span style=""><%= EditorCasePhoto.count(:conditions => "editor_id = #{@u.id} and photo != 0 and state = 4") %></span>
+</td>

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/photos
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/photos/index.rhtml
+END
+show.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/photos/show.rhtml
+END
+edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin/photos/edit.rhtml
+END

@@ -1,0 +1,153 @@
+	<link href="http://js.51hejia.com/css/ucenter.css?53452345" rel="stylesheet" type="text/css" />
+<%=render :partial => "/share/public_header"%>
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+<%if @note.size>0%>
+<%
+	require 'date'
+	d = Date.today
+    datest = d>>3
+%>
+<div class="titlebox">
+      <h2>装修日记</h2>
+      <ul>
+        <li class="hoveron"><a href="/member/user_note_list">日记列表</a></li>
+        <li><%if @note.size>0%><a href="#" onclick="javascript:alert('请三个月之后再新建日记!');">新建日记</a><%else%><a href="/member/user_note_new">新建日记</a><%end%></li>
+      </ul>
+      <div class="ttrbox">
+        <%if @note.size>0%><input type="submit" name="button3" class="bt2" id="button3" value="继续上传装修图片" onClick="javascript:window.open('/member/user_photo_new/<%=@note[0].id%>')"/><%else%><%end%>
+      </div>
+</div>
+	<%if @note.size>0%>
+    <div class="ucbox margin10">
+    <div class="biaotibtn clearfix"><h2>标题：<%=@note[0].title%></h2><div><a href="/member/user_note_edit/<%=@note[0].id%>" target="_blank" title="修改" class="bt3" style="color:#fff;">修改</a>
+				<a href="http://z.51hejia.com/gs-<%=@note[0].firm_id%>/zhuangxiugushi/<%=@note[0].id%>/all/1" target="_blank" title="预览" class="bt3" style="color:#fff;">预览</a></div></div>
+       <div class="ucpic">
+                <%if @note[0].dianping_id.to_i > 0%>
+                <a href='http://z.51hejia.com/dianping/editnew?id=<%=@note[0].dianping_id%>' target='_blank' style="color:#f60;">修改点评</a>
+                <%else%>
+                <a href='http://z.51hejia.com/dianping/newdp/<%=@note[0].firm_id%>?storyid=<%=@note[0].id%>' target='_blank' style="color:#f60;">为装修公司写点评</a>
+                <%end%>
+        <h4><span class="jd">装修阶段：
+							<%DecoFirm::ROOM.sort.each do |k|%>
+								<%if @note[0].room.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<%end%>
+							<% DecoFirm::PRICE.sort.each do |k| %>
+								<%if @note[0].price.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<% end %>
+							<% DecoFirm::MODELS.sort.each do |k| %>
+								<%if @note[0].methodtype.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<% end %>
+							<% DecoFirm::STYLES.sort.each do |k| %>
+								<%if @note[0].style.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<% end %></span>共有<%=@photo.total_entries%>张装修图片</h4>
+        <div class="pic uclist">
+        <%if @photo.size>0%>
+        <%@photo.each do |p|%>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="164"><a href="<%=p.imageurl%>" target="_blank" title="<%=p.title%>"><img src="<%=p.imageurl%>" alt="<%=p.title%>" /></a></td>
+              <td width="495"><div><strong>装修阶段：</strong><%DecoFirm::STAGE.sort.each do |k|%>
+								<%if k[0].to_i==p.stage.to_i %><%=k[1]%><%end%>
+							<%end%></div>
+                <div><strong>描述：</strong></div>
+                <div class="pt"><strong>发表时间：</strong><%=p.created_at.strftime("%Y-%m-%d")%></div></td>
+				<td width="81">
+				<a href="/member/user_photo_edit/<%=p.id%>" target="_blank" title="修改" class="bt3" style="margin:10px 0; color:#fff;">修改</a>
+				<a href="/member/questions?id=<%=p.id%>&type=2" target="_blank" title="回复" class="bt3" style="margin:10px 0; color:#fff;">提问</a></td>
+            </tr>
+            <% q = UserQuestionAnswer.get_question(p.id)%>
+            <%if q.size>0%>
+            <tr>
+              <td colspan="3">
+              <%q.each do |qu|%>
+                <ul>
+                	<% answer = UserQuestionAnswer.get_answer(qu.id)%>
+                  <%if answer.size>0%>
+                  	<li class="li01"><strong>问：</strong><%=qu.title%></li>
+	                  <%answer.each do |an|%>
+	                  <li><strong>答：</strong><%=an.context%></li>
+	                  <%end%>
+                  <%else%>
+                  	<li class="li02"><span><a href="/member/questions?id=<%=p.id%>&type=2" target="_blank" title="回答" class="bt3">回答</a></span><strong>问：</strong><%=qu.title%></li>
+                  <%end%>
+                </ul>
+              <%end%>
+               </td>
+            </tr>
+            <%end%>
+          </table>
+          <%end%>
+          <%end%>
+        </div>
+        <table class="bt" width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td></td>
+            <td><div class="pagination">
+                <ul>
+                  <%= will_paginate @photo,:prev_label=> "上一页",:next_label=> "下一页" %>
+                </ul>
+              </div></td>
+          </tr>
+        </table>
+    </div>  
+        <%end%>
+   <%else%>
+   	<link href="http://js.51hejia.com/css/ucenter.css?4124556" rel="stylesheet" type="text/css" />
+   	<div class="titlebox">
+      <h2>装修日记</h2>
+      <ul>
+        <li class="hoveron"><a href="/member/user_note_list">日记列表</a></li>
+        <li><%if @note.size>0%><a href="#" onclick="javascript:alert('请三个月之后再新建日记!');">新建日记</a><%else%><a href="/member/user_note_new">新建日记</a><%end%></li>
+      </ul>
+</div>
+		<div class="diary_tis">
+		<div class="diary_wenz">
+		<p>您还未建立装修日记，请点击以下按钮新建：</p>
+		<a href="/member/user_note_new" target="_self" class="diary_xinj">新建日记</a>
+		</div>
+		</div>
+   <%end%>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+<%=render :partial => "/share/public_footer"%>

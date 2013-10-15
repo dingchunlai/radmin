@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf8" />
+    <title>用户登陆-和家网</title>
+    <meta name="keywords" content="用户登陆" />
+    <meta name="description" content="用户登陆" />
+    <meta name="robots" content="all" />
+    <link rel="stylesheet" href="http://p.51hejia.com/stylesheets/screen.css" type="text/css" media="screen, projection" />
+    <!--[if IE]>
+      <link rel="stylesheet" href="http://p.51hejia.com/stylesheets/ie.css" type="text/css" media="screen, projection" />
+    <![endif]-->
+    <link rel="stylesheet" href="http://p.51hejia.com/stylesheets/style.css" type="text/css" media="screen, projection" />
+  </head>
+
+  <body id="body-account" style="margin:0 auto; width:950px;">
+
+    <br /><br /><br />
+
+    <div id="content" class="span-24">
+
+
+      <div class="screg clearfix">
+        <h2><a href="http://www.51hejia.com" target="_blank">和家网</a>会员登陆</h2>
+        <div class="scloginbox">
+          <h3>登陆</h3>
+          <iframe name="hideiframe" width="0" height="0" style="display: none;"></iframe>
+          <form action='/member/login' method="post" target="hideiframe">
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="80">用户名：</td>
+                <td>
+                  <input type="text" name="s_username" class="txt" />
+                  <input type="hidden" name="category" value="1" />
+                </td>
+              </tr>
+              <tr>
+                <td>密&nbsp;&nbsp;码：</td>
+                <td><input type="password" name="s_userpwd" class="txt" /></td>
+              </tr>
+              <!-- tr>
+                <%# 注释于2010/08/20 商家登录早就在controller里面被注释掉了，这边留着也没用。而专家和会员又没区别，这部分纯粹多余。在上面直接加了个hidden %>
+                <td>&nbsp;</td>
+                <td>
+                  <input name="category" type="radio" checked value="1" /> 会员
+                  <input name="category" type="radio" value="1" /> 专家
+                  <input name="category" type="radio" value="2" /> 商家
+                </td>
+              </tr -->
+              <tr>
+                <td>&nbsp;</td>
+                <td>
+                  <input name="keeplogin" type="checkbox" value="3" />
+                  记住用户名&nbsp;&nbsp;
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>
+                  <input id="ihwenba" name="forward" type="hidden" value="/member" />
+                  <input type="submit" name="Submit" value="登 陆" class="bt" />&nbsp;
+                  <!--<a href="#" target="_blank">忘记密码？</a></td>-->
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td><a href="http://member.51hejia.com/member/reg?forward=http://member.51hejia.com/member/ulogin" target="_blank">您是新用户？请注册</a></td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

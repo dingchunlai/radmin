@@ -1,0 +1,32 @@
+<% include_jquery %>
+<script src="http://js.51hejia.com/js/jquery.uploadify.v2.1.0.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js" type="text/javascript"></script>
+<% javascript 'http://js.51hejia.com/js/admin/decos/glory_certificate.js' %>
+<div class="user_right">
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id="userprofile">
+        <div class="top">
+          <div class="profile_name">我的和家 - 门店照片</div>
+        </div>
+        <div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护门店照片信息。</div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/decos/glory_certificates">门店照片列表</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/decos/glory_certificates/new">上传门店照片</a></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+      <% form_for :glory_certificate, :url => deco_glory_certificate_path(@glory_certificate) , :html => {:method => :put,:id => 'glory_certificate_form',:data_image_prefix_array => IMAGE_PREFIX_ARRAY.join(",") , :picture_prefix => PICTURE_PREFIX ,
+        :multipart => true} do |f| %>
+        <%= render :partial => "form", :locals => {:f => f} %>
+      <% end %>
+    </div>
+  </div>
+</div>

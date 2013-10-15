@@ -1,0 +1,49 @@
+<div id="div_main">
+  <form name="ftiwen" action="/boke/users" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      用户名或编号：<input name="username" type="text" size="6" value="<%= @username %>" />　
+      <input type="submit"value="搜 索" />
+    </div>
+  </form>
+
+  <% if @boke_user %>
+    <hr />
+    <div>
+      <div>
+        用户名：<%= @boke_user.name %><br />
+        注册时间：<%= @boke_user.regist_time.strftime("%Y-%m-%d %H：%M") %><br />
+        当前状态：<%= BokeUser::STATE.rassoc(@boke_user.state)[0] %><br />
+        IP地址：<%= @boke_user.ip_address %><br />
+      </div>
+    </div>
+    <hr />
+    <% freeze_time_hash = [["永久",25.year.from_now.to_s(:db)],["一天(#{1.day.from_now.to_s(:db)})",1.day.from_now.to_s(:db)],
+      ["三天(#{3.days.from_now.to_s(:db)})",3.days.from_now.to_s(:db)],["五天(#{5.days.from_now.to_s(:db)})",5.days.from_now.to_s(:db)],
+      ["一周(#{7.days.from_now.to_s(:db)})",7.days.from_now.to_s(:db)],["两周(#{14.days.from_now.to_s(:db)})",14.days.from_now.to_s(:db)],
+      ["一个月(#{1.month.from_now.to_s(:db)})",1.month.from_now.to_s(:db)],["两个月(#{2.months.from_now.to_s(:db)})",2.months.from_now.to_s(:db)],
+      ["三个月(#{3.months.from_now.to_s(:db)})",3.months.from_now.to_s(:db)],["半年(#{6.months.from_now.to_s(:db)})",6.months.from_now.to_s(:db)],
+      ["一年(#{1.year.from_now.to_s(:db)})",1.year.from_now.to_s(:db)]] %>
+    <% form_for :boke_user,@boke_user, :url => {:action => "create_boke_user"} do |f| %>
+      <div>
+        用户操作：
+        <% for state in BokeUser::STATE %>
+          <%= f.radio_button(:state, state[1]) %><%= state[0] %>
+        <% end %>
+        <br />
+        禁止有效期：<%= f.select :freeze_time, freeze_time_hash %>
+        <br />
+        清空用户相关内容：<%= check_box_tag :bowen %>博文 &nbsp;&nbsp;&nbsp;<%= check_box_tag :huifu %>回复 &nbsp;&nbsp;&nbsp;<%= check_box_tag :duanxin %>站内短信 &nbsp;&nbsp;&nbsp;
+        <%= check_box_tag :touxiang %>博客头像 &nbsp;&nbsp;&nbsp;<%= check_box_tag :qianming %>博客签名 &nbsp;&nbsp;&nbsp;<%= check_box_tag :lock %>锁定博客 &nbsp;&nbsp;&nbsp;
+        <br />
+        操作理由：<%= f.text_area :reason, :rows => 10 %>
+        <br />
+        <%= f.hidden_field :user_id %>
+        <%= f.hidden_field :ip_address %>
+        <%= f.hidden_field :regist_time %>
+        <%= f.hidden_field :name %>
+        <%= f.hidden_field :radmin_user_id %>
+        <%= submit_tag "提交" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

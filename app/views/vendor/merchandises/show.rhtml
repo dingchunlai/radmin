@@ -1,0 +1,64 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">产品名称</td>
+		<td><%= @product.name -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属类别</td>
+		<td><%= @product.category.name_zh if @product.category %></td>
+	</tr>
+	<tr>
+		<td class="label">所属商家</td>
+		<td><%= @product.vendor.name_zh if @product.vendor -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属品牌</td>
+		<td><%= @product.brand.name_zh if @product.brand -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品型号</td>
+		<td><%= @product.model -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品类型</td>
+		<td><%= typehood_string(@product.typehood) -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品属性</td>
+		<td>
+			<% if @product.params %>
+				<% @product.params.each do |pp| %>
+					<%= pp.cparam.key %>：<%= pp.cparam_item.value if pp.cparam_item %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">产品单位</td>
+		<td><%= @product.unit -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品详情</td>
+		<td><%= @product.detail -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品标签</td>
+		<td><%= @product.tags -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品现价</td>
+		<td><%= @product.now_price.to_i == 888888 ? "0.0" : @product.now_price -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品图片</td>
+		<td>
+		<% @product.images.each do |image| %>
+		<%= image_tag(image.full_path(:thumb), :alt => image.filename) %>
+		<% end %>
+		</td>
+	</tr>
+	<!--<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= link_to "编辑产品", edit_vendor_merchandise_path(:id => @product.productid) %></td>
+	</tr>-->
+</table>

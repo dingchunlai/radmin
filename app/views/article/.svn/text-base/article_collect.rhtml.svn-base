@@ -1,0 +1,97 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<style type="text/css">
+table {
+	border:1px solid #CCC;
+	border-collapse:collapse ;
+	width:100%;
+}
+th, td {
+	border:1px solid #DDD;
+	border-left:0;
+	border-right:0;
+	padding:.3em .5em;
+}
+td input {
+	vertical-align:middle;
+}
+#atr tr{ 
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]); 
+}
+table td.label {
+	background-color:#EEE;
+	text-align:center;
+	width:7em;
+}
+th {
+	background-color:#F3F3F3;
+	color:#666;
+	padding:.3em .5em;
+	text-align:left;
+	white-space:nowrap;  
+}
+</style>
+<% form_tag :action => "article_collect" do %>
+<table>
+	<tr>
+		<td>
+			 关键词搜索 标题：<input type="text" style="width:130px;" name="search" <%= %|value="#{@search}"| unless @search.blank? %> />
+		</td>
+		<td>
+			正文：<input type="text" style="width:130px;" name="content" <%= %|value="#{@content}"| unless @content.blank? %> />
+		</td>
+		<td>
+			采集时间：<input type="text" style="width:80px;" readonly="true" name="begin_time" onclick="new Calendar().show(this);" value="<%=@begin_time%>">到<input type="text" style="width:80px;" readonly="true" name="end_time" onclick="new Calendar().show(this);" value="<%=@end_time%>">
+		</td>
+		<td>
+		 	<%= submit_tag "查 找" -%>
+		</td>
+	 </tr>
+ </table><br/>
+ <table>
+ <tr>
+ <% if @articles.total_entries > 100%>
+ 	<td align="right">
+ 		
+			跳到<input type="text" name="page" size="3">页
+			<input type="submit" name="submit1" value="确定"/>
+	</td>
+ 	<td align="center">
+		<%= will_paginate @articles %>
+	</td>
+	<td align="left">
+		共 <span style="color:red">  <%=@articles.total_entries %></span> 篇 
+		
+	</td>
+	<%end -%>
+	</tr>
+</table>
+<% end %>
+</table>
+<table id="atr">
+  <tr>
+	<th>标题</th>
+	<th>操作</th>
+	<th>日期</th>
+  </tr>
+  <% @articles.each do |article| -%>
+	<tr>
+	  <td>  <a href="/article/article_collect_show/<%=article.id%>" target="_blank"><%= article.title %></a></td>
+	  <td>
+	    <a href="/article/article_collect_show/<%=article.id%>" target="_blank">查看</a>&nbsp;
+	  	<a href="/article/article_collect_add/<%=article.id%>" target="_blank">添加</a>	  
+	  </td>
+	  <td><%= article.created_at.strftime("%Y-%m-%d") %></td>
+	  <!-- <td>  <%#=h truncate(article.content, 100, '...') %>	  </td> -->
+	</tr>
+  <% end -%>
+</table>
+ <table>
+ <tr>
+ 	<td align="right">
+		<%= will_paginate @articles %>
+	</td>
+	<td align="left">
+		共  <span style="color:red">  <%=@articles.total_entries %></span> 篇 
+	</td>
+	</tr>
+</table>

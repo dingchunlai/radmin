@@ -1,0 +1,16 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>产品名称</th>
+		<th>产品价格</th>
+		<th>相关操作</th>
+	</tr>
+	<% @quotes.each do |quote| %>
+	<tr>
+		<td><%= quote.product.name %></td>
+		<td><%= quote.price %></td>
+		<td><%= link_to "查看", vendor_quote_path(quote) %>
+			<%= link_to "编辑", edit_vendor_quote_path(quote) %>
+		</td>
+	</tr>
+	<% end %>
+</table>

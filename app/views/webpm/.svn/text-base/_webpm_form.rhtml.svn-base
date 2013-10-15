@@ -1,0 +1,45 @@
+<script type="text/javascript">  
+function submitForm(form){
+    ge("p_keyword").style.color="#999999";
+    ge("p_value").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("keyword").value)==""){
+        ge("keyword").focus();
+        ge("p_keyword").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("value").value)==""){
+        ge("value").focus();
+        ge("p_value").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+
+<div class="formouter">
+            <div class="formleft">关 键 字：</div>
+            <div class="formcenter"><input name="keyword" id="keyword" type="text" /></div>
+            <div class="formright" id="p_keyword">关键字必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">参 数 值：</div>
+            <div class="formcenter"><input name="value" id="value" type="text" /></div>
+            <div class="formright" id="p_value">参数值必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">参数类别：</div>
+            <div class="formcenter">
+              <select name="sort" id="sort">
+                <%0.upto(WEBPM_SORT.length-1) do |v|%>
+                <option value="<%=v%>"><%=WEBPM_SORT[v]%></option>
+                <%end%>
+              </select>
+             </div>
+            <div class="formright" id="p_sort">请选择参数类别</div>
+</div>
+<div class="formouter">
+            <div class="formleft">参数说明：</div>
+            <div class="formcenter"><input name="description1" id="description1" type="text" /></div>
+            <div class="formright" id="p_description">参数的说明信息</div>
+</div>

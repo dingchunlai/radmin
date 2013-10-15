@@ -1,0 +1,105 @@
+<script type="text/javascript">
+  var TotalSeconds = <%= ((@bid_record.expired_time - Time.now)/1000).to_i * 1000 %>;
+
+  function takeCount()
+  {
+    //计数减一
+    if(TotalSeconds > 0)
+    {
+      TotalSeconds -= 1;
+
+      //计算时分秒
+      var days = Math.floor( TotalSeconds / ( 60 * 60 * 24 ));
+      var hours = Math.floor( TotalSeconds / ( 60 * 60 )) % 24;
+      var minutes = Math.floor(TotalSeconds / (60)) % 60;
+      var seconds = Math.floor(TotalSeconds) % 60;
+
+      //将时分秒插入到html中
+      document.getElementById("RemainTime").innerHTML = "离标签结束还有 " + days + "天" + hours + "小时" + minutes + "分" + seconds + "秒";
+    }
+    else
+    {
+      document.getElementById("RemainTime").innerHTML = "竞标已经结束"
+    }
+  }
+
+  window.onload = setInterval("takeCount();",1000);
+</script>
+<div class="user_right">
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>
+            我的和家 - 竞标详细页
+          </div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          在这里您可以参加竞标。
+        </div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on">竞标详细页</li>
+          <li class="line"></li>
+          <li class="more"></li>
+        </ul>
+      </div>
+
+      <div id="same1">
+        <div>
+          <div style="width: 550px;float: left;">竞标标签：<%= @tag_name %></div>
+          <div id="RemainTime"></div>
+        </div>
+        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+          <tr>
+            <th>排名</th>
+            <th>商户</th>
+            <th>价格</th>
+          </tr>
+          <% @bids.each_with_index do |bid, index| %>
+            <% index += 1 %>
+            <tr style="background-color:#FFFDE6">
+              <td>
+                <%= index %>
+              </td>
+              <td>
+                <%= bid.deco_firm.name_zh %>
+              </td>
+              <td>
+                <%= bid.bid_price %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <div>
+        <% unless (@bid.id and @bid.status == true) %>
+          <% form_for(:bid, @bid, :url => {:action => "bid_create"}, :html => {:id => "bid_form"}) do |f| -%>
+            <div>
+              <%= f.hidden_field :bid_record_id %>
+              <%= f.hidden_field :deco_firm_id %>
+              <%= f.hidden_field :city %>
+              <%= f.hidden_field :price %>
+              <%= f.hidden_field :style %>
+              <%= f.hidden_field :expired_time %>
+            </div>
+            <p>
+              您的出价：<%= f.text_field :bid_price %>元
+              <% if @bid.id %>
+                <input type="button" value="出价" onclick="document.getElementById('bid_form').action='/decos/bid_update?bid_id=<%= @bid.id %>';this.form.submit();"></input>
+              <% else %>
+                <input type="button" value="出价" onclick="this.form.submit();"></input>
+              <% end %>
+            </p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

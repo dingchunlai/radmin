@@ -1,0 +1,83 @@
+<script type="text/javascript" src="/javascripts/list_select_and_delete.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 650;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/zhuanqu/dianxing_list?page="+page+"&recordcount=<%=@recordcount%>&name=<%=u(@name)%>", "_self");
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" method="post" action="/zhuanqu/dianxing_list" target="_top">
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    频道名称: <input name="name" type="text" size="15" value="<%=@name%>" />
+    <input type="submit"value="搜 索" />
+  </div>
+
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		<span style="color:#BF0000;">典型频道管理</span>
+        总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+        　<%=gmb("新建典型频道","","window.open('/zhuanqu/dianxing_edit','_blank');","")%> <br />
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>频道名</th>
+            <th>频道名</th>
+            <th>创建时间</th>
+            <th>操作</th>
+    </tr>
+    <%for r in @rs%>
+    <tr style="background-color:#FFFDE6" id="tr_<%=r.id%>">
+      <td><input type="checkbox" name="arid" id="arid<%=r.id%>" value="<%=r.id%>" /> <%=r.id%></td>
+      <td align="center"><a href="http://tag.51hejia.com/<%=r.spell%>/" target="_blank"><%=r.name%></a></td>
+      <td align="center"><%=r.spell%></a></td>
+      <td align="center"><%=r.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+      <td align="center">
+        <a href="/zhuanqu/dianxing_edit?id=<%=r.id%>" target="_blank">编辑</a>　
+      </td>
+    </tr>
+    <% end %>
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.arid);" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll('/zhuanqu/dianxing_del');" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

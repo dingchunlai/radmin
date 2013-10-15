@@ -1,0 +1,691 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<title>预览：<%= @product.name %></title>
+<meta content="佳饰橱柜特贡系列价格,佳饰橱柜特贡系列报价,佳饰整体橱柜,整体橱柜" name="keywords"/>
+<meta content="和家网产品报价频道提供佳饰橱柜特贡系列最近价格,了解佳饰橱柜特贡系列上海地区最低报价,至和家网免费核价,轻松找低价!" name="description"/>
+<meta content="all" name="robots"/>
+<link media="screen, projection" type="text/css" href="http://p.51hejia.com/stylesheets/main.css" rel="stylesheet"/>
+<link media="screen, projection" type="text/css" href="http://p.51hejia.com/stylesheets/product601.css" rel="stylesheet"/>
+<script type="text/javascript" src="http://www.51hejia.com/js/newShow/cookie.js"/></script>
+<script type="text/javascript" src="http://p.51hejia.com/javascripts/history.js"/></script>
+<script type="text/javascript" src="http://p.51hejia.com/javascripts/jquery.js"/></script>
+<script type="text/javascript" src="http://p.51hejia.com/javascripts/jquery-ui.js"/></script>
+<script type="text/javascript" src="http://p.51hejia.com/javascripts/jrails.js"/></script>
+</head>
+<body id="body-products">
+<div class="main clearfix">
+  <!-- Header Begin -->
+  <div class="clearfix" id="global_head">
+    <div class="glogo"><a target="_blank" href="http://www.51hejia.com/"><img src="http://js.51hejia.com/img/Logo.gif"/></a></div>
+    <div class="navigation clearfix">
+      <ul class="main_nav clearfix">
+        <li><a href="http://tuku.51hejia.com/">看图片</a></li>
+        <li><a href="http://d.51hejia.com/">选装修</a></li>
+        <li><a href="http://p.51hejia.com/">找低价</a></li>
+        <li><a href="http://www.51hejia.com/jushang/">居 尚</a></li>
+        <li class="last"><a href="http://bbs.51hejia.com/">论 坛</a></li>
+      </ul>
+      <ul class="account clearfix">
+        <li class="users clearfix"><a href="/account" class="myaccount">我的店铺</a><a target="hideiframe_login" href="http://member.51hejia.com/member/loginout?forward=http://p.51hejia.com/products/234886.html" class="glogout">退出</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="menu_topad">
+	
+		<a title="橱柜专家" target="_blank" href="http://p.51hejia.com/cuxiao/NO7/index.html"><img src="http://d.51hejia.com/api/images/0000/0586/menu_ad01.gif" alt="橱柜专家"/></a>
+	
+		<a title="装修促销" target="_blank" href="http://p.51hejia.com/cuxiao/zhuangx/index.html"><img src="http://d.51hejia.com/api/images/0000/0597/menu_ad02.gif" alt="装修促销"/></a>
+	
+</div>
+<div class="menu_box">
+  <ul class="clearfix">
+    <li class="menu_left"/>
+    <li class="menu_bg"><a target="_self" href="/">建材报价</a></li>
+    <li><a target="_self" href="/mall">直销商城</a></li>
+    <li><a target="_self" href="/markets">卖场查询</a></li>
+    <li><a target="_self" href="/vendors">商家查询</a></li>
+    <li><a target="_self" href="/brands">品牌查询</a></li>
+  </ul>
+  <span>服务热线：400-706-5511转8888（9:00-21:00）</span>
+</div>
+
+<div class="main">
+	<div class="menu_text">
+		<div class="search">
+			<form target="_blank" method="post" action="/search">
+				<div class="l">
+					<select name="search_type" id="search_type" class="menu_s01">
+						<option value="1">搜索产品</option>
+						<option value="2">搜索商家</option>
+						<option value="3">搜索卖场</option>
+					</select>
+					<input type="text" value="输入关键词" onclick="if( this.value == '输入关键词' ) { this.value = '' }" name="query" id="query" class="menu_s02"/>
+					<select name="category" id="category" class="menu_s03">
+						<option value="">所有分类</option>
+						<option value="12">橱柜</option>
+						<option value="2">厨房电器</option>
+						<option value="289">卫浴</option>
+						<option value="144">龙头/水槽</option>
+						<option value="250">地板</option>
+						<option value="263">瓷砖/马赛克/石材</option>
+						<option value="201">油漆/墙纸</option>
+						<option value="17">开关/电线</option>
+						<option value="26">门窗/移门</option>
+						<option value="50">楼梯/铁艺</option>
+						<option value="79">五金/锁具</option>
+						<option value="45">吊顶</option>
+						<option value="62">采暖/中央空调</option>
+						<option value="75">空气处理</option>
+						<option value="153">水处理</option>
+						<option value="209">阳光房</option>
+						<option value="305">智能家居</option>
+						<option value="90">基础建材</option>
+						<option value="114">灯具/灯饰</option>
+						<option value="97">家具/沙发</option>
+						<option value="158">装饰/地毯</option>
+						<option value="130">床上用品/布艺</option>
+						<option value="165">家用电器</option>
+						<option value="246">办公设备</option>
+					</select>
+					<input type="submit" value=" " name="commit" class="menu_s04"/>
+				</div>
+			</form>
+		</div>
+		<div class="topkeywords">热门关键字：
+			
+				<a title="厨房电器" target="_blank" href="http://p.51hejia.com/cuxiao/meida/index.html">厨房电器</a>
+			
+				<a title="橱柜" target="_blank" href="http://p.51hejia.com/cuxiao/NO7/index.html">橱柜</a>
+			
+				<a title="卫浴" target="_blank" href="http://p.51hejia.com/cuxiao/NO9/index.html">卫浴</a>
+			
+				<a title="阳台窗" target="_blank" href="http://p.51hejia.com/cuxiao/NO8/index.html">阳台窗</a>
+			
+		</div>
+		<div class="cart"><a href="/cart" target="_blank" title="购物车">购物车</a></div>
+	</div>
+</div>
+
+<div class="product">
+	<div class="location">
+		您现在的位置：<a href="/">产品频道</a> > <%= link_to @category.parent.name_zh, category_path(@category.parent) %> > <%= link_to @category.name_zh, category_path(@category) %> > <%= @product.name %>
+		<div>
+		<span><a onclick="window.clipboardData.setData('Text',window.location)" href="#">复制链接</a></span>|
+		<span><a onclick="window.external.addFavorite(window.location,'佳饰橱柜特贡系列');" href="#">加入收藏</a></span>|
+		<span><a href="/pricings/new"><span>获取最低价</span></a></span>
+		</div>
+	</div>
+<div class="leftbox">
+	<div id="product_name" class="name"><%= @product.name %></div>
+	<div class="top clearfix">
+		<dl>
+		<dt>
+			<div id="pic_p">
+				<%= link_to image_tag(@product.primary_image_path(:medium), :alt => @product.name,  :id => "mainphoto", :width => "280", :height => "210"), @product.primary_image_path, :title => @product.name, :target => "_blank" -%>
+			</div>
+			<% if @product.images.size > 1 %>
+			<div class="btpic">
+			<img width="14" height="45" id="goleft" src="http://www.51hejia.com/images/prod0601/goleft.gif" style="cursor: pointer;"/>
+			<img width="14" height="45" id="goright" src="http://www.51hejia.com/images/prod0601/goright.gif" style="cursor: pointer;"/>
+			<div id="photos">
+				<div id="showArea" style="width: 416px;">
+				<% @product.images.each do |image| -%>
+					<%= link_to image_tag(image.full_path(:small), :rel => image.full_path(:medium)), image.full_path, :target => "_blank" -%>
+				<% end -%>
+				</div>
+				<div style="overflow: hidden; width: 1px; height: 1px;"></div>
+			</div>
+			<script type="text/javascript" language="javascript">
+				var browse = window.navigator.appName.toLowerCase();
+				var MyMar;
+				var speed = 1; //速度，越大越慢
+				var spec = 1; //每次滚动的间距, 越大滚动越快
+				var minOpa = 100; //滤镜最小值
+				var maxOpa = 100; //滤镜最大值
+				var spa = 2; //缩略图区域补充数值
+				var w = 0;
+				spec = (browse.indexOf("microsoft") > -1) ? spec : ((browse.indexOf("opera") > -1) ? spec*10 : spec*20);
+				function $$(e) {return document.getElementById(e);}
+				function goleft() {$$('photos').scrollLeft -= spec;}
+				function goright() {$$('photos').scrollLeft += spec;}
+				function setOpacity(e, n) {
+						if (browse.indexOf("microsoft") > -1) e.style.filter = 'alpha(opacity=' + n + ')';
+						else e.style.opacity = n/100;
+				}
+				$$('goleft').style.cursor = 'pointer';
+				$$('goright').style.cursor = 'pointer';
+				$$('mainphoto').onmouseover = function() {setOpacity(this, maxOpa);}
+				$$('mainphoto').onmouseout = function() {setOpacity(this, minOpa);}
+				$$('mainphoto').onclick = function() {location = this.getAttribute('name');}
+				$$('goleft').onmouseover = function() {this.src = 'http://www.51hejia.com/images/prod0601/goleft1.gif'; MyMar=setInterval(goleft, speed);}
+				$$('goleft').onmouseout = function() {this.src = 'http://www.51hejia.com/images/prod0601/goleft.gif'; clearInterval(MyMar);}
+				$$('goright').onmouseover = function() {this.src = 'http://www.51hejia.com/images/prod0601/goright1.gif'; MyMar=setInterval(goright,speed);}
+				$$('goright').onmouseout = function() {this.src = 'http://www.51hejia.com/images/prod0601/goright.gif'; clearInterval(MyMar);}
+				window.onload = function() {
+					setOpacity($$('mainphoto'), minOpa);
+					var rHtml = '';
+					var p = $$('showArea').getElementsByTagName('img');
+					for (var i=0; i<p.length; i++) {
+							w += parseInt(p[i].getAttribute('width')) + spa;
+							setOpacity(p[i], minOpa);
+							p[i].onclick = function() {location = this.getAttribute('name');}
+							p[i].onmouseover = function() {
+									setOpacity(this, maxOpa);
+									$$('mainphoto').src = this.getAttribute('rel');
+									$$('mainphoto').setAttribute('name', this.getAttribute('name'));
+									setOpacity($$('mainphoto'), maxOpa);
+							}
+							p[i].onmouseout = function() {
+									setOpacity(this, minOpa);
+									setOpacity($$('mainphoto'), minOpa);
+							}
+							rHtml += '<img src="' + p[i].getAttribute('rel') + '" width="0" height="0" alt="" />';
+					}
+					$$('showArea').style.width = parseInt(w) + 'px';
+					var rLoad = document.createElement("div");
+					$$('photos').appendChild(rLoad);
+					rLoad.style.width = "1px";
+					rLoad.style.height = "1px";
+					rLoad.style.overflow = "hidden";
+					rLoad.innerHTML = rHtml;
+				}
+			</script>
+		</div>
+		<% end %>
+		<div class="seeall">[共有 <strong><%= @product.images.size %></strong> 张产品图片]</div>
+	</dt>
+	<dd><div class="dd01" id="product_price">
+		<% if @product.special_price != 0 %>
+			特价：<%= format_price(@product.special_price, @product.unit, @product.typehood) -%>
+		<% else %>	
+			市场价：<%= format_price(@product.now_price, @product.unit, @product.typehood) -%>
+		<% end %>
+	</div></dd>
+	<dd><div class="dd02"><span>型号：<%= @product.model -%></span><span>产品综合分：<span><%= @product.marking -%></span></span><span>核价次数：<span><%= @product.liveness -%></span> 次</span></div></dd>
+	<dd><div class="dd03">
+		<% @pparams.each do |p| %>
+			<span><%= p.cparam.key %>：<%= p.cparam_item.value %></span>
+		<% end %>
+	<br/><span>[<a target="_blank" href="/products">查看全部产品</a>]</span>
+	<span>[<%= link_to "查看所有#{@category.name_zh}", category_path(:id => @category.tagid), :target => "_blank" if @category -%>]</span>
+	<span>[<%= link_to "查看该品牌所有产品", brand_path(@product.brand) if @product.brand %>]</span></div>
+	</dd>
+	<dd class="dd05"><div class="dd04">
+	<div><table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tbody><tr>
+			<td><%= product_button(@product) -%></td>
+			<td><a class="a01" title="陪同砍价" target="_blank" href="/daogou">陪同砍价</a><a class="a01" title="我要现场砍价" target="_blank" href="/daogou">我要现场砍价</a><br/>服务热线：400-706-5511转8888 （9：00-21：00）</td>
+		</tr>
+	</tbody></table>
+	</div></div>
+	</dd>
+	<dd class="dd06">
+	<div><span>该产品标签</span><%= format_tags(@product.tags) if @product.tags %></div>
+	</dd>
+	</dl>
+	</div>
+<div class="box01">
+	<div class="title">核价流程</div>
+	<div class="text01">
+    <p><strong>核价流程</strong><br/>
+      第1步：本产品价格为上海地区市场价格，获取最低价格请将产品相关信息(品牌,型号)填写核价单，或拨打客服电话：400 706 5511转8888告诉我们；<br/>
+      第2步：如在和家网站内未找到您需要的商品，亦可直接将产品相关信息(品牌,型号)告知我们客服工作人员；<br/>
+      第3步：我们会在1个工作日内，短信或邮件方式告知该产品的最低价格、购买地址、有效日期；<br/>
+      第4步：凭此短信或邮件打印件，到商家处即可享受和家网优惠价格；<br/>
+      <strong>温馨提示</strong><br/>
+      1、和家网核价服务目前只针对上海地区；<br/>
+      2、和家网提供的价格信息仅对本次核价商铺有效，不作为其他商铺的砍价依据；<br/>
+      3、请在价格有效期内购买；<br/>
+      4、如在1个工作日内无法收到信息，请直接致电400 706 5511转8888客服电话，我们将通过您确认的方式再次发送核价信息；<br/>
+      5、如果您需要购买橱柜等定制类产品，或想集中购买产品可以申请和家网选材顾问陪购(此服务对和家网友免费),陪购服务可以让你更省时、省力、省钱，请点击“<a title="我要陪购" href="http://p.51hejia.com/pricings/new">我要陪购</a>”<br/>
+    </p>
+	</div>
+	<div class="title">产品详情</div>
+	<div class="text01">
+		<div><%= @product.detail -%></div>
+	</div>
+	<div class="title">店铺其他产品</div>
+	<div class="text02 clearfix">
+		<div class="text02_pic">
+			<ul>
+				
+				<li><div><a title="佳饰橱柜—特别推荐系列" target="_blank" href="/products/118163.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220497236628.jpg" alt="佳饰橱柜—特别推荐系列"/></a></div><span><a title="佳饰橱柜—特别推荐系列" target="_blank" href="/products/118163.html">佳饰橱柜—特别推荐系列</a></span></li>
+				
+				<li><div><a title="佳饰橱柜—常规巡航系列" target="_blank" href="/products/118162.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220497379851.jpg" alt="佳饰橱柜—常规巡航系列"/></a></div><span><a title="佳饰橱柜—常规巡航系列" target="_blank" href="/products/118162.html">佳饰橱柜—常规巡航系列</a></span></li>
+				
+				<li><div><a title="佳饰橱柜—时代经典系列" target="_blank" href="/products/118171.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220497050690.jpg" alt="佳饰橱柜—时代经典系列"/></a></div><span><a title="佳饰橱柜—时代经典系列" target="_blank" href="/products/118171.html">佳饰橱柜—时代经典系列</a></span></li>
+				
+				<li><div><a title="佳饰橱柜—欧陆风情系列" target="_blank" href="/products/118172.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220496961676.jpg" alt="佳饰橱柜—欧陆风情系列"/></a></div><span><a title="佳饰橱柜—欧陆风情系列" target="_blank" href="/products/118172.html">佳饰橱柜—欧陆风情系列</a></span></li>
+				
+				<li><div><a title="佳饰威诗利卫浴A系列" target="_blank" href="/products/139914.html"><img src="http://d.51hejia.com/files/hekea/img/20080919/tn/img200809191221802157912.jpg" alt="佳饰威诗利卫浴A系列"/></a></div><span><a title="佳饰威诗利卫浴A系列" target="_blank" href="/products/139914.html">佳饰威诗利卫浴A系列</a></span></li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="title">最新商情</div>
+	<div class="text02 clearfix">
+		<div class="text02_pic clearfix">
+			<ul>
+			
+				<li>
+					<div><a title="除油烟率达到99.6%.再也不用清洗抽油烟机" target="_blank" href="http://p.51hejia.com/cuxiao/meida/index.html"><img src="http://d.51hejia.com/api/images/0000/0943/1.jpg" alt="除油烟率达到99.6%.再也不用清洗抽油烟机"/></a></div>
+					<span><a title="除油烟率达到99.6%.再也不用清洗抽油烟机" target="_blank" href="http://p.51hejia.com/cuxiao/meida/index.html">除油烟率达到99.6%.再也不用清洗抽油烟机</a></span>
+				</li>
+			
+				<li>
+					<div><a title="全市最低价格封阳台 免费带样上门量尺寸" target="_blank" href="http://p.51hejia.com/cuxiao/NO8/index.html"><img src="http://d.51hejia.com/api/images/0000/0944/u_4059710429_716742498_fm_0_gp_20.jpg" alt="全市最低价格封阳台 免费带样上门量尺寸"/></a></div>
+					<span><a title="全市最低价格封阳台 免费带样上门量尺寸" target="_blank" href="http://p.51hejia.com/cuxiao/NO8/index.html">全市最低价格封阳台 免费带样上门量尺寸</a></span>
+				</li>
+			
+				<li>
+					<div><a title="尚高卫浴 挑战上海卫浴最低极限价" target="_blank" href="http://p.51hejia.com/cuxiao/NO9/index.html"><img src="http://d.51hejia.com/api/images/0000/0945/03.jpg" alt="尚高卫浴 挑战上海卫浴最低极限价"/></a></div>
+					<span><a title="尚高卫浴 挑战上海卫浴最低极限价" target="_blank" href="http://p.51hejia.com/cuxiao/NO9/index.html">尚高卫浴 挑战上海卫浴最低极限价</a></span>
+				</li>
+			
+				<li>
+					<div><a title="大开套装门6.8折 满1500送100元" target="_blank" href="http://p.51hejia.com/cuxiao/dakai/index.html"><img src="http://d.51hejia.com/api/images/0000/0946/1.jpg" alt="大开套装门6.8折 满1500送100元"/></a></div>
+					<span><a title="大开套装门6.8折 满1500送100元" target="_blank" href="http://p.51hejia.com/cuxiao/dakai/index.html">大开套装门6.8折 满1500送100元</a></span>
+				</li>
+			
+				<li>
+					<div><a title="选材顾问帮你选橱柜 必有一款适合你" target="_blank" href="http://p.51hejia.com/cuxiao/NO7/index.html"><img src="http://d.51hejia.com/api/images/0000/0947/2.jpg" alt="选材顾问帮你选橱柜 必有一款适合你"/></a></div>
+					<span><a title="选材顾问帮你选橱柜 必有一款适合你" target="_blank" href="http://p.51hejia.com/cuxiao/NO7/index.html">选材顾问帮你选橱柜 必有一款适合你</a></span>
+				</li>
+			
+			</ul>
+		</div>
+		<div class="text02_list clearfix">
+			<ul class="clearfix">
+				
+				<li>•<a title="[厨电]美大集成灶发起21世纪厨房革命" target="_blank" href="http://p.51hejia.com/cuxiao/meida/index.html">[厨电]美大集成灶发起21世纪厨房革命</a><a title="[厨电]美大集成灶发起21世纪厨房革命" target="_blank" href="http://p.51hejia.com/cuxiao/meida/index.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[门窗]拉迷移门 限量低价大派送" target="_blank" href="http://lami.51hejia.com/promotions.html">[门窗]拉迷移门 限量低价大派送</a><a title="[门窗]拉迷移门 限量低价大派送" target="_blank" href="http://lami.51hejia.com/promotions.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[热水器]清华阳光太阳能 买机送温控器" target="_blank" href="http://p.51hejia.com/products/86483.html">[热水器]清华阳光太阳能 买机送温控器</a><a title="[热水器]清华阳光太阳能 买机送温控器" target="_blank" href="http://p.51hejia.com/products/86483.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[橱柜]做整体橱柜自己买台面更合算" target="_blank" href="http://dupont.51hejia.com/promotions.html">[橱柜]做整体橱柜自己买台面更合算</a><a title="[橱柜]做整体橱柜自己买台面更合算" target="_blank" href="http://dupont.51hejia.com/promotions.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[浴室柜]德恩石尚 买任一浴室柜 送龙头" target="_blank" href="http://p.51hejia.com/cuxiao/deen/index.html">[浴室柜]德恩石尚 买任一浴室柜 送龙头</a><a title="[浴室柜]德恩石尚 买任一浴室柜 送龙头" target="_blank" href="http://p.51hejia.com/cuxiao/deen/index.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[橱柜]沃迪勒韩国模系列 5折促销重磅出击！" target="_blank" href="http://p.51hejia.com/products/338736.html">[橱柜]沃迪勒韩国模系列 5折促销重磅出击！</a><a title="[橱柜]沃迪勒韩国模系列 5折促销重磅出击！" target="_blank" href="http://p.51hejia.com/products/338736.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[油漆]多乐士金装5和1 促销价490元！" target="_blank" href="http://p.51hejia.com/products/188719.html">[油漆]多乐士金装5和1 促销价490元！</a><a title="[油漆]多乐士金装5和1 促销价490元！" target="_blank" href="http://p.51hejia.com/products/188719.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[空调]大金空调6月旺季促销 好礼送不完" target="_blank" href="http://dajin.51hejia.com/products.html">[空调]大金空调6月旺季促销 好礼送不完</a><a title="[空调]大金空调6月旺季促销 好礼送不完" target="_blank" href="http://dajin.51hejia.com/products.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[家具]和式空间 衍杰榻榻米特价160元/平" target="_blank" href="http://p.51hejia.com/products/135076.html">[家具]和式空间 衍杰榻榻米特价160元/平</a><a title="[家具]和式空间 衍杰榻榻米特价160元/平" target="_blank" href="http://p.51hejia.com/products/135076.html"><span>查看详情</span></a></li>
+				
+				<li>•<a title="[水管]爱康保利水管 特价促销" target="_blank" href="http://aikang.51hejia.com/">[水管]爱康保利水管 特价促销</a><a title="[水管]爱康保利水管 特价促销" target="_blank" href="http://aikang.51hejia.com/"><span>查看详情</span></a></li>
+				
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="box02">
+	<div class="title02">看过佳饰橱柜特贡系列产品的还看过<span><a href="#" target="_self">返回顶部</a></span></div>
+	<div class="text02 clearfix">
+		<div class="text02_pic">
+			<ul>
+				
+				<li><div><a title="佳饰橱柜—常规巡航系列" target="_blank" href="/products/118162.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220497379851.jpg" alt="佳饰橱柜—常规巡航系列"/></a></div><span><a title="佳饰橱柜—常规巡航系列" target="_blank" href="/products/118162.html">佳饰橱柜—常规巡航系列</a></span></li>
+				
+				<li><div><a title="佳饰橱柜—特别推荐系列" target="_blank" href="/products/118163.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220497236628.jpg" alt="佳饰橱柜—特别推荐系列"/></a></div><span><a title="佳饰橱柜—特别推荐系列" target="_blank" href="/products/118163.html">佳饰橱柜—特别推荐系列</a></span></li>
+				
+				<li><div><a title="佳饰橱柜—欧陆风情系列" target="_blank" href="/products/118172.html"><img src="http://d.51hejia.com/files/hekea/img/20080904/tn/img200809041220496961676.jpg" alt="佳饰橱柜—欧陆风情系列"/></a></div><span><a title="佳饰橱柜—欧陆风情系列" target="_blank" href="/products/118172.html">佳饰橱柜—欧陆风情系列</a></span></li>
+				
+				<li><div><a title="一诺·悠悠厨房3D模压系列套餐" target="_blank" href="/products/143876.html"><img src="http://d.51hejia.com/files/hekea/img/20081204/tn/img200812041228359285602.jpg" alt="一诺·悠悠厨房3D模压系列套餐"/></a></div><span><a title="一诺·悠悠厨房3D模压系列套餐" target="_blank" href="/products/143876.html">一诺·悠悠厨房3D模压系列套餐</a></span></li>
+				
+				<li><div><a title="一诺·悠悠厨房双饰面门板系列巧厨套餐" target="_blank" href="/products/143880.html"><img src="http://d.51hejia.com/files/hekea/img/20081017/tn/img200810171224220027620.jpg" alt="一诺·悠悠厨房双饰面门板系列巧厨套餐"/></a></div><span><a title="一诺·悠悠厨房双饰面门板系列巧厨套餐" target="_blank" href="/products/143880.html">一诺·悠悠厨房双饰面门板系列巧厨套餐</a></span></li>
+				
+				<li><div><a title="一诺·悠悠厨房双饰面板系列套餐" target="_blank" href="/products/145221.html"><img src="http://d.51hejia.com/files/hekea/img/20081204/tn/img200812041228359114671.jpg" alt="一诺·悠悠厨房双饰面板系列套餐"/></a></div><span><a title="一诺·悠悠厨房双饰面板系列套餐" target="_blank" href="/products/145221.html">一诺·悠悠厨房双饰面板系列套餐</a></span></li>
+				
+				<li><div><a title="一诺·悠悠厨房3D模压白色系列套餐" target="_blank" href="/products/187422.html"><img src="http://d.51hejia.com/files/hekea/img/20081204/tn/img200812041228359692470.jpg" alt="一诺·悠悠厨房3D模压白色系列套餐"/></a></div><span><a title="一诺·悠悠厨房3D模压白色系列套餐" target="_blank" href="/products/187422.html">一诺·悠悠厨房3D模压白色系列套餐</a></span></li>
+				
+				<li><div><a title="方太组合橱柜“三米阳光”" target="_blank" href="/products/236061.html"><img src="http://d.51hejia.com/files/hekea/img/20090217/tn/img200902171234856137166.jpg" alt="方太组合橱柜“三米阳光”"/></a></div><span><a title="方太组合橱柜“三米阳光”" target="_blank" href="/products/236061.html">方太组合橱柜“三米阳光”</a></span></li>
+				
+				<li><div><a title="方太海伦小厨系列橱柜" target="_blank" href="/products/236075.html"><img src="http://d.51hejia.com/files/hekea/img/20090217/tn/img200902171234859309390.jpg" alt="方太海伦小厨系列橱柜"/></a></div><span><a title="方太海伦小厨系列橱柜" target="_blank" href="/products/236075.html">方太海伦小厨系列橱柜</a></span></li>
+				
+				<li><div><a title="喜天路橱柜" target="_blank" href="/products/339236.html"><img src="http://p.51hejia.com/images/products/0015/8601/1_thumb.jpg?1244711942" alt="喜天路橱柜"/></a></div><span><a title="喜天路橱柜" target="_blank" href="/products/339236.html">喜天路橱柜</a></span></li>
+				
+			</ul>
+		</div>
+	</div>
+
+	
+	<div class="title02">关于佳饰橱柜特贡系列产品的问答<span><a href="http://wb.51hejia.com/visitor/s?wd=整体橱柜" target="_blank">更多</a></span></div>
+	<div class="text02">
+		<ul class="wen">
+			
+			<li class="open"><a target="_blank" class="gray" href="http://wb.51hejia.com/visitor/browse/8.html">[其他]</a>
+			<a target="_blank" href="http://wb.51hejia.com/visitor/question/205391.html">求整体橱柜报价</a>
+			<span class="pinlun">2次评论</span><span class="yuedu">627次阅读</span>
+			
+			</li><li class="resolved"><a target="_blank" class="gray" href="http://wb.51hejia.com/visitor/browse/127.html">[厨房电器]</a>
+			<a target="_blank" href="http://wb.51hejia.com/visitor/question/205278.html">装饰管的前后尺寸这样厚，影响橱柜的平衡，因为整体橱柜比老板的上筒薄。
+</a>
+			<span class="pinlun">1次评论</span><span class="yuedu">587次阅读</span>
+			
+			</li><li class="open"><a target="_blank" class="gray" href="http://wb.51hejia.com/visitor/browse/214.html">[橱柜]</a>
+			<a target="_blank" href="http://wb.51hejia.com/visitor/question/177949.html">整体橱柜可以改吗？</a>
+			<span class="pinlun">4次评论</span><span class="yuedu">801次阅读</span>
+			
+			</li><li class="open"><a target="_blank" class="gray" href="http://wb.51hejia.com/visitor/browse/214.html">[橱柜]</a>
+			<a target="_blank" href="http://wb.51hejia.com/visitor/question/174363.html">请教整体橱柜的安装步骤？</a>
+			<span class="pinlun">1次评论</span><span class="yuedu">795次阅读</span>
+			
+			</li><li class="open"><a target="_blank" class="gray" href="http://wb.51hejia.com/visitor/browse/214.html">[橱柜]</a>
+			<a target="_blank" href="http://wb.51hejia.com/visitor/question/173908.html">如何把握整体橱柜的简单设计规则</a>
+			<span class="pinlun">2次评论</span><span class="yuedu">819次阅读</span>
+			
+		</li></ul>
+	</div>
+	
+
+	<div class="title02">佳饰橱柜特贡系列最新咨询<span>共有 0 条咨询信息</span></div>
+	<div class="text02">
+		<div id="comments">
+			 
+		</div>
+
+		<div class="question">
+			<div class="title02">我要咨询佳饰橱柜特贡系列</div>
+			<form method="post" id="comment_form" action="/comments">
+				<div><label>标题：</label><input type="text" size="40" name="comment[title]" id="comment_title"/></div>
+				<div><label>内容：</label><textarea rows="5" name="comment[body]" id="comment_body" cols="70"/></textarea></div>
+				<div class="btn"><input type="submit" value="提交" name="commit"/></div>
+			</form>
+		</div>
+
+	</div>
+
+	<div class="title02">与佳饰橱柜特贡系列产品有关的关键词</div>
+	<div class="text02">
+		<div class="keywords_p clearfix">
+			
+				<a title="橱柜报价" href="/categories/7701">橱柜报价</a>
+			
+				<a title="厨房电器报价" href="/categories/7612">厨房电器报价</a>
+			
+				<a title="卫浴报价" href="/categories/12660">卫浴报价</a>
+			
+				<a title="龙头/水槽报价" href="/categories/12543">龙头/水槽报价</a>
+			
+				<a title="地板报价" href="/categories/7519">地板报价</a>
+			
+				<a title="瓷砖/马赛克/石材报价" href="/categories/7222">瓷砖/马赛克/石材报价</a>
+			
+				<a title="油漆/墙纸报价" href="/categories/7906">油漆/墙纸报价</a>
+			
+				<a title="水管报价" href="/categories/7910">水管报价</a>
+			
+				<a title="开关/电线报价" href="/categories/7905">开关/电线报价</a>
+			
+				<a title="门窗/移门报价" href="/categories/7907">门窗/移门报价</a>
+			
+				<a title="楼梯/铁艺报价" href="/categories/7909">楼梯/铁艺报价</a>
+			
+				<a title="五金/锁具报价" href="/categories/7913">五金/锁具报价</a>
+			
+				<a title="吊顶报价" href="/categories/7908">吊顶报价</a>
+			
+				<a title="采暖/中央空调报价" href="/categories/7911">采暖/中央空调报价</a>
+			
+				<a title="空气处理报价" href="/categories/7912">空气处理报价</a>
+			
+				<a title="水处理报价" href="/categories/12859">水处理报价</a>
+			
+				<a title="阳光房报价" href="/categories/12955">阳光房报价</a>
+			
+				<a title="智能家居报价" href="/categories/12954">智能家居报价</a>
+			
+				<a title="基础建材报价" href="/categories/7915">基础建材报价</a>
+			
+				<a title="灯具/灯饰报价" href="/categories/7919">灯具/灯饰报价</a>
+			
+				<a title="家具/沙发报价" href="/categories/7918">家具/沙发报价</a>
+			
+				<a title="装饰/地毯报价" href="/categories/13129">装饰/地毯报价</a>
+			
+				<a title="床上用品/布艺报价" href="/categories/7921">床上用品/布艺报价</a>
+			
+				<a title="家用电器报价" href="/categories/13155">家用电器报价</a>
+			
+				<a title="办公设备报价" href="/categories/33062">办公设备报价</a>
+			
+		</div>
+	</div>
+
+	<div class="navigation">
+		<div class="title02">您可以用以下几种方式找到佳饰橱柜特贡系列产品</div>
+		<ul class="text02">
+			<li>
+				<a href="/products/0.0.0.1.0.0.html">所有产品</a> > 
+				<a href="/products/627.0.0.1.0.1.html">佳饰</a> > 
+				<a href="/products/627.0.0.1.5.1.html">1000 - 2000</a> > 
+				<a href="/products/627.13.0.1.5.1.html">整体橱柜</a>
+			</li>
+			<li>
+				<a href="/products/0.0.0.1.0.0.html">所有产品</a> > 
+				<a href="/products/627.0.0.1.0.1.html">佳饰</a> > 
+				<a href="/products/627.13.0.1.0.1.html">整体橱柜</a> > 
+				<a href="/products/627.13.0.1.5.1.html">1000 - 2000</a>
+			</li>
+			<li>
+				<a href="/products/0.0.0.1.0.0.html">所有产品</a> > 
+				<a href="/products/0.13.0.1.0.1.html">整体橱柜</a> > 
+				<a href="/products/627.13.0.1.0.1.html">佳饰</a> > 
+				<a href="/products/627.13.0.1.5.1.html">1000 - 2000</a>
+			</li>
+			<li>
+				<a href="/products/0.0.0.1.0.0.html">所有产品</a> > 
+				<a href="/products/0.13.0.1.0.1.html">整体橱柜</a> > 
+				<a href="/products/0.13.0.1.5.1.html">1000 - 2000</a> > 
+				<a href="/products/627.13.0.1.5.1.html">佳饰</a>
+			</li>
+			<li>
+				<a href="/products/0.0.0.1.0.0.html">所有产品</a> > 
+				<a href="/products/0.0.0.1.5.1.html">1000 - 2000</a> > 
+				<a href="/products/0.13.0.1.5.1.html">整体橱柜</a> > 
+				<a href="/products/627.13.0.1.5.1.html">佳饰</a>
+			</li>
+			<li>
+				<a href="/products/0.0.0.1.0.0.html">所有产品</a> > 
+				<a href="/products/0.0.0.1.5.1.html">1000 - 2000</a> > 
+				<a href="/products/627.0.0.1.5.1.html">佳饰</a> > 
+				<a href="/products/627.13.0.1.5.1.html">整体橱柜</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+</div>
+
+<div class="rightbox">
+	
+	<div id="vendor_name" class="title"><div title="<%= @vendor.name_zh %>"><%= @vendor.name_zh %></div></div>
+	<div class="text rightbox_d">
+		<dl>
+			<dt>商户等级：<%= class_index_image(@vendor.class_index.to_i) -%></dt>
+			<dt>商户诚信度：<%= @vendor.price_faith -%></dt>
+			<dt>品牌知名度：<%= @vendor.brand_awareness -%></dt>
+			<dd><%= vendor_link(@vendor, image_tag("http://www.51hejia.com/images/prod0601/shop.gif")) -%></dd>
+		</dl>
+	</div>
+	
+	<div class="title">商户产品排行</div>
+	<div class="text rightbox_e">
+		<ul class="paih01">
+			
+			<li><a title="佳饰橱柜—特别推荐系列" target="_blank" href="/products/118163.html"><span>• 佳饰橱柜—特别推荐系列</span></a></li>
+			
+			<li><a title="佳饰橱柜—常规巡航系列" target="_blank" href="/products/118162.html"><span>• 佳饰橱柜—常规巡航系列</span></a></li>
+			
+			<li><a title="佳饰橱柜—时代经典系列" target="_blank" href="/products/118171.html"><span>• 佳饰橱柜—时代经典系列</span></a></li>
+			
+			
+			
+			<li><a title="佳饰橱柜—欧陆风情系列" target="_blank" href="/products/118172.html">• 佳饰橱柜—欧陆风情系列</a></li>
+			
+			<li><a title="佳饰威诗利卫浴A系列" target="_blank" href="/products/139914.html">• 佳饰威诗利卫浴A系列</a></li>
+			
+			<li><a title="佳饰威诗利卫浴C系列" target="_blank" href="/products/139916.html">• 佳饰威诗利卫浴C系列</a></li>
+			
+			<li><a title="佳饰威诗利卫浴B系列" target="_blank" href="/products/139915.html">• 佳饰威诗利卫浴B系列</a></li>
+			
+			<li><a title="佳饰威诗利卫浴D系列" target="_blank" href="/products/139917.html">• 佳饰威诗利卫浴D系列</a></li>
+			
+			<li><a title="佳饰橱柜威诗利C橱柜" target="_blank" href="/products/118184.html">• 佳饰橱柜威诗利C橱柜</a></li>
+			
+			<li><a title="佳饰橱柜—白金等级系列" target="_blank" href="/products/118176.html">• 佳饰橱柜—白金等级系列</a></li>
+			
+			
+		</ul>
+	</div>
+
+	<div class="title">分类产品排行</div>
+	<div class="text rightbox_e">
+		<ul class="paih01">
+			
+			
+		</ul>
+	</div>
+
+	<div class="title">为什么选择我们</div>
+	<div class="text rightbox_f">
+		<dl>
+			<dt>核价服务</dt>
+			<dd>为您看中的产品核出全市最低价，想省就省到低。</dd>
+			<dt>选材服务</dt>
+			<dd>为您做最专业分析比较把最合适的产品按最低价介绍给您。</dd>
+			<dt>陪购服务</dt>
+			<dd>砍不了价？专业陪购师愿意在每个周末陪您一起度过：逛卖场、挑产品、砍价。</dd>
+		</dl>
+	</div>
+
+	
+	<div class="title">相关导购文章</div>
+	<div class="text rightbox_c">
+		<ul>
+			
+			<li>• <a title="厨房装扮12大热点 为家配套完善的整体橱柜" target="_blank" href="http://www.51hejia.com/chuguipindao/20090611/406357.r">厨房装扮12大热点 为家配套完善的整体橱柜</a></li>
+			
+			<li>• <a title="网友家经典厨房装修 学配田园整体橱柜" target="_blank" href="http://www.51hejia.com/chuguipindao/20090611/406350.r">网友家经典厨房装修 学配田园整体橱柜</a></li>
+			
+			<li>• <a title="预算8万元以内 厨房可以这样配整体橱柜" target="_blank" href="http://www.51hejia.com/chuguipindao/20090611/406289.r">预算8万元以内 厨房可以这样配整体橱柜</a></li>
+			
+			<li>• <a title="看大户型奢华欧式装修 配时尚整体橱柜" target="_blank" href="http://www.51hejia.com/chuguipindao/20090610/406253.r">看大户型奢华欧式装修 配时尚整体橱柜</a></li>
+			
+			<li>• <a title="看大户型奢华欧式装修 配时尚整体橱柜" target="_blank" href="http://www.51hejia.com/chuguipindao/20090610/406251.r">看大户型奢华欧式装修 配时尚整体橱柜</a></li>
+			
+			<li>• <a title="26套整体橱柜样板间 缤纷色彩为厨房添活力" target="_blank" href="http://www.51hejia.com/chuguipindao/20090610/406245.r">26套整体橱柜样板间 缤纷色彩为厨房添活力</a></li>
+			
+			<li>• <a title="6款整体橱柜推荐让小厨房摇身变大空间" target="_blank" href="http://www.51hejia.com/chuguipindao/20090604/401798.r">6款整体橱柜推荐让小厨房摇身变大空间</a></li>
+			
+			<li>• <a title="整体橱柜价格混乱 怎么算账才能不吃亏？ " target="_blank" href="http://www.51hejia.com/chuguipindao/20090524/400508.r">整体橱柜价格混乱 怎么算账才能不吃亏？ </a></li>
+			
+			<li>• <a title="整体橱柜套餐暗藏消费陷阱 消费者购买时需谨慎 " target="_blank" href="http://www.51hejia.com/chuguipindao/20090523/400313.r">整体橱柜套餐暗藏消费陷阱 消费者购买时需谨慎 </a></li>
+			
+			<li>• <a title="德意09年新品推出3 整体橱柜" target="_blank" href="http://www.51hejia.com/chuguipindao/20090522/400126.r">德意09年新品推出3 整体橱柜</a></li>
+			
+		</ul>
+	</div>
+	
+
+	<div class="title">您浏览过的产品</div>
+	<div class="text rightbox_g">
+	</div>
+
+</div>
+
+</div>
+
+
+<div class="c"/>
+<div class="main">
+	<div class="bottom_p">
+		<div class="c clearfix">
+			<dl>
+				<dt><strong>找低价</strong></dt>
+				<dd><a title="和家网的优势" target="_blank" href="/help/protocol#1">和家网的优势</a></dd>
+				<dd><a title="为什么我们的价格最低" target="_blank" href="/help/protocol#1">为什么我们的价格最低</a></dd>
+				<dd><a title="如何找低价" target="_blank" href="/help/protocol#1">如何找低价</a></dd>
+			</dl>
+			<dl>
+				<dt><strong>直销商城</strong></dt>
+				<dd><a title="什么是直销商城" target="_blank" href="/help/protocol#2">什么是直销商城</a></dd>
+				<dd><a title="直销商城和找低价的区别" target="_blank" href="/help/protocol#2">直销商城和找低价的区别</a></dd>
+				<dd><a title="价格这么低是正品吗" target="_blank" href="/help/protocol#2">价格这么低是正品吗</a></dd>
+			</dl>
+			<dl>
+				<dt><strong>售后服务</strong></dt>
+				<dd><a title="对已买的货物不满意" target="_blank" href="/help/protocol#3">对已买的货物不满意</a></dd>
+				<dd><a title="如果其他地方有更低价格" target="_blank" href="/help/protocol#3">如果其他地方有更低价格</a></dd>
+			</dl>
+			<dl>
+				<dt><strong>帮助中心</strong></dt>
+				<dd><a title="常见的热门问题" target="_blank" href="/help/protocol#4">常见的热门问题</a></dd>
+				<dd><a title="联系我们" target="_blank" href="/help/protocol#4">联系我们</a></dd>
+				<dd><a title="投诉与建议" target="_blank" href="/help/protocol#4">投诉与建议</a></dd>
+			</dl>
+			<dl>
+				<dt><strong>客服热线</strong></dt>
+				<dd>400-706-5511转8888</dd>
+				<dd>9：00-21：00</dd>
+			</dl>
+		</div>
+		<div class="biaos c">
+			<img alt="仅限上海地区" src="http://p.51hejia.com/images/index_88.gif"/><img alt="承诺保证正品" src="http://p.51hejia.com/images/index_89.gif"/><img alt="承诺保证低价" src="http://p.51hejia.com/images/index_90.gif"/>
+		</div>
+	</div>
+</div>
+
+<div class="span-24" id="footer">
+    <div>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/">全站索引</a> ->
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/A.html">A</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/B.html">B</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/C.html">C</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/D.html">D</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/E.html">E</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/F.html">F</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/G.html">G</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/H.html">H</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/I.html">I</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/J.html">J</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/K.html">K</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/L.html">L</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/M.html">M</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/N.html">N</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/O.html">O</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/P.html">P</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/Q.html">Q</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/R.html">R</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/S.html">S</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/T.html">T</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/U.html">U</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/V.html">V</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/W.html">W</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/X.html">X</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/Y.html">Y</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/letter/Z.html">Z</a>
+    </div>
+    <div>
+      <a target="_blank" href="http://corp.51hejia.com/login.jhtml">企业用户登录</a>
+      <a target="_blank" href="http://www.51hejia.com/aboutus/about.html">关于我们</a>
+      <a target="_blank" href="http://www.51hejia.com/aboutus/contactus.html">联系我们</a>
+      <a onclick="Divopop('Login');return true;" href="#top">会员登陆</a>
+      <a target="_blank" href="http://www.51hejia.com/aboutus/priv.html">版权声明</a>
+      <a target="_blank" href="http://www.51hejia.com/link/link/index.htm">友情链接</a>
+      <a target="_blank" href="http://www.51hejia.com/siteindex/">网站地图</a>
+    </div>
+    <div>和家网(上海)信息技术有限公司 版权所有</div>
+    <div>违法及不良信息举报 webmaster@51hejia.com <br/>沪ICP备06009042号</div>
+</div>
+</body></html>

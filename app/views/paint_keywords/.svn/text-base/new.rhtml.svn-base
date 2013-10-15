@@ -1,0 +1,14 @@
+	<% form_for :paint_keyword,@paint_keyword , :url => {:action => "create", :id => @paint_keyword.id},:html => {:method => (@paint_keyword.new_record? && :post || :put)} do |f| -%>
+	<p style="color:red;"><%= flash[:error] %></p>
+	<table>
+		<tr>
+			<td>名字：</td>
+			<td><%= f.text_field :name %></td>
+		</tr>
+		<tr>
+			<td>
+				<%= submit_tag "确定" %>
+			</td>
+		</tr>
+	</table>
+	<% end %>

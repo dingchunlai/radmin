@@ -1,0 +1,5 @@
+<% fields_for_property(property) do |property_form| %>
+	<%= property.cproperty.name %>:
+	<%= property_form.hidden_field :property_id %>
+	<%= property_form.text_field :value -%>
+<% end %>

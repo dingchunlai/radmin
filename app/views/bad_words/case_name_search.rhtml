@@ -1,0 +1,10 @@
+<% if @cases.blank?%>
+	<h1>没有数据</h1>
+<% else %>
+<ul>
+	<% @cases.each do |c| -%>
+	<li><%= c.NAME%></li>
+	<% end %>
+</ul>
+
+<% end %>

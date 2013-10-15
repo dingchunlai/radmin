@@ -1,0 +1,174 @@
+<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 我的主帖</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以浏览所有您在和家论坛上发表的帖子。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:480px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on">我的主帖</li>
+    <li class="line"></li>
+    <li class="more"></li>
+	</ul>
+  </div>
+
+<script type="text/javascript">
+window.onload = function(){
+  //div_main_height = 440;
+  //ge("div_main").style.height = div_main_height;
+  //ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/member/usertopic?page="+page+"&recordcount=<%=@recordcount%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/member/usertopic_del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = "0";
+      for (i=0; i<document.form1.topicid.length;i++){
+          if (document.form1.topicid[i].checked)
+              ids += ", " + document.form1.topicid[i].value;
+      }
+      if (ids!="0") hideiframe.location="/member/usertopic_del?ids="+ids;
+    }
+}
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:12px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    color:#F27900;
+    text-decoration:none;
+  }
+</style>
+
+<div id="same1">
+<form name="form1">
+  <div style="font-family:Verdana; color:#DD4504; line-height:32px; font-size:12px; letter-spacing:1px; margin: 0px 0px 0px 15px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+  </div>
+  <div style="height:390px;">
+  <table id="datalist" style="margin-left:7px; width:98%;">
+    <tr>
+            <th>编号</th>
+            <th>帖子标题</th>
+            <th>最后更新</th>
+            <th>操作</th>
+    </tr>
+    <%for topic in @topics%>
+    <tr style="background-color:#FFFDE6">
+      <td width="90"><input type="checkbox" name="topicid" value="<%=topic.id%>" /> <%=topic.id%></td>
+      <td><a href="http://bbs.51hejia.com/btopic/<%=topic.id%>" target="_blank"><%= topic.subject %></a></td>
+      <td width="90" align="center"><%= topic.updated_at.strftime("%Y-%m-%d") %></td>
+      <td width="60" align="center">
+        <a href="http://bbs.51hejia.com/edit/<%=topic.id%>/1" target="_blank">编辑</a>
+      </td>
+
+    </tr>
+    <% end %>
+    </table>
+    </div>
+
+    <div id="div_pagelist" style="margin:0px 10px 0px 10px;">
+      <div style="float:left">
+      <input onclick="SelectAll(document.form1.topicid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      </div>
+      <div style="float:right"><span id="pagelist"></span></div>
+    </div>
+</form>
+</div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+
+
+<%=render :partial => "/share/public_footer"%>

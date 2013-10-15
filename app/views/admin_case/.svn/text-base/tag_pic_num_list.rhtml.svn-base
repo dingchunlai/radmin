@@ -1,0 +1,21 @@
+<table style="margin:0 auto;">
+  <% @ts.each do |t| %>
+    <tr>
+      <td colspan="5" style="line-height:26px;background-color:#EEF9EB;font-size:15px;font-weight:bold;"><%= t.TAGNAME %>-<%= t.TAGURL %></td>
+    </tr>
+    <%
+    ppts = pic_tags(t)
+  %>
+    <% ppts.in_groups_of(5, false) do |g| %>
+      <tr>
+        <% g.each do |item| %>
+          <td>
+            <%= link_to item.name, "/admin_case/tag_pic_index?id=#{item.id}", :target => "_blank" %>
+            <% num = PhotoPhotosTag.count :conditions => "tag_id = #{item.id}" %>
+            (<strong <%= "style=\"color:red;\"" if num >= 24 %>><%= num %></strong>)
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

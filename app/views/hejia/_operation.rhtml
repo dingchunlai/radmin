@@ -1,0 +1,145 @@
+<script type="text/javascript">
+function gotopage(page){
+    window.open("/hejia/list?page="+page+"&recordcount=<%=@recordcount%>&username=<%=u(@username)%>&phone=<%=@phone%>&xinghao=<%=u(@xinghao)%>&state=<%=@state%>&name=<%=u(@name)%>&brand=<%=u(@brand)%>&riqi1=<%=@riqi1%>&riqi2=<%=@riqi2%>&executor=<%=@executor%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/user/del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/user/del?ids="+ids;
+    }
+}
+function getids(){
+    var ids = "0";
+    if (document.form1.userid.length==undefined){
+        if (document.form1.userid.checked) ids = document.form1.userid.value;
+    }else{
+        for (i=0; i<document.form1.userid.length;i++){
+            if (document.form1.userid[i].checked) ids += ", " + document.form1.userid[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择核价单记录！"); return "";} else return ids;
+}
+function fenpei(){  //分配处理人员
+  if (ge("zuyuan").value==""){
+    alert("请选择要分配的人员!");
+  }else{
+    ids = getids();
+    if (ids!="") hideiframe.location="/hejia/fenpei?userID=" + ge("zuyuan").value + "&ids=" + ids;
+  }
+}
+function chuli(){   //处理核价单
+    if (confirm('确定将选中的核价单更改为《已处理》状态吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/hejia/chuli?ids=" + ids;
+    }
+}
+function fasong(){   //确认发送短信
+    if (confirm('确定将选中的核价单更改为《已发送短信》状态吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/hejia/fasong?ids=" + ids;
+    }
+}
+function zuofei(){   //作废核价单
+    if (confirm('确定将选中的核价单更改为《已作废》状态吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/hejia/zuofei?ids=" + ids;
+    }
+}
+function chengjiao(){   //成交核价单
+    if (confirm('确定将选中的核价单更改为《已成交》状态吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/hejia/chengjiao?ids=" + ids;
+    }
+}
+function fangqi(){   //放弃核价单
+    if (confirm('确定将选中的核价单更改为《已放弃》状态吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/hejia/fangqi?ids=" + ids;
+    }
+}
+function daochu(){
+    ids = getids();
+    if (ids!="") window.open("/hejia/export_select?ids=" + ids,"_self");
+}
+function daochu_search(){
+    window.open("/hejia/export_search?cd=<%=u(@cd)%>","_self");
+}
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+
+<div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 10px 5px; ">
+      客户姓名：<input name="username" type="text" size="10" value="<%=@username%>" />
+      客户手机：<input name="phone" type="text" size="11" value="<%=@phone%>" />
+      型 号：<input name="xinghao" type="text" size="10" value="<%=@xinghao%>" />
+      处理状态：<select name="state" id="state"><option value="">--------------</option>
+                    <%
+                    0.upto(HEJIA_STATE.size-1) do |v|
+                    %>
+                    <option value="<%=v%>"><%=HEJIA_STATE[v]%></option>
+                    <%end%>
+                </select>　
+               <select name="area" id="area">
+                <option value="">地域</option>
+                <option value="上海">上海</option>
+                <option value="广州">广州</option>
+                <option value="深圳">深圳</option>
+                <option value="其他">其他</option>
+              </select>
+      <br />
+      产品名称：<input name="name" type="text" size="6" value="<%=@name%>" />
+      产品品牌：<input name="brand" type="text" size="6" value="<%=@brand%>" />
+
+
+      
+      日 期：<input name="riqi1" type="text" size="6" value="<%=@riqi1%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%=@riqi2%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />
+      处理人员：<select name="executor" id="executor" <%unless @is_zuzhang%>disabled<%end%>><option value="">--------------</option>
+                    <%
+                    get_zuyuan.each do |v|
+                    %>
+                    <option value="<%=v[0]%>"><%=v[1]%></option>
+                    <%end%>
+                </select>　
+      <input type="submit" value="搜 索" />
+    </div>
+    <hr style="border:1px solid #EEEEEE;" />
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 5px 0px 10px 5px; ">
+      <%if @state.nil? || @state == "6"%> <input type="button" value="处理核价单" onclick="chuli();" />　<%end%>
+      <%if @state.nil? || @state == "1"%> <input type="button" value="确认发送短信" onclick="fasong();" />　<%end%>
+      <%if @state.nil? || @state == "2"%> <input type="button" value="成交核价单" onclick="chengjiao();" />　<%end%>
+      <%if @state.nil? || @state == "2"%> <input type="button" value="放弃核价单" onclick="fangqi();" />　<%end%>
+      <input type="button" value="作废核价单" onclick="zuofei();" />　<br />
+      
+      <input type="button" value="全选" onclick="SelectAll(document.form1.userid);" />　
+      <%if @is_zuzhang%>
+        核价人员:
+        <select name="zuyuan" id="zuyuan">
+          <option value="">请选择</option>
+          <%
+          get_zuyuan.each do |v|
+          %>
+          <option value="<%=v[0]%>"><%=v[1]%></option>
+          <%end%>
+        </select>
+          <input type="button" value="分 配" onclick="fenpei();" />　
+      <%end%>
+      <input type="button" value="导出选择记录" onclick="daochu();" />　
+      <input type="button" value="导出搜索结果" onclick="daochu_search();" />
+    </div>

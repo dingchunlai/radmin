@@ -1,0 +1,195 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 5000;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/zhuanqu/fuheci?page="+page+"&recordcount=<%=@recordcount%>&sort_id1=<%=@sort_id1%>&sort_id2=<%=@sort_id2%>", "_self");
+}
+function deleteAll(){
+    var ids = [];
+    for (i=0; i<document.form1.r_id.length;i++){
+        if (document.form1.r_id[i].checked)
+            ids.push(document.form1.r_id[i].value);
+    }
+    if (ids.length==0){
+        alert("请选择要操作的记录!");
+    }else{
+        if (confirm('您确定要删除这些记录吗？')) hideiframe.location="/zhuanqu/fuheci_del?ids=" + ids.join(",");
+    }
+}
+function stat_case(){ //统计案例
+    var ids = [];
+    for (i=0; i<document.form1.r_id.length;i++){
+        if (document.form1.r_id[i].checked)
+            ids.push(document.form1.r_id[i].value);
+    }
+    if (ids.length==0){
+        alert("请选择要操作的记录!");
+    }else{
+        hideiframe.location="/zhuanqu/stat_case?ids=" + ids.join(",");
+    }
+}
+function recommendAll(){
+    var ids = [];
+    for (i=0; i<document.form1.r_id.length;i++){
+        if (document.form1.r_id[i].checked)
+            ids.push(document.form1.r_id[i].value);
+    }
+    if (ids.length==0){
+        alert("请选择要操作的记录!");
+    }else{
+        if (confirm('您确定要推荐这些记录吗？')) hideiframe.location="/zhuanqu/fuheci_rec?ids=" + ids.join(",");
+    }
+}
+
+
+function recommendCancel(){
+    var ids = [];
+    for (i=0; i<document.form1.r_id.length;i++){
+        if (document.form1.r_id[i].checked)
+            ids.push(document.form1.r_id[i].value);
+    }
+    if (ids.length==0){
+        alert("请选择要操作的记录!");
+    }else{
+        if (confirm('您确定要取消推荐这些记录吗？')) hideiframe.location="/zhuanqu/fuheci_can?ids=" + ids.join(",");
+    }
+}
+
+
+function fuheci_rename(id){
+    var newname = prompt("确认是否修改?",ge("tid_" + id).innerHTML);
+    if(newname != null)
+      {
+        ge("tid_" + id).innerHTML = newname;
+        hideiframe.location = "/zhuanqu/fuheci_rename?tag_id=" + id + "&newname=" + EncodeURI(newname);
+      }
+}
+
+function yuanci_replace(oldname,newname){
+  hideiframe.location = "/zhuanqu/yuanci_replace?oldtagname=" + EncodeURI(oldname) + "&newtagname=" + EncodeURI(newname);
+}
+
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false"; 
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true"; 
+  
+  }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+<div id="div_main">
+  <form name="form1" method="post" action="" target="_top">
+  
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+
+    <%=gmb("原词名修改","","rename_oldtag.style.display = 'block';","")%>　
+    
+    分类一：
+    <select id="sort_id1">
+      <%for tag in get_case_lv1_tags%>
+        <option value="<%=tag[0]%>" <%="selected" if @sort_id1==tag[0]%>><%=tag[1]%></option>
+      <%end%>
+    </select>
+
+    分类二：
+    <select id="sort_id2">
+      <%for tag in get_case_lv1_tags%>
+        <option value="<%=tag[0]%>" <%="selected" if @sort_id2==tag[0]%>><%=tag[1]%></option>
+      <%end%>
+    </select>　
+    <input type="button" value="查　看" onclick="window.open('/zhuanqu/fuheci?sort_id1='+ge('sort_id1').value+'&sort_id2='+ge('sort_id2').value,'_top');" />　
+    <input type="button" value="生成复合词" id="generate_button" onclick="window.open('/zhuanqu/fuheci_generate?sort_id1='+ge('sort_id1').value+'&sort_id2='+ge('sort_id2').value,'hideiframe');this.disabled=true;" />　
+  </div>
+
+    <div id="rename_oldtag" style="display: none; background-color: #F8F8F8; padding:5px; font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 0px; ">
+      旧原词：<input name="oldtagname" type="text" style="width:120px;" />　
+      新原词：<input name="newtagname" type="text" style="width:120px;" />　
+      <input type="button" value="改 名" onclick="yuanci_replace(oldtagname.value,newtagname.value);" />
+    </div>
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">    
+		<span style="color:#BF0000;">案例复合词管理</span>
+        总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+        
+    </div>
+
+    <table id="datalist" style="width:auto;">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>复合词</th>
+            <th>原词1</th>
+            <th>原词2</th>
+            <th>推荐</th>
+            <th>案例数</th>
+            <th>更新时间</th>
+            <th>操作</th>
+    </tr>
+    <%for tag in @cws%>
+    <tr style="background-color:#FFFDE6" align="center">
+      <td><input type="checkbox" name="r_id" value="<%=tag.id%>" /> <%=tag.id%></td>
+      <td><a href="http://tuku.51hejia.com/zhuanqu/<%=tag.kw1%>_<%=tag.kw2%>.html" target="_blank" id="tid_<%=tag.id%>"><%=tag.tagname%></a></td>
+      <td><a href="http://tuku.51hejia.com/zhuanqu/<%=tag.kw1%>.html" target="_blank"><%=tag.kw1%></a></td>
+      <td><a href="http://tuku.51hejia.com/zhuanqu/<%=tag.kw2%>.html" target="_blank"><%=tag.kw2%></a></td>
+      <%if tag.is_confirmed == 0%>
+        <td></td>
+      <%else%>
+        <td><font color="#BF0000">是</font></td>
+      <%end%>
+      <td><%=tag.case_num==-1 ? "" : "<font color='blue'>#{tag.case_num}</font>"%></td>
+      <td><%=tag.updated_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+      <td><a href="javascript://" onclick="fuheci_rename(<%=tag.id%>);">改名</a></td>
+    </tr>
+    <% end %>
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+      <input onclick="SelectAll(document.form1.r_id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="stat_case();" type="button" value="案例统计" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="recommendAll()" type="button" value="批量推荐" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="recommendCancel()" type="button" value="取消推荐" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+    <span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

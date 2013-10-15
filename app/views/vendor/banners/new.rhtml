@@ -1,0 +1,4 @@
+<%= error_messages_for :banner %>
+<% form_for :banner, @banner, :url => vendor_banners_path, :html => {:multipart => true} do |f| -%>
+  <%= render :partial => "form", :locals => {:f => f} -%>
+<% end %>

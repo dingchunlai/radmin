@@ -1,0 +1,68 @@
+<!--[form:quoted_price]-->
+<table  id="new_and_edit">
+  <p><%= hidden_field 'quoted_price', 'deco_firm_id',:value => @firm.id %> </p>
+  <tbody>
+    <tr>
+      <td id="field"><label for="quoted_price_room">户型：</label></td>
+      <td id="input_data">
+        <!--
+        <% if params[:quoted_price].nil? %>
+          <%= select_tag "quoted_price[room]",options_for_select({'请选择' => 0}.merge(FACTORY_FANGXING.invert).sort_by {|k,v| v}) %>
+        <% else %>
+          <%= select_tag "quoted_price[room]",options_for_select({'请选择' => 0}.merge(FACTORY_FANGXING.invert).sort_by {|k,v| v},params[:quoted_price][:room].to_i) %>
+        <% end %>
+        -->
+        <%= select_tag "quoted_price[room]",options_for_select({'请选择' => 0}.merge(FACTORY_FANGXING.invert).sort_by {|k,v| v},quoted_price.room_selected(params) ) %>
+        <% unless quoted_price.errors.on(:room).nil? %>
+          <span class="error_message"><%= quoted_price.show_error_on('room') %></span>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <td id="field" ><label for="quoted_price_area">面积：</label></td>
+      <td id="input_data">
+        <%= text_field 'quoted_price', 'area',:size => 12 %>
+
+        <% if quoted_price.errors.on(:area).nil? %>
+          <span>平米（注：请填写整数）</span>
+        <% else %>
+          <span class="error_message"><%= quoted_price.show_error_on('area') %></span>
+
+        <% end %>
+      </td>
+    </tr>
+
+    <tr><td id="field"><label for="quoted_price_deco_type">类型：</label></td>
+      <td id="input_data">
+        <select id="quoted_price_deco_type" name="quoted_price[deco_type]">
+          <option value="">请选择</option>
+          <% QUOTE_PRICE_TYPE.sort.each do |c| %>
+            <option value="<%=c[0]%>" <%if quoted_price.deco_type.to_i == c[0].to_i%>selected<%end%>><%= c[1] %></option>
+          <%end%>
+        </select>
+        <% unless quoted_price.errors.on(:deco_type).nil? %>
+          <span class="error_message"><%= quoted_price.show_error_on('deco_type') %></span>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr><td id="field"><label for="quoted_price_price">价格：</label></td>
+      <td id="input_data">
+
+        <%= text_field 'quoted_price', 'price',:size =>12  %>
+
+        <% if quoted_price.errors.on(:price).nil? %>
+          <span>
+            万（注：请填写纯数字，且小数点后面只保留1位小数（0.0），如：12.5）
+          </span>
+        <% else %>
+          <span class="error_message">
+            <%= quoted_price.show_error_on('price') %>
+          </span>
+        <% end %>
+      </td></tr>
+  </tbody>
+</table>
+<!--[eoform:quoted_price]-->
+

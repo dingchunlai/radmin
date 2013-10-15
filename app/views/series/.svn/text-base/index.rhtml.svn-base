@@ -1,0 +1,22 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>系列名称</th>
+		<th>所属品牌</th>
+		<th>所属分类</th>
+		<th>系列描述</th>
+		<th>相关操作</th>
+	</tr>
+	<% @series.each do |serie| %>
+	<tr>
+		<td><%= serie.name %></td>
+		<td><%= serie.brand.name_zh %></td>
+		<td><%= serie.category.name_zh if serie.category %></td>
+		<td><%= serie.description %></td>
+		<td>
+			<%= link_to "显示", serie_path(serie) %>
+			<%= link_to "编辑", edit_serie_path(serie) %>
+			<%= link_to "删除", serie_path(serie), :method => "delete" %>
+		</td>
+	</tr>
+	<% end %>
+</table>

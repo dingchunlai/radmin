@@ -1,0 +1,102 @@
+<script type="text/javascript" src="/javascripts/list_select_and_delete.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 650;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/boke/boke_list?page="+page+"&recordcount=<%=@recordcount%>&user_id=<%=u(@user_id)%>", "_self");
+}
+function deleteUserAllBoke(){
+     var user_id = document.form1.user_id.value;
+    if(user_id == "")
+      {
+      alert("请填写你要删除博客的用户编号")
+       return
+      }
+    if (confirm('您确定要删除其用户所有博客吗？')){
+        if (user_id!="")
+          {
+             hideiframe.location = "/boke/boke_del_all?user_id=" + user_id
+             ge('datalist').style.display = "none";
+         }
+    }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+   <form name="form1" method="post" action="/boke/boke_list" target="_top">
+
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    要删除的用户编号: <input name="user_id" type="text" size="10" value="<%=@user_id%>" />
+      <input type="submit" value="搜 索" />
+      <input type="button" value="删除其用户所有博客" onclick="deleteUserAllBoke()" />
+   </div>
+
+    
+     <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.arid);" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll('/boke/boke_del');" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+	<span id="pagelist"></span>
+    </div> 
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		
+          
+        总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+        　
+    </div>
+
+    <table id="datalist" style="width:auto;display: block" summary="这个表格是..." >
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>用户编号</th>
+            <th>博客标题</th>
+            <th>创建日期</th>
+    </tr>
+   
+    <%for b in @boke%>
+    <tr style="background-color:#FFFDE6" id="tr_<%=b.id%>" valign="top">
+      <td><input type="checkbox" name="arid" id="arid<%=b.id%>" value="<%=b.id%>" /> <%=b.id%></td>
+       <td><%=b.user_id%></td>
+      <td width="100"><%=b.subject%></td>
+       <td align="center"><%=b.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+   </tr>
+    <% end%>
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.arid);" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll('/boke/boke_del');" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+	<span id="pagelist"></span>
+    </div>
+  
+</form>
+</div>

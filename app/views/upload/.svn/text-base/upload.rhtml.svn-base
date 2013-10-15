@@ -1,0 +1,7 @@
+<h1>Upload File</h1>   
+  
+<%= form_tag({:action => 'save'}, :multipart => true) %>   
+Upload your file: <%= file_field("file", "file") %>   
+<br/>   
+<%= submit_tag("Upload file") %>   
+<%= end_form_tag %>  

@@ -1,0 +1,16 @@
+<h3>导出品牌产品</h3>
+<form action="/common/export_products">
+  <input type="hidden" name="type" value="brand" />
+  品牌编号：<input type="textfield" name="brand_id" />
+  <input type="submit" value="导出品牌产品">
+</form>
+
+<h3>导出商家产品</h3>
+<form action="/common/export_products">
+  <input type="hidden" name="type" value="vendor" />
+  商家编号：<input type="textfield" name="vendor_id" />
+  <input type="submit" value="导出商家产品">
+</form>
+
+<h3>导出品牌列表</h3>
+<%= button_to "导出品牌", :action => "export_brands" %>

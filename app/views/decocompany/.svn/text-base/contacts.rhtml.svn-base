@@ -1,0 +1,59 @@
+<div>
+  <% unless flash[:success].blank? %><p><font color="red"><%= flash[:success] %></font></p><%end%>
+  <p><%= @deco_firm.name_zh %>  <%= link_to "新建联系地址", "/decocompany/contacts?company_id=#{@deco_firm.id}" %></p>
+</div>
+<hr />
+<% if @deco_firm.deco_firms_contacts.size > 0 %>
+<div>
+  <table style="width: 70%; margin-left: 20px;">
+    <tr>
+      <th>公司地址</th>
+      <th>联系电话</th>
+      <th>在线联系</th>
+      <th>类型</th>
+      <th>操作</th>
+    </tr>
+  <% @deco_firm.deco_firms_contacts.each do |contact| %>
+    <tr>
+      <td><%= contact.address %></td>
+      <td><%= contact.telephone %></td>
+      <td><%= contact.online_contact %></td>
+      <td><%= contact.master? ? '总店' : '分店' %></td>
+      <td>
+        <%= link_to "编辑", "/decocompany/contacts?company_id=#{@deco_firm.id}&contact_id=#{contact.id}" %>
+        <%= link_to "删除", "/decocompany/destory_contact?company_id=#{@deco_firm.id}&contact_id=#{contact.id}", :confirm => "Are you sure? " %>
+      </td>
+    </tr>
+  <% end -%>
+  </table>
+</div>
+<hr />
+<% end -%>
+<div>
+  <div style="color: red; font-size: 15px;"><%= @deco_firms_contact.new_record? ? '新建联系地址' : '修改联系地址' %><br /></div>
+  <% form_for :deco_firms_contact, :url => "/decocompany/update_contacts?company_id=#{@deco_firm.id}", :html => {:method => :post} do |f| %>
+    <%= f.hidden_field :deco_firm_id, :value => @deco_firm.id %>
+    <% unless @deco_firms_contact.new_record? %><%= hidden_field_tag :contact_id, @deco_firms_contact.id %><% end -%>
+    <table>
+      <tr>
+        <td>公司地址</td>
+        <td><%= f.text_field :address %></td>
+      </tr>
+      <tr>
+        <td>联系电话</td>
+        <td><%= f.text_field :telephone %></td>
+      </tr>
+       <tr>
+        <td>在线联系</td>
+        <td><%= f.text_field :online_contact %></td>
+      </tr>
+       <tr>
+        <td>总店／总店</td>
+        <td><%= f.select :is_master, DecoFirmsContact::ADDRESS_TYPE.map {|key, value| [key, value]}, :selected => (@deco_firms_contact.master? ? 1 : 0) %></td>
+      </tr>
+      <tr>
+        <td align="center" colspan="2"><%= submit_tag "提 交" %></td>
+      </tr>
+    </table>
+  <% end -%>
+</div>

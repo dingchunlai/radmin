@@ -1,0 +1,19 @@
+<p align=center><%=@company.name_zh%></p>
+<p align=center><a href="/decocompany/vedionew?companyid=<%=@company.id%>" target="_blank">增加</a></p>
+<table border=1 align=center>
+	<tr>
+		<td>标题</td>
+		<td>上传时间</td>
+		<td>操作</td>
+	</tr>
+	<%@vedios.each do |v|%>
+	<tr>
+		<td><%=v.title%></td>
+		<td><%=v.created_at.strftime("%Y-%m-%d")%></td>
+		<td>
+			<a href="/decocompany/vedioedit?id=<%=v.id%>" target="_blank">编辑</a> &nbsp;
+			<a href="/decocompany/vediodelete?id=<%=v.id%>&companyid=<%=@company.id%>">删除</a>
+		</td>
+	</tr>		
+	<%end%>
+</table>

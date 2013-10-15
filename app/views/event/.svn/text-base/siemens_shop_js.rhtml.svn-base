@@ -1,0 +1,14 @@
+<%shengfen = ""%>
+var cities = [];
+var adr = [];
+<%i = -1%>
+<%for r in @rs%>
+  <%if shengfen!=r.shengfen%>
+      <%i += 1; j = 0%>
+      cities[<%=i%>] = "<%=r.shengfen%>";
+      adr[<%=i%>] = [];
+      <%shengfen = r.shengfen%>
+  <%end%>
+  adr[<%=i%>][<%=j%>] = "<%=trim(r.dianpu)%>,<%=trim(r.dizhi)%>";
+  <%j += 1%>
+<%end%>

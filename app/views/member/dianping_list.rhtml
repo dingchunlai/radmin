@@ -1,0 +1,197 @@
+<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 装修案例</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以添加和维护装修案例信息。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:700px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on"><a href="/member/dianping_list">已发评论</a></li>
+    <li class="line"></li>
+    <li id="s1" class="menu_off"><a href="/member/reply_list" target="_blank">我的回应</a></li>
+    <li class="line"></li>
+    <li id="s1" class="menu_off"><a href="http://z.51hejia.com/dianping/newdp" target="_blank">写装修点评</a></li>
+    <li class="line"></li>
+	</ul>
+  </div>
+
+<script type="text/javascript">
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = "0";
+      var lenz = document.form1.f_id.length;
+      if(typeof(lenz) == "undefined") {
+	      lenz=1;
+      }
+      if(lenz==1){
+      	if (document.getElementById('f_id').checked)
+      		ids += ", " + document.getElementById('f_id').value;
+      }else{
+	      for (i=0; i<lenz;i++){
+	          if (document.form1.f_id[i].checked)
+	              ids += ", " + document.form1.f_id[i].value;
+	      }
+      }
+      if (ids!="0"){
+      	document.getElementById('deleteids').value = ids;
+		document.getElementById('form1').action = '/member/dianping_del';
+		document.getElementById('form1').submit();
+      }
+    }
+}
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:12px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    color:#F27900;
+    text-decoration:none;
+  }
+</style>
+
+<div id="same1">
+<form name="form1" id="form1" action="/member/case_list" method="post">
+  <input type="hidden" id="deleteids" name="ids"/>
+  <div style="font-family:Verdana; color:#DD4504; line-height:32px; font-size:12px; letter-spacing:1px; margin: 0px 0px 0px 15px; ">
+		<br>
+		总共搜索到<B><%=@reviews.total_entries%></B>条记录 
+  </div>
+  <div style="height:600px;">
+    <!-- ID as id, DESNAME, DESFEE, DESAGE, DESTEL, DESSCHOOL, DESSTYLE, DESRESUME -->
+  <table id="datalist" style="margin-left:7px; width:98%;">
+    <tr>
+            <th>编号</th>
+            <th>评论</th>
+            <th>时间</th>
+            <th>浏览数</th>
+            <th>状态</th>
+            <th>操作</th>
+    </tr>
+    <%for c in @reviews%>
+    <tr align="center" style="background-color:#FFFDE6">
+      <th><input type="checkbox" name="f_id" value="<%=c.id%>" /><%=c.id%></th>
+      <th>
+      <a href="http://z.51hejia.com/dianping-<%=c.id%>" target="_blank"><%=truncate(c.title,10)%></a>
+      </th>
+      <th><%=c.cdate.strftime("%Y-%m-%d")%></th>
+      <th><%=c.dpv.to_i%></th>
+      <th>
+      	<%
+      	if c.status.to_s=='1'
+      		st = "已审核"
+      	else
+      		st = "未审核"
+      	end
+      	 %>
+      	<%if c.review_type=='1'%>
+      		普通（<%=st%>）
+      	<%elsif c.review_type=='2'%>
+      		精华（<%=st%>）
+      	<%elsif c.review_type=='3'%>
+      		投诉（<%=st%>）
+      	<%else%>
+      		
+      	<%end%>
+      </th>
+      <th>
+      	<a href="/member/dianping_edit?id=<%=c.id%>" >修改</a>
+      	<a href="/member/dianping_del?ids=<%=c.id%>" >删除</a>
+      </th>
+    </tr>
+    <% end %>
+    </table>
+    </div>
+
+    <div id="div_pagelist" style="margin:0px 10px 0px 10px;">
+      <div style="float:left">
+      <input onclick="SelectAll(document.form1.f_id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      </div>
+      <div style="float:right">
+        <%= will_paginate @reviews,:prev_label=> "上一页",:next_label=> "下一页" %>
+      </div>
+    </div>
+</form>
+</div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+<%=render :partial => "/share/public_footer"%>

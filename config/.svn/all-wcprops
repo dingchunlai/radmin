@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/!svn/ver/726/51hejia/repos/radmin/release/config
+END
+load_gems.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/99/51hejia/repos/radmin/release/config/load_gems.rb
+END
+database.example.yml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/config/database.example.yml
+END
+deploy.rb
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/99/51hejia/repos/radmin/release/config/deploy.rb
+END
+routes.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/726/51hejia/repos/radmin/release/config/routes.rb
+END
+ckeditor.yml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/99/51hejia/repos/radmin/release/config/ckeditor.yml
+END
+database.yml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/630/51hejia/repos/radmin/release/config/database.yml
+END
+boot.rb
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/99/51hejia/repos/radmin/release/config/boot.rb
+END
+environment.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/99/51hejia/repos/radmin/release/config/environment.rb
+END
+newrelic.yml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/99/51hejia/repos/radmin/release/config/newrelic.yml
+END

@@ -1,0 +1,289 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<DIV>
+  <DIV><h3> > 留言管理页面</h3></DIV>
+  <DIV style="margin-left:20px;">
+    <form action="/remarks" method="get">
+      <p align=center>
+				类型：<select id="type" name="type">
+          <option value="0">请选择</option>
+          <option value="1" <%if @type == 1%> selected <%end%> >公司</option>
+          <option value="2" <%if @type == 2%> selected <%end%> >日记</option>
+          <option value="3" <%if @type == 3%> selected <%end%> >优惠劵</option>
+          <option value="4" <%if @type == 4%> selected <%end%> >案例</option>
+          <option value="5" <%if @type == 5%> selected <%end%> >图库</option>
+          <option value="6" <%if @type == 6%> selected <%end%> >所有回复</option>
+          <option value="7" <%if @type == 7%> selected <%end%> >设计理念</option>
+          <option value="8" <%if @type == 8%> selected <%end%> >现金券</option>
+        </select>
+        城市：<select id="city" name='city'>
+          <option value='0'>选择</option>
+          <%@CITIES.sort.each do |k,v|%>
+            <option value='<%=k%>' <%if @city.to_i == k%>selected<%end%>><%=v%></option>
+          <%end%>
+        </select>
+            		是否审核：<select id="status" name='status'>
+          <option value='0'>请选择</option>
+          <option value='1' <%if @status.to_i == 1%>selected<%end%>>已审核</option>
+          <option value='2' <%if @status.to_i == 2%>selected<%end%>>未审核</option>
+        </select>
+        是否打分：<select id="praise" name='praise'>
+          <option value='0'>请选择</option>
+          <option value='1' <%if @praise.to_i == 1%>selected<%end%>>打分</option>
+          <option value='2' <%if @praise.to_i == 2%>selected<%end%>>非打分</option>
+        </select>
+        评价：<%= select_tag :score,options_for_select([["请选择","0"],["好评","3"],["中评","2"],["差评","1"]],@score) %>
+        公司：<input type="text" name="firm_name" id="firm_name" value="<%if @firm_name%><%=@firm_name %><%end%>" size=20/><br/>
+        作者：<input type="text" name="editor" id="editor" value="<%if @editor%><%=@editor %><%end%>" size=10/>
+        内容：<input type="text" name="content" id="content" value="<%if @content%><%=@content %><%end%>" size=30/>
+        开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>/>
+	结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>/>
+        <input type="submit" class="btn" value="查 询"/>
+      </p>
+    </form>
+  </DIV><br />
+  <DIV>
+    <table width="98%" align="center" border="0" cellspacing="1" cellpadding="1" style="text-align:center;">
+      <tr >
+        <td style="font-size:14px;width:70px"><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAllBox();"/>反/全选</td>
+        <td style="font-size:18px;font-weight: 700"><% if @type == 1 %>公司<% elsif @type == 2 %>日记<% elsif @type == 3 %>优惠券<% elsif @type == 4 %>案例<% elsif @type == 5 %>图库<% else %>类型<% end %></td>
+        <td style="font-size:18px;font-weight: 700">作者</td>
+        <td style="font-size:18px;font-weight: 700">IP</td>
+        <td style="font-size:18px;font-weight: 700">城市</td>
+        <td style="font-size:18px;font-weight: 700">角色</td>
+        <td style="font-size:18px;font-weight: 700">精华</td>
+        <td style="font-size:18px;font-weight: 700">内容</td>
+        <td style="font-size:18px;font-weight: 700">状态</td>
+        <td style="font-size:18px;font-weight: 700">发表时间</td>
+        <td style="font-size:18px;font-weight: 700">操作</td>
+      </tr>
+      <% @remarks.each do |remark| -%>
+        <tr >
+          <td><input type="checkbox" name="ids" id="ids" value="<%=remark.id%>" onchange="check()"/></td>
+          <td><%= show_page(remark) rescue "" %></td>
+          <td><%= remark.hejia_user_bbs.USERNAME unless remark.hejia_user_bbs.nil? %></td>
+          <td><%= remark.ip %></td>
+          <td><%= show_remark_city(remark) %></td>
+          <td><%if !remark.hejia_user_bbs.nil? && remark.hejia_user_bbs.USERTYPE.to_i == 200 %>专家 <%else%>普通用户 <%end%></td>
+          <td><%= remark.is_essence.to_i == 1 ? '精华' : '非精华' %></td>
+          <td>
+            <label title="<%= h(remark.content).to_s.split(//u) %>">
+              <%= h(truncate_u(remark.content,20,"...")) %>
+            </label>
+          </td>
+          <td><%= remark.status ? '已审核' : '未审核' %></td>
+          <td><%= remark.created_at.utc.strftime("%Y-%m-%d %X")%></td>
+          <td>
+            <% if remark.replies.size > 0 %><a href="/review/remark_reply_manage?remark_id=<%=remark.id%>" target="_blank">查看回复</a> <% end %>
+            <%=link_to "删除", remark_path(remark),:method => :delete, :confirm => "你确认要删除此信息吗？" %>
+            <%= select_tag :set_score,options_for_select([["请选择","0"],["好评","3"],["中评","2"],["差评","1"]],remark.score.to_s),:onchange => "setScore(#{remark.id},this.value);" %>
+          </td>
+        </tr>
+
+      <%end -%>
+    </table>
+
+  </DIV><br />
+  <DIV>
+    <div style="float:left;">
+      <input type="button" class="btn" value="批量删除" style="margin-left:10px;" onclick="deleteAll();" />
+      <input type="button" class="btn" value="设为精华" style="margin-left:10px;" onclick="makeCream();" />
+      <input type="button" class="btn" value="取消精华" style="margin-left:10px;" onclick="makeNonEssential();" />
+      <input type="button" class="btn" value="审核" style="margin-left:10px;" onclick="makeShenHe();"/>
+      <input type="button" class="btn" value="取消审核" style="margin-left:10px;" onclick="makeQuXiaoShenHe();"/>
+
+      <input type="button" class="btn" value="批量好评" style="margin-left:10px;" onclick="makeScore(3);" />
+      <input type="button" class="btn" value="批量中评" style="margin-left:10px;" onclick="makeScore(2);" />
+      <input type="button" class="btn" value="批量差评" style="margin-left:10px;" onclick="makeScore(1);" />
+      <input type="button" class="btn" value="批量取消评分" style="margin-left:10px;" onclick="makeScore(0);" />
+
+      <form id="batch" action="", method="post">
+            <input type="hidden" name="remark_ids" id="remark_ids" value="" />
+      </form>
+    </div>
+    <p align=center>搜索到 <%=@remarks.total_entries%> 条留言</p>
+    <div style="text-align:center"><%= will_paginate @remarks %></div>
+  </DIV>
+</DIV>
+<script type="text/javascript">
+  var j = 0;
+  var ids = new Array();
+  var all = document.getElementById("checkAll");
+  var is_box = document.getElementsByName("ids");
+  var submit_form = document.getElementById("batch");
+  var remark_ids = document.getElementById("remark_ids");
+  // 全选按钮点击事件
+  function checkAllBox(){
+    for(var i = 0; i < is_box.length; i++)
+    {
+      is_box[i].checked = all.checked;
+    }
+  }
+  // 复选框触发事件
+  function check(){
+    var flg = true;
+    for(var i = 0; i < is_box.length; i++)
+    {
+      if(is_box[i].checked == false)
+        flg = false;
+    }
+    if(flg){
+      all.checked = true;
+    }else{
+      all.checked = false;
+    }
+  }
+  function validate(){
+    var flg = true;
+    for(var i = 0; i < is_box.length; i++)
+    {
+      if(is_box[i].checked == true)
+        flg = false;
+    }
+    return flg;
+  }
+	  
+  // 批量删除
+  function deleteAll(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/remarks/mach_destroy";
+      submit_form.submit();
+    }
+  }
+  // 设为精华
+  function makeCream(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/remarks/essential";
+      submit_form.submit();
+    }
+  }
+  // 取消精华
+  function makeNonEssential(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/remarks/non_essential";
+      submit_form.submit();
+    }
+  }
+
+  // 审核
+  function makeShenHe(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/remarks/shen_he";
+      submit_form.submit();
+    }
+  }
+
+  // 取消审核
+  function makeQuXiaoShenHe(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/remarks/qu_xiao_shen_he";
+      submit_form.submit();
+    }
+  }
+
+  // 设置好、中、差评
+  function makeScore(score){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/remarks/make_score?score=" + score;
+      submit_form.submit();
+    }
+  }
+
+  function setScore(remark_id,score)
+  {
+    remark_ids.value = remark_id;
+    submit_form.action = "/remarks/make_score?score=" + score;
+    submit_form.submit();
+  }
+
+</script>
+<style type="text/css">
+  /* <![CDATA[ */
+
+  table, td
+  {
+    border-color: #7EBF4F;
+    border-style: solid;
+  }
+
+  table
+  {
+    border-width: 0 0 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td
+  {
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+  }
+
+  /* ]]> */
+</style>

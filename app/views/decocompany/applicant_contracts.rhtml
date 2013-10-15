@@ -1,0 +1,51 @@
+<div>
+  <% unless flash[:success].blank? %><p><font color="red"><%= flash[:success] %></font></p><%end%>
+  <p><%= @deco_firm.name_zh %>  <%= link_to "新建预约合同", "/decocompany/applicant_contracts?company_id=#{@deco_firm.id}" %></p>
+</div>
+<hr />
+<% if @deco_firm.applicant_contracts.size > 0 %>
+  <div>
+    <table style="width: 70%; margin-left: 20px;">
+      <tr>
+        <th>序号</th>
+        <th>合同序号</th>
+        <th>时间</th>
+        <th>单数</th>
+        <th>操作</th>
+      </tr>
+      <% @deco_firm.applicant_contracts.each do |applicant_contract| %>
+        <tr>
+          <td><%= applicant_contract.id %></td>
+          <td><%= applicant_contract.contract %></td>
+          <td><%= applicant_contract.created_at.strftime("%F %R") %></td>
+          <td><%= applicant_contract.limit_number %></td>
+          <td>
+            <%= link_to "编辑", "/decocompany/applicant_contracts?company_id=#{@deco_firm.id}&applicant_contract_id=#{applicant_contract.id}" %>
+    <%#= link_to "删除", "/decocompany/destory_contact?company_id=#{@deco_firm.id}&contact_id=#{applicant_contract.id}", :confirm => "Are you sure? " %>
+          </td>
+        </tr>
+      <% end -%>
+    </table>
+  </div>
+  <hr />
+<% end -%>
+<div>
+  <div style="color: red; font-size: 15px;"><%= @applicant_contract.new_record? ? '新建预约合同' : '修改预约合同' %><br /></div>
+    <% form_for :applicant_contract, :url => "/decocompany/update_applicant_contract?company_id=#{@deco_firm.id}", :html => {:method => :post} do |f| %>
+      <%= f.hidden_field :deco_firm_id, :value => @deco_firm.id %>
+      <% unless @applicant_contract.new_record? %><%= hidden_field_tag :applicant_contract_id, @applicant_contract.id %><% end -%>
+    <table>
+      <tr>
+        <td>合同序号</td>
+        <td><%= f.text_field :contract %></td>
+      </tr>
+      <tr>
+        <td>预约单数</td>
+        <td><%= f.text_field :limit_number %></td>
+      </tr>
+      <tr>
+        <td align="center" colspan="2"><%= submit_tag "提 交" %></td>
+      </tr>
+    </table>
+  <% end -%>
+</div>

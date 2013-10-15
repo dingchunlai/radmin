@@ -1,0 +1,4 @@
+<p><%= @banner.link %></p>
+<p><%= @banner.image ? image_tag(@banner.image.url) : "没有图片" %></p>
+<br />
+<p><%= link_to "编辑", edit_vendor_banner_path(@banner) %></p>

@@ -1,0 +1,10 @@
+<div>
+  <p>目前添加的标签对象有：</p> <br />
+  <ul>
+    <% @fathertags.each do |ft| %>
+    <li><%= ft.fathername %> [<%= link_to '添加',:action =>'new_keyword_tag',:id =>ft.id %>],[<%= link_to '查看',:action =>'view_keyword_tag',:id =>ft.id %>]</li>
+    <% end %>
+  </ul>
+
+</div> <br /><br />
+<h3><%= link_to '新建类别标签',:action =>'new_father_tag' %></h3>

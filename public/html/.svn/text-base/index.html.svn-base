@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>评选装修案例 就送装修折上折</title>
+</head>
+<script type="text/javascript" src="http://js.51hejia.com/js/2010/login_n.js?20100714"></script>
+<script type="text/javascript">
+	var	status = location.href.split("?")[1].split("=")[1]; 
+	if(status == "success") {
+		alert("保存成功!")
+	};
+	if(status == "fail"){
+		alert("保存失败!")
+	};
+</script>
+<style type="text/css">
+*{margin:0;padding:0;}
+div{margin:0 auto;}
+li{list-style:none;}
+body{font-size:14px;line-height:24px;background:#f0ece1;width:100%;height:100%;}
+#boxbg01{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_bg01.gif) center top no-repeat;}
+#boxbg02{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_bg02.gif) center 200px no-repeat;}
+#boxbg03{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_bg03.gif) center 447px no-repeat;}
+#boxbg04{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_bg04.gif) center 647px no-repeat;}
+#boxbg05{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_bg05.gif) center bottom no-repeat;}
+
+#box_content{width:960px;height:1924px;overflow:hidden;}
+#box_content a{display:block; font-size:0;line-height:0;text-indent:-999px;overflow:hidden;}
+
+.box01{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_01.gif) no-repeat;width:960px;height:96px;}
+.box01 a{width:960px;height:96px;}
+.box02{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_02.gif) no-repeat;width:960px;height:96px;}
+.box02 a{width:960px;height:96px;}
+.box03{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_03.gif) no-repeat;width:960px;height:97px;}
+.box03 a{width:960px;height:97px;}
+.box04{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_04.gif) no-repeat;width:675px;height:96px; position:relative;}
+.box04 a{position:absolute;bottom:0;right:0;width:138px;height:62px;background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/zxyy.gif) no-repeat;}
+.box04 p{color:#423322;padding:0 5px 0 50px;}
+.box04_2{text-align:center;}
+.box04_2 strong{color:#fe9a30; font-size:16px;}
+.box05{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_05.gif) no-repeat;width:285px;height:96px;}
+.box05 a{width:285px;height:96px;}
+.box06{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_06.gif) no-repeat;width:675px;height:192px;position:relative;}
+.box06 a{position:absolute;top:0;left:0;width:675px;height:192px;background:url(http://img3.51hejia.com/img/bugbg.gif) no-repeat;}
+.box06 ul{padding:10px 0 0 230px;}
+.box06 li{line-height:30px;color:#423322;}
+.box07{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_07.gif) no-repeat;width:285px;height:192px;}
+.box07 a{width:285px;height:192px;}
+.box08{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_08.gif) no-repeat;width:960px;height:52px;}
+.box08 a{width:960px;height:52px;}
+.box09{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_09.gif) no-repeat;width:331px;height:306px;}
+.box09 a{width:331px;height:306px;}
+.box10{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_10.gif) no-repeat;width:344px;height:306px;}
+.box10 a{width:344px;height:306px;}
+.box11{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_11.gif) no-repeat;width:285px;height:306px;}
+.box11 a{width:285px;height:306px;}
+.box12{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_12.gif) no-repeat;width:410px;height:401px;}
+.box12 a{width:410px;height:401px;}
+.box13{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_13.gif) no-repeat;width:265px;height:251px;}
+.box13 a{width:265px;height:251px;}
+.box14{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_14.gif) no-repeat;width:285px;height:251px;}
+.box14 a{width:285px;height:251px;}
+.box15{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_15.gif) no-repeat;width:265px;height:257px;}
+.box15 a{width:265px;height:257px;}
+.box16{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_16.gif) no-repeat;width:285px;height:257px;}
+.box16 a{width:285px;height:257px;}
+.box17{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_17.gif) no-repeat;width:410px;height:107px;}
+.box17 a{width:410px;height:107px;}
+.box18{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_18.gif) no-repeat;width:410px;height:129px;}
+.box18 a{width:410px;height:129px;}
+.box19{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_19.gif) no-repeat;width:156px;height:129px;}
+.box20{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_20.gif) no-repeat;width:394px;height:361px;}
+.box20 a{width:394px;height:361px;}
+.box21{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_21.gif) no-repeat;width:283px;height:232px;}
+.box21 a{width:283px;height:232px;}
+.box22{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_22.gif) no-repeat;width:283px;height:232px;}
+.box22 a{width:283px;height:232px;}
+.box23{background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/szdianp06_23.gif) no-repeat;width:960px;height:120px;}
+
+
+.bg {Z-INDEX: 1; POSITION: fixed; _POSITION:absolute; FILTER: alpha(opacity=50); BACKGROUND-COLOR: #666; WIDTH: 100%; DISPLAY: none; HEIGHT: 100%; TOP: 0px; LEFT: 0px; opacity: 0.5;_bottom:auto;_top:expression(eval(document.documentElement.scrollTop));}
+.popIframe {Z-INDEX: 1; POSITION: fixed; _POSITION:absolute; FILTER: alpha(opacity=50); BACKGROUND-COLOR: #666; WIDTH: 100%; DISPLAY: none; HEIGHT: 100%; TOP: 0px; LEFT: 0px; opacity: 0.5;}
+.popIframe {FILTER: alpha(opacity=0); opacity: 0;}
+
+
+.gsl_yy{z-index: 999; position: fixed; _position:absolute; width: 500px;height:300px; background:url(http://zt.51hejia.com/zhuanti/szdianp06/images/zxyyk.jpg) no-repeat; top: 20%; left: 30%; _bottom:auto;_top:expression(eval(document.documentElement.scrollTop)); _margin-top:10%;}
+.gsl_yy table{ margin:60px auto 0 auto;}
+.gsl_yy td{padding:2px 5px;font-size:12px;}
+.gsl_yy td span{ color:red;}
+.gsl_yy textarea{ width:200px; height:50px;}
+.gsl_btndiv{ width:200px;}
+
+.gsl_zjgd_btn{border:none;background:none;font-size:14px;font-weight:bold;color:#fff;width:60px;height:30px;line-height:30px;margin:15px 0 0 30px;cursor:pointer;}
+.gsl_zjgd_hack{margin-left:27px;}
+
+#bg{_position:absolute;_bottom:auto;_top:expression(eval(document.documentElement.scrollTop));}
+*html{_background-image:url(about:blank);_background-attachment:fixed;}
+</style>
+<script type="text/javascript">
+window.onload=function()
+{
+for(var i=0; i<document.links.length; i++)
+document.links[i].onfocus=function(){this.blur()}
+}
+</script>
+<body>
+<div id="boxbg01">
+  <div id="boxbg02">
+    <div id="boxbg03">
+      <div id="boxbg04">
+        <div id="boxbg05">
+          <div id="box_content">
+            <table width="961" height="1925" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td colspan="6"><div class="box01"><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="96" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="6"><div class="box02"><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="96" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="6"><div class="box03"><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="97" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="5"><div class="box04"><p>导语：清新夏日，姑苏装修新惊喜。和家网推出装修公司折上折活动，看案例图片签约装修公司，就能获得定金的50%。</p><p class="box04_2"><strong>[率先预约，参与活动！]</strong><br/>QQ:1466079700   TEL:0512-68703970</p><a href="javascript:void(0);" title="在线预约" target="_self" onclick="show_advice_div(1975)"></a></div></td>
+                <td><div class="box05"><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="96" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="5"><div class="box06">
+                <ul><li> 1、评选装修公司设计案例图，说出喜爱的理由；</li><li> 2、评论后，打印设计案例图签约装修；</li><li>3、签约客户装修完成全额退还装潢定金后，还可获得装潢定金的50%；</li><li> 4、活动时间：7月1日—7月31日。</li></ul><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a>
+                </div></td>
+                <td><div class="box07"><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="192" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="6"><div class="box08"><a href="http://z.suzhou.51hejia.com/?utm_source=BDxh&utm_medium=kongbaichu&rcc_id=7eb7420223afda3427135bad91569a19" title="评选装修案例 就送装修折上折" target="_blank"></a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="52" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="2"><div class="box09"><a href="http://z.suzhou.51hejia.com/gs-256140/?utm_source=BDxh&utm_medium=linhai623&rcc_id=6b8bb918d1f33c32453dc0268b05dead" title="菱海装潢" target="_blank">菱海装潢</a></div></td>
+                <td colspan="3"><div class="box10"><a href="http://z.suzhou.51hejia.com/gs-255714/?utm_source=BDxh&utm_medium=yianju623&rcc_id=0ead7745f67770bcafdff2c370708168" title="易安居装饰" target="_blank">易安居装饰</a></div></td>
+                <td><div class="box11"><a href="http://z.suzhou.51hejia.com/gs-255669/?utm_source=BDxh&utm_medium=qingting623&rcc_id=bab961271b63e2e09554c16ef1732a76" title="青庭装饰" target="_blank">青庭装饰</a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="306" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="3" rowspan="2"><div class="box12"><a href="http://z.suzhou.51hejia.com/gs-256155/?utm_source=BDxh&utm_medium=huihailong623&rcc_id=b17a11faae83774b3275b314bd76aa80" title="汇海隆装饰" target="_blank">汇海隆装饰</a></div></td>
+                <td colspan="2"><div class="box13"><a href="http://z.suzhou.51hejia.com/gs-256153/?utm_source=BDxh&utm_medium=hekongjian623&rcc_id=0500ab366fa7b975a81a7c1c8e914faa" title="和空间装饰设计" target="_blank">和空间装饰设计</a></div></td>
+                <td><div class="box14"><a href="http://z.suzhou.51hejia.com/gs-255095/?utm_source=BDxh&utm_medium=runxiang623&rcc_id=ab88383bca4dc1ec994b745e89927ecd" title="润祥装饰" target="_blank">润祥装饰</a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="251" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="2" rowspan="2"><div class="box15"><a href="http://z.suzhou.51hejia.com/gs-197220/?utm_source=BDxh&utm_medium=daye623&rcc_id=cf0437fb85d6ffa0ee9a2fe1428367f8" title="大业装饰" target="_blank">大业装饰</a></div></td>
+                <td rowspan="2"><div class="box16"><a href="http://z.suzhou.51hejia.com/gs-256432/?utm_source=BDxh&utm_medium=huayou623&rcc_id=a240d9df457ecdc8111c3de3848d7f24" title="华友装饰" target="_blank">华友装饰</a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="150" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="3"><div class="box17"><a href="http://z.suzhou.51hejia.com/gs-256482/?utm_source=BDxh&utm_medium=diaoke623&rcc_id=8fe79eccb8da776bb1ce2eee37fab62f" title="雕刻空间" target="_blank">雕刻空间</a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="107" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="3"><div class="box18"><a href="http://z.suzhou.51hejia.com/gs-256482/?utm_source=BDxh&utm_medium=diaoke623&rcc_id=8fe79eccb8da776bb1ce2eee37fab62f" title="雕刻空间" target="_blank">雕刻空间</a></div></td>
+                <td><div class="box19"></div></td>
+                <td colspan="2" rowspan="2"><div class="box20"><a href="http://z.suzhou.51hejia.com/gs-256552/?utm_source=BDxh&utm_medium=jialimei623&rcc_id=6070482cb10539cd7e04b27459179d6a" title="嘉丽美设计" target="_blank">嘉丽美设计</a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="129" alt=""></td>
+              </tr>
+              <tr>
+                <td><div class="box21"><a href="http://z.suzhou.51hejia.com/gs-256553/?utm_source=BDxh&utm_medium=yuanhao623&rcc_id=27159a520999663757f010fa088e065d" title="圆号装饰" target="_blank">圆号装饰</a></div></td>
+                <td colspan="3"><div class="box22"><a href="http://z.suzhou.51hejia.com/gs-256551/?utm_source=BDxh&utm_medium=junma623&rcc_id=2f223036e22c2cdeec9789b75566714e" title="骏马装饰" target="_blank">骏马装饰</a></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="232" alt=""></td>
+              </tr>
+              <tr>
+                <td colspan="6"><div class="box23"></div></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="1" height="120" alt=""></td>
+              </tr>
+              <tr>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="283" height="1" alt=""></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="48" height="1" alt=""></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="79" height="1" alt=""></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="156" height="1" alt=""></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="109" height="1" alt=""></td>
+                <td><img src="http://zt.51hejia.com/zhuanti/szdianp06/images/fgf.gif" width="285" height="1" alt=""></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="gsl_yy" id="popDiv" style="display:none;"><form name="regis" action="http://radmin.51hejia.com/applicants/" method="post" onsubmit="return isfull();">
+    <table width="80%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right" width="120">姓名：</td>
+        <td><input id="register_name" name="applicant[name]" size="23" type="text" />
+ 						<input type="hidden" name="applicant[activity_name]" value="苏州折上折活动" id="activity_name"><span>*</span></td>
+      </tr>
+      <tr>
+        <td align="right" width="120">性别：</td>
+        <td><select id="register_sex" name="applicant[gender]">
+	<option value="">- 请选择 -</option>
+	<option value="男">男</option>
+	<option value="女">女</option>
+	</select>
+<span>*</span></td>
+
+      </tr>
+      <tr>
+        <td align="right" width="120">联系电话：</td>
+        <td><input id="register_phone" name="applicant[tel]" size="23" type="text" /> <span>*</span></td>
+      </tr>
+      <tr>
+        <td align="right" width="120">装修公司：</td>
+        <td><select id="register_company" name="applicant[deco_firm_id]"><option value="">- 请选择 -</option>
+<option value="256140">菱海装潢</option>
+<option value="255714">易安居装饰</option>
+<option value="255669">青庭装饰</option>
+<option value="256155">汇海隆装饰</option>
+<option value="256153">和空间装饰空间</option>
+<option value="255095">润祥装饰</option>
+<option value="254701">大业装饰</option>
+<option value="256432">华友装饰</option>
+<option value="256482">雕刻空间</option>
+<option value="256553">圆号装饰</option>
+<option value="256551">骏马装饰</option>
+<option value="256552">嘉丽美设计</option>
+
+</select>
+
+</td>
+
+      </tr>
+      <tr>
+        <td align="right" width="120" valign="top">备注：</td>
+        <td><textarea cols="40" id="register_remark" name="applicant[comment]" rows="20"></textarea></td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><div class="gsl_btndiv">
+
+            <input name="" type="submit" value="预约" class="gsl_zjgd_btn f_l" />
+            <input name="" onclick="javascript:closeDiv()" type="button" value="返回" class="gsl_zjgd_btn gsl_zjgd_hack f_r" /></div></td>
+      </tr>
+    </table></form></div>
+<div id="bg" class="bg" style="display:none;"></div>
+<iframe id='popIframe' class='popIframe' frameborder='0' ></iframe>
+<iframe name="hideiframe" width="0" height="0"></iframe>
+<script type="text/javascript">
+  function show_advice_div(fatherid){
+    document.getElementById('popDiv').style.display='block';
+    document.getElementById('popIframe').style.display='block';
+    document.getElementById('bg').style.display='block';
+
+    var adv = document.getElementById("advice_div"),
+    btn = document.getElementById('advice_form_submit');
+    if(btn && btn.disabled) btn.disabled = false;
+
+    document.getElementById("ad_context").focus();
+  }
+
+  function closeDiv(){
+    document.getElementById('popDiv').style.display='none';
+    document.getElementById('bg').style.display='none';
+    document.getElementById('popIframe').style.display='none';
+    document.getElementById("is_q_a").value = 1;
+  }
+  function isfull(){
+    if(document.regis.register_name.value == ""){
+      alert( "姓名不能为空 ");
+      document.regis.register_name.focus();
+      return   false;
+    }
+    if(document.regis.register_sex.value == ""){
+      alert( "请选择性别 ");
+      document.regis.register_sex.focus();
+      return   false;
+    }
+    if(document.regis.register_phone.value == ""){
+      alert( "电话不能为空 ");
+      document.regis.register_phone.focus();
+      return   false;
+    }
+    if(document.regis.register_company.value == ""){
+      alert( "请选择装修公司 ");
+      document.regis.register_company.focus();
+      return   false;
+    }
+    return true;
+  }
+</script>
+
+
+
+
+
+<!--statistics_code-->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+
+  _gaq.push(
+    ['_setAccount', 'UA-7619267-1'],
+    ['_setDomainName', '.51hejia.com'],
+    ['_addOrganic', "baidu", "kw"],
+    ['_addOrganic', "baidu", "word"],
+    ['_addOrganic', "soso", "w"],
+    ['_addOrganic', "3721", "name"],
+    ['_addOrganic', "yodao", "q"],
+    ['_addOrganic', "vnet", "kw"],
+    ['_addOrganic', "sogou", "query"],
+    ['_trackPageview']
+  );
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] ||
+    document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script>
+
+<script type="text/javascript">
+  var _raq = _raq || [];
+  _raq.push(
+    ['_setAccount', 'UA-7619267-1'],
+    ['_setDomainName', '.51hejia.com'],
+    ['_addOrganic', "baidu", "kw"],
+    ['_addOrganic', "baidu", "word"],
+    ['_addOrganic', "soso", "w"],
+    ['_addOrganic', "3721", "name"],
+    ['_addOrganic', "yodao", "q"],
+    ['_addOrganic', "vnet", "kw"],
+    ['_addOrganic', "sogou", "query"],
+    ['_trackPageview']
+  );
+
+  (function() {
+    var ra = document.createElement('script'); ra.type = 'text/javascript'; ra.async = true;
+    ra.src = 'http://js.51hejia.com/ra.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ra, s);
+  })();
+</script>
+<!-- baidu statistics_code  -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F413eb88661221537985a18b6638be957' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!--end_baidu statistics_code-->
+<script src="http://dma.51hejia.com/dma.js?4c08b1b48fe0a" type="text/javascript"></script>
+<!--end_statistics_code-->
+</body>
+</html>

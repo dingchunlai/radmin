@@ -1,0 +1,4 @@
+<%= error_messages_for :ad_code %>
+<% form_for( :ad_code, :url => photo_ad_path(@ad_code), :html => {:method => "put", :multipart => true}) do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>

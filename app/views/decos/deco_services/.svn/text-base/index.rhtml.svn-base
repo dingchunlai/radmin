@@ -1,0 +1,70 @@
+<style type="text/css" media="screen">
+  #deco_services_list li{
+    margin:10px;
+    padding-bottom:10px;
+    border-bottom:1px dashed #ccc;
+  }
+  #deco_services_list li .info{
+    margin:10px;
+
+  }
+  #deco_services_list li .info p{
+    width:550px;height:50px;
+    border:1px dashed #ccc;
+    margin:5px 0;
+  }
+</style>
+
+<div class="user_right">
+
+  <div id=widebar >
+    <div id=nav_bottom></div>
+    <div id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 服务承诺</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          <% if flash[:notice].nil? %>
+            在这里您可以添加和维护服务承诺信息。
+          <%else%>
+            <b><font color="red"><%= flash[:notice] %></font></b>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class=mainbox style="border:1px solid #f60;border-left:none;border-bottom:none;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><%= link_to "服务承诺列表", :action => "index"%></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><%= link_to "新建服务承诺", :action => "new"%></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="width:760px;float:left">
+      <ul id="deco_services_list">
+        <% @deco_services.each do |deco_service|%>
+          <li class="clearfix">
+            <div class="img f_l">
+              <%= image_tag deco_service.master_picture.url("120x100"), :size => "120x100" %>
+            </div>
+            <div class="info f_l">
+              <%=h deco_service.title%>
+              <p><%= truncate_u(strip_tags(deco_service.content).gsub(/\<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" \/\>/, '').tr(' ', ''),50)%></p>
+              <div>
+                操作: <%= link_to "编辑", edit_deco_service_path(deco_service)%> | <%= link_to "删除", deco_service_path(deco_service), :method => "delete", :confirm => "确认删除?"%>
+                创建日期:<%= deco_service.created_at.to_s(:db)%>
+              </div>
+            </div>
+          </li>
+        <% end -%>
+      </ul>
+
+    </div>
+  </div>
+</div>

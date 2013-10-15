@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/test/fixtures
+END
+categories_widgets.yml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/test/fixtures/categories_widgets.yml
+END
+tags.yml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/test/fixtures/tags.yml
+END
+taggings.yml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/test/fixtures/taggings.yml
+END
+categories.yml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/test/fixtures/categories.yml
+END
+widgets.yml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/test/fixtures/widgets.yml
+END

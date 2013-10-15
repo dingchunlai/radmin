@@ -1,0 +1,18 @@
+.set-praise p{
+	float:left;
+	cursor:pointer;
+}
+.big-star p{
+	width:20px;height:20px;
+	background:url("http://img3.51hejia.com/img/zxdpimg/pj_stars01.gif") no-repeat scroll 0 -21px transparent;
+	margin-left:1px;
+}
+.set-praise p.one{background-position:0 0;}
+.small-star p{
+	width:16px;height:13px;
+	background:url("http://img3.51hejia.com/img/zxdpimg/pj_stars02.gif") no-repeat scroll 0 -13px transparent;
+	padding-left:3px;
+}
+.detail_praise strong{
+	line-height:15px;
+}

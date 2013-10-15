@@ -1,0 +1,197 @@
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+  th {
+    background-color:#F3F3F3;
+    color:#666;
+    padding:.3em .5em;
+    text-align:left;
+    white-space:nowrap;  
+  }
+  table td.label {
+    background-color:#EEE;
+    text-align:center;
+    width:7em;
+  }
+
+  td input {
+    vertical-align:middle;
+  }
+  #atr tr{ 
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]); 
+  }
+  a:link {text-decoration:none;color:#444444;}
+  a:hover {text-decoration:underline;color:#444444;}
+  a:active {text-decoration:none;color:#444444;}
+  a:visited {text-decoration:none;color:#444444;}
+
+</style>
+<% if @articles.total_entries == 0 %>
+  <br/><br/>
+  <hr>
+  <div style="text-align:center;color:red">没有搜索到相关的信息	</div>
+<% else %>
+  <div>
+    <table>
+      <tr>
+        <%if !(@beginnum && @allnum )%>
+          <td style="text-align:right;">
+            共有<span style="color:red">
+              <%=@articles.total_entries%>
+            </span>篇文章 
+          </td>
+          <td style="text-align:lsft;">
+            <%= will_paginate @articles %> 
+          </td>
+        <%end%>
+      </tr>
+    </table>
+  </div>
+  <div id="atricle-show">
+    <table id="atr" align="center" style="font-size:11px;" border=1>
+      <tr style="background-color:#CCCCCC;font-size:15px;">
+        <th style="color:#000000;">全选<input type="checkbox" id="checkall" onclick="check('1')"> </th>
+        <th style="color:#000000;">标题</th>
+        <th style="color:#000000;">类别</th>
+        <th style="color:#000000;">添加人</th>
+        <th style="color:#000000;">修改人</th>
+        <th style="color:#000000;">添加时间</th>
+        <th style="color:#000000;">品牌</th>
+        <th style="color:#000000;">操作/排序</th>
+      </tr>
+      <% @articles.each do |article| -%>
+        <tr valign="top">
+          <td><%= check_box_tag "article[selected_ids][]", article.ID %><%= article.id %>
+
+          </td>
+          <td>
+            <%if article.STATE.to_s == '0'%>
+
+              <%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+                <span style="color:#000000"><%= article.TITLE.to_s%></span>
+              <%else%>
+                <a href="/article/show/<%=article.ID%>" target="_blank"><span style="color:#000000"><%= article.TITLE.to_s %></span></a>
+              <%end%>
+
+            <%elsif article.STATE.to_s == '2'%>
+
+              <%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+                <span style="color:#0000CC"><%= article.TITLE.to_s%></span>
+              <%else%>
+                <a href="/article/show/<%=article.ID%>" target="_blank"><span style="color:#0000CC"><%= article.TITLE.to_s %></span></a>
+              <%end%>
+
+            <%elsif article.STATE.to_s == '3'%>
+
+              <%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+                <span style="color:#006633"><%= article.TITLE.to_s%></span>
+              <%else%>
+                <a href="/article/show/<%=article.ID%>" target="_blank"><span style="color:#006633"><%= article.TITLE.to_s %></span></a>
+              <%end%>
+
+            <%elsif article.STATE.to_s == '-2'%>
+
+              <%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+                <span style="color:#FF0000"><%= article.TITLE.to_s%></span>
+              <%else%>
+                <a href="/article/show/<%=article.ID%>" target="_blank"><span style="color:#FF0000"><%= article.TITLE.to_s %></span></a>
+              <%end%>
+            <%end%>
+          </td>
+          <td>
+            <%if article.article_type1%>
+              <%= article.article_type1.TAGNAME%>
+            <%else%>
+              &nbsp;
+            <%end%>		
+          </td>
+          <td>
+            <% if article.shop_merchant_id != 0 %>
+              <%= ActiveRecord::Base.connection.select_all("SELECT * FROM 51hejia_php.zx_merchants where id=#{article.shop_merchant_id}").first["name"] rescue "" %>
+            <% else %>
+              <%if article.article_author_new%>
+                <%=article.article_author_new.rname%>
+              <%elsif article.article_author%>
+                <%= article.article_author.USERBBSNAME%>
+              <%end%>
+            <% end %>
+          </td>
+          <td>
+            <%if article.article_author_check %>
+              <%=article.article_author_check.rname%>
+            <%end%>
+          </td>
+          <td>
+            <%if article.CREATETIME%>
+              <%= article.CREATETIME.strftime("%Y/%m/%d")%>
+            <%else%>
+              &nbsp;
+            <%end%>
+          </td>
+          <td><%if article.article_brand%>
+              <%= article.article_brand.name_zh%>
+            <%else%>
+              &nbsp;
+            <%end%>
+          </td>
+          <td width="140px;">
+            <a href="<%if article.article_type1 && article.article_type1.TAGURL=='zhuangxiu'%>http://d.51hejia.com/<%elsif article.article_type1 && article.article_type1.TAGURL=='pinpaiku'%>http://b.51hejia.com/<%elsif article.article_type1 && article.article_type1.TAGURL=='youqigongzhishi'%>http://www.yougong.51hejia.com/<%else%>http://www.51hejia.com/<%end%><% if article.article_type1 && article.article_type1.TAGURL=='youqigongzhishi' %>youqishigong/<% else %><%= article.article_type1.TAGURL unless article.article_type1.blank? %>/<%end%><%if article.CREATETIME%><%= article.CREATETIME.strftime("%Y%m%d")%>/<%end%><%= article.id%>_preview" target="_blank">预览</a>
+            <%if isrole('实习编辑') && current_staff.id != article.EDITPEOPLE %>
+            <%else%>
+              <a href="/article/show/<%=article.id%>" target="_blank">修改</a>
+              <!--
+              <a href="#n" onclick="checkarticle('3','<%=article.id%>')">审核</a> &nbsp;
+              <%if article.STATE != '0'%>
+                          <a href="#n" onclick="checkarticle('0','<%=article.id%>')">发布</a> &nbsp;
+              <%end%>
+              <%if article.STATE != '-2'%>
+                          <a href="#n" onclick="window.open('/article/backarticle?articleid=<%=article.ID%>&stype=-2')">退回</a>
+              <%end%>-->
+            <%end%>
+            <input type="text" style="width:12px;" id="orid<%=article.id%>" value="<%if @third && @third != '0'%><%=article.THIRDORDERID%><%elsif @second && @second != '0'%><%=article.SECONDORDERID%><%else%><%=article.FIRSTORDERID%><%end%>" ><input type="button" style="border:none;" value="排序" onclick="setorder(document.getElementById('orid<%=article.id%>').value,'<%=article.id%>')">
+          </td>
+        </tr>
+      <% end -%>
+      <tr align="left" style="background-color:#CCCCCC;">
+        <td colspan="8">
+          <%if isrole("推广文章负责人") || isrole("新闻负责人") || isrole("实用文章负责人")|| isrole("文章编辑") || isrole("管理员")%>
+            <input type="button" value="批量发布选中文章" onclick="checkarticles('0')">
+          <%end%>
+          <input type="button" value="批量删除选中文章" onclick="delselectall()">
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <span size="20" color="red">注： <span style="color:#000000">已发布 (黑色)</span>  |  <span style="color:#0000CC">未审核 (蓝色)</span>  |   <span style="color:#006633">已审核  (绿色)</span>   |   <span style="color:#FF0000">已退回 (红色)</span>
+    </span>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <%if !(@beginnum && @allnum )%>
+          <td style="text-align:right;">
+            共有<span style="color:red">
+              <%=@articles.total_entries%>
+            </span>篇文章 
+          </td>
+          <td style="text-align:lsft;">
+            <%= will_paginate @articles %> 
+          </td>
+        <%end%>
+      </tr>
+    </table>
+  </div>
+
+  <input type="hidden" name="delid" id="delid">
+  <input type="hidden" name="page" id="pageid" value="<%=@page%>">
+<%end%>

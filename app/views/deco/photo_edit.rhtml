@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>公司相册</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+  <link href="http://d.51hejia.com/css/shouye/header1014.css" rel="stylesheet" type="text/css" />
+  <link href="http://js.51hejia.com/css/xiangce090512.css" rel="stylesheet" type="text/css">
+  <link href="http://d.51hejia.com/css/baoming/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="main">
+  <div class="xleft">
+    <h3>上传帮助</h3>
+    <ul class="tongzhi">
+      <li>1、每次最多可以上传5张照片，每张照片的大小不超过5M。支持.jpg .gif .png格式。</li>
+      <li>2、请您遵守中华人民共和国相关法律、法规，承担一切因您的行为而直接或间接引起的法律责任。</li>
+      <li>更多帮助信息，请<a href="#"><strong>点击这里</strong></a>。</li>
+    </ul>
+  </div>
+</div>
+<div class="xright1" style=" background-color:#F9F9F9;">
+    <div class="zhaopiansh" ><strong><p align="center">上传照片</p></strong></div>
+    <div id="msg"></div>
+    <form action="/deco/phot_edit_save" method="post" enctype="multipart/form-data" >
+    <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" class="table5">
+    <input type="hidden" value="<%=@photo.ID%>" name="id"/>
+          <tr>
+          	<td><img id="logoimg" src="<%if !@photo.IMAGENAME.nil?%>/files/hekea/companyphoto_img/<%=@photo.IMAGENAME%><%else%>/images/nil.gif<%end%>" alt="佳饰橱柜" border="0" wedth="42" height="90"/></td>
+            <td>
+              图片<input name="photoimg[uploaded_data]" type="file" id="photoimg_uploaded_data" onchange="document.getElementById('logoimg').src=this.value" size="40">
+              图片描述<input  name="content" type="text" size="30" value="<%=@photo.CONTENT%>"/>
+            </td>
+          </tr>
+        
+              <tr>
+                <td colspan="2" align="center"><input type="submit" name="submit" value="修改" id="upload_file"></td>
+              </tr>
+            
+      
+    </table>
+    </form>
+  </div>
+</div>
+</body>
+</html>

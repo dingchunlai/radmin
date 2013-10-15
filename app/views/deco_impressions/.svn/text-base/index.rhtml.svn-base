@@ -1,0 +1,42 @@
+<h3>> 公司印象管理</h3>
+<a href="/deco_impressions/edit_deco_impression" target="_blank">公司印象修改</a>
+
+<form action="">
+  <div style="color:red;"><%= flash[:notice]  if flash[:notice] %></div>
+  <table>
+    <tr>
+      <td width="150">公司名称(ID)：<input type="text" id="deco_firm_id" value="" size="30"/></td>
+    </tr>
+    <tr>
+      <td width="150">公司印象 ：
+        <textarea id="deco_firm_impressions" rows="11" cols="30">
+          <%= render :partial => "deco_firm_impressions" %>
+        </textarea></td>
+      <td><input type="button" id="get_deco_impressions" value="刷新"/></td>
+    </tr>
+    <tr>
+      <td><input type="button" id="update_deco_impressions" value="提交"/></td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#get_deco_impressions").live('click',function(){
+      $.post("/deco_impressions/index",{
+        title: '刷新'
+      },function(data){
+        $("#deco_firm_impressions").html(data)
+      });
+    });
+    $("#update_deco_impressions").live('click',function(){
+      $.post("/deco_impressions/update",{
+        'deco_firm_id': $("#deco_firm_id").val(),
+        'deco_firm_impressions': $("#deco_firm_impressions").val()
+      },function(data){
+        if(data.result){
+          alert("操作已成功！")
+        }
+      });
+    });
+  });
+</script>

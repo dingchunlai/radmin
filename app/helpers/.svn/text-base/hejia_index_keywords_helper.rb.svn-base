@@ -1,0 +1,2 @@
+module HejiaIndexKeywordsHelper
+end

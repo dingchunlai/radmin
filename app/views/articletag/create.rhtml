@@ -1,0 +1,21 @@
+<form action="/articletag/create" method="post">
+<input type="hidden" name="fatherid" value="<%=@fatherid%>">
+<input type="hidden" name="type" value="<%=@type%>">
+<table>
+	<tr>
+		<td>标签名字：</td>
+		<td><input type="text" name="tagname"></td>
+	</tr>
+	<tr>
+		<td>标签拼音：</td>
+		<td><input type="text" name="tagurl"></td>
+	</tr>
+	<tr>
+		<td>标签说明：</td>
+		<td><textarea name="tagvalue" cols="50" rows="10"></textarea></td>
+	</tr>
+	<tr>
+		<td colspan=2><input type="submit" value="确定"></td>
+	</tr>
+</table>
+</form>

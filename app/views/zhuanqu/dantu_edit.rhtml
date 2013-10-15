@@ -1,0 +1,137 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 4400;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height + 26;
+}
+
+function submitForm(form){
+    ge("p_name").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("zq_name").value)==""){
+        ge("p_name").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px; height:32px;
+}
+.formleft{
+  width:150px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:500px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+  
+<form action="/zhuanqu/dantu_edit_save" name="form1" enctype="multipart/form-data" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+     <span style="color:#BF0000;"><%if @id ==0%>新建<%else%>编辑<%end%>单图专区</span>
+     <input type="hidden" name="id" value="<%=@id%>" />
+    </div>
+      
+<div class="formouter">
+            <div class="formleft">专区关键词：</div>
+            <div class="formcenter">
+                <%=text_field("zq","name",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_name">专区关键词必须填写！</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">所属分类：</div>
+            <div class="formcenter">
+                <%=select("zq", "sort_id", get_case_lv1_tags.invert)%>
+            </div>
+            <div class="formright" id="p_name">专区关键词必须填写！</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">分词形式：</div>
+            <div class="formcenter">
+                <%=text_field("zq","split",{:size=>60})%>
+            </div>
+            <div class="formright" id="p_split">如果专区关键词是一个复合词，请填写分词形式，使用英文逗号分隔！</div>
+</div>
+  
+<!--
+<div class="formouter">
+            <div class="formleft">所属板块：</div>
+            <div class="formcenter">
+                <%#=select("zq","board_id",array_to_hash(ZHUANQU_BOARD,true))%>
+            </div>
+            <div class="formright" id="p_board_id">请选择所属板块</div>
+</div>
+-->
+
+<div class="formouter" style="height:105px;">
+            <div class="formleft">专区描述：</div>
+            <div class="formcenter">
+                <%=text_area("zq","description",{:style=>"width:400px;height:100px;"})%>
+            </div>
+            <div class="formright">
+              请填写专区描述信息
+            </div>
+</div>
+
+<div class="formouter" style="height:105px;">
+            <div class="formleft">相关专区：</div>
+            <div class="formcenter">
+                <%=text_area("zq","about_links",{:style=>"width:400px;height:100px;"})%>
+            </div>
+            <div class="formright">
+              标题1<回车><br/>
+              链接1<回车><br/>
+              标题2<回车><br/>
+              链接2<回车> ...
+            </div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">TITLE：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_title",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">KEYWORDS：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_keywords",{:size=>60})%>
+            </div>
+            <div class="formright">多个关键字之间用逗号分隔</div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">DESCRIPTION：</div>
+            <div class="formcenter">
+                <%=text_field("zq","html_description",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter" style="padding:30px 0px 0px 280px;">
+
+  <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+
+</div>
+     
+</form>
+</div>

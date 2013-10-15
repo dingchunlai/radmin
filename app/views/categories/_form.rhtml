@@ -1,0 +1,34 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">中文名称</td>
+		<td><%= f.text_field :name_zh -%></td>
+	</tr>
+	<tr>
+		<td class="label">英文名称</td>
+		<td><%= f.text_field :name_en %></td>
+	</tr>
+	<tr>
+		<td class="label">所属分类</td>
+		<td><%= f.collection_select :parent_id, ProductCategory.first_class, :id, :name_zh, {:include_blank => true} %></td>
+	</tr>
+	<tr>
+		<td class="label">永久链接</td>
+		<td><%= f.text_field :permalink %></td>
+	</tr>
+	<tr>
+		<td class="label">排序位置</td>
+		<td><%= f.text_field :position %></td>
+	</tr>
+	<tr>
+		<td class="label">类别简介</td>
+		<td><%= f.text_area :summary, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">是否有效</td>
+		<td><%= f.check_box :is_valid %></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建分类" : "更新分类") -%></td>
+	</tr>
+</table>

@@ -1,0 +1,11 @@
+K 10
+svn:ignore
+V 15
+.idea
+.project
+
+K 13
+svn:mergeinfo
+V 35
+/51hejia/repos/radmin/trunk:100-781
+END

@@ -1,0 +1,94 @@
+<script type="text/javascript" src="/javascripts/list_select_and_delete.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 650;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+  window.open("/zhuanqu/kw_list?page="+page+"&recordcount=<%=@recordcount%>&sort_id=<%=@sort_id%>&kw_name=<%=u(@kw_name)%>", "_self");
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" method="post" action="/zhuanqu/kw_list" target="_top">
+  
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+    所属栏目: 
+    <select name="sort_id">
+      <option value="">不限</option>
+      <%for sort in ZhuanquSort.find(:all,:select=>"id, sort_name").collect{ |i| [i.id, i.sort_name] }%>
+        <option value="<%=sort[0]%>" <%="selected" if @sort_id==sort[0]%>><%=sort[1]%></option>
+      <%end%>
+    </select>
+    关键词: <input name="kw_name" type="text" size="15" value="<%=@kw_name%>" />
+    <input type="submit"value="搜 索" />
+  </div>
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">    
+		<span style="color:#BF0000;">列表专区管理</span>
+        总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+        　<%=gmb("新建列表专区","","window.open('/zhuanqu/kw_edit','_blank');","")%>
+    </div>
+
+    <table id="datalist" style="width:auto;">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>板块</th>
+            <th>所属分类</th>
+            <th>关键词</th>
+            <th>访问网址</th>
+            <th>创建时间</th>
+            <th>操作</th>
+    </tr>
+    <%for kw in @kws%>
+    <tr style="background-color:#FFFDE6" id="tr_<%=kw.id%>">
+      <td><input type="checkbox" name="arid" id="arid<%=kw.id%>" value="<%=kw.id%>" /> <%=kw.id%></td>
+      <td align="center"><%=ZHUANQU_BOARD[kw.sort.board_id]%></td>
+      <td align="center"><a href="http://<%=TAG_HOST_NAME%>/zq/<%=u(kw.sort.sort_name)%>" title="预览" target="_blank"><%=kw.sort.sort_name%></a></td>
+      <td align="center"><a href="http://<%=TAG_HOST_NAME%>/zq/<%=u(kw.sort.sort_name)%>-<%=u(kw.kw_name)%>.html" title="预览" target="_blank"><%=kw.kw_name%></a></td>
+      <td align="center"><input type="text" value="http://<%=ZHUANQU_BOARD_SPELL[kw.sort.board_id]%>.51hejia.com/zq/<%=u(kw.sort.sort_name)%>-<%=u(kw.kw_name)%>.html" size="50" onclick="this.select();" /></td>
+      <td align="center"><%=kw.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+      <td align="center">
+        <a href="/zhuanqu/kw_edit?id=<%=kw.id%>" target="_blank">编辑</a>
+        <%=show_publish_button(kw.is_published, kw.id, "kw")%>
+      </td>
+    </tr>
+    <% end %> 
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.arid);" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll('/zhuanqu/kw_del');" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

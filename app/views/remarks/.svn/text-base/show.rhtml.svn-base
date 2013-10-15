@@ -1,0 +1,8 @@
+<p>
+  <b>Content:</b>
+  <%=h @remark.content %>
+</p>
+
+
+<%= link_to 'Edit', edit_remark_path(@remark) %> |
+<%= link_to 'Back', remarks_path %>

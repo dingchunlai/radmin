@@ -1,0 +1,53 @@
+<script type="text/javascript">
+window.onload = function(){
+  setValue();
+  div_main_height = 540;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+function setValue(){
+    ge("id1").value="<%=@user.id%>";
+    ge("name1").value="<%=@user.name%>";
+    ge("rname").value="<%=@user.rname%>";
+    ge("password1").value="********";
+    ge("idate1").value="<%=@user.idate.utc.strftime("%Y-%m-%d %H:%M")%>";
+    <%@description=@user.description if pp(@user.description)%>
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:180px; float:left;
+}
+.formcenter input{
+    width:140px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+  
+<form name="form1" action="edit_save" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <input type="hidden" name="id1" id="id1" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                编辑用户信息
+    </div>
+    
+    <%=render :partial => "user_form"%>
+    
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+</div>

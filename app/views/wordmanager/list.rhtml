@@ -1,0 +1,126 @@
+<script type="text/javascript">
+	function deleteAll(){
+	    if (confirm('您确定要删除这些记录吗？')){
+	      var ids = "0";
+	      for (i=0; i<document.getElementById('fmid').wid.length;i++){
+	          if (document.getElementById('fmid').wid[i].checked){
+	              ids += ", " + document.getElementById('fmid').wid[i].value;
+	          }
+	      }
+	      document.getElementById('wids').value = ids;
+	      //var form1 = document.getElementById("fmid");
+	      //form1.action = "/wordmanager/wdel";
+   		  //form1.submit();
+   		  return true;
+	    }else{
+	      return false;
+	    }
+	}
+	function zhuanqu(){
+		if (document.getElementById('fmid').wid.length>0){
+			if (confirm('您确定要增加专区吗？')){
+		      var ids = "0";
+		      for (i=0; i<document.getElementById('fmid').wid.length;i++){
+		          if (document.getElementById('fmid').wid[i].checked){
+		              ids += ", " + document.getElementById('fmid').wid[i].value;
+		          }
+		      }
+		      if (ids=="0"){
+		      	alert("请选择要加专区的关键字");
+				return false;
+		      }
+		      document.getElementById('wids1').value = ids;
+		      //var form1 = document.getElementById("fmid");
+		      //form1.action = "/wordmanager/zhuanqu";
+	   		  //form1.submit();
+	   		  return true;
+		    }else{
+		      return false;
+		    }
+		}else{
+			alert("请选择要加专区的关键字");
+			return false;
+		}
+		
+	}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+<div id="div_main">
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+  
+  <form id="fmid" name="fmid" action="/wordmanager/list" method="get">
+    <input name="title" value="<%=@title%>" type="text"/>
+	<input type="submit" name="submit" value="查询"/>
+	<a href="/wordmanager/new" target="_blank">添加关键字</a>
+  </div>
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@list.total_entries%></B>条记录
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>上一级关键字</th>
+            <th>所属级别</th>
+            <th>关键字</th>
+            <th>专区</th>
+            <th>内联</th>
+            <th>同义词</th>
+            <th>创建时间</th>
+            <th>引用数</th>
+            <th>操作</th>
+    </tr>
+    <%for w in @list%>
+    <tr align="center" style="background-color:#FFFDE6" id="tr_<%=w.id%>">
+      <td align="left"><input type="checkbox" name="wid" id="wid" value="<%=w.id%>" /> <%=w.id%></td>
+      <td><%if w.fatherid.nil?||w.fatherid.to_s==''||w.fatherid.to_s=='0'%>无上级<%else%><%=getleadword(w.fatherid)%><%end%></td>
+      <td><%=w.level%></td>
+      <td><%=w.name%></td>
+      <td><%=w.zhuanqu%></td>
+      <td><%=w.inline%></td>
+      <td><%=sameword(w.id)%></td>
+      <td>
+      <%=w.created_at.strftime("%Y-%m-%d") rescue ""%>
+      </td>
+      <td>
+      	<%=countword(w.id)%>
+      </td>
+      <td>
+      <a href="/wordmanager/new?id=<%=w.id%>" target="_blank">加下级</a>
+      <a href="/wordmanager/edit?id=<%=w.id%>" >修改</a>
+      <a href="/wordmanager/same?id=<%=w.id%>" >同义词</a>
+      <a href="/wordmanager/zhuanqu?wids=<%=w.id%>" >专区</a>
+      <a href="/wordmanager/wdel?wids=<%=w.id%>" >删除</a>
+      </td>
+    </tr>
+    <%end%>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+		<%= will_paginate @list,:prev_label=> "上一页",:next_label=> "下一页" %>
+    </div>
+</form>
+  <span><form id="fmid2" name="fmid2" action="/wordmanager/zhuanqu" method="get" onSubmit="return zhuanqu();">
+  	<input id="wids1" name="wids" value="" type="hidden"/><input type="submit" name="submit1" value="批量加专区"/>
+  </form>
+  <form id="fmid1" name="fmid1" action="/wordmanager/wdel" method="get" onSubmit="return deleteAll();">
+  	<input id="wids" name="wids" value="" type="hidden"/><input type="submit" name="submit1" value="批量删除"/>
+  </form></span>
+</div>

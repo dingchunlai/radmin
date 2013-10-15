@@ -1,0 +1,69 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 760;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%= @hejia_indexes.total_entries %>;
+    pagesize = <%= @pagesize %>;
+    curpage = <%= @curpage %>;
+    cur_list = 0;
+    listsize = <%= @listsize %>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="hejia_index_keywords_form" action="/hejia_index_keywords" id="hejia_index_keywords_form" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      <input name="riqi1" type="text" size="7" value="<%=@riqi1%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="7" value="<%=@riqi2%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />
+      显示<input name="per_page" type="text" size="7" value="<%= @per_page %>" />条数据
+      显示第<input name="current_page" type="text" size="7" value="<%= @current_page %>" />页数据
+      <input type="submit" value="搜 索" onclick="document.hejia_index_keywords_form.action = '/hejia_index_keywords';document.hejia_index_keywords_form.submit();" />
+      <input type="submit" value="导出本页数据" onclick="document.hejia_index_keywords_form.action = '/hejia_index_keywords/export_hejia_indexes';document.hejia_index_keywords_form.submit();" />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+	总共搜索到<B><%= @hejia_indexes.total_entries %></B>条记录 当前显示第 <%= @hejia_indexes.current_page %> 页 共<B><%= @hejia_indexes.total_pages %></B>页
+    </div>
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>标签编号</th>
+        <th>名称</th>
+        <th>创建日期</th>
+        <th>对象编号</th>
+        <th>标题</th>
+        <th>网址</th>
+      </tr>
+      <% for hejia_index in @hejia_indexes %>
+        <tr align="center" style="background-color:#FFFDE6" id="tr_<%= hejia_index.id %>">
+          <td><%= hejia_index.k_id %></td>
+          <td><%= hejia_index.name %> </td>
+          <td><%= hejia_index.created_at.to_s(:db) %></td>
+          <td><%= hejia_index.id %></td>
+          <td><%= hejia_index.title %> </td>
+          <td><%= hejia_index.url %></td>
+        </tr>
+      <%end %>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+      <span id="pagelist"></span>
+    </div>
+  </form>
+</div>

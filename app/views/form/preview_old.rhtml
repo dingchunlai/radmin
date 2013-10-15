@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>表单预览 - 和家网后台管理[radmin.hejia.com]</title>
+<meta name="keywords" content="和家网后台管理">
+<meta name="description" content="和家网后台管理">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<meta name="author" content="MSN: qq1713173@hotmail.com" />
+<script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+<link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+  body{
+    padding:0px;
+  }
+  .formouter{
+      width:100%; clear:left; padding-bottom:10px;
+  }
+  .formleft{
+    width:80px; float:left;
+    font-size:14px;
+    letter-spacing: 1px;
+    color: #666666; padding-top: 4px;
+  }
+  .formcenter{
+    width:420px; float:left;
+    font-size:14px;
+    letter-spacing: 1px;
+    color: #3465D6;
+  }
+  .formright{
+      float:left;font-size:14px;
+      letter-spacing: 1px;
+      color: #999999; padding-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<form action="/form/form_save" method="post" enctype="multipart/form-data" target="hideiframe" onsubmit="return submitForm(this);">
+
+<div style="margin:15px;">
+    <input type="hidden" name="f_id" id="f_id" value="5" />
+    <input type="hidden" name="c_id" id="c_id" value="0" />
+
+<script type="text/javascript">
+  function submitForm(form){
+      <%for col in @columns%>
+          <%if col.ctype!=2 && col.ctype!=5 && col.mustfill%>
+          if (trim(ge("c<%=col.sn%>").value)==""){
+              alert("<%=col.cname%>是必填项，不能为空！");
+              return false;
+          }
+          <%end%>
+      <%end%>
+      return true;
+  }
+  </script>
+
+<%for col in @columns%>
+
+<div class="formouter">
+            <div class="formleft"><%=col.cname%>：</div>
+            <div class="formcenter">
+              <%=get_form_element(col.sn, col.ctype, col.ovalue, col.dvalue)%>
+            </div>
+</div>
+
+<%end%>
+
+    <div style="margin-left:100px;margin-top:15px;">
+      <input name="formid" type="hidden" value="<%=params[:id]%>" />
+       <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+
+</div>
+
+</form>
+
+
+<iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+
+</body>
+</html>

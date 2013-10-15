@@ -1,0 +1,165 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 1200;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  }
+  function gotopage(page){
+    window.open("/comment/reply_list?page="+page+"&recordcount=<%=@recordcount%>&entity_id=<%=@entity_id%>&content=<%=u(@content)%>&time_num=<%=@time_num%>&time_way="+document.form1.time_way.value, "_self");
+  }
+  
+  function deleteAll(){
+    if (confirm('您确定要不通过这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        var submit_form = document.getElementById("form1");
+        submit_form.action = "/comment/replies_del?ids=" + ids;
+        submit_form.submit();
+      }
+    }
+  }
+
+  function examineAll(){
+    if (confirm('您确定要通过这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        var submit_form = document.getElementById("form1");
+        submit_form.action = "/comment/replies_examine?ids=" + ids;
+        submit_form.submit();
+      }
+    }
+  }
+  var checkflag = "false";
+  function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+      if (field.length==undefined)
+        field.checked = true;
+      else
+        for (i = 0; i < field.length; i++) field[i].checked = true;
+      checkflag = "true";
+      return "false";
+    }
+    else {
+      if (field.length==undefined)
+        field.checked = false;
+      else
+        for (i = 0; i < field.length; i++) field[i].checked = false;
+      checkflag = "false";
+      return "true";
+    }
+  }
+
+  function getids(){
+    var ids = "0";
+    if (document.form1.pkey_id.length==undefined){
+      if (document.form1.pkey_id.checked) ids = document.form1.pkey_id.value;
+    }else{
+      for (i=0; i<document.form1.pkey_id.length;i++){
+        if (document.form1.pkey_id[i].checked) ids += ", " + document.form1.pkey_id[i].value;
+      }
+    }
+    if (ids=="0"){alert("请选择记录！"); return "";} else return ids;
+  }
+</script>
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+  tinyMCE.init({
+    mode : "exact",
+    elements : "reply",
+    language : "zh",
+    theme : "simple",
+    dialog_type : "modal",
+    convert_urls : false,
+    plugins : "advhr,advimage,advlink,emotions,fullscreen,preview,paste,table",
+    theme_advanced_layout_manager : "SimpleLayout",
+    theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,separator,forecolor,backcolor,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,link,unlink,advhr,image,advimage,advlink,emotions,pastetext,pasteword,fullscreen,selectall,code",
+    theme_advanced_buttons2 : "tablecontrols",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    extended_valid_elements : "fieldset[style],legend[style],a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+  });
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" id="form1" method="post" action="/comment/reply_list" target="_top">
+
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      entity_id: <input name="entity_id" type="text" size="10" value="<%=@entity_id%>" />
+      内容:<input name="content" type="text" size="25" value="<%=@content%>" />
+      时间数:<input name="time_num" type="text" size="5" value="<%=@time_num%>" />
+      <select id="time_way" name="time_way" >
+        <option id="1" value="month" <%=@month_selected%> >个月</option>
+        <option id="2" value="day" <%=@day_selected%> >天</option>
+        <option id="3" value="hour" <%=@hour_selected%> >个小时</option>
+      </select>
+      <input type="submit"value="搜 索" />
+    </div>
+
+
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+      <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>entity_id</th>
+        <th>内容</th>
+        <th>创建日期</th>
+        <th>操作</th>
+      </tr>
+      <%for reply in @replies%>
+        <tr style="background-color:#FFFDE6" align="center">
+          <td><input type="checkbox" name="pkey_id" value="<%=reply.id%>" /> <%=reply.id%></td>
+          <td><%= reply.entity_id %></td>
+          <td width="500">
+            <label title="<%= h(reply.content).to_s.split(//u) %>">
+              <%= truncate_u(h(reply.content),60,"...") %>
+            </label>
+          </td>
+          <td><%= reply.created_at.utc.strftime("%Y-%m-%d %H:%M:%S") rescue "" %></td>
+          <td>
+            <%= link_to("通过", {:action => "replies_examine", :ids => reply.id}) %> |
+            <%= link_to("不通过", {:action => "replies_del", :ids => reply.id}) %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+      <input onclick="SelectAll(document.form1.pkey_id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="examineAll()" type="button" value="批量审核通过" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+      <input onclick="deleteAll()" type="button" value="批量审核不通过" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <span id="pagelist"></span>
+    </div>
+
+  </form>
+</div>

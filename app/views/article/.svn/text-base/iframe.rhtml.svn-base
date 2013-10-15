@@ -1,0 +1,8 @@
+<% @images.each do |image| -%>
+	<div>
+	 <input type='hidden' name='images[]' value=<%=image%> />
+		<%= image_tag(image, :size => "60x60", :border => "0", :alt => "water_mark") %>
+		<A href="/article/water_mark_edit?image=<%=image %>" target="_blank">手动加水印</A>
+		<input type='hidden' name='id' value=<%=@id %> />
+	</div>
+ <% end -%>

@@ -1,0 +1,15 @@
+<%= error_messages_for :promotion %>
+<% form_for :promotion, @promotion, :url => charge_promotion_path(@promotion), :html => {:method => "put", :multipart => true} do |f| -%>
+	<div class="body">
+		<%= @promotion.body %>
+	</div>
+	<div>
+		<% @promotion.images.each do |image| %>
+		<%= image_tag(image.public_filename, :alt => image.filename) %>
+		<% end %>
+	</div>
+	<div><%= f.text_area :reply, :rows => 4, :cols => 80 %></div>
+	<%= hidden_field_tag "promotion[status]", "processed" %>
+	<div><%= submit_tag "处理" %></div>
+<% end -%>
+

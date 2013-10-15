@@ -1,0 +1,17 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label">标签</td>
+    <td><%= Tag.find(@ad_code.tag_id).TAGNAME %></td>
+  </tr>
+  <tr>
+    <td class="label">广告代码</td>
+    <td><%= @ad_code.ad_code -%></td>
+  </tr>
+  <tr>
+    <td class="label">操作</td>
+    <td>
+      <%= link_to "返回", photo_ads_path -%>&nbsp;
+<%= link_to "编辑", edit_photo_ad_path(@ad_code) -%>
+    </td>
+  </tr>
+</table>

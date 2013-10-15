@@ -1,0 +1,171 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 1000;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  }
+  function gotopage(page){
+    window.open("/boke/operations?page="+page+"&recordcount=<%= @recordcount %>&riqi1=<%= @riqi1 %>&riqi2=<%= @riqi2 %>&username=<%=u(@username)%>&wu_state=<%= @wu_state %>&radmin_username=<%= @radmin_username %>", "_self");
+  }
+
+  function getids(){
+    var ids = [];
+    if (document.ftiwen.arid.length==undefined){
+      if (document.ftiwen.arid.checked) ids = document.ftiwen.arid.value;
+    }else{
+      for (i=0; i<document.ftiwen.arid.length;i++){
+        if (document.ftiwen.arid[i].checked && document.ftiwen.arid[i].value!='0') ids.push(document.ftiwen.arid[i].value);
+      }
+      ids = ids.join(",");
+    }
+    if (ids==""){alert("请选择记录！"); return "";} else return ids;
+  }
+
+  var checkflag = "false";
+  function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+      if(field.length==undefined)
+      {
+        document.ftiwen.arid.checked=true
+      }
+      else
+      {
+        for (i = 0; i < field.length; i++) {
+          field[i].checked = true;}
+      }
+      checkflag = "true";
+      return "false";
+    }
+    else {
+      if(field.length==undefined)
+      {
+        document.ftiwen.arid.checked = false;
+      }
+      else
+      {
+        for (i = 0; i < field.length; i++) {
+          field[i].checked = false; }
+      }
+      checkflag = "false";
+      return "true";
+    }
+  }
+
+  //搜索
+  function search()
+  {
+    var submit_form = document.getElementById("boke_users_form");
+    submit_form.action = "/boke/operations";
+    submit_form.submit();
+  }
+
+  //批量操作（禁言、删除）
+  function operationAll()
+  {
+    if (confirm('您确定要批量执行吗？')){
+      var submit_form = document.getElementById("boke_users_form");
+      document.getElementById("wu_ids").value = getids();
+      submit_form.action = "/boke/operation_all";
+      submit_form.submit();
+    }
+  }
+</script>
+<style type="text/css">
+  .ellipsis{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap
+  }
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="ftiwen" id="boke_users_form" action="/boke/operations" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      用户名或编号：<input name="username" type="text" size="6" value="<%= @username %>" />
+      管理员名称：<input name="radmin_username" type="text" size="6" value="<%= @radmin_username %>" />
+      状态：<%= select_tag :wu_state,options_for_select(WenbaUser::STATE,@wu_state) %>
+      操作时间：<input name="riqi1" type="text" size="6" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      <input onclick="search();" type="button" value="搜 索" />　
+    </div>
+
+    <% unless @boke_users.blank? %>
+      <table id="datalist" style="width:auto;" summary="这个表格是...">
+        <caption align="left"></caption>
+        <tr>
+          <th>编号</th>
+          <th>用户编号</th>
+          <th>用户名</th>
+          <th>状态</th>
+          <th>原因</th>
+          <th>管理员</th>
+          <th>操作时间</th>
+        </tr>
+        <% for boke_user in @boke_users %>
+          <tr align="center" style="background-color:#FFFDE6" id="tr_<%= boke_user.id %>">
+            <td align="left"><input type="checkbox" name="arid" id="arid<%= boke_user.id %>" value="<%= boke_user.id %>" /> <%= boke_user.id %></td>
+            <td><%= boke_user.user_id %></td>
+            <td>
+              <% if boke_user.user_id == 0 %>
+                游客
+              <% else %>
+                <a href="http://blog.51hejia.com/u/<%= boke_user.user_id %>" target="_blank"><%= boke_user.user.USERNAME rescue "<font color='red'>未知用户</font>"%></a>
+              <% end %>
+            </td>
+            <td align="left">
+              <%= WenbaUser::STATE.rassoc(boke_user.state)[0] %>
+            </td>
+            <td>
+              <% if boke_user.reason %>
+                <label title="<%= boke_user.reason %>"><%= truncate_u(boke_user.reason, 20) %></label>
+              <% end %>
+            </td>
+            <td>
+              <%= boke_user.radmin_user.name rescue "" %>
+            </td>
+            <td><%= boke_user.updated_at.strftime("%Y-%m-%d %H:%M") rescue "" %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      没有符合条件的记录
+    <% end %>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+      <%= hidden_field_tag :wu_ids %>
+      <input onclick="SelectAll(document.ftiwen.arid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      状态：<%= select_tag :state,options_for_select(WenbaUser::STATE) %>
+      <% freeze_time_hash = [["永久",25.year.from_now.to_s(:db)],["一天(#{1.day.from_now.to_s(:db)})",1.day.from_now.to_s(:db)],
+        ["三天(#{3.days.from_now.to_s(:db)})",3.days.from_now.to_s(:db)],["五天(#{5.days.from_now.to_s(:db)})",5.days.from_now.to_s(:db)],
+        ["一周(#{7.days.from_now.to_s(:db)})",7.days.from_now.to_s(:db)],["两周(#{14.days.from_now.to_s(:db)})",14.days.from_now.to_s(:db)],
+        ["一个月(#{1.month.from_now.to_s(:db)})",1.month.from_now.to_s(:db)],["两个月(#{2.months.from_now.to_s(:db)})",2.months.from_now.to_s(:db)],
+        ["三个月(#{3.months.from_now.to_s(:db)})",3.months.from_now.to_s(:db)],["半年(#{6.months.from_now.to_s(:db)})",6.months.from_now.to_s(:db)],
+        ["一年(#{1.year.from_now.to_s(:db)})",1.year.from_now.to_s(:db)]] %>
+      <%= select_tag :freeze_time,options_for_select(freeze_time_hash) %>
+      原因：<%= text_field_tag :reason %>
+      <input onclick="operationAll()" type="button" value="批量操作" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <span id="pagelist"></span>
+    </div>
+  </form>
+</div>

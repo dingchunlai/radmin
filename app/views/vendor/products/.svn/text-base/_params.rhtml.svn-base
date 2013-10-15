@@ -1,0 +1,7 @@
+<% category.owned_params.each do |param| %>
+	<% if param.param_items.size > 0 %>
+	<%= param.key %>:
+	<%= hidden_field_tag "product[new_param_attributes][][param_id]", param.id %>
+	<%= select_tag "product[new_param_attributes][][param_item_id]", options_from_collection_for_select(param.param_items, "id", "value"), { :include_blank => true } -%>
+	<% end %>
+<% end %>

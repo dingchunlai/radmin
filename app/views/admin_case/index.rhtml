@@ -1,0 +1,29 @@
+<%= render :partial => 'search_company_and_designer' %>
+<table style="width:100%;">
+  <tr style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:20px;">
+    <td>公司名</td>
+    <td>设计师</td>
+  </tr>
+  <% if @companys %>
+    <% @companys.each do |company| %>
+      <tr style="line-height:20px;color:#336699;" onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');" >
+        <td>
+          <a href="#" style="font-size:14px;">
+            <%= company.CN_NAME %>
+          </a>
+        </td>
+        <td>
+          <% query_designers_by_company_id(company.ID).each do |designer| %>
+            <a href="/admin_case/show_designer?designer_id=<%= designer.ID %>" style="font-size:14px;">
+              <%= designer.DESNAME %>(<%= query_case_num_by_designer_id(designer.ID) %>)
+            </a>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<br>
+<% if @companys %>
+  <%= will_paginate @companys, :previous_label => "上一页", :next_label => "下一页", :inner_window => 3, :class => "digg_pagination" %>
+<% end %>

@@ -1,0 +1,26 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label">选择分类</td>
+    <td>
+      <table style="width:20%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <%= select :ad_code, :tag_father_id, Tag.photo_first_tag.collect {|t| [t.TAGNAME, t.TAGID]}, {}, { :size => 11 } %>
+          </td>
+          <td>
+            <%= select_tag :tag_id, @select_options, { :size => 11 } -%>
+            <%= observe_field "ad_code_tag_father_id", {:url => {:controller => 'photo_ads', :action => 'children_tag_update'}, :with => "tag_father_id"} %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">广告代码</td>
+    <td><%= f.text_area :ad_code -%></td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "添加代码" : "更新代码") -%></td>
+  </tr>
+</table>

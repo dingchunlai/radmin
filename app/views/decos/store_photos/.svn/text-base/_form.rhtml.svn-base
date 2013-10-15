@@ -1,0 +1,20 @@
+<style type="text/css">
+	#upload_store {padding:0 10px;}
+	#upload_store li{padding:10px 0}
+</style>
+<% is_new = @store_photo.id.nil? ? true : false%>
+<ul id="upload_store">
+	<li>图片链接：<%= f.text_field :link %></li>
+	<li>上传图片 </li>
+	<li><img src="<%= is_new ? 'http://js.51hejia.com/img/nopic.gif' : @store_photo.picture.url %>" id="photo_show" />
+		<input type="hidden" name="picture[image_id]" id="picture_image_id" value="<%= @store_photo.picture.image_id unless is_new %>" />
+	    <input type="hidden" name="picture[image_md5]" id="picture_image_md5" value="<%= @store_photo.picture.image_md5 unless is_new %>"/>
+	    <input type="hidden" name="picture[image_ext]" id="picture_image_ext" value="<%= @store_photo.picture.image_ext unless is_new %>"/>
+	    <input type="hidden" name="picture[file_name]" id="picture_file_name"  value="<%= @store_photo.picture.file_name unless is_new %>"/>
+		<input type="hidden" name="picture_id" value="<%= @store_photo.picture.id unless is_new %>">
+		</li>
+	<li>
+	  <span id="main_image_upload_button"></span>
+	</li>
+	<li><%= submit_tag "提交" %></li>
+</ul>

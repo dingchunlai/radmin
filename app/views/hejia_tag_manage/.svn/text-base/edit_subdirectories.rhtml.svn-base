@@ -1,0 +1,18 @@
+<p>修改 : <%= @tag.TAGNAME %>相关信息（如果想要修改其父目录，则需要sql语句执行修改）</p>
+<form action="/hejia_tag_manage/subdirectories_update" method="post">
+  <table border=1>
+    <input type="hidden" name="type" id="type" value="edit"/>
+    <input type="hidden" name="tagid" id="tagid" value="<%= @tag.TAGID %>"/>
+    <tr>
+      <td>名称</td>
+      <td><input type="text" name="tagname" id="tagname" value="<%= @tag.TAGNAME %>" size=10/></td>
+    </tr>
+    <tr>
+      <td>pinyin</td>
+      <td><input type="text" name="tagpinyin" id="tagpinyin" value="<%= @tag.TAGURL %>" size=10/></td>
+    </tr>
+    <tr>
+      <td align=center colspan=2><input type="submit" value="更新"/></td>
+    </tr>
+  </table>
+</form>

@@ -1,0 +1,81 @@
+bdt {
+	font-weight:bold;
+}
+#datalist {
+		border-collapse:collapse;
+		border:1px solid #FFDDAA;
+}
+#datalist th {
+text-align:center;
+		font-family:Verdana;
+		padding: 4px 10px 2px 10px;
+		letter-spacing: 2px;
+		background-color: #F27900;
+		font-size: 12px;
+		color: white;
+		font-weight: normal;
+		text-decoration: none;
+		border:1px solid white;
+}
+#datalist td {
+		color: #757575;
+		font-family:Verdana;
+		padding: 2px 2px;
+		letter-spacing: 1px;
+		font-size: 12px;
+		border:1px solid #FFDDAA;
+}
+#datalist a {
+		color: #000000;
+		text-decoration: none;
+}
+#datalist a:hover {
+		color: #F27900;
+		text-decoration: none;
+}
+#sidebar_item {
+	padding-left:10px;
+}
+#sidebar_item li {
+	background:transparent url("http://www.51hejia.com/images/user/blog.gif") no-repeat left center;
+	line-height:2em;
+	padding-left:20px;
+}
+#widebar #userprofile {
+	width:99%;	
+}
+#widebar #userprofile .top, #nav_bottom {
+	width:100%;
+}
+.mainbox {
+	border:0;
+	width:99%;
+}
+.mainbox tbody td {
+	border-top:0;
+}
+
+table#new_and_edit {
+
+}
+table#new_and_edit tr {
+    height: 30px;
+    border-bottom:1px solid #FFE3C8;
+}
+table#new_and_edit td#field {
+    width :15%;
+    text-align :right;
+}
+table#new_and_edit td#field label {
+    width :15%;
+    text-align :right;
+}
+table#new_and_edit td#input_data {
+}
+table#new_and_edit div.fieldWithErrors {
+    display: inline;
+}
+table#new_and_edit span.error_message {
+    color: red;
+}
+

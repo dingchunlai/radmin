@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>表单代码 - 和家网后台管理[radmin.hejia.com]</title>
+<meta name="keywords" content="和家网后台管理">
+<meta name="description" content="和家网后台管理">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<meta name="author" content="MSN: qq1713173@hotmail.com" />
+<link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#datalist {
+    border-collapse:collapse;
+    border:1px solid #BED0E2;
+}
+#datalist th
+{
+text-align:center;
+    font-family:Verdana;
+    padding: 5px 15px 3px 15px;
+    letter-spacing: 12px;
+    background-color: #45719C;
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
+    border:1px solid white;
+}
+#datalist td {
+    color: #757575;
+    font-family:Verdana;
+    padding: 5px 8px 5px 8px;
+    letter-spacing: 1px;
+    font-size: 9pt;
+    border:1px solid #D9E3EE;
+}
+#datalist a {
+    color: #2853FF;
+    text-decoration: none;
+}
+#datalist a:hover {
+    color: #FD352B;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<div style="margin:15px;">
+    <input type="hidden" name="f_id" id="f_id" value="5" />
+    <input type="hidden" name="c_id" id="c_id" value="0" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                表单标题：<font color="#CE0000"><%=@title%></font>
+    </div>
+
+<textarea style="width:800px;height:600px">
+<!-- 表单自动生成系统生成的代码 Start #################################################### -->
+<script type="text/javascript">
+  function ge(id){return document.getElementById(id);}
+  function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+  function submitForm(form){
+      var valReturn = true;
+      <%for col in @columns%><%if col.ctype!=2 && col.ctype!=5 && col.mustfill%>
+          if (trim(ge("c<%=col.sn%>").value)==""){
+              alert("您必须填写【<%=col.cname%>】！")
+              valReturn = false;
+          }
+      <%end%><%end%>
+      return valReturn;
+  }
+ </script>
+
+<div class="box01">
+<form action="http://radmin.51hejia.com/form/form_save" method="post" enctype="multipart/form-data" target="hideiframe" onsubmit="return submitForm(this);">
+<%for col in @columns%>
+    <div class="formouter">
+        <div class="formleft"><%=col.cname%>：<%if col.mustfill%><span>*</span><%end%></div>
+        <div class="formcenter">
+            <%=h(get_form_element(col.sn, col.ctype, col.ovalue, col.dvalue))%>
+        </div>
+    </div>
+<%end%>
+    <div class="formouter">
+        <div class="formleft">&nbsp;</div>
+        <div class="formcenter">
+            <input name="formid" type="hidden" value="<%=params[:id]%>" />
+            <input value="提交" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="reset" name="Submit" value="重置" />
+        </div>
+    </div>
+</form>
+</div>
+
+<iframe name="hideiframe" width="0" height="0" style="display: none;"></iframe>
+<!-- 表单自动生成系统生成的代码 End #################################################### -->
+</textarea>
+
+</div>
+
+</body>
+</html>

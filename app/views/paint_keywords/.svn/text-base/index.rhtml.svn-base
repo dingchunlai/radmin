@@ -1,0 +1,47 @@
+<style type="text/css">
+#pagelist{
+  font-family:Verdana;
+  color:#999999;
+  font-size:14px;
+  letter-spacing:1px;
+  vertical-align: middle;
+}
+#pagelist a{
+  color:#000040;
+  text-decoration:none;
+}
+#pagelist a:hover{
+  background-color: #000040;
+  color:white;
+  text-decoration:none;
+}
+</style>
+
+<div id="div_main">
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    <%= link_to("添加油工关键词", "/paint_keywords/new") %>
+  </div>
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>名称</th>
+        <th>操作</th>
+      </tr>
+      <% for paint_keyword in @paint_keywords %>
+      <tr style="background-color:#FFFDE6">
+        <td><%= paint_keyword.id %></td>
+        <td align="center"><%= paint_keyword.name %></td>
+        <td align="center">
+          <a href="/paint_keywords/<%= paint_keyword.id %>/edit">编辑</a> 
+        </td>
+      </tr>
+      <% end %> 
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+      <span id="pagelist"><%= will_paginate @paint_keyword %></span>
+    </div>
+  </div>
+</div>

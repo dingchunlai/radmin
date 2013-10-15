@@ -1,0 +1,11 @@
+<%#
+# 标签多极联动子部件
+# render :partial => "admin_case/show_option_tags", :locals => { :tags => array.reverse, :tag => tag}
+%>
+
+<% tags.each_with_index do |tag_array, index| %>
+  <% unless tag_array[0].children_tags.blank? %>
+    <%= select_tag "#{index}_level_tags", options_for_select(tag_array[0].children_tags.map{|t| [t.TAGNAME,t.TAGID]}, tag_array[1].TAGID), :onchange => "tags_show(this.value);" %>
+  <% end %>
+<% end %>
+<%= select_tag :last_level_tags, options_for_select(tag.children_tags.map{|t| [t.TAGNAME,t.TAGID]}.unshift(["请选择",""])), :onchange => "tags_show(this.value);" %>

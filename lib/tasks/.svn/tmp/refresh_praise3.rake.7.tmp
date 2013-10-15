@@ -1,0 +1,114 @@
+namespace :refresh do
+  desc "初始化完结"
+  task :init_finished => :environment do
+    @diaries = DecorationDiary.find(:all, :conditions => "is_verified = 1")
+    @diaries.each do |diary|
+      p diary.id
+      DecorationDiary.update_all("finished = 1", ["id = ?", diary.id])
+    end   
+  end
+
+  desc "刷新公司好评"
+  task :praise3 => :environment do
+
+    begin_at = 6.month.ago.to_date
+
+    sql = %{
+        select f.id as id,avg(f.praise) as praise,avg(f.construction_praise) as construction_praise,avg(f.design_praise) as design_praise,avg(f.service_praise) as service_praise from
+        ((
+          select deco_firm_id as id , praise * 0.9 as praise, design_praise , construction_praise, service_praise 
+          from decoration_diaries where status = 1 and praise > 0 and deco_firm_id <> "" 
+          and  created_at >= '#{begin_at}' and created_at <'2010-11-11'
+          )union all(
+          select deco_firm_id as id , praise * 0.8 as praise , design_praise * 0.8 as design_praise , 
+          construction_praise * 0.8 as construction_praise , service_praise * 0.8 as service_praise 
+          from decoration_diaries where status = 1 and praise >=0 and deco_firm_id <> "" and is_verified <> 1 and finished = 0
+          and created_at >= '#{begin_at}'  and created_at >= '2010-11-11'
+          )union all(
+          select deco_firm_id as id , praise * 0.9 as praise , design_praise * 0.9 as design_praise , 
+          construction_praise * 0.9 as construction_praise , service_praise * 0.9 as service_praise 
+          from decoration_diaries where status = 1 and praise >=0 and deco_firm_id <> "" and ((is_verified <> 1 and finished = 1) or (is_verified = 1 and finished = 0))
+          and created_at >= '#{begin_at}'  and created_at >= '2010-11-11'
+          )union all(
+          select deco_firm_id as id , praise , design_praise , construction_praise, service_praise 
+          from decoration_diaries where status = 1 and praise > 0 and deco_firm_id <> "" and is_verified = 1 and finished = 1
+          and created_at >= '#{begin_at}' and created_at >= '2010-11-11'
+          )union all(
+            select resource_id as id , praise * 0.8 as praise , design_praise * 0.8 as design_praise , 
+            construction_praise * 0.8 as construction_praise , service_praise * 0.8 as service_praise
+              from remarks where status = 1 and resource_type ='DecoFirm' and praise > 0 and resource_id <> ""
+          and created_at >= '#{begin_at}'  and created_at >= '2010-11-11' 
+          ))f
+        group by id
+    }
+      
+    more_than_5_comments_sql = %{
+         
+        select deco_firm_id from(
+         select resource_id as deco_firm_id , count(*) as num 
+                from remarks
+                where  resource_type='DecoFirm'  and created_at >= '#{60.days.ago.at_beginning_of_day.to_s(:db)}' and ( praise > 0 or other_id is not null)
+                group by resource_id 
+        )d where d.num >=5
+    }
+        
+      
+    @firms = DecoFirm.find_by_sql sql
+    @more_than_5_comments = DecoFirm.find_by_sql(more_than_5_comments_sql).map(&:deco_firm_id)
+    
+    @firms.each do |firm|
+      #firm_in_database = firm.id && DecoFirm.find(:first,:conditions=>"id = #{firm.id} and is_cooperation = 1")
+      firm_in_database = firm.id && DecoFirm.find(:first,:conditions=>"id = #{firm.id}")
+      unless firm_in_database.nil?
+        if firm_in_database.is_cooperation.to_i == 1
+          cooperation_time = firm_in_database.cooperation_time || firm_in_database.created_at
+          #综合口碑的限制期
+
+          firm.praise = 7 if firm.praise && firm.praise > 7 && cooperation_time > 1.month.ago
+          firm.praise = 8.5 if firm.praise && firm.praise > 8.5 && cooperation_time > 2.months.ago
+          firm.praise = 9.4 if firm.praise && firm.praise > 9.4 && cooperation_time > 3.months.ago
+
+          firm.design_praise = 7 if firm.design_praise && firm.design_praise > 7 && cooperation_time > 1.month.ago
+          firm.construction_praise = 7 if firm.construction_praise && firm.construction_praise > 7 && cooperation_time > 1.month.ago
+          firm.service_praise = 7 if firm.service_praise && firm.service_praise > 7 && cooperation_time > 1.month.ago
+
+          firm.design_praise = 8.5 if firm.design_praise && firm.design_praise > 8.5 && cooperation_time > 2.months.ago
+          firm.construction_praise = 8.5 if firm.construction_praise && firm.construction_praise > 8.5 && cooperation_time > 2.months.ago
+          firm.service_praise = 8.5 if firm.service_praise && firm.service_praise > 8.5 && cooperation_time > 2.months.ago
+
+          firm.design_praise = 9.4 if firm.design_praise && firm.design_praise > 9.4 && cooperation_time > 3.months.ago
+          firm.construction_praise = 9.4 if firm.construction_praise && firm.construction_praise > 9.4 && cooperation_time > 3.months.ago
+          firm.service_praise = 9.4 if firm.service_praise && firm.service_praise > 9.4 && cooperation_time > 3.months.ago
+
+          unless @more_than_5_comments.include? firm.id.to_s
+            firm.praise = firm.praise / 2 if firm.praise
+            firm.design_praise = firm.design_praise / 2 if firm.design_praise
+            firm.construction_praise = firm.construction_praise / 2 if firm.construction_praise
+            firm.service_praise = firm.service_praise / 2 if firm.service_praise
+          end
+        else
+          firm.praise = firm.praise / 2 if firm.praise
+          firm.design_praise = firm.design_praise / 2 if firm.design_praise
+          firm.construction_praise = firm.construction_praise / 2 if firm.construction_praise
+          firm.service_praise = firm.service_praise / 2 if firm.service_praise
+        end
+      end
+      
+      firm.praise = 0 unless firm.praise.to_i > 0
+      firm.design_praise = 0 unless firm.design_praise.to_i > 0
+      firm.construction_praise = 0 unless firm.construction_praise.to_i > 0
+      firm.service_praise = 0 unless firm.service_praise.to_i > 0
+
+      #firm.praise = firm.praise * 0.7 + ((firm.design_praise + firm.construction_praise + firm.service_praise)/3)*0.3
+
+      update_sql = %{praise = adjusted_praise + #{firm.praise} ,   nonadjusted_praise  = #{firm.praise} ,
+                      design_praise = adjusted_design_praise + #{firm.design_praise} , nonadjusted_design_praise = #{firm.design_praise} , 
+                      construction_praise = adjusted_construction_praise +#{firm.construction_praise} ,nonadjusted_construction_praise = #{firm.construction_praise} ,
+                       service_praise =adjusted_service_praise + #{firm.service_praise} , nonadjusted_service_praise = #{firm.service_praise}}
+
+      DecoFirm.update_all(update_sql,:id=>firm.id)
+        
+      puts "#{firm.id} => praise:#{firm.praise} design_praise:#{firm.design_praise} construction_praise:#{firm.construction_praise} service_praise:#{firm.service_praise}"
+    end
+  end
+end

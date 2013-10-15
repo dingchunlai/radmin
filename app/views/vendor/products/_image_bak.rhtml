@@ -1,0 +1,7 @@
+	<div class="image">
+	<% fields_for_image(image) do |image_form| %>
+		<%= image_form.file_field :uploaded_data %>
+		<%= link_to_function "移除", "$(this).up('.image').remove()" %>
+	<% end %>
+	</div>
+

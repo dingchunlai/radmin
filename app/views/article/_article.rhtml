@@ -1,0 +1,8 @@
+<tr>
+  <td td width="60%">
+
+	<%= check_box_tag "artid[]", article.ID, (@arts.map {|t| t.TAGID}.include? article.ID.to_s) %><%=article.TITLE%>
+  </td>
+  <td td width="40%">
+  </td>
+</tr>

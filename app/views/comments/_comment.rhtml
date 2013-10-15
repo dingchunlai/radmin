@@ -1,0 +1,4 @@
+<div class="advisory" id="<%= comment.dom_id -%>">
+	<h4>回复于：<span><%= comment.created_at.to_s(:db) %></span> <%= link_to_remote "删除", :url => vendor_comment_path(comment), :method => "delete", :confirm => "确认删除吗？" %></h4>
+	<p><%=h comment.body %></p>
+</div>

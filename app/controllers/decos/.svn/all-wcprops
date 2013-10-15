@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos
+END
+glory_certificates_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/glory_certificates_controller.rb
+END
+events_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/events_controller.rb
+END
+quotations_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/quotations_controller.rb
+END
+registers_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/registers_controller.rb
+END
+store_photos_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/store_photos_controller.rb
+END
+photos_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/photos_controller.rb
+END
+deco_services_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/deco_services_controller.rb
+END
+contacts_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/contacts_controller.rb
+END
+deco_ideas_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/decos/deco_ideas_controller.rb
+END

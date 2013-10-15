@@ -1,0 +1,16 @@
+<table border=1 align=center>
+	<tr>
+		<td>类型</td>
+		<td>名字</td>
+		<td>值</td>
+		<td>操作</td>
+	</tr>
+	<% @dlist.each do |d| -%>
+	<tr>
+		<td><%if d.dtype && d.dtype == 1%>统计文章类型<%else%>其他<%end%></td>
+		<td><%=d.dname%></td>
+		<td><%=d.dvalue%></td>
+		<td><a href="/baselogdate/delete/<%=d.id%>">删除</a> </td>
+	</tr>
+	<% end -%>
+</table>

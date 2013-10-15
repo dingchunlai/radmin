@@ -1,0 +1,195 @@
+<a href="/" style="font-size:15px;">radmin首页</a>&nbsp;&nbsp;&nbsp;
+<a href="/admin_case/articles_to_cases_index" style="font-size:15px;">打标签首页</a>&nbsp;&nbsp;&nbsp;
+<%if isrole("管理员") || isrole("文章编辑") %>
+  <a href="/admin_case/tag_list" style="font-size:15px;">增加标签</a>&nbsp;&nbsp;&nbsp;
+<% end %>
+  <a href="/admin_case/tag_case_num_list" style="font-size:15px;">标签案例数量</a>&nbsp;&nbsp;&nbsp;
+  <a href="/admin_case/tag_pic_num_list" style="font-size:15px;">标签图片数量</a>&nbsp;&nbsp;&nbsp;
+  <a href="/company/linktofront?companyid=7" target="_blank" style="font-size:15px; title="图片标签">录入图片</a>&nbsp;&nbsp;&nbsp;
+共<strong><%= @pages.item_count %></strong>套图<br>
+<%= render :partial => "admin_case/choose_tag/search_editor_cases" %>
+<%if isrole("管理员") || isrole("文章编辑") %>
+  <br>
+  <table>
+    <tr>
+      <td style="background-color:#C0C0C0;">
+        <%
+        ids = []
+        @cases.each {|c| ids << c.ID }
+      %>
+        当前页信息--案例数：<div id="total_case_num" style="display:inline;font-weight:bold;"><%= @cases.size %></div>，图片数：<div id="total_pic_num" style="display:inline;font-weight:bold;"><%= query_cases_pic_num(ids) %></div>
+      </td>
+    </tr>
+  </table>
+  <table id="user_total_info">
+    <%= render :partial => "admin_case/choose_tag/user_total_info" %>
+  </table>
+<% else %>
+  <br>
+  <table>
+    <tr>
+      <td style="background-color:#C0C0C0;">
+        <%
+        ids = []
+        @cases.each {|c| ids << c.ID }
+      %>
+        当前页信息--案例数：<div id="total_case_num" style="display:inline;font-weight:bold;"><%= @cases.size %></div>，图片数：<div id="total_pic_num" style="display:inline;font-weight:bold;"><%= query_cases_pic_num(ids) %></div>
+      </td>
+    </tr>
+  </table>
+<% end %>
+<br>
+<script type="text/javascript">
+  /**
+   * Comment
+   */
+  function tiaohzuan() {
+    var page = parseInt($('pagepp').value);
+    var url = "";
+    if(page > 0 && page <= <%= @pages.page_count %> ){
+<% if @url_to %>
+        url = "<%= @url_to %>".replace(/&page=\d+/,"") + "&page=" + page;
+<% else %>
+        url = "/admin_case/articles_to_cases_index?page=" + page;
+<% end %>
+      window.open(url,"_self");
+    }
+  }
+  function keypress(e){
+    var isie = (document.all) ? true : false;
+    var key;
+    if(isie){
+      key = window.event.keyCode;
+    }else{
+      key = e.which;
+    }
+    if(key==13){
+      tiaohzuan();
+    }
+  }
+</script>
+<div class="paginate">
+  <%= link_to '&laquo; 上一页', { :page => @pages.current.previous.to_i, :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time, :state => @state, :editor_id => @editor_id } if @pages.current.previous %>
+  <%= pagination_links(@pages, :params => { :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time, :state => @state, :editor_id => @editor_id }, :window_size => 14) %>
+  <%= link_to '下一页 &raquo;', { :page => @pages.current.next.to_i, :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time, :state => @state, :editor_id => @editor_id } if @pages.current.next %>
+  <% if @pages.page_count > 1 %>
+    <input name="page" size="10" style="display:inline;" id="pagepp" onkeypress="keypress(event)"><input type="button" value="跳转" style="display:inline;" onclick="tiaohzuan()">
+  <% end %>
+</div>
+<br>
+<script type="text/javascript" src="/javascripts/builder.js"></script>
+<script type="text/javascript" src="/javascripts/modalbox.js"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/modalbox.css"></link>
+<div id="cases_list">
+  <% form_remote_tag :url => {:action => "allocate_case_to_editor"}, :loading => "Element.show('ss')",
+    :complete => "Element.hide('ss')", :html => { :name => "case_form", :id => "case_form" } do %>
+    <%if isrole("管理员") || isrole("文章编辑")%>
+      <table>
+        <tr>
+          <td colspan="3">
+            <input type="button" value="全选" onclick="checkAll('case_id[]')"/>
+            <input type="button" value="反选" onclick="clearAll('case_id[]')"/>
+            <select name="editor_id">
+              <% @users.each do |u| %>
+                <option value="<%= u.id %>"><%= u.rname %>
+              <% end %>
+            </select>
+            <input type="submit" value="分配">
+            <input type="button" value="删除" onclick="form_submit('case_id[]','case_form','/admin_case/destory_cases');"/>
+            <input type="button" value="审核" onclick="form_submit('case_id[]','case_form','/admin_case/pass');"/>
+            <img id="ss" style="display: none;" src="http://radmin.51hejia.com/images/icons/indicator.gif" alt="ss"/>
+            <span>选中信息--案例数：<div id="case_num" style="display:inline;font-weight:bold;">0</div>，图片数：<div id="pic_num" style="display:inline;font-weight:bold;">0</div></span>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+    <table style="width:100%;">
+      <tr style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:20px;">
+        <td style="width:3%;">选择</td>
+        <td>图片</td>
+        <td>案例名称</td>
+        <%#*<td>案例介绍</td>%>
+        <td>案例标签数量</td>
+        <td>创建时间</td>
+        <td style="width:12%">案例类别</td>
+        <td style="width:12%">状态</td>
+      </tr>
+      <% if @cases %>
+        <% @cases.each do |one_case| %>
+          <tr style="line-height:20px;background-color:<%= cycle("#ffffff", "#EEF9EB") -%>;">
+            <td>
+              <input type="checkbox" name="case_id[]" value="<%= one_case.ID %>" onclick="count_num('<%= one_case.ID %>', this.checked)">
+            </td>
+            <td>
+              <a href="/admin_case/case_pics_tags?cid=<%= one_case.ID %>" onclick="Modalbox.show(this.href, {title: this.title, width: 990, height: 600}); return false;">
+                <!--img src="http://image.51hejia.com<%#= one_case.MAINPHOTO %>" height="70" width="120"-->
+                <img src="<%= query_small_image(one_case.ID, one_case.TYPE_ID, one_case.MAINPHOTO) %>" width="120" height="70"/>
+              </a>
+            </td>
+            <td style="text-align:left;">
+              <a href="/admin_case/choose_tag_for_case?id=<%= one_case.ID %>" style="font-size:14px;" target="_blank">
+                <%= one_case.NAME %>[<span class="pic_num" id="pic_num<%= one_case.ID %>"><%= query_case_pic_num(one_case.ID) %></span>]
+              </a>
+            </td>
+            <%#*<td style="text-align:left;vertical-align:top;">%>
+            <%#= one_case.INTRODUCE.chars[0, 100] %>
+            <%#*</td>%>
+            <td style="text-align:left;" id="case_pic_tags_<%= one_case.ID %>">
+              <% @cid = one_case.ID %>
+              <%= render :partial => "admin_case/choose_tag/case_pic_tags", :object => @cid %>
+            </td>
+            <td>
+              <%= one_case.CREATEDATE.strftime("%Y-%m-%d") %>
+            </td>
+            <td id="choose_case_type_<%= one_case.ID %>">
+              <%
+              @rs = HejiaTagEntityLink.find(:first, :conditions => "ENTITYID = #{one_case.ID} and TAGID in (4346,41662,9079,30885)")
+              if @rs
+                case @rs.TAGID
+                when 4346
+                  @tag_name = "案例类"
+                  @tag_type = "anli"
+                when 41662
+                  @tag_name = "产品类"
+                  @tag_type = "chanpin"
+                when 9079
+                  @tag_name = "新闻类"
+                  @tag_type = "xinwen"
+                when 30885
+                  @tag_name = "生活类"
+                  @tag_type = "shenghuo"
+                else
+                  @tag_name = ""
+                end
+              else
+                @tag_name = ""
+              end
+            %>
+              <%= link_to_remote "案例类", :url => {:action => "choose_case_type",
+                :id => one_case.ID, :type => "anli", :from => "index"}, :loading => "Element.show('indicator_#{one_case.ID}')", :complete => "Element.hide('indicator_#{one_case.ID}')" %>
+              <%= link_to_remote "产品类", :url => {:action => "choose_case_type",
+                :id => one_case.ID, :type => "chanpin", :from => "index"}, :loading => "Element.show('indicator_#{one_case.ID}')", :complete => "Element.hide('indicator_#{one_case.ID}')" %>
+              <%= link_to_remote "新闻类", :url => {:action => "choose_case_type",
+                :id => one_case.ID, :type => "xinwen", :from => "index"}, :loading => "Element.show('indicator_#{one_case.ID}')", :complete => "Element.hide('indicator_#{one_case.ID}')" %>
+              <%= link_to_remote "生活类", :url => {:action => "choose_case_type",
+                :id => one_case.ID, :type => "shenghuo", :from => "index"}, :loading => "Element.show('indicator_#{one_case.ID}')", :complete => "Element.hide('indicator_#{one_case.ID}')" %>
+              <img id="indicator_<%= one_case.ID %>" style="display: none;" src="http://radmin.51hejia.com/images/icons/indicator.gif" alt="Indicator"/>
+              <%= render :partial => "admin_case/choose_tag/choose_case_type" %>
+            </td>
+            <td id="editor_<%= one_case.ID %>" style="text-align: left; vertical-align: top;">
+              <% @cid = one_case.ID %>
+              <%= render :partial => "admin_case/choose_tag/case_editor", :object => @cid %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  <% end %>
+</div>
+<br>
+<div class="paginate">
+  <%= link_to '&laquo; 上一页', { :page => @pages.current.previous.to_i, :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time, :state => @state, :editor_id => @editor_id } if @pages.current.previous %>
+  <%= pagination_links(@pages, :params => { :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time, :state => @state, :editor_id => @editor_id }, :window_size => 14) %>
+  <%= link_to '下一页 &raquo;', { :page => @pages.current.next.to_i, :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time, :state => @state, :editor_id => @editor_id } if @pages.current.next %>
+</div>
+<script src="http://radmin.51hejia.com/javascripts/WebCalendar.js" type="text/javascript" charset="gb2312"></script>

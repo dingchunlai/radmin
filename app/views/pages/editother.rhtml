@@ -1,0 +1,20 @@
+<form action="/pages/editothernew" method="post">
+	<input type="hidden" name="pageid" value="<%=@pageid%>">
+	<table>
+	<tr>
+	<td>title:</td><td><input type="text" name="title" value="<%=@title%>" size="80"></td>
+	</tr>
+	<tr>
+	<td>keywords:</td>
+	<td><textarea name="keywords" cols=80 rows=5><%=@keywords%></textarea></td>
+	</tr>
+	<tr>
+	<td>description:</td>
+	<td><textarea name="description" cols=80 rows=5><%=@description%></textarea></td>
+	</tr>
+	<tr>
+	<td>domain:</td>
+	<td><input type="text" name="domain" value="<%=@domain%>" size="80"></td>
+	</tr>
+	<tr><td><input type="submit" value="确定"><td></tr>
+</form>

@@ -1,0 +1,41 @@
+
+<% unless flash[:notice].blank? -%>
+  <div id='notice'><%=flash[:notice]%></div>
+<% end -%>
+<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+	<table border=1 width="80%" align="center">
+		<tr style="background-color:#7389A4;">
+  			<th style="color:#FFFFFF;">ID</th>
+  			<th style="color:#FFFFFF;">笔名</th>
+  			<th style="color:#FFFFFF;">状态</th>
+			<th style="color:#FFFFFF;">操作</th>
+		</tr>
+		<%if !@usepen.nil?%>
+		<tr style="background-color:#FFFDE6">
+			<td><%=@usepen.id%></td>
+			<td><%=@usepen.name%></td>
+			<td>使用中</td>
+			<td><a href="#n" onclick="delpen(<%=@usepen.id%>)">删除</a>|<a href="/pen_name/show/<%=@usepen.id%>" target="_blank">修改</a></td>
+		</tr>
+		<%end%>
+		<%for p in @pen%>
+			<%if p.id==@usepen.id%>
+			<%else%>
+				<tr style="background-color:#FFFDE6">
+					<td><%=p.id%></td>
+					<td><%=p.name%></td>
+					<td><%if p.ischoice==1%>曾用<%else%>未使用<%end%></td>
+					<td><a href="#n" onclick="delpen(<%=p.id%>)">删除</a>|<a href="/pen_name/show/<%=p.id%>" target="_blank">修改</a></td>
+				</tr>
+			<%end%>
+		<%end%>		
+	</table>
+</div>
+<script language="javascript">
+	function delpen(id){
+		if(window.confirm('确定删除吗')){
+			location.href="/pen_name/delete/"+id;
+			
+		}
+	}
+</script>

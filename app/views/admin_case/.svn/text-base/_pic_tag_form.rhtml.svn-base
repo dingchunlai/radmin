@@ -1,0 +1,25 @@
+
+<div id="tag" style="display:inline;">
+  添加：
+  <% form_remote_tag :url => '/admin_case/save_tag',
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" do -%>
+    父标签：
+    <span id="option_tags">
+      <%= select_tag :first_tag, options_for_select(@case_pic_tags.map{|t| [t.TAGNAME,t.TAGID]}), :onchange => "option_tags(this.value);" %>
+      <!--select>
+        <%# @case_pic_tags.each do |tag| %>
+          <option value="<%#= tag.TAGID %>" /><%#= tag.TAGNAME %>
+        <%# end %>
+      </select-->
+    </span>
+    <br />
+    <input id="tag_TAGFATHERID" name="tag[TAGFATHERID]" type="hidden" value="1" />
+    <input name="tag[TAGESTATE]" type="hidden" value="1" />
+    标签名字：<input name="tag[TAGNAME]" />
+    标签url：<input name="tag[TAGURL]" />
+    标签分类：<input name="tag[TAGCOMMENT]" value="" />
+    重要？：<input name="tag[ISIMPORTANT]" type="checkbox" value="1" />
+    <%= submit_tag '提交' %>
+    <%= button_to_function "移除", "$(this).up('#tag').remove()" %>
+  <% end -%>
+</div>

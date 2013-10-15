@@ -1,0 +1,179 @@
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]); 
+  }
+</style>
+<form id="fmid" action='/review/back_company_list' method=get>
+  <input type='hidden' name='company_id' id='company_id' />
+  &nbsp;&nbsp;&nbsp;&nbsp;资源类型
+  <select onchange='changeleixing(this.value)'>
+    <option value='1' selected>公司</option>
+    <!--<option value='2'>点评</option>-->
+    <!--<option value='3'>回复</option>-->
+  </select>
+  <script type="text/javascript">
+    function changeleixing(val){
+      if(val == '1')
+        location.href='/review/back_company_list';
+      else if(val == '2')
+        location.href='/review/back_commont_list';
+      else if(val == '3')
+        location.href='/review/replyindex';
+    }
+  </script>
+  <p align=center style="font-size:15px">
+    公司编号(ID)：<input type="text" name="cid" value="<%=@cid%>" />
+	公司名：<input type="text" name="cname" value="<%=@cname%>" />
+	城市：<select name="city" onchange="new Ajax.Updater('area', '/review/select_area', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+      <option value='0'>选择</option>
+      <% cities_for_query.each do |k,v| %>
+        <option value='<%=k%>' <%if k==@city.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    价格: <select name="price">
+      <option value='0'>选择</option>
+      <%PRICE.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if k==@price.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    方式：<select name="model">
+      <option value='0'>选择</option>
+      <%MODELS.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if k==@model.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    风格：<select name="style">
+      <option value='0'>选择</option>
+      <%STYLES.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if k==@style.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select><br/>
+    排序：<select name="order">
+      <option value='0'>口碑</option>
+      <option value='1' <%if @order.to_i == 1%>selected<%end%> >服务口碑</option>
+      <option value='2' <%if @order.to_i == 2%>selected<%end%> >设计口碑</option>
+      <option value='3' <%if @order.to_i == 3%>selected<%end%> >施工口碑</option>
+    </select>
+    是否合作：<select name='is_cooperation'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @is_cooperation.to_i == 1 %>selected<%end%>>合作</option>
+      <option value='2' <%if @is_cooperation.to_i == 2 %>selected<%end%>>未合作</option>
+      <option value='3' <%if @is_cooperation.to_i == 3 %>selected<%end%>>意向</option>
+    </select>
+    状态:<select name="shangjia">
+      <option value="">请选择</option>
+      <option value="1" <%if @shangjia == '1'%>selected<%end%>>全部</option>
+      <option value="2" <%if @shangjia == '2'%>selected<%end%>>上架</option>
+      <option value="3" <%if @shangjia == '3'%>selected<%end%>>下架</option>
+      <option value="4" <%if @shangjia == '4'%>selected<%end%>>注册公司</option>
+    </select>
+    <input type=submit value="搜索" />
+  </p>
+</form>
+<table align=center border=1 style="font-size:12px;width:1280px">
+  <tr style="font-size:13px">
+    <td>公司编号</td>
+    <td>名字</td>
+    <td>地区</td>
+    <td>案例数</td>
+    <td>设计师数</td>
+    <td>在建工地数</td>
+    <td>日记数</td>
+    <td>留言数</td>
+    <td>调整后的口碑</td>
+    <td>调整口碑</td>
+    <td>调整前的口碑</td>
+    <td>服务口碑</td>
+    <td>调整服务口碑</td>
+    <td>调整前的服务口碑</td>
+    <td>设计口碑</td>
+    <td>调整设计口碑</td>
+    <td>调整前的设计口碑</td>
+    <td>施工口碑</td>
+    <td>调整施工口碑</td>
+    <td>调整前的施工口碑</td>
+    <td>合作</td>
+    <td>操作</td>
+  </tr>
+  <%@companys.each do |c|%>
+    <tr>
+      <td><a href="http://z.51hejia.com/firms-<%=c.id%>" target="_blank"><%=c.id%></a></td>
+      <td><a href="/company/linktofront?companyid=<%=c.id%>" title='<%=c.name_zh%>' target="_blank"/><%=c.name_zh%></td>
+      <td><%if c.city.to_i == 11910%>上海<%elsif c.district.to_i >0%><%=CITIES[c.district.to_i]%><%end%></td>
+      <td><%=c.cases_count%></td>
+      <td><%=c.designers_count%></td>
+      <td><%=c.rad_factories.blank? ? '暂无' : c.rad_factories.size%></td>
+      <td><%=c.decoration_diaries.blank? ? '暂无' : c.decoration_diaries.size%></td>
+      <td><%=c.comments_count.blank? ? '暂无' : c.comments_count%></td>
+      <td><%= c.praise %></td>
+      <td width="100"><% if isrole("页面制作") ||isrole("管理员") -%>
+          <% form_for :company ,c,:url=>{:action=>"update_this_adjusted_praise"} do |f| -%>
+            <%= f.hidden_field :company ,:value=> c.id %>
+            <%= f.text_field :adjusted_praise , :value=>c.adjusted_praise ,:size=>"5"%><%= submit_tag("更新")%>
+          <% end -%>
+        <% end -%>
+      </td>
+      <td><%= c.nonadjusted_praise %></td>
+      <td><%=c.service_praise%></td>
+      <td width="100"><% if isrole("页面制作") ||isrole("管理员") -%>
+          <% form_for :company ,c,:url=>{:action=>"update_service_adjusted_praise"} do |f| -%>
+            <%= f.hidden_field :company ,:value=> c.id %>
+            <%= f.text_field :adjusted_service_praise , :value=>c.adjusted_service_praise ,:size=>"5"%><%= submit_tag("更新")%>
+          <% end -%>
+        <% end -%>
+      </td>
+      <td><%= c.nonadjusted_service_praise %></td>
+      <td><%=c.design_praise%></td>
+      <td width="100"><% if isrole("页面制作") ||isrole("管理员") -%>
+          <% form_for :company ,c,:url=>{:action=>"update_design_adjusted_praise"} do |f| -%>
+            <%= f.hidden_field :company ,:value=> c.id %>
+            <%= f.text_field :adjusted_design_praise , :value=>c.adjusted_design_praise ,:size=>"5"%><%= submit_tag("更新")%>
+          <% end -%>
+        <% end -%>
+      </td>
+      <td><%= c.nonadjusted_design_praise %></td>
+      <td><%=c.construction_praise%></td>
+      <td width="100"><% if isrole("页面制作") ||isrole("管理员") -%>
+          <% form_for :company ,c,:url=>{:action=>"update_construction_adjusted_praise"} do |f| -%>
+            <%= f.hidden_field :company ,:value=> c.id %>
+            <%= f.text_field :adjusted_construction_praise , :value=>c.adjusted_construction_praise ,:size=>"5"%><%= submit_tag("更新")%>
+          <% end -%>
+        <% end -%>
+      </td>
+      <td><%= c.nonadjusted_construction_praise %></td>
+      <td> <%= cooperation(c)%></td>
+      <td><a href="/company/linktofront?companyid=<%=c.id%>" target="_blank">修改</a>
+        &nbsp;
+        <a href='#n' onclick='deletecompany(<%=c.id%>);'>删除</a>
+        &nbsp;
+        <a href="/review/cat_firm_reviews?firmid=<%=c.id%>" target="_blank">查看公司评论</a>
+        <% if c.is_cooperation == 1 %>
+          &nbsp;
+          <a href="/review/update_cooperation_time?firmid=<%=c.id%>" target="_blank">修改合作时间</a>
+        <% end %>
+      </td>
+    </tr>
+  <%end%>
+</table>
+<p align=center>搜索到 <%=@companys.total_entries%> 家公司<%= will_paginate @companys %></p>
+<script language="javascript">
+  function deletecompany(id){
+    if(window.confirm('确定删除吗？')){
+      document.getElementById('company_id').value=id;
+      document.getElementById('fmid').action = '/review/back_company_delete';
+      document.getElementById('fmid').submit();
+    }
+  }
+</script>

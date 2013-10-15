@@ -1,0 +1,7 @@
+CREATE TABLE relate_tags (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  article_tag VARCHAR(50),
+  diary_tag varchar(50),
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL
+) ENGINE InnoDB CHARACTER SET utf8;

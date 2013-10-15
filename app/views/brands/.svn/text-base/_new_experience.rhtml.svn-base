@@ -1,0 +1,9 @@
+<tr>
+	<td class="label"><%= new_experience.name %></td>
+	<td>
+		<%= hidden_field_tag "brand[new_experience_attributes][][category_id]", new_experience.category_id %>
+		<%= hidden_field_tag "brand[new_experience_attributes][][experience_id]", new_experience.id %>
+		<%= text_field_tag "brand[new_experience_attributes][][value]" -%>
+		所属类别：<%= link_to new_experience.category.name_zh, category_experiences_path(:category_id => new_experience.category.tagid) %>
+	</td>
+</tr>

@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor
+END
+cases_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/cases_controller.rb
+END
+pricings_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/pricings_controller.rb
+END
+quotes_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/quotes_controller.rb
+END
+vendor_search_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/vendor_search_controller.rb
+END
+products_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/products_controller.rb
+END
+comments_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/comments_controller.rb
+END
+merchandises_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/merchandises_controller.rb
+END
+sales_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/sales_controller.rb
+END
+banners_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/banners_controller.rb
+END
+common_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/common_controller.rb
+END
+honors_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/honors_controller.rb
+END
+promotions_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/vendor/promotions_controller.rb
+END

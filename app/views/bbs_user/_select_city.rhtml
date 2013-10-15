@@ -1,0 +1,9 @@
+<select id="areas" name="areas">
+	<option value="0">请选择</option>
+	<% if @area && @area.size>0%>
+	<%@area.each do |aa|%>
+		<option value="<%=aa.TAGID%>"><%=aa.TAGNAME%></option>
+	<%end%>
+	<%end%>
+</select>
+  

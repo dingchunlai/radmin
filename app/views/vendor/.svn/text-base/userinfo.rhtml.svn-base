@@ -1,0 +1,189 @@
+<%=render :partial => "member/header"%>
+
+<DIV id=usermain style="margin-top:5px;">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+       <%=render :partial => "leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name><a href="http://blog.51hejia.com/u/<%#=@user_id%>" title="访问我的博客" target="_blank"><b><%#=@username%></b></a>我的和家 - 个人资料</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以修改您的个人资料。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:480px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on">基本信息</li>
+    <li class="line"></li>
+    <li class="more"></li>
+	</ul>
+  </div>
+  <script type="text/javascript">
+  window.onload = function(){
+    ge("area").value = "<%#=@area%>";
+    change_area("<%#=@area%>");
+    ge("city").value = "<%#=@city%>";
+    ge("headimg").value = "<%#=@headimg%>";
+    ge("headimg_view").src = ge("headimg").value
+  }
+  function onformsubmit(){
+    if (ge("city").value==""){
+      alert("请选择您所在的省份与地区！");
+      return false;
+    }    
+    return true;
+  }
+  function onchange_headimg_id(){
+    ge("headimg").value = "http://member.51hejia.com/images/headimg/" + ge("headimg_id").value + ".gif";
+    ge("headimg_view").src = ge("headimg").value
+  }
+  </script>
+
+  <div id="same1">
+  <FORM action="/member/userinfo_save" target="hideiframe" method="post" ONSUBMIT="return onformsubmit();">
+  <TABLE width="50%" cellPadding=0 cellSpacing=0>
+        <TBODY>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">真实姓名：</TD>
+            <TD><input name="userbbsname" id="userbbsname" type="text" value="<%#=@userbbsname%>" size="16"></TD>
+            <TD width="15%">联系方式：</TD>
+            <TD><input name="userbbstel" id="userbbstel" type="text" value="<%#=@userbbstel%>" size="24"></TD>
+          </TR>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">性&nbsp;&nbsp;&nbsp;&nbsp;别：</TD>
+            <TD><p>
+              <label>
+                <%#
+                if trim(@userbbssex) == "女"
+                  ischeckboy = ""
+                  ischeckgirl = "checked"
+                else
+                  ischeckboy = "checked"
+                  ischeckgirl = ""
+                end
+                %>
+                <input type="radio" <%#=ischeckboy%> name="userbbssex" id="userbbssex" value="男">
+                男</label>
+              <label>
+                <input type="radio" <%#=ischeckgirl%> name="userbbssex" id="userbbssex" value="女">
+                女</label>
+            </p></TD>
+            <TD>通讯地址：</TD>
+            <TD><input name="userbbsaddress" id="userbbsaddress" type="text" value="<%#=@userbbsaddress%>" size="24"></TD>
+          </TR>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">所在城市：</TD>
+            <TD>
+              <script type="text/javascript" src="/javascripts/area_city.js"></script>
+			  <select name="area" id="area" onchange="change_area(this.value);">
+              <option value="">省份</option>
+              <SCRIPT LANGUAGE="JavaScript">
+                      for (var i=0;i<area_text.length;i++)
+                      {
+                              document.write("<option value='" + area_value[i] + "'>" + area_text[i] + "</option>");
+                      }
+              </SCRIPT>
+               </select>
+              <select name="city" id="city">
+              <option value="">城市</option>
+              </select>
+			</TD>
+            <TD>&nbsp;</TD>
+            <TD>&nbsp;</TD>
+          </TR>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">QQ：</TD>
+            <TD>
+				<input name="qq" id="qq" type="text" value="<%#=@qq%>" size="24">
+			</TD>
+            <TD>msn:</TD>
+            <TD><input name="msn" id="msn" type="text" value="<%#=@msn%>" size="24"></TD>
+          </TR>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">个人头像：</TD>
+            <TD colspan="3">
+			  <img name="headimg_view" id="headimg_view" />
+              <select name="headimg_id" id="headimg_id" onchange="onchange_headimg_id();">
+                <option value="">请选择头像</option>
+                <script>
+                for (var i=0; i<180; i++)
+                  document.write("<option value='" + i + "'>头像" + i + "</option>")
+                </script>
+              </select>
+              <input name="headimg" id="headimg" type="text" style="width:380px;" onblur="ge('headimg_view').src = this.value;" />
+            </TD>
+          </TR>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">个人简介：</TD>
+            <TD colspan="3">
+              <textarea name="userbbsreadme" id="userbbsreadme" style="height:125px;"><%#=@userbbsreadme%></textarea>
+			</TD>
+          </TR>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">&nbsp;</TD>
+            <TD><BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON></TD>
+            <TD>&nbsp;</TD>
+            <TD>&nbsp;</TD>
+          </TR>
+        </TBODY>
+      </TABLE></FORM>
+    </div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+
+
+<%=render :partial => "member/footer"%>
+

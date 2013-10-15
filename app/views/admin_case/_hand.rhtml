@@ -1,0 +1,6 @@
+<% unless @case.DESIGNERID %>
+  <%= link_to_remote "分配到当前设计师", :url => { :action => "allocate_case_to_designer", :case_id => @case.ID, :designer_id => session[:designer_id] } %>
+<% end %>
+<% if @case.DESIGNERID %>
+  <%= link_to_remote "取消", :url => { :action => "abolish_designer_case", :case_id => @case.ID, :designer_id => session[:designer_id] } %>
+<% end %>

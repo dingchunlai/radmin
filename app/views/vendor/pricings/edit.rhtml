@@ -1,0 +1,53 @@
+<% form_for :pricing, @pricing, vendor_pricing_path(@pricing), :method => "put" do |f| %>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>客户姓名：</td>
+			<td><%= f.text_field :username, :disabled => true %></td>
+			<td>您不能修改客户姓名</td>
+		</tr>
+		<tr>
+			<td>客户电话：</td>
+			<td><%= f.text_field :phone, :disabled => true %></td>
+			<td>您不能修改客户电话</td>
+		</tr>
+		<tr>
+			<td>提交日期：</td>
+			<td><%= f.text_field :createtime, :disabled => true %></td>
+			<td>您不能修改日期</td>
+		</tr>
+		<tr>
+			<td>地域：</td>
+			<td><%= f.select :area, [['上海', '上海'], ['广州','广州'], ['深圳', '深圳'], ['其他', '其他']] %></td>
+			<td>请选择地域</td>
+		</tr>
+		<tr>
+			<td>产品名称：</td>
+			<td><%= f.text_field :name %></td>
+			<td>产品名称必须填写</td>
+		</tr>
+		<tr>
+			<td>品牌：</td>
+			<td><%= f.text_field :brand %></td>
+			<td>请填写品牌</td>
+		</tr>
+		<tr>
+			<td>型号：</td>
+			<td><%= f.text_field :xinghao %></td>
+			<td>请填写型号</td>
+		</tr>
+		<tr>
+			<td>希购地：</td>
+			<td><%= f.text_field :hopeaddress %></td>
+			<td>请填写希望购买地</td>
+		</tr>
+		<tr>
+			<td>数量：</td>
+			<td><%= f.text_field :num %></td>
+			<td>请填写数量(包含单位) 如：50平方米</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><%= submit_tag "提交更新" %></td>
+		</tr>
+	</table>
+<% end %>

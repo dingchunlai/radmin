@@ -1,0 +1,105 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]);
+  }
+</style>
+<table>
+  <% day_name = (@time == 1.days.ago.strftime("%Y-%m-%d"))? "昨日" : "当日" %>
+  <% if @firms.size > 0 %>
+    <% if @city_summary.class == Array %>
+      <tr><td><%= day_name %>上海：评价数 <%= @city_summary[0].evaluations %>  日记数 <%= @city_summary[0].diaries %>  案例数 <%= @city_summary[0].cases %>  评论数 <%= @city_summary[0].comments %>  在建工地预约数 <%= @city_summary[0].registers %></td></tr>
+      <tr><td><%= day_name %>苏州：评价数 <%= @city_summary[1].evaluations %>  日记数 <%= @city_summary[1].diaries %>  案例数 <%= @city_summary[1].cases %>  评论数 <%= @city_summary[1].comments %>  在建工地预约数 <%= @city_summary[1].registers %></td></tr>
+      <tr><td><%= day_name %>宁波：评价数 <%= @city_summary[2].evaluations %>  日记数 <%= @city_summary[2].diaries %>  案例数 <%= @city_summary[2].cases %>  评论数 <%= @city_summary[2].comments %>  在建工地预约数 <%= @city_summary[2].registers %></td></tr>
+      <tr><td><%= day_name %>杭州：评价数 <%= @city_summary[3].evaluations %>  日记数 <%= @city_summary[3].diaries %>  案例数 <%= @city_summary[3].cases %>  评论数 <%= @city_summary[3].comments %>  在建工地预约数 <%= @city_summary[3].registers %></td></tr>
+      <tr><td><%= day_name %>无锡：评价数 <%= @city_summary[4].evaluations %>  日记数 <%= @city_summary[4].diaries %>  案例数 <%= @city_summary[4].cases %>  评论数 <%= @city_summary[4].comments %>  在建工地预约数 <%= @city_summary[4].registers %></td></tr>
+    <% else %>
+      <tr><td><%= day_name %><%= CITIES[@city_summary.city.to_i] %>：评价数 <%= @city_summary.evaluations %>  日记数 <%= @city_summary.diaries %>  案例数 <%= @city_summary.cases %>  评论数 <%= @city_summary.comments %>  在建工地预约数 <%= @city_summary.registers %></td></tr>
+    <% end %>
+  <% end %>
+</table>
+
+<form id="fmid" action='/review/first_summary' method=get>
+  <p align=center style="font-size:15px">
+	公司名：<input type="text" name="cname" value="<%=@cname%>"/>
+	城市：<select name="city" onchange="new Ajax.Updater('area', '/review/select_area', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+      <option value='0'>选择</option>
+      <%CITIES.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if k==@city.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    价格: <select name="price">
+      <option value='0'>选择</option>
+      <%PRICE.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if k==@price.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    风格：<select name="style">
+      <option value='0'>选择</option>
+      <%STYLES.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if k==@style.to_i%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    	选择日期：<input type=text name="time"  onclick="new Calendar().show(this);" <%if @time%>value="<%=@time%>"<%end%>/>
+    排序：<select name="order">
+      <option value='0'>默认</option>
+      <option value='1' <%if @order == "evaluations desc"%>selected<%end%> >评价数</option>
+      <option value='2' <%if @order == "diaries desc"%>selected<%end%> >日记数</option>
+      <option value='3' <%if @order == "cases desc"%>selected<%end%> >案例数</option>
+      <option value='4' <%if @order == "comments desc"%>selected<%end%> >评论数</option>
+      <option value='5' <%if @order == "registers desc"%>selected<%end%> >在建工地预约数</option>
+    </select>
+    <input type=submit value="搜索"/>
+  </p>
+</form>
+
+<table align=center border=1 style="font-size:12px">
+  <tr style="font-size:13px">
+    <td>公司编号</td>
+    <td>名字</td>
+    <td>状态</td>
+    <td>地区</td>
+    <td><%= day_name %>公司评价数</td>
+    <td><%= day_name %>公司日记数</td>
+    <td><%= day_name %>公司案例数</td>
+    <td><%= day_name %>公司评论数</td>
+    <td><%= day_name %>公司在建工地预约数</td>
+  </tr>
+  <%@firms.each do |firm|%>
+    <tr>
+      <td><%= firm.firm_id %></td>
+      <td><a href='<%= gen_firm_city_path(firm.firm_id) %>' target='_blank'><%= firm.name %></a></td>
+      <td><%= cooperation(firm.cooperation) %></td>
+      <td><%=CITIES[firm.city]%></td>
+      <td><%= firm.evaluations %></td>
+      <td><%= firm.diaries %></td>
+      <td><%= firm.cases %></td>
+      <td><%= firm.comments %></td>
+      <td><%= firm.registers %></td>
+    </tr>
+  <%end%>
+</table>
+<% if @cname.blank? %>
+  <p align=center>搜索到 <%=@firms.total_entries%> 家公司
+    <% if @city == "0" && @firms.size > 0 %>
+      <%= @city_summary[0].evaluations + @city_summary[1].evaluations + @city_summary[2].evaluations + @city_summary[3].evaluations + @city_summary[4].evaluations %>条评价
+      <%= @city_summary[0].diaries + @city_summary[1].diaries + @city_summary[2].diaries + @city_summary[3].diaries + @city_summary[4].diaries %>篇日记
+      <%= @city_summary[0].cases + @city_summary[1].cases + @city_summary[2].cases + @city_summary[3].cases + @city_summary[4].cases %>篇案例
+      <%= @city_summary[0].comments + @city_summary[1].comments + @city_summary[2].comments + @city_summary[3].comments + @city_summary[4].comments %>条评论
+      <%= @city_summary[0].registers + @city_summary[1].registers + @city_summary[2].registers + @city_summary[3].registers + @city_summary[4].registers %>位在建工地预约
+    <% end %>
+    <%= will_paginate @firms %></p>
+<% end %>
+

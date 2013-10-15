@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <td colspan="2" style="font-size:24px;"><%= @tag.name %></td>
+  </tr>
+  <% @pics.each do |pic| %>
+  <tr>
+    <%
+              if pic.type_id == 5
+                t5 = "http://image.51hejia.com"
+              else
+                t5 = "http://image.51hejia.com/files/hekea/case_img/"
+              end
+              %>
+    <td><img src="<%= t5 %><%= pic.filepath %>" alt=""></td>
+                <td><%= pic.description %><%= pic.case_id %></td>
+  </tr>
+  <% end %>
+</table>
+<%= will_paginate @pics, :class => "paginate" %>

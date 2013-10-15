@@ -1,0 +1,6 @@
+<select id="third2" name="third2">
+	<option value="0">请选择</option>
+	<% for u in @thirdlist %>
+		<option value="<%=u.TAGID%>"><%=u.TAGNAME%></option>
+	<% end %>
+</select>

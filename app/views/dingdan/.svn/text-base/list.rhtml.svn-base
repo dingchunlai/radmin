@@ -1,0 +1,90 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 750;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  <%if pp(@status)%>ge("status").value = "<%=@status%>";<%end%>
+}
+</script>
+<style type="text/css">
+  .t1 {color:#757575}
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" action="/dingdan/list" method="get">
+
+    <%=render :partial => "operation" %>
+
+    <div style="font-family:Verdana; padding:0px 10px 0px 10px; background-color:#EEEEEE; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 10px 0px; ">
+        <span style="color:#CE0000">订购单管理</span>
+        总共搜索到<B><%=@recordcount%></B>条满足条件的核价单 当前显示第
+        <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+        页 共<B><%=@pagecount%></B>页
+    </div>
+
+    
+    <table id="datalist" style="width:870px; margin-bottom:20px;">
+    <caption align="left"></caption>
+    <tr>
+            <th>订单号</th>
+            <th>客户姓名</th>
+            <th>客户电话</th>
+            <th>下单时间</th>
+            <th>预约时间</th>
+            <th>状态</th>
+            <th>操作</th>
+    </tr>
+    <%for order in @orders%>
+    <tr align="center">
+      <td><input type="checkbox" name="userid" value="<%=order.id%>" /> <%=order.id%></td>
+      <td><%=order.name%></td>
+      <td><%=order.telephone%></td>
+      <td><%=order.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+      <td><%=order.booking_at.strftime("%Y-%m-%d") rescue ""%></td>
+      <td>
+          <%
+          case order.status
+          when 3
+            color = "blue"
+          when 4
+            color = "#CE0000"
+          else
+            color = "#757575"
+          end
+          %>
+          <font color="<%=color%>"><%=DINGDAN_STATE[order.status]%></font>
+      </td>
+      <td><a href="/dingdan/detail?id=<%=order.id%>" target="_blank">浏览详情</a></td>
+    </tr>
+    <% end %>
+    </table>
+    
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.userid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

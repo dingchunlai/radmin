@@ -1,0 +1,5 @@
+<div class="body"><%= @promotion.body %></div>
+<div><%= image_tag(@promotion.image.url, :alt => @promotion.title) if @promotion.image %></div>
+<div><label>当前状态：</label><%= promotion_state(@promotion.status) %></div>
+<div><label>相关回复：</label><%=h @promotion.reply %></div><br />
+<div class="action"><%= link_to "返回列表", charge_promotions_path %> <%= link_to "处理", edit_charge_promotion_path(@promotion) if @promotion.status == "open" %></div>

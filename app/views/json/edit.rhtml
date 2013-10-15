@@ -1,0 +1,19 @@
+<% form_for( :product, :url => json_path(@product), :html => {:method => "put"}) do |f| -%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="product_params">
+	<% @product_params.each do |pkey, pvalue| %>
+	<tr>
+		<th colspan="2"><%= pkey %></th>
+	</tr>
+	<% pvalue.each do |key, value| -%>
+	<tr>
+		<td class="label"><%= key %></td>
+		<td><%= text_area_tag "product_params[#{pkey}][#{key}]", value, :size => "100x2" %></td>
+	</tr>
+	<% end %>
+	<% end %>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><input type="submit" class="" value="更新参数" /></td>
+	</tr>
+</table>
+<% end %>

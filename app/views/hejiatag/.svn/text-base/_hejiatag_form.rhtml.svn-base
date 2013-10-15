@@ -1,0 +1,53 @@
+<script type="text/javascript">
+function submitForm(form){
+    set_action();
+    p_name.style.color="#999999";
+    p_parent_id.style.color="#999999";
+    p_level.style.color="#999999";
+    p_initial.style.color="#999999";
+    var valReturn = true;
+    if (trim(form.name.value)==""){
+        form.name.focus();
+        p_name.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.parent_id.value)==""){
+        form.parent_id.focus();
+        p_parent_id.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.level.value)==""){
+        form.level.focus();
+        p_level.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.initial.value)==""){
+        form.initial.focus();
+        p_initial.style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+
+<div class="formouter">
+            <div class="formleft">关键字：</div>
+            <div class="formcenter"><input name="name" type="text" /></div>
+            <div class="formright" id="p_name">关键字必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">首字母：</div>
+            <div class="formcenter"><input name="initial" type="text" /></div>
+            <div class="formright" id="p_initial">首字母必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">级别：</div>
+            <div class="formcenter"><input name="level" type="text" readonly /></div>
+            <div class="formright" id="p_level">级别必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">父级编号：</div>
+            <div class="formcenter"><input name="parent_id" type="text" readonly /></div>
+            <div class="formright" id="p_parent_id">父级编号必须填写</div>
+</div>
+

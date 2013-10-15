@@ -1,0 +1,18 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+	<tr>
+		<th>编号</th>
+		<th>类别</th>
+		<th>名称</th>
+		<th>排序</th>
+		<th>是否禁用</th>
+		<th>相关操作</th>
+	</tr>
+  <tr class="<%= cycle("odd", "even")%>">
+    <td><%= @experience.id -%></td>
+    <td><%= link_to @experience.category.name_zh, category_brands_path(:category_id => @experience.category.tagid) %></td>
+    <td><%= link_to @experience.name, experience_path(@experience) -%></td>
+    <td><%= @experience.position -%></td>
+		<td><%= check_box_tag "experience_id", @experience.id, @experience.is_disabled, {:onclick => remote_function( :url => is_disabled_experience_path(@experience), :with => "'cvalue='+this.checked", :method => "put")} -%> 禁用</td>
+    <td><%= link_to "编辑", edit_experience_path(@experience) -%></td>
+  </tr>
+</table>

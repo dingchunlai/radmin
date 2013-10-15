@@ -1,0 +1,60 @@
+<% if @vendors %>
+  <div id="vendors_list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="vendors">
+      <tr>
+        <th>编号</th>
+        <th>店铺标志</th>
+        <th>店铺名称</th>
+        <th>经营品牌</th>
+        <th>所属分类</th>
+        <th>所属卖场</th>
+        <th>是否推荐</th>
+        <th>品牌库</th>
+        <th>等级</th>
+        <th>品牌知名度</th>
+        <th>价格诚信度</th>
+        <th>售后服务度</th>
+        <th>创建时间</th>
+        <th>相关操作</th>
+      </tr>
+      <% @vendors.each do |vendor| %>
+        <tr class="<%= cycle("odd", "even")%>">
+          <td><%= vendor.companyid %></td>
+          <td class="thumb"><%= link_to image_tag(vendor.logo, :alt => vendor.name_zh), vendor_path(vendor), :title => vendor.name_zh -%></td>
+          <td><%= link_to vendor.name_zh, vendor_path(vendor) %>(<%= vendor.products_count %>)</td>
+          <td>
+            <% vendor.brands.each do |b| -%>
+              <%= link_to b.name_zh, brand_path(b), :title => b.name_zh -%>
+            <% end -%>
+          </td>
+          <td>
+            <% vendor.categories.each do |c| -%>
+              <%= link_to c.name_zh, category_path(:id => c.tagid), :title => c.name_zh -%>
+            <% end -%>
+          </td>
+          <td><%= vendor.market.name_zh if vendor.market %></td>
+          <td><%= check_box_tag "vendor_id", vendor.id, vendor.is_recommend, {:onclick => remote_function( :url => is_recommend_vendor_path(vendor), :with => "'cvalue='+this.checked", :method => "put")} -%> 推荐</td>
+          <td>
+      <%= check_box_tag "vendor_is_precinct", vendor.is_precinct, vendor.is_precinct, {:onclick => remote_function( :url => is_precinct_vendor_path(vendor), :with => "'cvalue='+this.checked", :method => "put")} -%>
+      <span id="is_precinct_<%= vendor.dom_id -%>"><%= vendor.is_precinct ? "<strong>是</strong>" : "否" %></span>
+    </td>
+          <td><%= class_index_string(vendor.class_index) %></td>
+          <td><%= vendor.brand_awareness %></td>
+          <td><%= vendor.price_faith %></td>
+          <td><%= vendor.after_service %></td>
+          <td><%= vendor.created_at.to_date if vendor.created_at %></td>
+          <td>
+            <!--<%= link_to "添加产品", new_product_path(:vendor_id => vendor.id) %><br />-->
+            <%= link_to "显示", vendor_path(vendor) %>
+            <%= link_to "编辑", edit_vendor_path(vendor) %><br />
+            <%= link_to "设置账户", setup_vendor_path(vendor) if has_role?("产品组长") %>
+            <%= link_to "评论", "/vendor_points/new?vendor_id=#{vendor.id}", :target => "_blank" %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @vendors, :renderer => 'CustomPaginationRenderer' %>
+  </div>
+<% else %>
+  <p>无商家</p>
+<% end %>

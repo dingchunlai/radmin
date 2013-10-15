@@ -1,0 +1,152 @@
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 装修案例</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以添加和维护装修案例信息。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:700px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on"><a href="/deco/dianping_list">已发评论</a></li>
+    <li class="line"></li>
+    <li id="s1" class="menu_off"><a href="/deco/reply_list" target="_blank">我的回应</a></li>
+    <li class="line"></li>
+    <li id="s1" class="menu_off"><a href="http://z.51hejia.com/dianping/newdp" target="_blank">写装修点评</a></li>
+    <li class="line"></li>
+	</ul>
+  </div>
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<script src="/javascripts/tiny_mce/tiny_mce_src.js?1241055414" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+tinyMCE.init({
+convert_urls : false,
+editor_selector : 'mceEditor',
+language : 'zh',
+mode : 'textareas',
+plugins : "table,fullscreen,upload",
+relative_urls : false,
+theme : 'advanced',
+theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontselect,fontsizeselect,|,outdent,indent,blockquote,|,undo,redo',
+theme_advanced_buttons2 : 'tablecontrols,|,hr,removeformat,visualaid,code |,hr,removeformat,visualaid,|,link,unlink,anchor,image,upload,cleanup,|,forecolor,backcolor,code',
+theme_advanced_buttons3 : '',
+theme_advanced_resize_horizontal : false,
+theme_advanced_resizing : true,
+theme_advanced_statusbar_location : 'bottom',
+theme_advanced_toolbar_align : 'left',
+theme_advanced_toolbar_location : 'top',
+visual : false,
+width : '500px',
+height : '500px'
+});
+//]]>
+</script>
+<form action="/deco/dianping_edit" method=post>
+<input type="hidden" name="id" value="<%=@review.id%>">
+<table align=center>
+	<tr>
+		<td width=50>标题</td><td ><input type="text" name="title" value="<%=@review.title%>"></td>
+	</tr>
+	<tr>
+		<td>内容</td><td ><textarea name="content" class="mceEditor"><%=@review.content%></textarea></td>
+	</tr>
+	<tr>
+		<td>装修小区</td><td ><input type="text" name="area" value="<%=@review.area%>"></td>
+	</tr>
+	<tr>
+		<td>小区地址</td><td ><input type="text" name="address" value="<%=@review.address%>"></td>
+	</tr>
+	<tr>
+		<td>设计分</td><td >
+		<select name="design_score">
+			<option value="-1" <%if @review.design_score.to_s == '-1'%>selected<%end%>>差</option>
+			<option value="0" <%if @review.design_score.to_s == '0'%>selected<%end%>>一般</option>
+			<option value="1" <%if @review.design_score.to_s == '1'%>selected<%end%>>好</option>
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td>性价比</td><td >
+				<select name="budget_score">
+			<option value="-1" <%if @review.budget_score.to_s == '-1'%>selected<%end%>>差</option>
+			<option value="0" <%if @review.budget_score.to_s == '0'%>selected<%end%>>一般</option>
+			<option value="1" <%if @review.budget_score.to_s == '1'%>selected<%end%>>好</option>
+		</select></td>
+	</tr>
+	<tr>
+		<td>施工分</td><td >
+				<select name="construction_score">
+			<option value="-1" <%if @review.construction_score.to_s == '-1'%>selected<%end%>>差</option>
+			<option value="0" <%if @review.construction_score.to_s == '0'%>selected<%end%>>一般</option>
+			<option value="1" <%if @review.construction_score.to_s == '1'%>selected<%end%>>好</option>
+		</select>
+	</tr>
+	<tr>
+		<td>服务分</td><td >
+				<select name="service_score">
+			<option value="-1" <%if @review.service_score.to_s == '-1'%>selected<%end%>>差</option>
+			<option value="0" <%if @review.service_score.to_s == '0'%>selected<%end%>>一般</option>
+			<option value="1" <%if @review.service_score.to_s == '1'%>selected<%end%>>好</option>
+		</select></td>
+	</tr>
+	<tr><td>装修价格</td><td><select name="price">
+							<option value='0'>请选择</option>
+							<% DecoFirm::PRICE.sort.each do |k| %>
+								<option value='<%=k[0]%>' <%if @review.price == k[0]%>selected<%end%>><%=k[1]%></option>
+							<% end %>
+	</td>
+	</tr>
+	
+	<tr><td>装修方式</td><td><select name="method">
+							<option value='0'>请选择</option>
+							<% DecoFirm::MODELS.sort.each do |k| %>
+								<option value='<%=k[0]%>' <%if @review.method == k[0]%>selected<%end%>><%=k[1]%></option>
+							<% end %>
+	</td>
+	</tr>	
+	
+	<tr><td>装修风格</td><td><select name="style">
+							<option value='0'>请选择</option>
+							<% DecoFirm::STYLES.sort.each do |k| %>
+								<option value='<%=k[0]%>' <%if @review.style == k[0]%>selected<%end%>><%=k[1]%></option>
+							<% end %>
+	</td>
+	</tr>
+	
+	<tr><td>装修阶段</td><td><select name="stage">
+							<option value='0'>请选择</option>
+							<%DecoFirm::STAGE.sort.each do |k|%>
+								<option value='<%=k[0]%>' <%if @review.stage == k[0]%>selected<%end%>><%=k[1]%></option>
+							<%end%>
+	</td>
+	</tr>	
+	
+	<tr><td>户型</td><td><select name="room">
+							<option value='0'>请选择</option>
+							<%DecoFirm::ROOM.sort.each do |k|%>
+								<option value='<%=k[0]%>' <%if @review.room == k[0]%>selected<%end%>><%=k[1]%></option>
+							<%end%>
+	</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type="submit" value="确定">
+		</td>
+	
+	</tr>
+</table>
+</form>
+</DIV>
+</DIV>
+</DIV>
+</DIV>

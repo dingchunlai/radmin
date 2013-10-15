@@ -1,0 +1,105 @@
+<DIV class="user_right">
+
+<DIV id="widebar">
+<DIV id="nav_bottom"></DIV>
+<DIV id="widebar_content">
+  <div id="userprofile">
+    <div class="top">
+      <div class="profile_name">我的和家 - 企业信息</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以修改企业信息。
+    </div>
+  </div>
+</DIV>
+<DIV class="mainbox" style="height:600px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on">企业信息</li>
+    <li class="line"></li>
+    <li class="more"></li>
+	</ul>
+  </div>
+  <script type="text/javascript">
+  window.onload = function(){
+    ge("deco_COMPANYAREA").value = "<%=@deco.COMPANYAREA rescue ""%>";
+  }
+  function onformsubmit(){
+
+  }
+  </script>
+
+  <div id="same1">
+  <FORM action="/deco/decoinfo_save" target="hideiframe" enctype="multipart/form-data" method="post" ONSUBMIT="return onformsubmit();">
+  <TABLE width="50%" cellPadding=0 cellSpacing=0>
+        <TBODY>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">公司名称：</TD>
+            <TD><%=text_field("deco","CN_NAME",{:size=>40})%></TD>
+            <TD width="15%">公司地址：</TD>
+            <TD><%=text_field("deco","ADDRESS",{:size=>40})%></TD>
+          </TR>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">电 话：</TD>
+            <TD><%=text_field("deco","TEL",{:size=>40})%></TD>
+            <TD width="15%">店门区域：</TD>
+            <TD><%=select("deco","COMPANYAREA",@areas.invert)%></TD>
+          </TR>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">MSN：</TD>
+            <TD><%=text_field("deco","MSN",{:size=>40})%></TD>
+            <TD width="15%">QQ：</TD>
+            <TD><%=text_field("deco","QQ",{:size=>40})%></TD>
+          </TR>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">营业时间：</TD>
+            <TD><%=text_field("deco","BEGINBUSINESS",{:size=>10})%>-<%=text_field("deco","ENDBUSINESS",{:size=>10})%></TD>
+            <TD width="15%">联系人：</TD>
+            <TD><%=text_field("deco","LINKMAN",{:size=>40})%></TD>
+          </TR>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">LOGO图标：</TD>
+            <TD COLSPAN="3">
+              <%if pp(@deco.COMPANYLOGO)%><img src="<%=@deco.COMPANYLOGO%>" width="110" height="110" /><%else%><img src="/images/nil.gif"/><%end%>
+                <%=text_field("deco","COMPANYLOGO",{:size=>40})%>　
+                <input name="logo_upload" type="file" size="30" />
+            </TD>
+          </TR>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">公司简介：</TD>
+            <TD COLSPAN="3"><%=text_area("deco","DESCRIBE",{ :style =>"height:230px;", :class => "mceEditor"})%></TD>
+          </TR>
+          <%if !@back.nil?%>
+          <TR>
+            <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="15%" align="center">排序：</TD>
+            <TD><%=text_field("deco","ORDERID",{:size=>10})%></TD>
+            <TD width="15%"></TD>
+            <TD></TD>
+          </TR>
+          <%end%>
+          <TR>
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">&nbsp;</TD>
+            <TD>
+              
+              <BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON>
+              </TD>
+            <TD>&nbsp;</TD>
+            <TD>&nbsp;</TD>
+          </TR>
+        </TBODY>
+      </TABLE></FORM>
+    </div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>

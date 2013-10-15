@@ -1,0 +1,9 @@
+<% form_for :activity, @activity,:url=>activities_path() do |f| %>
+  <%=error_messages_for :activity  %>
+  
+  <p>
+   活动名称:<br />
+    <%= f.text_field :name %>
+  </p>
+  <p><%= submit_tag "提交" %></p>
+<% end %>

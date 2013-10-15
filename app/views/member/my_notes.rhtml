@@ -1,0 +1,6 @@
+<%if @have_new_note == 0%>
+document.write("<a href='http://member.51hejia.com/member/note_list' target='_blank' style='color:#666666' title='您没有未读信息!'>[短信息]</a>");
+<%else%>
+document.write("<a href='http://member.51hejia.com/member/note_list' target='_blank' style='color:red' title='您有未读信息!'>[短信息]</a>");
+have_new_message();
+<%end%>

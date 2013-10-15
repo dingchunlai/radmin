@@ -1,0 +1,34 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+		<td class="label">产品价格</td>
+		<td><%= @quote.price %>元</td>
+	</tr>
+	<tr>
+		<td class="label">是否促销</td>
+		<td><%= @quote.is_special ? "促销" : "非促销" %></td>
+	</tr>
+	<tr>
+		<td class="label">促销时间</td>
+		<td><%= @quote.special_start.to_date if @quote.special_start %>至<%= @quote.special_end.to_date if @quote.special_end %></td>
+	</tr>
+  <tr>
+		<td class="label">促销详情</td>
+		<td><%= @quote.special_detail %></td>
+	</tr>
+	<tr>
+		<td class="label">是否推荐</td>
+		<td><%= @quote.is_recommend ? "推荐" : "非推荐" %></td>
+	</tr>
+  <tr>
+		<td class="label">推荐理由</td>
+		<td><%= @quote.recommend_reason %></td>
+	</tr>
+  <tr>
+		<td class="label">相关备注</td>
+		<td><%= @quote.comment %></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= link_to "编辑", edit_vendor_quote_path(@quote) -%></td>
+	</tr>
+</table>

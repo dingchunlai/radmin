@@ -1,0 +1,141 @@
+<form action="/pages/genmoban" method="post">
+	<input type="hidden" id="bujuid" value="<%=@buju%>">
+	<input type="hidden" id="idsid" value="<%=@ids%>">
+
+	
+	<p>名字长度：<input type="text" id="namelength"></p>
+	<p>简介长度：<input type="text" id="deslength"></p>
+	
+	<p> <input type="button" value="返回" onclick="window.history.back()"><input type="button" value="生成代码(复杂但可修改)" onclick="gen()">
+	<!--
+	<input type="button" value="生成代码(简单但不可修改)" onclick="gen2()"> 
+	-->
+	</p>
+	
+	<textarea name="choosecontent" cols=100 rows=20 id="tid"></textarea>
+	
+	<input type="submit" value="选择生成模版项">
+</form>
+<script language="javascript">
+	function gen(){
+		var namelength = document.getElementById("namelength").value;
+		if(namelength == '' || isNaN(namelength)){
+			alert('请正确输入名字长度');
+			return false;
+		}
+		var deslength = document.getElementById("deslength").value;
+		if(deslength == '' || isNaN(deslength)){
+			alert('请正确输入简介长度');
+			return false;
+		}		
+	
+		var buju = '<%=@buju%>';
+		var ids = '<%=@ids%>';
+		
+		
+		//代码生成
+		var result = '<'+'% \n';
+		//按照id生成结果
+
+		result = result + "  articles = HejiaIndex.findbyids('"+ids+"') \n";
+		
+		
+		//公共部分
+		var all = '';
+		all = all + "	domain = article.url  \n";
+		all = all + "	img = article.image_url \n";
+		
+		
+		if(buju == '21'){
+			result = result + "  str = '<ul>' \n";
+			result = result + "  articles.each do |article| \n";
+			result = result + all;
+			result = result + "    str = str + '<li><a href='+domain+' target=_blank title='+article.title+'>' +article.title.chars[0,"+namelength+"]+'</a><span class=date>'+article.created_at.strftime('%m-%d')+'</span></li>' \n";
+			result = result + "  end \n";
+			result = result + "  str = str + '</ul>' \n";	
+		}else if(buju == '22'){
+			result = result + "  str = '<ul>' \n";
+			result = result + "  articles.each do |article| \n";
+			result = result + all;
+			result = result + "    str = str + '<li><a href='+domain+' target=_blank title='+article.title+'>' +article.title.chars[0,"+namelength+"]+'</a></li>' \n";
+			result = result + "  end \n";
+			result = result + "  str = str + '</ul>' \n";			
+		}else if(buju == '23'){
+			result = result + "  str = '' \n";
+			result = result + "  articles.each do |article| \n";
+			result = result + all;
+			result = result + "    str = str + '<img src='+img+' alt='+article.title+'>' \n";
+			result = result + "    str = str + '<h4><a href='+domain+' target=_blank title='+article.title+'>' +article.title.chars[0,"+namelength+"]+'</a>' \n";
+			result = result + "    str = str + '</h4>' \n";
+			result = result + "    str = str + '<p>'+article.description.chars[0,"+deslength+"]+'...[<a href='+domain+' target=_blank>详细</a>]' \n";
+			result = result + "    str = str + '</p>' \n";
+			result = result + "  end \n";		
+		}else if(buju == '24'){
+			result = result + "  str = '' \n";
+			result = result + "  articles.each do |article| \n";
+			result = result + all;
+			result = result + "    str = str + '<h4><a href='+domain+' target=_blank title='+article.title+'>' +article.title.chars[0,"+namelength+"]+'</a>' \n";
+			result = result + "    str = str + '</h4>' \n";
+			result = result + "    str = str + '<p>'+article.description.chars[0,"+deslength+"]+'...[<a href='+domain+' target=_blank>详细</a>]' \n";
+			result = result + "    str = str + '</p>' \n";
+			result = result + "  end \n";
+		}else if(buju == '25'){
+			result = result + "  str = '<dl>' \n";
+			result = result + "  articles.each do |article| \n";
+			result = result + all;
+			result = result + "	   str = str + '<dt><a href='+domain+' target=_blank title='+article.title+'><img src='+img+' alt='+article.title+'  height=97 border=0 /></a></dt>' \n";
+			result = result + "    str = str + '<dd><a href='+domain+' target=_blank title='+article.title+'>' +article.title.chars[0,"+namelength+"]+'</a></dd>' \n";
+			result = result + "  end \n";
+			result = result + "  str = str + '</dl>' \n";			
+		}else if(buju == '26'){
+			result = result + "  str = '' \n";
+			result = result + "  articles.each do |article| \n";
+			result = result + all;
+			result = result + "	   str = str + '<a href='+domain+' target=_blank title='+article.title+'><img src='+img+' alt='+article.title+' border=0 width=150 height=95 /></a>' \n";
+			result = result + "  end \n";
+		}
+		
+		
+		result = result + '%'+'> \n';
+		result = result + '<'+'%=str%'+'>';
+
+		document.getElementById('tid').value = result;
+	}
+
+	function gen2(){
+		var namelength = document.getElementById("namelength").value;
+		if(namelength == '' || isNaN(namelength)){
+			alert('请正确输入名字长度');
+			return false;
+		}
+		var deslength = document.getElementById("deslength").value;
+		if(deslength == '' || isNaN(deslength)){
+			alert('请正确输入简介长度');
+			return false;
+		}		
+		var classid = document.getElementById("classid").value;
+	
+		var brand = '<%=@brand%>';
+		var first = '<%=@first%>';
+		var second = '<%=@second%>';
+		var third = '<%=@third%>';
+		var begintime = '<%=@begintime%>';
+		var endtime = '<%=@endtime%>';
+		var beginnum = '<%=@beginnum%>';
+		var allnum = '<%=@allnum%>';
+		var order = '<%=@order%>';
+		var buju = '<%=@buju%>';
+		var generatetype = '<%=@generatetype%>';
+		var ids = '<%=@ids%>';
+		
+		var result = '<'+'%=';
+		if(generatetype == '1'){
+			result = result + "generatecodebytag( :brand => '"+brand+"',:first => '"+first+"', :second => '"+second+"',:third => '"+third+"',:begintime => '"+begintime+"', :endtime => '"+endtime+"', :beginnum => '"+beginnum+"', :allnum => '"+allnum+"', :order => '"+order+"',:buju => '"+buju+"',:namelength => '"+namelength+"',:deslength =>'"+deslength+"', :classid =>'"+classid+"'  )"
+		}
+		else{
+			result = result + "generatecodebyid( :ids => '"+ids+"', :buju => '"+buju+"',:namelength => '"+namelength+"',:deslength =>'"+deslength+"', :classid =>'"+classid+"'  )"
+		}
+		result = result + '%'+'> \n';
+		document.getElementById('tid').value = result;
+	}
+</script>

@@ -1,0 +1,15 @@
+<div id="div_main">
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    竞标结果导入
+  </div>
+  <div>
+    <p>
+      <%= flash[:notice] if flash[:notice] %>
+    </p>
+    <form action="/bid_records/inport_bids" method="post" enctype="multipart/form-data">
+      <label>导入竞标结果</label>
+      <%= file_field_tag :file %>
+      <%= submit_tag "导入" %>
+    </form>
+  </div>
+</div>

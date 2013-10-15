@@ -1,0 +1,20 @@
+<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+<p>二级分类：<%=@father1.TAGNAME%>
+<a href="/articletag/create?type=2&fatherid=<%=@fatherid%>" target=_blank>新增</a></p>
+<% if @secondlist && @secondlist.size>0 %>
+
+<table border=1>
+
+<% @secondlist.each do |tag| -%>
+	<tr><td>
+	<a href="#n" onclick="parent.chooseson('<%=tag.TAGID%>','3')"><%=tag.TAGNAME%></a>
+	</td><td> 
+	<a href="/articletag/show/<%=tag.TAGID%>" target=_blank>修改</a>
+	<!--<a href="/articletag/delete/<%=tag.TAGID%>" >删除</a>	-->
+	</td>
+<% end %>
+<%else%>
+	无子标签
+<%end%>
+</table>
+</div>

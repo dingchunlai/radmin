@@ -1,0 +1,15 @@
+<%= f.hidden_field :vendor_id %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+		<td class="label">荣誉标题</td>
+		<td><%= f.text_field :title, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">选择图片</td>
+		<td><%= f.file_field :image %></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建荣誉" : "更新荣誉") -%></td>
+	</tr>
+</table>

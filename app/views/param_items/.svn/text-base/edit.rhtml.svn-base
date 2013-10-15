@@ -1,0 +1,4 @@
+<%= error_messages_for :param_item %>
+<% form_for :param_item, :url => param_item_path(@param_item), :html => {:method => :put} do |f| -%>
+  <%= render :partial => "form", :locals => {:f => f} -%>
+<% end %>

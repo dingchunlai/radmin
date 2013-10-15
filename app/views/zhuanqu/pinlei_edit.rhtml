@@ -1,0 +1,1779 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 15000;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height + 26;
+  }
+
+  function submitForm(form){
+    ge("p_name").style.color="#999999";
+    ge("p_spell").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("pl_name").value)==""){
+      ge("p_name").style.color="red";
+      valReturn = false;
+    }
+    if (trim(ge("pl_spell").value)==""){
+      ge("p_spell").style.color="red";
+      valReturn = false;
+    }
+    return valReturn;
+  }
+</script>
+<style type="text/css">
+  .formouter{
+    width:100%; clear:left; padding-bottom:10px; height:32px;
+  }
+  .formleft{
+    width:180px; float:left;
+    font-size:12pt;
+    letter-spacing: 2px;
+    color: #3465D6; padding-top: 4px;
+  }
+  .formcenter{
+    width:500px; float:left;
+  }
+  .formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+  }
+</style>
+
+<div id="div_main" style="padding:10px;">
+
+  <form action="/zhuanqu/pinlei_edit_save" name="form1" enctype="multipart/form-data" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+      <span style="color:#BF0000;"><%if @id ==0%>新建<%else%>编辑<%end%>品类频道</span>
+      <input type="hidden" name="id" value="<%=@id%>" />
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道名：</div>
+      <div class="formcenter">
+        <%=text_field("pl","name",{:size=>60})%>
+      </div>
+      <div class="formright" id="p_name">必须填写，比如 桌子</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">拼音：</div>
+      <div class="formcenter">
+        <%=text_field("pl","spell",{:size=>60})%>
+      </div>
+      <div class="formright" id="p_spell">必须填写，比如 zhuozi</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">样式：</div>
+      <div class="formcenter">
+        <%=select("pl","style",{"绿色"=>1, "红色"=>2})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">图库关键字：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tuku_kw",{:size=>60})%>
+      </div>
+      <div class="formright">比如 别墅</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">TITLE：</div>
+      <div class="formcenter">
+        <%=text_field("pl","html_title",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">KEYWORDS：</div>
+      <div class="formcenter">
+        <%=text_field("pl","html_keywords",{:size=>60})%>
+      </div>
+      <div class="formright">多个关键字之间用;分隔</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">DESCRIPTION：</div>
+      <div class="formcenter">
+        <%=text_field("pl","html_description",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+     <div class="formouter">
+            <div class="formleft">推荐文章编号1：</div>
+            <div class="formcenter">
+                <%=text_field("pl","tuijian_ids1",{:size=>60})%>
+            </div>
+            <div class="formright">请填写<font color="red">7个编号</font>,多个编号之间用空格分隔</div>
+     </div>
+     <div class="formouter">
+            <div class="formleft">推荐文章编号2：</div>
+            <div class="formcenter">
+                <%=text_field("pl","tuijian_ids2",{:size=>60})%>
+            </div>
+            <div class="formright">请填写<font color="red">8个编号</font>,多个编号之间用空格分隔</div>
+     </div>
+
+     <div class="formouter">
+            <div class="formleft">右侧推荐词：</div>
+            <div class="formcenter">
+                <%=text_field("pl","rtj_kw",{:size=>60})%>
+            </div>
+            <div class="formright">请填写一个“专区关键词”</div>
+     </div>
+      
+    <%=show_big_hr%>
+
+
+    <div class="formouter" style="height:105px;">
+      <div class="formleft">频道推荐：</div>
+      <div class="formcenter">
+        <%=text_area("pl","pd_tuijian",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+        标题1<回车><br/>
+        链接1<回车><br/>
+        标题2<回车><br/>
+        链接2<回车> ...
+      </div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang1",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang2",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang3",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang4",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang5",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航6：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang6",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航7：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang7",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航8：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang8",{:size=>60})%>
+      </div>
+      <div class="formright">请填写键词，多个关键词之间用空格分隔。</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">频道导航9：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pd_daohang9",{:size=>60})%>
+      </div>
+      <div class="formright">请填写“<font color="red">图库专区</font>”关键词</div>
+    </div>
+
+    <div class="formouter" style="height:105px;">
+      <div class="formleft">友情链接：</div>
+      <div class="formcenter">
+        <%=text_area("pl","friendly_links",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+        标题1<回车><br/>
+        链接1<回车><br/>
+        标题2<回车><br/>
+        链接2<回车> ...
+      </div>
+    </div>
+
+    <%=show_big_hr%>
+
+    <div class="formouter">
+      <div class="formleft">头条标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","headline_title",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">头条导语：</div>
+      <div class="formcenter">
+        <%=text_field("pl","headline_resume",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">头条链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","headline_url",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">图文关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">图文标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">图文图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "tw_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">图文链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">图文标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+
+    <div class="formouter">
+      <div class="formleft">图文链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">图文标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <div class="formouter">
+      <div class="formleft">图文链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">图文标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <div class="formouter">
+      <div class="formleft">图文链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">图文标题5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">图文图片5：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "tw_image_url5")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">图文链接5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tw_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+
+
+    <%=show_big_hr%>
+
+    <div class="formouter">
+      <div class="formleft">焦点图排序：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_order",{:size=>60})%>
+      </div>
+      <div class="formright">请填写数字1至5，用空格分隔。比如 4 1 3 2 5</div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">焦点图标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">焦点图图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "jiaodiantu_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">焦点图链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">焦点图标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">焦点图图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "jiaodiantu_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">焦点图链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">焦点图标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">焦点图图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "jiaodiantu_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">焦点图链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">焦点图标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">焦点图图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "jiaodiantu_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">焦点图链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">焦点图标题5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">焦点图图片5：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "jiaodiantu_image_url5")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">焦点图链接5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","jiaodiantu_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+    <div class="formouter" style="height:105px;">
+      <div class="formleft">资讯推广关键词：</div>
+      <div class="formcenter">
+        <%=text_area("pl","zx_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+        关键词1<回车><br/>
+        链接1<回车><br/>
+        关键词2<回车><br/>
+        链接2<回车> ...<br/>
+        添加7对资讯推广关键词
+      </div>
+    </div>
+
+    <%=show_big_hr%>
+
+    <div class="formouter">
+      <div class="formleft">推荐关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+    <div class="formouter" style="height:105px;">
+      <div class="formleft">推荐推广位：</div>
+      <div class="formcenter">
+        <%=text_area("pl","tj_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+        标题1<回车><br/>
+        链接1<回车><br/>
+        标题2<回车><br/>
+        链接2<回车> ...
+      </div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">推荐标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">推荐图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "tj_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">推荐链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">推荐标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">推荐图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "tj_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">推荐链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">推荐标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">推荐图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "tj_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">推荐链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">推荐标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">推荐图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "tj_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">推荐链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","tj_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+    <div class="formouter" style="height:105px;">
+      <div class="formleft">栏目1推广位：</div>
+      <div class="formcenter">
+        <%=text_area("pl","lm1_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+          标题1<回车><br/>
+          链接1<回车><br/>
+          标题2<回车><br/>
+          链接2<回车> ...
+      </div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目1关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目1推广关键词1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_kws1",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目1推广关键词2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_kws2",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目1推广关键词3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_kws3",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目1标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目1文章导语1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_resume1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目1图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm1_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目1链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目1标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目1图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm1_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目1链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目1标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目1图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm1_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目1链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目1标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目1图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm1_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目1链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目1标题5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目1图片5：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm1_image_url5")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目1链接5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm1_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+     <div class="formouter" style="height:105px;">
+      <div class="formleft">栏目2推广位：</div>
+      <div class="formcenter">
+        <%=text_area("pl","lm2_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+          标题1<回车><br/>
+          链接1<回车><br/>
+          标题2<回车><br/>
+          链接2<回车> ...
+      </div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目2关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目2推广关键词1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_kws1",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目2推广关键词2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_kws2",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目2推广关键词3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_kws3",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目2标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目2文章导语1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_resume1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目2图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm2_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目2链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目2标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目2图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm2_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目2链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目2标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目2图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm2_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目2链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目2标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目2图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm2_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目2链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm2_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+     <div class="formouter" style="height:105px;">
+      <div class="formleft">栏目3推广位：</div>
+      <div class="formcenter">
+        <%=text_area("pl","lm3_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+          标题1<回车><br/>
+          链接1<回车><br/>
+          标题2<回车><br/>
+          链接2<回车> ...
+      </div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目3关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目3推广关键词1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_kws1",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目3推广关键词2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_kws2",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目3推广关键词3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_kws3",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目3标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目3文章导语1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_resume1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目3图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm3_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目3链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目3标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目3图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm3_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目3链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目3标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目3图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm3_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目3链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目3标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目3图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm3_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目3链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目3标题5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目3图片5：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm3_image_url5")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目3链接5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm3_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+     <div class="formouter" style="height:105px;">
+      <div class="formleft">栏目4推广位：</div>
+      <div class="formcenter">
+        <%=text_area("pl","lm4_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+          标题1<回车><br/>
+          链接1<回车><br/>
+          标题2<回车><br/>
+          链接2<回车> ...
+      </div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目4关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目4推广关键词1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_kws1",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目4推广关键词2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_kws2",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目4推广关键词3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_kws3",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目4标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目4文章导语1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_resume1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目4图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm4_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目4链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目4标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目4图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm4_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目4链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目4标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目4图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm4_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目4链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目4标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目4图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm4_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目4链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm4_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+     <div class="formouter" style="height:105px;">
+      <div class="formleft">栏目5推广位：</div>
+      <div class="formcenter">
+        <%=text_area("pl","lm5_tags",{:style=>"width:400px;height:100px;"})%>
+      </div>
+      <div class="formright">
+          标题1<回车><br/>
+          链接1<回车><br/>
+          标题2<回车><br/>
+          链接2<回车> ...
+      </div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目5关键词：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_kw",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">一个“专区关键词”</font></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目5推广关键词1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_kws1",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目5推广关键词2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_kws2",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目5推广关键词3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_kws3",{:size=>60})%>
+      </div>
+      <div class="formright">请填写<font color="red">四个“专区关键词”</font>，用空格分隔多个关键字。</div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目5标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">栏目5文章导语1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_resume1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目5图片1：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm5_image_url1")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目5链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目5标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目5图片2：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm5_image_url2")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目5链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目5标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目5图片3：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm5_image_url3")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目5链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目5标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目5图片4：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm5_image_url4")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目5链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+
+    <div class="formouter">
+      <div class="formleft">栏目5标题5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">栏目5图片5：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "lm5_image_url5")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">栏目5链接5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","lm5_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <%=show_big_hr%>
+
+    <div class="formouter">
+      <div class="formleft">品牌1标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌1链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌2标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌2链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌3标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌3链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌4标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌4链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌5标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌5链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌6标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title6",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌6链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url6",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌7标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title7",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌7链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url7",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌8标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title8",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌8链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url8",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌9标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title9",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌9链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url9",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌10标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title10",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">品牌10链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url10",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">品牌11标题：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_title11",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter" style="height:90px;">
+      <div class="formleft">品牌11图片：</div>
+      <div class="formcenter">
+        <%=get_image_area_by_column_name(@pl, "pp_image_url11")%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <div class="formouter">
+      <div class="formleft">品牌11链接：</div>
+      <div class="formcenter">
+        <%=text_field("pl","pp_url11",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <%=show_big_hr%>
+
+    <div class="formouter">
+      <div class="formleft">术语标题1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_title1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">术语链接1：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_url1",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">术语标题2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_title2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">术语链接2：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_url2",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">术语标题3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_title3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">术语链接3：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_url3",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">术语标题4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_title4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">术语链接4：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_url4",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">术语标题5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_title5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">术语链接5：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_url5",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <hr style="margin-bottom:12px;" />
+    <div class="formouter">
+      <div class="formleft">术语标题6：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_title6",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <div class="formouter">
+      <div class="formleft">术语链接6：</div>
+      <div class="formcenter">
+        <%=text_field("pl","sy_url6",{:size=>60})%>
+      </div>
+      <div class="formright"></div>
+    </div>
+    <%=show_big_hr%>
+  </form>
+</div>

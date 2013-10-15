@@ -1,0 +1,116 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 400;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; height: 40px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:255px; float:left;
+}
+.formcenter input{
+    width:235px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+<div id="div_main" style="padding:10px;">
+  
+<form action="" name="form1" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                功能模块自动生成系统
+    </div>
+    
+    <script type="text/javascript">  
+    function submitForm(form){
+    p_tname.style.color="#999999";
+    p_c1.style.color="#999999";
+    p_c2.style.color="#999999";
+    p_c3.style.color="#999999";
+    p_c4.style.color="#999999";
+    p_c5.style.color="#999999";
+    var valReturn = true;
+    if (trim(form.tname.value)==""){
+        form.tname.focus();
+        p_tname.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.c1.value)==""){
+        form.c1.focus();
+        p_c1.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.c2.value)==""){
+        form.c2.focus();
+        p_c2.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.c3.value)==""){
+        form.c3.focus();
+        p_c3.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.c4.value)==""){
+        form.c4.focus();
+        p_c4.style.color="red";
+        valReturn = false;
+    }
+    if (trim(form.c5.value)==""){
+        form.c5.focus();
+        p_c5.style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+    }
+    </script>
+
+    <div class="formouter">
+            <div class="formleft">模块名称：</div>
+            <div class="formcenter"><input name="tname" type="text" /></div>
+            <div class="formright" id="p_tname">模块名称必须填写</div>
+    </div>
+    <div class="formouter">
+            <div class="formleft">字段1：</div>
+            <div class="formcenter"><input name="c1" type="text" value="c1" /></div>
+            <div class="formright" id="p_c1">字段1必须填写</div>
+    </div>
+    <div class="formouter">
+            <div class="formleft">字段2：</div>
+            <div class="formcenter"><input name="c2" type="text" value="c2" /></div>
+            <div class="formright" id="p_c2">字段1必须填写</div>
+    </div>
+    <div class="formouter">
+            <div class="formleft">字段3：</div>
+            <div class="formcenter"><input name="c3" type="text" value="c3" /></div>
+            <div class="formright" id="p_c3">字段1必须填写</div>
+    </div>
+    <div class="formouter">
+            <div class="formleft">字段4：</div>
+            <div class="formcenter"><input name="c4" type="text" value="c4" /></div>
+            <div class="formright" id="p_c4">字段1必须填写</div>
+    </div>
+    <div class="formouter">
+            <div class="formleft">字段5：</div>
+            <div class="formcenter"><input name="c5" type="text" value="c5" /></div>
+            <div class="formright" id="p_c5">字段1必须填写</div>
+    </div>
+
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="添 加" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+</div>

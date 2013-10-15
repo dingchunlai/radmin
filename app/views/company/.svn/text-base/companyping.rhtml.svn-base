@@ -1,0 +1,97 @@
+<script type="text/javascript">
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+      	document.form1.action = "/company/delete_all?ids=" + ids;
+    	document.form1.submit();
+      }
+    }
+}
+
+function shenhe(){
+    if (confirm('您确定要审核这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        document.form1.action = "/company/shenhe?ids=" + ids;
+    	document.form1.submit();
+       }
+    }
+}
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+    if (field.length==undefined)
+      field.checked = true;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = true;
+    checkflag = "true";
+    return "false";
+  }
+  else {
+    if (field.length==undefined)
+      field.checked = false;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = false;
+    checkflag = "false";
+    return "true";
+  }
+}
+
+function getids(){
+    var ids = "0";
+    if (document.form1.pkey_id.length==undefined){
+        if (document.form1.pkey_id.checked) ids = document.form1.pkey_id.value;
+    }else{
+        for (i=0; i<document.form1.pkey_id.length;i++){
+            if (document.form1.pkey_id[i].checked) ids += ", " + document.form1.pkey_id[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择记录！"); return "";} else return ids;
+}
+</script>
+<p align=center><%if @check.to_s=='1'%>审核成功<%elsif @check.to_s=='2'%>删除成功<%else%><%end%>  </p>
+<form name="form1"  action="/company/companyping" method="post">
+内容：<input type="text" name="c7" value="<%=@c7%>"/>&nbsp;&nbsp;&nbsp;&nbsp;
+状态：<select name="status">
+<option value="0" <%if @status.to_s=='0'%>selected<%end%>>未审核</option>
+<option value="1" <%if @status.to_s=='1'%>selected<%end%>>已审核</option>
+</select>
+<input type="submit" value="查询"/>
+<table >
+    <tr>
+            <th>编号</th>
+            <th>内容</th>
+            <th>审核</th>
+            
+              <th>设计能力</th>
+            
+              <th>预算报价合理性</th>
+            
+              <th>施工质量</th>
+            
+              <th>售后服务</th>
+            
+    </tr>
+    <%for f in @list%>
+    <tr align=center>
+            <th><input id="pkey_id" type="checkbox" value="<%=f.id%>"/><%=f.id%></th>
+            <th><%=f.c7%></th>
+            <th><%if f.status.to_s=='1'%>已审核<%else%>未审核<%end%></th>
+            
+              <th><%=f.c3%></th>
+            
+              <th><%=f.c4%></th>
+            
+              <th><%=f.c5%></th>
+            
+              <th><%=f.c6%></th>
+            
+    </tr>
+    <%end%>
+    <tr>
+    	<th><input onclick="SelectAll(document.form1.pkey_id)" type="button" value="全选"/><input type="button" value="删除" onClick="deleteAll()"/><input type="button" value="审核" onClick="shenhe()"/></th>
+    </tr>
+</table>
+<p align=center><%= will_paginate @list %>  </p>
+</form>

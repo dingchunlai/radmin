@@ -1,0 +1,103 @@
+<div class="user_right">
+
+  <div id=widebar >
+    <div id=nav_bottom></div>
+    <div id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 预约免费量房报名</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+	  在这里您可以维护预约免费量房报名信息。
+        </div>
+      </div>
+    </div>
+    <% applicant_booking_limit = REDIS_DB.get("firm_#{@firm.id}_applicants") ? REDIS_DB.get("firm_#{@firm.id}_applicants").to_i : 0 %>
+    <div>
+      <% if staff_logged_in? %>
+        <form action="/applicants/booking_upper_limit" method="post">
+          <input type='hidden' id='company_id' name="company_id" value="<%= @firm.id %>"/>
+          <%= @firm.name_zh %>的预约上限为:<input type="text" id="upper_limit" name="upper_limit" value="<%= REDIS_DB.get("firm_#{@firm.id}_applicants").to_i %>" size="3"/>单
+          <% if applicant_booking_limit != 0 %>
+            | 剩余:<%= applicant_booking_limit - @firm.applicants.confirmed.size %>单
+          <% end %>
+          <input type=submit value="提交"/>
+        </form>
+      <% else %>
+        <% if applicant_booking_limit != 0 %>
+          <%= @firm.name_zh %>的预约剩余:<%= applicant_booking_limit - @firm.applicants.confirmed.size %>单
+        <% end %>
+      <% end %>
+    </div>
+
+    <form action="" method="get" id="fmid" name="fmid">
+      <p align=center>
+        创建开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>/>
+	创建结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>/><br/>
+        确认开始：<input type=text name="confirm_begintime"  onclick="new Calendar().show(this);" <%if @confirm_begintime%>value="<%=@confirm_begintime%>"<%end%>/>
+	确认结束：<input type=text name="confirm_endtime"  onclick="new Calendar().show(this);" <%if @confirm_endtime%>value="<%=@confirm_endtime%>"<%end%>/>
+        状态：<select name='status'>
+          <option value='0'>请选择</option>
+          <option value='1' <%if @status.to_i == 1%>selected<%end%>>确认</option>
+          <option value='2' <%if @status.to_i == 2%>selected<%end%>>未确认</option>
+        </select>
+        <input type=submit value="查询"/>
+      </p>
+
+      <div class="mainbox clearfix" style="padding-bottom:10px;">
+        <div class="same_cha">
+          <ul>
+            <li class="line"></li>
+            <li id="s1" class="menu_on">
+              <%= link_to "免费量房报名", applicants_path %>
+            </li>
+            <li class="more"></li>
+          </ul>
+        </div>
+
+        <table id="datalist"  style="margin-left:1px; width:100%;">
+          <tr>
+            <% Applicant.list_columns.each do |column| %>
+              <th><%=h translate_to_ch(column) %></th>
+            <% end %>
+            <th>操作</th>
+          </tr>
+
+          <% @applicants.each do |applicant| %>
+            <tr>
+              <% Applicant.list_columns.each do |column| %>
+                <td>
+                  <%=h(applicant.send(column)) unless %w[room model status created_at confirm_at tel].include?(column)  %>
+                  <%=h(ROOM[applicant.send(column)]) if column == 'room' %>
+                  <%=h(MODELS[applicant.send(column)]) if column == 'model' %>
+                  <%=h(APPLICANT_STATUS[applicant.send(column)]) if column == 'status' %>
+                  <%=h (applicant.send(column)).utc.strftime("%Y/%m/%d %H:%M") if column == 'created_at' %>
+                  <%=h (applicant.send(column)).utc.strftime("%Y/%m/%d %H:%M") if column == 'confirm_at' && applicant.send(column) %>
+                  <%=h (applicant.send(column)) if column == 'tel' && ((current_staff.nil? && current_user.deco_id == current_deco_id) || (current_staff && (isrole("管理员") || isrole("会员管理")))) %>
+                </td>
+              <% end %>
+              <td>
+                <% if staff_logged_in? %>
+                  <%= link_to '删除 |', { :action => 'destroy', :id => applicant }, :confirm => 'Are you sure?', :method => :delete %>
+                <% end %>
+                <% if @applicants_booked_count < applicant_booking_limit %>
+                  <%= link_to ' 确认', { :action => 'confirm',:id => applicant } if applicant.status ==0 %>
+                <% else %>
+                  <span style="color:gray"><%= "确认" if applicant.status == 0 %></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <div id="div_pagelist" style="margin:0px 10px 0px 20px;">
+          <p align="center" style="font-size:15px;">共有<%= @applicants.total_entries %>人预约</p>
+          <div style="float:right">
+            <span id="pagelist">
+              <%= will_paginate @applicants %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

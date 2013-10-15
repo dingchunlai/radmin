@@ -1,0 +1,33 @@
+<%
+            @rs = HejiaTagEntityLink.find(:first, :conditions => "ENTITYID = #{@id} and TAGID in (4346,41662,9079,30885)")
+            if @rs
+              case @rs.TAGID
+              when 4346
+                @tag_name = "案例类"
+                @tag_type = "anli"
+              when 41662
+                @tag_name = "产品类"
+                @tag_type = "chanpin"
+              when 9079
+                @tag_name = "新闻类"
+                @tag_type = "xinwen"
+              when 30885
+                @tag_name = "生活类"
+                @tag_type = "shenghuo"
+              else
+                @tag_name = ""
+              end
+            else
+              @tag_name = ""
+            end
+          %>
+              <%= link_to_remote "案例类", :url => {:action => "choose_case_type",
+                :id => @id, :type => "anli", :from => "index"}, :loading => "Element.show('indicator_#{@id}')", :complete => "Element.hide('indicator_#{@id}')" %>
+              <%= link_to_remote "产品类", :url => {:action => "choose_case_type",
+                :id => @id, :type => "chanpin", :from => "index"}, :loading => "Element.show('indicator_#{@id}')", :complete => "Element.hide('indicator_#{@id}')" %>
+              <%= link_to_remote "新闻类", :url => {:action => "choose_case_type",
+                :id => @id, :type => "xinwen", :from => "index"}, :loading => "Element.show('indicator_#{@id}')", :complete => "Element.hide('indicator_#{@id}')" %>
+              <%= link_to_remote "生活类", :url => {:action => "choose_case_type",
+                :id => @id, :type => "shenghuo", :from => "index"}, :loading => "Element.show('indicator_#{@id}')", :complete => "Element.hide('indicator_#{@id}')" %>
+              <img id="indicator_<%= @id %>" style="display: none;" src="http://radmin.51hejia.com/images/icons/indicator.gif" alt="Indicator"/>
+              <%= render :partial => "admin_case/choose_tag/choose_case_type" %>

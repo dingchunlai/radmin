@@ -1,0 +1,77 @@
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    竞标标签列表显示
+  </div>
+
+  <% for price in BidRecord::PRICE.keys %>
+    竞标标签：<%= BidRecord::PRICE.values_at(price) %>
+    <% bids = Bid.find(:all, :conditions => ["bid_record_id = ? and price = ?", @bid_record.id, price], :order => "bid_price desc", :limit => 5) %>
+    <% unless bids.blank? %>
+      <table id="datalist" style="width:auto;" summary="">
+        <tr>
+          <th>排名</th>
+          <th>商户</th>
+          <th>出价</th>
+        </tr>
+        <% bids.each_with_index do |bid, index| %>
+          <% i = index + 1 %>
+          <tr align="center" style="background-color:#FFFDE6">
+            <td align="left"><%= i %></td>
+            <td>
+              <%= bid.deco_firm.name_zh if bid.deco_firm %>
+            </td>
+            <td><%= bid.bid_price %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+    <p>暂无竞拍</p>
+    <% end %>
+  <% end %>
+
+
+  <% for style in BidRecord::STYLE.keys %>
+    竞标标签：<%= BidRecord::STYLE.values_at(style) %>
+    <% bids = Bid.find(:all, :conditions => ["bid_record_id = ? and style = ?", @bid_record.id, style], :order => "bid_price desc", :limit => 5) %>
+    <% unless bids.blank? %>
+      <table id="datalist" style="width:auto;" summary="">
+        <tr>
+          <th>排名</th>
+          <th>商户</th>
+          <th>出价</th>
+        </tr>
+        <% bids.each_with_index do |bid, index| %>
+          <% i = index + 1 %>
+          <tr align="center" style="background-color:#FFFDE6">
+            <td align="left"><%= i %></td>
+            <td>
+
+            </td>
+            <td><%= bid.bid_price %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <p>暂无竞拍</p>
+    <% end %>
+  <% end %>
+</div>

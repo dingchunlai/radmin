@@ -1,0 +1,16 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>产品名称</th>
+		<th>报价商家</th>
+		<th>产品价格</th>
+		<th>相关操作</th>
+	</tr>
+	<% @quotes.each do |quote| %>
+	<tr>
+		<td><%= quote.product.name %> <i><%= link_to "查看该产品所有报价", product_quotes_path(:product_id => quote.product_id) %></i></td>
+		<td><%= quote.vendor.name_zh %> <i><%= link_to "查看该商家所有报价", vendors_quotes_path(:vendor_id => quote.vendor_id) %></i></td>
+		<td><%= quote.price %></td>
+		<td><%= link_to "查看", quote_path(quote) %></td>
+	</tr>
+	<% end %>
+</table>

@@ -1,0 +1,2 @@
+module Charge::PromotionsHelper
+end

@@ -1,0 +1,10 @@
+
+<h3><%=h  @title%> 敏感词过滤管理 </h3>
+<%= render :partial => "form"%>
+<div>
+	敏感词查询:
+	<form action="case_name_search" method="get" target="_blank">
+		<input type="text" name="keyword" id="keyword">
+		<input type="submit" value="查询">
+	</form>
+</div>

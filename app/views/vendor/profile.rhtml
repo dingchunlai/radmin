@@ -1,0 +1,48 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="thumb"><%= image_tag(@vendor.logo, :alt => @vendor.name_zh) -%></td>
+		<td>
+			<%= @vendor.name_zh -%><br />
+			<%= @vendor.name_en -%><br />
+			<%= @vendor.website -%><br />
+			<%= @vendor.contact -%>
+		</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">营业时间</td>
+		<td><%= @vendor.open_time -%></td>
+	</tr>
+	<tr>
+		<td class="label">商家地址</td>
+		<td><%= @vendor.full_address -%></td>
+	</tr>
+	<tr>
+		<td class="label">电话号码</td>
+		<td><%= @vendor.telephone -%></td>
+	</tr>
+	<tr>
+		<td class="label">传真号码</td>
+		<td><%= @vendor.fax -%></td>
+	</tr>
+	<tr>
+		<td class="label">400电话</td>
+		<td><%= @vendor.service_telephone -%></td>
+	</tr>
+	<tr>
+		<td class="label">电子邮件</td>
+		<td><%= @vendor.email -%></td>
+	</tr>
+	<tr>
+		<td class="label">商家简介</td>
+		<td><%= @vendor.description -%></td>
+	</tr>
+	<tr>
+		<td class="label">店铺主题</td>
+		<td><%= @vendor.theme ? ProductVendor::THEMES[@vendor.theme] : "默认" -%></td>
+	</tr>
+	<tr>
+		<td colspan="2"><%= @vendor.banner ? image_tag(@vendor.banner.url) : "还未上传" -%></td>
+	</tr>
+</table>

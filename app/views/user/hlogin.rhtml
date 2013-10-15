@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>用户登录界面</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<meta name="author" content="1713173@qq.com" />
+<meta name="Copyright" content="Copyright©2005-2008 Hejia Net (shanghai) Information Technology Co. Ltd. All rights reserved." />
+<script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+<style type="text/css">
+.font {
+	FONT-SIZE: 12px; COLOR: #3669a0
+}
+
+.formouter{
+    width:100%; clear:left; height: 40px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:165px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+<script type="text/javascript">
+if (top.location !== self.location) {
+    top.location=self.location;
+}
+window.onload = function(){
+
+}
+function submitForm(form){
+    if (trim(form.username.value)==""){
+        form.username.focus();
+        alert("请填写用户名!")
+        return false;
+    }
+    if (trim(form.password.value)==""){
+        form.password.focus();
+        alert("请填写用户密码!")
+        return false;
+    }
+}
+</script>
+
+</head>
+<body background="/images/user/login/loginBG.gif">
+
+<br />
+<br />
+<br />
+
+<table id="Table1" height="448" cellspacing="0" cellpadding="0" width="640" align="center" 
+background="/images/user/login/loginfrmbg.gif" border="0">
+<tbody>
+<tr>
+<td width="416"></td>
+<td width="224">
+        <% flash.each do |key, msg| -%>
+          <%= content_tag :div, msg, :class => key -%>
+        <% end -%>
+        <form name="form1" action="/user/hlogin" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+          <table height="180" cellspacing="0" cellpadding="0" width="100%" border="0">
+        <tbody>
+            <tr height="25">
+            <td width="8%">&nbsp;</td>
+            <td class="font" width="92%">用户名： 
+            <input name="username" type="text" style="width:100px;" />
+            </td></tr>
+
+            <tr height="25">
+            <td>&nbsp;</td>
+            <td class="font">密　码： 
+            <input name="password" type="password" style="width:100px;" />
+            </td></tr>
+
+            <tr height="35">
+            <td>&nbsp;</td>
+            <td class="font"> 
+            <input name="keeplogin" type="checkbox" value="true" /> 保持登录状态
+            </td></tr>
+            
+            <tr height="40">
+            <td>&nbsp;</td>
+            <td>
+            <input type="image" src="/images/user/login/loginBtn.gif" />
+            </td>
+            </tr>
+            
+            <tr>
+            <td>&nbsp;</td>
+            <td>
+            <asp:Label runat="server" id="lblPromptText" ForeColor="Red" Font-Size="12px" Height="22px"></asp:Label>
+            <asp:RequiredFieldValidator ID="rfv1" runat="server" Font-Size="12px" ControlToValidate="txtUsername" Text="用户名必须输入!">
+            </asp:RequiredFieldValidator>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+        
+</form>
+
+</td>
+</tr>
+</tbody>
+</table>
+<iframe width="0" height="0" name="hideiframe" id="hideiframe" />
+</body>
+</html>

@@ -1,0 +1,7 @@
+<% if param.cparam.param_items.size > 0 %>
+<% fields_for_param(param) do |param_form| %>
+	<%= param.cparam.key %>:
+	<%= param_form.hidden_field :param_id %>
+	<%= param_form.select( :param_item_id, param.cparam.param_items.collect {|item| [item.value, item.id]}, :selected => param.param_item_id, :include_blank => true )-%>
+<% end %>
+<% end %>

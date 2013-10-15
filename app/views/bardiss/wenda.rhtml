@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>有奖知识闯关问题-巴迪斯</title>
+<link href="http://js.51hejia.com/css/bardiss.css?201004291823" rel="stylesheet" type="text/css" />
+<script src="http://js.51hejia.com/js/AC_RunActiveContent.js" type="text/javascript"></script>
+<script type="text/javascript" src=" http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://js.51hejia.com/js/jquery.timers-1.2.js"></script>
+<script type="text/javascript" src="http://js.51hejia.com/js/bardiss.js?201004271123"></script>
+
+<%#= javascript_include_tag 'bardiss' %>
+</head>
+<body>
+<div class="width840">
+<div class="topflash">
+<script type="text/javascript">
+AC_FL_RunContent( 'codebase','http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0','width','840','height','271','src','http://js.51hejia.com/img/bardissimg/top','quality','high','pluginspage','http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash','movie','http://js.51hejia.com/img/bardissimg/top' ); //end AC code
+</script>
+<noscript>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" width="840" height="271">
+<param name="movie" value="http://js.51hejia.com/img/bardissimg/top.swf" />
+<param name="quality" value="high" />
+<embed src="http://js.51hejia.com/img/bardissimg/top.swf" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="840" height="271"></embed>
+</object>
+</noscript>
+</div>
+<%= render :partial =>"nav"%>
+</div>
+<div class="width800 wenda_page2">
+	<div class="wenda_tit">
+		<h1>装修知识竞答-巴迪斯“五月抄底选购集结号”线上抽奖活动</h1>
+	</div>
+<div class="wenda_page2_bg">
+<div class="wenda_page2_tit"></div>
+<div class="wenda_page2_txt"> <span><strong>单选题：</strong></span>
+	<ol>
+		<form action="deal" method="post" >
+		<% @questions.each_with_index do |q,i| %>
+			<li>
+				<h3><%= i+1%>、<%=h q.title%></h3>
+				<% q.options.each_with_index do |option,j| %>
+					<span><input name="answer[<%=i%>]" type="radio" value="<%= option.id%>" /><%=num_to_abc( j+1)%>、<%=h option.content%></span>
+				<% end -%>
+			</li>
+		<% end -%>
+			<input type="hidden" name="spent_time" value="130" id="spent_time" />
+			<div class="wenda_page2_submit">
+				<input type="hidden" name="token" value="<%= @token%>" />
+				<input name="提交" type="submit" value="test" id="submit_button"/>
+			</div>
+		</form>
+	</ol>
+</div>
+	<div class="clock">
+		<div><strong>剩余时间：</strong></div>
+		<div class=" clock_time">
+		 <!--<span id="minute" class="minute">2</span><span>分</span>-->   	
+		<span  id="second" >60</span><span>秒</span>
+		</div>
+	</div> <!--END clock-->
+</div> <!--END wenda_page2_bg -->
+</div><!-- END class="width800 wenda_page2" -->
+</body>
+</html>

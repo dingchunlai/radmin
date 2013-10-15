@@ -1,0 +1,33 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>编号</th>
+    <th>店铺名称</th>
+    <th>投资额</th>
+    <th>合作期限</th>
+    <th>客服经理</th>
+    <th>业务经理</th>
+    <th>商品数量</th>
+    <th>已上架</th>
+    <th>核价单</th>
+    <th>已成交</th>
+    <th>最后更新</th>
+    <th>相关操作</th>
+  </tr>
+  <% @vendors.each do |vendor| %>
+    <tr>
+      <td><%= vendor.id %></td>
+      <td><%= vendor.name_zh %></td>
+      <td><%= vendor.total_investment %></td>
+      <td><%= vendor.effected_at.to_date if vendor.effected_at %>至<%= vendor.expired_at.to_date if vendor.expired_at %></td>
+      <td><%= vendor.customer_manager %></td>
+      <td><%= vendor.operation_manager %></td>
+      <td><%= vendor.products_count %></td>
+      <td><%= vendor.shelve_count %></td>
+      <td><%= vendor.pricings_count %></td>
+      <td><%= vendor.completed_count %></td>
+      <td><%= vendor.updated_at.to_s(:db) %></td>
+      <td><%= link_to "编辑", edit_charge_vendor_path(vendor) %> <%= link_to "查看店铺", "http://p.51hejia.com/vendors/#{vendor.id}", :target => "_blank" %></td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @vendors %>

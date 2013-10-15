@@ -1,0 +1,204 @@
+<script language="vbscript">
+Function str2asc(strstr)
+ str2asc = hex(asc(strstr))
+End Function
+Function asc2str(ascasc)
+ asc2str = chr(ascasc)
+End Function
+</script>
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 785;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  <%if pp(@status)%>ge("status").value='<%=@status%>';<%end%>
+}
+function gotopage(page){
+    window.open("/dingdan/vendor_list?page="+page+"&recordcount=<%=@recordcount%>&id=<%=@id%>&name_zh=<%=u(@name_zh)%>&telephone=<%=@telephone%>&slogin=<%=u(@login)%>&status=<%=@status%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/user/del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/user/del?ids="+ids;
+    }
+}
+function getids(){
+    var ids = "0";
+    if (document.form1.r_id.length==undefined){
+        if (document.form1.r_id.checked) ids = document.form1.r_id.value;
+    }else{
+        for (i=0; i<document.form1.r_id.length;i++){
+            if (document.form1.r_id[i].checked) ids += ", " + document.form1.r_id[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择商铺记录！"); return "";} else return ids;
+}
+function invalid(){ //作废店铺
+    ids = getids();
+    if (ids!=""){
+      if (confirm("您确定要作废已选中的店铺吗？")) hideiframe.location="/dingdan/vendor_cstatus?status=3&ids=" + ids;
+    }
+}
+function unused(){  //停用店铺
+    ids = getids();
+    if (ids!=""){
+      hideiframe.location="/dingdan/vendor_cstatus?status=0&ids=" + ids;
+    }
+}
+function used(){   //启用店铺
+    ids = getids();
+    if (ids!=""){
+      hideiframe.location="/dingdan/vendor_cstatus?status=1&ids=" + ids;
+    }
+}
+function daishenhe(){   //设为待审核店铺
+    ids = getids();
+    if (ids!=""){
+      hideiframe.location="/dingdan/vendor_cstatus?status=2&ids=" + ids;
+    }
+}
+function savelogininfo(id){ //修改商铺用户名及密码
+  login =ge("ln"+id.toString()).value;
+  pw =ge("pw"+id.toString()).value;
+  if (login==""||pw==""){
+
+  }else{
+    document.form2.login.value = login;
+    document.form2.pw.value = pw;
+    document.form2.id.value = id;
+    document.form2.submit();
+  }
+}
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+    if (field.length==undefined)
+      field.checked = true;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = true;
+    checkflag = "true";
+    return "false";
+  }
+  else {
+    if (field.length==undefined)
+      field.checked = false;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = false;
+    checkflag = "false";
+    return "true";
+  }
+}
+</script>
+<style type="text/css">
+  .t1 {color:#757575}
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+<form name="form0" action="/dingdan/vendor_list" method="get">
+    <div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 3px 0px 5px 5px; ">
+      商家编号：<input name="id" type="text" size="5" value="<%=@id%>" />
+      商家名称：<input name="name_zh" type="text" size="8" value="<%=@name_zh%>" />
+      商家电话：<input name="telephone" type="text" size="8" value="<%=@telephone%>" />
+      登录名：<input name="slogin" type="text" size="8" value="<%=@login%>" />
+      状态：<select name="status" id="status">
+            <option value="">-----------</option>
+            <%0.upto(VENDOR_STATE.size-1) do |v|%>
+            <option value="<%=v%>"><%=VENDOR_STATE[v]%></option>
+            <%end%>
+            </select>　
+      <input type="submit" value="搜 索" />
+    </div>
+    
+    <hr style="border:1px solid #EEEEEE;" />
+
+    <div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 10px 5px; ">
+      <input value="全 选" onclick="SelectAll(document.form1.r_id);" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="通过审核" onclick="used();" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="待审核" onclick="daishenhe();" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="停 用" onclick="unused();" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="作 废" onclick="invalid();" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+    </div>
+</form>
+
+    <div style="font-family:Verdana; padding:0px 10px 0px 10px; background-color:#EEEEEE; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 10px 0px; ">
+        <span style="color:#CE0000">商铺管理</span>
+        总共搜索到<B><%=@recordcount%></B>条满足条件的核价单 当前显示第
+        <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+        页 共<B><%=@pagecount%></B>页
+    </div>
+
+<form name="form1">
+    <table id="datalist" style="width:870px; margin-bottom:20px;">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>商家名称</th>
+            <th>商家电话</th>
+            <th>状态</th>
+            <th>登录名</th>
+            <th>密码</th>
+            <th>操作</th>
+    </tr>
+    <%for vendor in @vendors%>
+    <tr align="center">
+      <td nowrap align="left"><input type="checkbox" name="r_id" value="<%=vendor.id%>" /> <%=vendor.id%></td>
+      <td align="left"><%=vendor.name_zh%></td>
+      <td align="left"><%=vendor.telephone%></td>
+      <td>
+          <%
+          case vendor.status
+          when 1
+            color = "blue"
+          when 2
+            color = "#CE0000"
+          else
+            color = "#757575"
+          end
+          %>
+          <font color="<%=color%>"><%=VENDOR_STATE[vendor.status]%></font>
+      </td>
+      <td><input name="ln<%=vendor.id%>" type="text" value="<%=vendor.login%>" size="8" /></td>
+      <td><input name="pw<%=vendor.id%>" type="text" value="" size="8" /></td>
+      <td nowrap>
+        <a href="#" onclick="savelogininfo(<%=vendor.id%>);" title="保存登录名与密码">保存</a>
+      </td>
+    </tr>
+    <% end %>
+    </table>
+    <div id="div_pagelist" style="margin: 15px 0px 10px 5px; ">
+	<input value="全 选" onclick="SelectAll(document.form1.r_id);" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+	　　　　　　<span id="pagelist"></span>
+    </div>
+
+</form>
+<form name="form2" action="/dingdan/vendor_savelogininfo" method="post" target="hideiframe">
+  <input name="login" type="hidden" value="" />
+  <input name="pw" type="hidden" value="" />
+  <input name="id" type="hidden" value="" />
+</form>
+</div>

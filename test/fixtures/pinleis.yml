@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: pinleis
+#
+#  id          :integer(11)     not null, primary key
+#  sort_id     :integer(11)     default(0), not null
+#  name        :string(128)     default(""), not null
+#  img_url     :string(128)
+#  bgimg_url   :string(128)
+#  property    :string(1024)
+#  subsort     :integer(4)      default(1), not null
+#  created_at  :datetime
+#  updated_at  :datetime
+#  intro       :string(1024)
+#  title_color :string(7)
+#  intro_color :string(7)
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+two:
+  id: 2

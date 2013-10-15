@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation
+END
+controller_instrumentation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/controller_instrumentation.rb
+END
+passenger_instrumentation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/passenger_instrumentation.rb
+END
+sunspot.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/sunspot.rb
+END
+acts_as_solr.rb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/acts_as_solr.rb
+END
+data_mapper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/data_mapper.rb
+END
+authlogic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/authlogic.rb
+END
+rack.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/rack.rb
+END
+delayed_job_instrumentation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/delayed_job_instrumentation.rb
+END
+net.rb
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/net.rb
+END
+active_record_instrumentation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/active_record_instrumentation.rb
+END
+active_merchant.rb
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/active_merchant.rb
+END
+metric_frame.rb
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/metric_frame.rb
+END
+unicorn_instrumentation.rb
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/unicorn_instrumentation.rb
+END
+sinatra.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/sinatra.rb
+END
+memcache.rb
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/instrumentation/memcache.rb
+END

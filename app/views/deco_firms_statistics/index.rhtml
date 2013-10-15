@@ -1,0 +1,60 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+
+<h1>合作装修公司数据统计页面</h1>
+<hr />
+<div class="search_firm">
+  <% form_tag deco_firms_statistics_path, :method => :get do %>
+    编号: <%= text_field_tag :firm_id,params[:firm_id] ? params[:firm_id] : '' %>
+    简称: <%= text_field_tag :name %>
+    时间:
+    <input type="text" size=10 name="begintime" onclick="new Calendar().show(this);" value="<%=@begintime%>" readonly="true">
+    --
+    <input type="text" size=10 name="endtime" onclick="new Calendar().show(this);" value="<%=@endtime%>" readonly="true">
+    城市: <%= select_tag :city, options_for_select(CITIES.collect {|key, value| [value, key]}.unshift(['全部', ''])) %>
+    <%= submit_tag "Search" %>
+  <% end -%>
+</div>
+<br />
+<div>
+<fieldset>
+  <legend>公司列表</legend>
+  <table>
+    <tr>
+      <th>编号</th>
+      <th>全称</th>
+      <th>简称</th>
+      <th>地区</th>
+      <th>数量统计</th>
+    </tr>
+    <% @firms.each do |firm| %>
+    <tr>
+      <td><%= firm.id %></td>
+      <td><%= firm.name_zh %></td>
+      <td><%= firm.name_abbr %></td>
+      <td><%#= DecoFirm.getcity(firm.city)%>-<%#= DecoFirm.getarea(firm.district) %><%= firm.city == 11910 ? CITIES[firm.city] : CITIES[firm.district] %></td>
+      <td>
+        <% if !params[:begintime].blank? or !params[:endtime].blank? %>
+            <% fid = firm.id;get_diaries_count_is_hejia_user(true,params[:begintime],params[:endtime],fid) %>
+            <% diary_count = firm.decoration_diaries.get_diaries_by_time(params[:begintime],params[:endtime]).size %>
+            <%= link_to("日记(#{diary_count}[编辑:#{@d_count[0].c.to_i}篇,用户:#{diary_count - @d_count[0].c.to_i}篇])", {:action =>'show',:id =>firm,:begintime =>params[:begintime],:endtime =>params[:endtime]}, :target => '_blank') if diary_count > 0 %>
+            <%= "案例(#{firm.option_cases_by_querytime(params[:begintime],params[:endtime])})" %>
+            <%= "评论(#{firm.option_remarks_by_querytime(params[:begintime],params[:endtime])})" %>
+        <% else %>
+            <% fid = firm.id;get_diaries_count_is_hejia_user(false,'','',fid) %>
+            <% diary_count = firm.decoration_diaries.size %>
+            <%= link_to "日记(#{diary_count}[编辑:#{@d_count[0].c.to_i}篇,用户:#{diary_count - @d_count[0].c.to_i}篇])", deco_firms_statistic_path(firm), :target => '_blank' if diary_count > 0 %>
+            <%= "案例(#{firm.option_cases_by_querytime})" if firm.option_cases_by_querytime > 0 %>
+            <%= "评论(#{firm.remark_only_count})" if firm.remark_only_count > 0 %>
+        <% end %>
+      </td>
+    </tr>
+    <% end -%>
+    <tr><td colspan="5"><%= will_paginate @firms %></td></tr>
+  </table>
+</fieldset>
+</div>
+<style type="text/css">
+  .search_firm {margin-left: 10px;}
+  table {width: 80%; text-align: center;}
+  table tr {text-align: center;}
+</style>

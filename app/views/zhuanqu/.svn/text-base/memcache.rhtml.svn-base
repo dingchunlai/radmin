@@ -1,0 +1,24 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 200;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+}
+</script>
+
+<div id="div_main">
+
+<br />
+<a href="http://tag.51hejia.com/zq/cmc/zq_index_mk" target="hideiframe">清除《专区聚合页》缓存</a><br /><br />
+
+<a href="http://tag.51hejia.com/zq/cmc/zq_mk" target="hideiframe">清除《专区内容》缓存</a><br /><br />
+
+<hr />
+
+<a href="http://tag.51hejia.com/zq/cmc/tuku_index_mk" target="hideiframe">清除《图库专区聚合页》缓存</a><br /><br />
+
+<a href="http://tag.51hejia.com/zq/cmc/taotu_mk" target="hideiframe">清除《套图专区内容》缓存</a><br /><br />
+
+<a href="http://tag.51hejia.com/zq/cmc/dantu_mk" target="hideiframe">清除《单图专区内容》缓存</a><br /><br />
+
+</div>

@@ -1,0 +1,5 @@
+<%= render :partial => "shared/search" %>
+
+<%= (@products.size > 0 ? (render :partial => "shared/products") : "<div class='no_result notice'>对不起，搜索结果为空！</div>") if @products -%>
+<%= (@vendors.size > 0 ? (render :partial => "shared/vendors") : "<div class='no_result notice'>对不起，搜索结果为空！</div>") if @vendors -%>
+<%= (@brands.size > 0 ? (render :partial => "shared/brands") : "<div class='no_result notice'>对不起，搜索结果为空！</div>") if @brands -%>

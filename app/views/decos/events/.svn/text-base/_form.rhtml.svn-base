@@ -1,0 +1,79 @@
+<script>
+	function tongyong(){
+		document.getElementById('tongyong').style.display='block';
+		document.getElementById('zhuangyong').style.display='none';
+		//document.getElementById(id).style.display
+	}
+	function zhuangyong(){
+		document.getElementById('zhuangyong').style.display='block';
+		document.getElementById('tongyong').style.display='none';
+	}
+</script>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>活动标题：</td>
+				<td colspan="3"><%= f.text_field :title, :size => 60 %></td>
+			</tr>
+			<tr>
+				<td>优惠类型：</td>
+				<td>优惠<input type="radio" name="event[style]" value="1" onclick="tongyong();" <%if !@event.style.nil?&&@event.style.to_s=='2'%><%else%>checked<%end%>/> 免费<input type="radio" name="event[style]" value="2" onclick="zhuangyong();" <%if !@event.style.nil?&&@event.style.to_s=='2'%>checked<%end%>/></td>
+				<td>优惠类别：</td>
+				<td>
+					<div id="tongyong" style="display:<%if !@event.style.nil?&&@event.style.to_s=='2'%>none<%else%>block<%end%>">
+					综合优惠<input type="radio" name="event[types]" value="11" <%if !@event.types.nil?&&@event.types.to_s=='11'%>checked<%end%>/>
+					抵用<input type="radio" name="event[types]" value="12" <%if !@event.types.nil?&&@event.types.to_s=='12'%>checked<%end%>/>
+					折扣<input type="radio" name="event[types]" value="13" <%if !@event.types.nil?&&@event.types.to_s=='13'%>checked<%end%>/></div>
+					<div id="zhuangyong" style="display:<%if !@event.style.nil?&&@event.style.to_s=='2'%>block<%else%>none<%end%>">
+					免费设计<input type="radio" name="event[types]" value="21" <%if !@event.types.nil?&&@event.types.to_s=='21'%>checked<%end%>/>
+					免费看样板房<input type="radio" name="event[types]" value="22" <%if !@event.types.nil?&&@event.types.to_s=='22'%>checked<%end%>/>
+					免费量房<input type="radio" name="event[types]" value="23" <%if !@event.types.nil?&&@event.types.to_s=='23'%>checked<%end%>/></div>
+				</td>
+			</tr>
+			<tr>
+				<td>开始日期：</td>
+				<td><%= f.text_field :starts_at, :onclick => "new Calendar().show(this);" %></td>
+				<td>结束日期：</td>
+				<td><%= f.text_field :ends_at, :onclick => "new Calendar().show(this);" %></td>
+			</tr>
+			<tr>
+				<td>市：</td>
+				<td><%= f.text_field :city %></td>
+				<td>区县：</td>
+				<td><%= f.text_field :district %></td>
+			</tr>
+			<tr>
+				<td>活动地址：</td>
+				<td colspan="3"><%= f.text_field :address, :size => 60 %></td>
+			</tr>
+			<tr>
+				<td>联系方式：</td>
+				<td colspan="3"><%= f.text_field :contact, :size => 60 %></td>
+			</tr>
+			<tr>
+				<td>交通路线：</td>
+				<td colspan="3"><%= f.text_field :traffic, :size => 60 %></td>
+			</tr>
+			<tr>
+				<td>活动横幅：</td>
+				<td colspan="3">
+				<%= image_tag(@event.banner.url(:medium)) unless @event.new_record? %>
+				<%= f.file_field :banner, :size => 60 %>
+				</td>
+			</tr>
+			<tr>
+				<td>活动介绍：</td>
+				<td colspan="3"><%= f.text_area :summary, :class => "mceEditor" %></td>
+			</tr>
+			<tr>
+				<td>活动流程：</td>
+				<td colspan="3"><%= f.text_area :prompt, :maxlength => "1000" %></td>
+			</tr>
+			<tr style="display:none;">
+				<td>免责声明：</td>
+				<td colspan="3"><%= f.text_area :disclaimer, :class => "mceEditor" %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag(controller.action_name == "new" ? "创建活动" : "更新活动") -%></td>
+			</tr>
+		</table>

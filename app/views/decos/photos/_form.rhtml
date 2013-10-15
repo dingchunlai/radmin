@@ -1,0 +1,26 @@
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td><span style="color:red">*</span> 图片标题：</td>
+				<td><%= f.text_field :title, :size => 60 %></td>
+			</tr>
+			<tr>
+				<td>图片类型：</td>
+				<td><%= f.radio_button :phototype, '1' %>公司相册 <%= f.radio_button :phototype, '0' %>施工图片</td>
+			</tr>
+			<tr>
+				<td><span style="color:red">*</span> 图片简介：</td>
+				<td><%= f.text_area :summary %></td>
+			</tr>
+			<tr>
+				<td><span style="color:red">*</span> 选择图片：</td>
+				<td>
+				<%= image_tag(@photo.image.url(:medium)) unless @photo.new_record? %>
+				<%= f.file_field :image, :size => 60 %>
+				</td>
+                                <td>注：请将上传的图片限制在200KB以内</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag(controller.action_name == "new" ? "创建图片" : "更新图片") -%></td>
+			</tr>
+		</table>

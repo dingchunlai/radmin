@@ -1,0 +1,19 @@
+<% form_tag "/vendor/login_action", :id => "vendor_login", :class => "vendor" do %>
+<% flash.each do |key, msg| -%>
+	<%= content_tag :div, msg, :class => key -%>
+<% end -%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td><h3>商铺登录</h3></td>
+	</tr>
+	<tr>
+		<td>帐号：<%= text_field_tag :login %></td>
+	</tr>
+	<tr>
+		<td>密码：<%= password_field_tag :password %></td>
+	</tr>
+	<tr>
+		<td><%= submit_tag "登录" %></td>
+	</tr>
+</table>
+<% end %>

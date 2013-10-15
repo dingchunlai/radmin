@@ -1,0 +1,33 @@
+# Settings specified here will take precedence over those in config/environment.rb
+
+# In the development environment your application's code is reloaded on
+# every request.  This slows down response time but is perfect for development
+# since you don't have to restart the webserver when you make code changes.
+config.cache_classes = false
+
+# Log error messages when you accidentally call methods on nil.
+config.whiny_nils = true
+
+# Enable the breakpoint server that script/breakpointer connects to
+config.breakpoint_server = true
+
+# Show full error reports and disable caching
+config.action_controller.consider_all_requests_local = true
+config.action_controller.perform_caching             = false
+config.action_view.cache_template_extensions         = false
+config.action_view.debug_rjs                         = true
+
+# Don't care if the mailer can't send
+config.action_mailer.raise_delivery_errors = false
+
+SERVER_ID= "192.168.0.15"
+
+begin
+ # gem 'redis', '< 2'
+  require 'redis'
+  REDIS_DB = Redis.new :host => "192.168.0.15"
+rescue
+  puts "Notice: Redis is not enabled!"
+end
+
+require RAILS_ROOT + '/config/load_gems'

@@ -1,0 +1,35 @@
+<div class="user_right">
+
+	<div id="widebar">
+		<div id="nav_bottom"></div>
+		<div id="widebar_content">
+			<div id="userprofile">
+				<div class="top">
+					<div class="profile_name">我的和家 - 装修日记</div>
+				</div>
+				<div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护装修日记信息。</div>
+			</div>
+		</div>
+		<div class="mainbox">
+			<div class="same_cha">
+				<ul>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/diaries">日记列表</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_on"><a href="/decos/diaries/new">新建日记</a></li>
+					<li class="line"></li>
+				</ul>
+			</div>
+
+			<div id="same1" style="padding:10px;">
+			<%= error_messages_for :diary %>
+			<% form_for( :diary, :url => deco_diaries_path, :html => {:multipart => true} ) do |f| -%>
+				<%= render :partial => "form", :locals => {:f => f} -%>
+			<% end -%>
+			</div>
+
+		</div>
+		
+	</div>
+
+</div>

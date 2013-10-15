@@ -1,0 +1,97 @@
+<script type="text/javascript" src="/javascripts/list_select_and_delete.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 800;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/zhuanqu/sort_list?page="+page+"&recordcount=<%=@recordcount%>&board_id=<%=@board_id%>&sort_name=<%=u(@sort_name)%>", "_self");
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" method="post" action="/zhuanqu/sort_list" target="_top">
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    所属板块:
+    <select name="board_id">
+      <option value="">不限</option>
+      <%1.upto(ZHUANQU_BOARD.length-1) do |i|%>
+        <option value="<%=i%>" <%="selected" if @board_id==i%>><%=ZHUANQU_BOARD[i]%></option>
+      <%end%>
+    </select>
+    栏目名称: <input name="sort_name" type="text" size="15" value="<%=@sort_name%>" />
+    <input type="submit"value="搜 索" />
+  </div>
+
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">    
+		<span style="color:#BF0000;">分类专区管理</span>
+        总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页 &nbsp;
+        
+         <%=gmb("新建分类专区","","window.open('/zhuanqu/sort_edit','_blank');","")%> <br/>
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>板块</th>
+            <th>分类名</th>
+            <th>访问网址</th>
+            <th>创建时间</th>
+            <th>操作</th>
+    </tr>
+    <%for sort in @sorts%>
+    <tr style="background-color:#FFFDE6" id="tr_<%=sort.id%>">
+      <td><input type="checkbox" name="arid" id="arid<%=sort.id%>" value="<%=sort.id%>" /> <%=sort.id%></td>
+      <td align="center"><%=ZHUANQU_BOARD[sort.board_id]%></a></td>
+      <td align="center"><a href="http://<%=TAG_HOST_NAME%>/zq/<%=u(sort.sort_name)%>" title="" target="_blank"><%=sort.sort_name%></a></td>
+      <td align="center"><input type="text" value="http://<%=ZHUANQU_BOARD_SPELL[sort.board_id]%>.51hejia.com/zq/<%=u(sort.sort_name)%>" size="50" onclick="this.select();" /></td>
+      <td align="center"><%=sort.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+      <td align="center">
+        <a href="/zhuanqu/sort_edit?id=<%=sort.id%>" target="_blank">编辑</a>　
+        <%=show_publish_button(sort.is_published, sort.id, "sort")%>
+        <!-- <a href="/zhuanqu/zq_clear_cache?keyword=<%#=u(sort.sort_name)%>" target="hideiframe">清除缓存</a> -->
+      </td>
+    </tr>
+    <% end %> 
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.arid);" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll('/zhuanqu/sort_del');" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<%=gmb("填充所有下级关键词","","if (confirm('您确定要执行填充操作吗？')) hideiframe.location = '/zhuanqu/sort_fresh';","")%>　
+        <span id="pagelist"></span>
+        
+    </div>
+
+</form>
+</div>

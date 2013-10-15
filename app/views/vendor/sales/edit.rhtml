@@ -1,0 +1,5 @@
+<%= error_messages_for :sale %>
+<% form_for :sale, @sale, :url => vendor_sale_path(@sale), :html => {:method => "put", :multipart => true} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>
+

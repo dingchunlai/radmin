@@ -1,0 +1,88 @@
+10
+
+dir
+782
+http://svn.51hejia.com:8081/51hejia/repos/radmin/release/vendor/plugins
+http://svn.51hejia.com:8081
+
+
+
+2012-10-18T05:03:51.977076Z
+99
+admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ee6026de-87bf-49f6-b6b9-4a97e4a78e28
+
+rails-ckeditor
+dir
+
+in_place_editing
+dir
+
+paperclip
+dir
+
+will_paginate
+dir
+
+geokit
+dir
+
+attachment_fu
+dir
+
+acl_system2
+dir
+
+newrelic_rpm
+dir
+
+action_mailer_tls
+dir
+
+engines
+dir
+
+acts_as_paranoid
+dir
+
+dom_id
+dir
+
+google_maps
+dir
+
+extensions
+dir
+
+auto_complete
+dir
+
+excel
+dir
+
+acts_as_state_machine
+dir
+
+model_auto_completer
+dir
+
+tiny_mce
+dir
+
+acts_as_list
+dir
+

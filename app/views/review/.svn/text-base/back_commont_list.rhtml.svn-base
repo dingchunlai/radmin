@@ -1,0 +1,201 @@
+<style type="text/css">
+table {
+	border:1px solid #CCC;
+	border-collapse:collapse ;
+	width:100%;
+}
+th, td {
+	border:1px solid #DDD;
+	border-left:0;
+	border-right:0;
+	padding:.3em .5em;
+}
+
+tr{ 
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]); 
+}
+</style>
+<p>
+
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<form id="fmid" action='/review/back_commont_list' method=get>
+&nbsp;&nbsp;&nbsp;&nbsp;资源类型
+<select onchange='changeleixing(this.value)'>
+<option value='1'>公司</option>
+<option value='2' selected>点评</option>
+<option value='3'>回复</option>
+</select>
+</p>
+<script type="text/javascript">
+	function changeleixing(val){
+		if(val == '1')
+			location.href='/review/back_company_list';
+		else if(val == '2')
+			location.href='/review/back_commont_list';
+		else if(val == '3')
+			location.href='/review/replyindex';
+	}
+</script>
+<p align=center style="font-size:15px">
+	标题：<input name="title" value="<%=@title%>" size=6>
+	公司：<input name="cname" value="<%=@cname%>" size=6>
+	地区：<select name="city">
+			<option value='0'>选择</option>
+			<%CITIES.sort.each do |k,v|%>
+				<option value='<%=k%>' <%if k==@city.to_i%>selected<%end%>><%=v%></option>
+			<%end%>
+		 </select>
+    价格: <select name="price">
+    		<option value='0'>选择</option>
+    		<%PRICE.sort.each do |k,v|%>
+    			<option value='<%=k%>' <%if k==@price.to_i%>selected<%end%>><%=v%></option>
+    		<%end%>
+    	</select>
+    方式：<select name="model">
+    		<option value='0'>选择</option>
+    		<%MODELS.sort.each do |k,v|%>
+    			<option value='<%=k%>' <%if k==@model.to_i%>selected<%end%>><%=v%></option>
+    		<%end%>    		
+    	</select>
+    风格：<select name="style">
+    		<option value='0'>选择</option>
+    		<%STYLES.sort.each do |k,v|%>
+    			<option value='<%=k%>' <%if k==@style.to_i%>selected<%end%>><%=v%></option>
+    		<%end%>    		
+    	</select>		
+</p>
+<p align=center style="font-size:15px">
+	开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>>
+	结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>>
+	排序：<select name="order">
+		<option value='0' <%if @order.to_i == 0%>selected<%end%>>点评时间</option>
+		<option value='2' <%if @order.to_i == 2%>selected<%end%>>发布时间</option>
+		<option value='3' <%if @order.to_i == 3%>selected<%end%>>回复数</option>
+		</select>
+	<input type="submit" value="搜索">
+</p>
+<p align=center style="font-size:15px">
+	类型:<select name="type">
+				<option value="">请选择</option>
+				<option value="1" <%if @type == '1'%>selected<%end%> >普通</option>
+				<option value="2" <%if @type == '2'%>selected<%end%>>精华</option>
+				<option value="3" <%if @type == '3'%>selected<%end%>>投诉</option>
+			</select> &nbsp;
+	状态:<select name="status">
+				<option value="">请选择</option>
+				<option value="0" <%if @status == '0'%>selected<%end%>>未确认</option>
+				<option value="1" <%if @status == '1'%>selected<%end%>>已确认</option>				
+			</select> &nbsp;
+	录入人：<input type="text" name="author" value="<%=@author%>"> &nbsp;
+	主日记: <select name="rijimain">
+				<option value="">请选择</option>
+				<option value="1" <%if @rijimain == '1'%>selected<%end%>>主日记</option>
+		</select>
+</p >
+<table align=center border=1 style="font-size:12px">
+	<tr style="font-size:13px">
+		<td>id</td>
+		<td>名字</td>
+		<td>公司</td>
+		<td>合作</td>
+		<td>风格</td>
+		<td>回复</td>
+		<td>内容分</td>
+		<td>真实分</td>
+		<td>编辑评分</td>
+		<td>活动分</td>
+		<td>总分</td>
+		<td>录入人</td>
+		<td>点评日期</td>
+		<td>操作</td>
+	</tr>
+<%@commonts.each do |commont|%>
+	<%firm = DecoReview.get_simple_company_info(commont[1].c1)%>
+	<tr>
+		<td>
+		<%= check_box_tag "review[selected_ids][]", commont[1].id %>
+		&nbsp;
+		<a href="http://z.51hejia.com/dianping-<%=commont[1].id%>" target="_blank"><%=commont[1].id%></a></td>
+		<td><a href="/review/show/<%=commont[1].id%>" target="_blank"><%=commont[1].title%></a></td>
+		<td><%=firm.name_zh%></td>
+		<td><%if firm.is_cooperation%>合作<%else%>非合作<%end%></td>
+		<td><%=STYLES[commont[1].c22.to_i]%></td>
+		<td><%=commont[1].response_num.to_i%></td>
+		<td><%if commont[0]%><%=commont[0].content_score.to_f%><%end%></td>
+		<td><%if commont[0]%><%=commont[0].real_score.to_f%><%end%></td>
+		<td><%if commont[0]%><%=commont[0].editor_score.to_f%><%end%></td>
+		<td><%if commont[0]%><%=commont[0].active_score.to_f%><%end%></td>
+		<td><%if commont[0]%><%=commont[0].result_score.to_f%><%end%></td>
+		<td><%if commont[1]%><%=commont[1].author%><%end%></td>
+		<td><%if commont[1].cdate%><%=commont[1].cdate.strftime("%y-%m-%d")%><%end%></td>
+		<td><%if commont[1].main_id.to_i == 0%><a href="/review/continuewrite?main_id=<%=commont[1].id%>" target="_blank">续写</a>&nbsp;<%end%>
+		<a href="/review/show/<%=commont[1].id%>" target="_blank">修改</a>&nbsp;
+		<%if isrole("管理员") || isrole("页面制作")%>
+		<a href="/review/commont_editor_score?commont_id=<%=commont[1].id%>" target="_blank">打分</a>&nbsp;
+		<%end%>
+		<a href="/review/back_reply?review_id=<%=commont[1].id%>" target="_blank">回复</a></td>
+	</tr>
+<%end%>
+</table>
+<p align=center><%= will_paginate @dv %></p>
+<p align=center style="font-size:15px">
+		<a href="#n" onclick="updatestate(-1)">删除</a> &nbsp;
+		<a href="#n" onclick="updatetype(1)">普通</a> &nbsp;
+		<a href="#n" onclick="updatetype(2)">精华</a> &nbsp;
+		<a href="#n" onclick="updatetype(3)">投诉</a> &nbsp;
+		<a href="#n" onclick="updatestate(1)">审核</a> &nbsp;
+</p>
+	<input type="hidden" id="tid" name="newtype">
+	<input type="hidden" id="sid" name="newstate">
+</form>
+
+<script language='javascript'>
+	function checkselected(){
+		var chs = document.getElementsByName("review[selected_ids][]");
+		if(chs.length > 0){
+			var count = 0;
+			for(var i=0;i<chs.length;i++){
+				if(chs[i].checked == true)
+					count++;
+			}
+		}else{
+			return false;
+		}
+		if(count == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	function updatetype(num){
+		if(!checkselected())
+		{
+			alert('请选择评论');
+			return false;
+		}
+		
+		document.getElementById('tid').value=num;
+		document.getElementById('fmid').action='/review/updatetype2';
+		document.getElementById('fmid').submit();
+	}
+	
+	function updatestate(state){
+		if(!checkselected())
+		{
+			alert('请选择评论');
+			return false;
+		}
+		var str = ''
+		if (state=='-1'){
+			str = '确定删除这些评论吗？';
+		}else if (state == '1'){
+			str = '确定审核这些评论吗？';
+		}
+		if (window.confirm(str)){
+			document.getElementById('sid').value=state;
+			document.getElementById('fmid').action='/review/updatestate2';
+			document.getElementById('fmid').submit();				
+		}
+	}		
+</script>	

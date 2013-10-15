@@ -1,0 +1,4 @@
+<%= error_messages_for :experience %>
+<% form_for :experience, :url => experience_path(@experience), :html => {:method => :put} do |f| -%>
+  <%= render :partial => "form", :locals => {:f => f} -%>
+<% end %>

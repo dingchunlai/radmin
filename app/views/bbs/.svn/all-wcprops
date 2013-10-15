@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs
+END
+topic_stat_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs/topic_stat_list.rhtml
+END
+admin_operation.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs/admin_operation.rhtml
+END
+topic_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs/topic_list.rhtml
+END
+forum_tag_handle.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bbs/forum_tag_handle.rhtml
+END

@@ -1,0 +1,60 @@
+<DIV class="user_right">
+  <DIV id=widebar >
+    <DIV id=nav_bottom></DIV>
+    <DIV id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 公司联系方式</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          <% if flash[:notice].nil? %>
+            在这里您可以添加和维护公司联系信息。
+          <%else%>
+            <b><font color="red"><%= flash[:notice] %></font></b>
+          <% end %>
+        </div>
+      </div>
+    </DIV>
+    <DIV class=mainbox style="border:1px solid #f60;border-left:none;border-bottom:none;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><%= link_to "联系地址列表", :action => "index"%></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><%= link_to "新建联系地址", :action => "new"%></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+    </DIV>
+    <style type="text/css">
+      .contact_table {width: 90%;}
+      .contact_table tr th{ text-align: center; }
+      .contact_table tr td{ text-align: center; }
+    </style>
+    <div style="width:760px;float:left">
+      <table class="contact_table" style="margin-left: 20px;">
+        <tr>
+          <th>公司地址</th>
+          <th>联系电话</th>
+          <th>在线联系</th>
+          <th>总店/分店</th>
+          <th>时间</th>
+          <th>操作</th>
+        </tr>
+      <% @deco_firms_contacts.each do |contact|%>
+        <tr>
+          <td><%=h contact.address %></td>
+          <td><%=h contact.telephone %></td>
+          <td><%=h contact.online_contact %></td>
+          <td><%= contact.master? ? '总店' : '分店' %></td>
+          <td><%=h contact.created_at.strftime("%Y-%m-%d") %></td>
+          <td>
+            <%= link_to "编辑", edit_deco_contact_path(contact) %> | <%= link_to "删除", deco_contact_path(contact), :confirm => '确认删除吗？', :method => :delete %>
+          </td>
+        </tr>
+      <% end -%>
+      </table>
+    </div>
+  </DIV>
+</DIV>
+

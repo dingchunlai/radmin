@@ -1,0 +1,140 @@
+<%= javascript_include_tag :defaults %>
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+  tinyMCE.init({
+    mode : "exact",
+    elements : "deco_INFO",
+    language : "zh",
+    theme : "advanced",
+    dialog_type : "modal",
+    convert_urls : false,
+    plugins : "advhr,advimage,advlink,emotions,fullscreen,preview,paste,table",
+    theme_advanced_layout_manager : "SimpleLayout",
+    theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,separator,forecolor,backcolor,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,link,unlink,advhr,image,advimage,advlink,emotions,pastetext,pasteword,fullscreen,selectall,code",
+    theme_advanced_buttons2 : "tablecontrols",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    extended_valid_elements : "fieldset[style],legend[style],a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+  });
+</script>
+
+<DIV class="user_right">
+
+  <DIV id=widebar >
+    <DIV id=nav_bottom></DIV>
+    <DIV id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 在建工地</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          在这里您可以添加和维护在建工地信息。以下有*的为必填项
+        </div>
+      </div>
+    </DIV>
+    <DIV class=mainbox style="height:480px;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/deco/factory_list">工地列表</a></li>
+
+          <li class="line"></li>
+          <li id="s2" class="menu_on"><a href="/deco/factory_edit">新建工地</a></li>
+          <li class="more"></li>
+        </ul>
+      </div>
+
+      <script type="text/javascript">
+        window.onload = function(){
+          //ge("deco_COMPANYAREA").value = "<%=@deco.COMPANYAREA rescue ""%>";
+        }
+        function onformsubmit(){
+          if (ge("factory_NAME").value==""){
+            alert("请填写楼盘名称！");
+            ge("factory_NAME").focus();
+            return false;
+          }
+          if (ge("factory_PROVINCE2").value=="0"){
+            alert("请选择所在区域！");
+            ge("factory_PROVINCE2").focus();
+            return false;
+          }
+          if (ge("factory_FANGXING").value=="0"){
+            alert("请选择房型！");
+            ge("factory_FANGXING").focus();
+            return false;
+          }
+          if (ge("factory_MONEY").value==""){
+            alert("请填写预算额度！");
+            ge("factory_MONEY").focus();
+            return false;
+          }
+          if (isNaN(ge("factory_MONEY").value)){
+            alert("预算额度必须为纯数字形式！");
+            ge("factory_MONEY").focus();
+            return false;
+          }
+          if (ge("factory_MONEY").value<"0.1"){
+            alert("预算额度不能小于0.1万！");
+            ge("factory_MONEY").focus();
+            return false;
+          }
+          return true;
+        }
+      </script>
+
+      <div id="same1" style="padding:10px;">
+        <FORM action="/deco/factory_edit_save" target="hideiframe" method="post" ONSUBMIT="return onformsubmit();">
+          <TABLE width="50%" cellPadding=0 cellSpacing=0>
+            <TBODY>
+              <TR height="30">
+                <TD width="15%" align="right"><font color="red">*</font> 楼盘名称：</TD>
+                <TD><%=text_field("factory","NAME",{:size=>40})%></TD>
+              </TR>
+
+              <TR height="30">
+                <TD width="15%" align="right"><font color="red">*</font> 所在区域：</TD>
+                <TD><select id="city" name="factory[PROVINCE1]" onchange="new Ajax.Updater('select_city_area', '/deco/select_city_area', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+                    <option value="0">请选择</option>
+                    <%@cities.each do |c|%>
+                      <option value="<%=c[0]%>" <%if @factory.PROVINCE1.to_i==c[0].to_i%>selected<%end%>><%=c[1]%></option>
+                    <%end%>
+                  </select>
+                  <span id="select_city_area">
+                    <option value="0">请选择</option>
+                    <%=select("factory","PROVINCE2",@areas.invert)%>
+                  </span></TD>
+              </TR>
+
+              <TR height="30">
+                <TD width="15%" align="right"><font color="red">*</font> 房 型：</TD>
+                <TD><select id="factory_FANGXING" name="factory[FANGXING]">
+                    <option value='0'>选择</option>
+                    <% FACTORY_FANGXING.sort.each do |k,v| %>
+                      <option value='<%=k%>' <%if @fangxing == v%>selected<%end%>><%=v%></option>
+                    <%end%>
+                  </select></TD>
+              </TR>
+              <TR height="30">
+                <TD width="15%" align="right"><font color="red">*</font> 预算：</TD>
+                <TD><%=text_field("factory","MONEY",{:size=>10})%>万&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：请填写纯数字，且小数点后面只保留1位小数（0.0），如：12.5</TD>
+              </TR>
+              <TR height="30">
+                <TD width="15%" align="right">可供参观时间：</TD>
+                <TD><%=text_field("factory","STARTENABLE",{:size=>8,:onfocus=>"new Calendar().show(this);"})%> - <%=text_field("factory","ENDENABLE",{:size=>8,:onfocus=>"new Calendar().show(this);"})%></TD>
+              </TR>
+              <TR height="30">
+                <TD width="15%" align="right"></TD>
+                <TD>
+                  <BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON>
+                  <input type="hidden" name="id" value="<%=@id%>" />
+                </TD>
+              </TR>
+            </TBODY>
+          </TABLE>
+        </FORM>
+      </div>
+    </DIV>
+  </DIV>
+</DIV>

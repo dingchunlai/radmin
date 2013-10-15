@@ -1,0 +1,24 @@
+<% title "Participant" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @participant.name %>
+</p>
+<p>
+  <strong>Activity:</strong>
+  <%=h @participant.activity_id %>
+</p>
+<p>
+  <strong>Tel:</strong>
+  <%=h @participant.tel %>
+</p>
+<p>
+  <strong>Post:</strong>
+  <%=h @participant.post_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_participant_path(@participant) %> |
+  <%= link_to "Destroy", @participant, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", participants_path %>
+</p>

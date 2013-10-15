@@ -1,0 +1,82 @@
+<script>
+  $(document).ready(function(){
+  	 $("#quanxuan").click(function(){
+	 	$("input[name*='bad_word[]']").each(function() {
+            $(this).attr("checked", true);
+        });
+		 $("#quanxuan").hide();
+		 $("#fanxuan").show();
+	 });
+	 $("#fanxuan").click(function(){
+	 	$("input[name*='bad_word[]']").each(function() {
+            $(this).attr("checked", false);
+        });
+		$("#quanxuan").show();
+		$("#fanxuan").hide();
+	 });
+  });
+</script>
+<table>
+	<tr>
+		<td>
+		<form action="#" method="get" accept-charset="utf-8">
+				<%= hidden_field_tag "key",@key %>
+				查找:<%= text_field_tag "bad_word",params[:bad_word] %>
+				<%= submit_tag("查找")%>
+		</form>
+	</td>
+
+	</tr>
+</table>
+
+<table border="0" cellspacing="0" cellpadding="3" width="200">
+	<tr>
+		<th>屏蔽词</th><th>操作</th>
+	</tr>
+
+	<tr>
+		<% form_tag :action=>"create" do -%>
+			<%= hidden_field_tag "key",@key %>
+			<td><%= text_area_tag "bad_word" %></td>
+			<td><%= submit_tag("增加")%></td>
+		<% end -%>
+	</tr>
+	<% form_tag :action=>"destroy" do -%>
+		<%= hidden_field_tag "key",@key %>
+	<% unless @bad_words.nil? %>
+		<% @bad_words.each do |bad_word| -%>
+		<tr style="background:<%= cycle('#ccc',"#fff")%>">
+			<td width="150"><%= bad_word%> </td>
+			<td width="50">
+					<%= check_box_tag "bad_word[]",bad_word %>
+			</td>
+		</tr>
+		<% end -%>
+		<% end -%>
+		<tr style="background:<%= cycle('#ccc',"#fff")%>">
+			<td width="150"><%= submit_tag "删除"%>
+			</td>
+			<td width="50">
+				<div id="quanxuan" style="color:#FE7100;cursor:pointer;">全选</div>
+				<div id="fanxuan" style="display:none;color:#F27900;cursor:pointer;">全选</div>
+			</td>
+		</tr>
+		<% end -%>
+</table>
+	<div id="page">
+		<% if @page > 1 %>
+			<%= (link_to "首页" ,:page => 1)%>
+			<%= (link_to "上一页" ,:page => @page - 1)%>
+		<% else %>
+			首页   上一页
+		<% end %>
+		<% if @page < @page_count %>
+			<%= (link_to "下一页" ,:page=>@page + 1)%>
+			<%= (link_to "尾页" ,:page => @page_count)%>
+		<% else %>
+			下一页 尾页
+		<% end %>
+		第 <%= @page%> / <%= @page_count%> 页
+	</div>
+
+	

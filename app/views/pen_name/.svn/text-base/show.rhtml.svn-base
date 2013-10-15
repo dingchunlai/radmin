@@ -1,0 +1,14 @@
+<form name="form1" method="post" action="/pen_name/create" style="margin:0">
+<input type="hidden" name="id" value="<%if !@pens.nil?%><%=@pens.id%><%end%>"/>
+<table border=1>
+<tr><td>
+	笔名:</td><td><input type="text" name="name" value="<%if !@pens.nil?%><%=@pens.name%><%end%>"/> &nbsp;
+</td></tr>
+<tr><td>
+	是否使用:</td><td><input type="radio" name="ischoice" value="1" <%if @pens.ischoice==1%>checked<%else%><%end%>/>是<input type="radio" name="ischoice" value="0" <%if @pens.ischoice==1%><%else%>checked<%end%>/>否 &nbsp;
+</td></tr>
+<tr><td colspan=2 align=center>
+	<input type="submit" value="确定">
+</td></tr>
+</table>
+</form>

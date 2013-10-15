@@ -1,0 +1,4 @@
+<p>链接：<%= @sale.link %></p>
+<p><%= @sale.image ? image_tag(@sale.image.url) : "没有图片" %></p>
+<br />
+<p><%= link_to "编辑", edit_vendor_sale_path(@sale) %></p>

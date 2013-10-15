@@ -1,0 +1,4 @@
+<h3><%= @photo.title %></h3>
+<div><%= image_tag(@photo.image.url) %></div>
+<div><%= @photo.summary %></div>
+<div><%= @photo.created_at.to_s(:db) %></div>

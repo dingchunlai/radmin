@@ -1,0 +1,2 @@
+
+<img src="/files/hekea/article_img/sourceImage/<%=@image.filename.slice(0,8) %>/<%=@image.filename%>">

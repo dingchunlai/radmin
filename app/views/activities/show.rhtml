@@ -1,0 +1,14 @@
+<% title "Activity" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @activity.name %>
+</p>
+<p>
+	<%= link_to "新建问题", new_activity_question_path(@activity) %>
+</p>
+<p>
+  <%= link_to "Edit", edit_activity_path(@activity) %> |
+  <%= link_to "Destroy", @activity, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", activities_path %>
+</p>

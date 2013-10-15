@@ -1,0 +1,146 @@
+<DIV class="user_right">
+
+<DIV id=widebar STYLE="height:830px;">
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 装修案例</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以添加和维护装修案例信息。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:740px;">
+	<div class="same_cha">
+    <ul>
+		<li class="line"></li>
+    <li id="s1" class="menu_on"><a href="/deco/case_edit?id=<%=params[:id]%>">基本信息</a></li>
+    <li class="line"></li>
+    <%if params[:id].to_i != 0%>
+      <li id="s1" class="menu_on"><a href="/deco/image_list?id=<%=params[:id]%>">装修实图</a></li>
+      <li class="line"></li>
+      <li id="s1" class="menu_on"><a href="/deco/house_list?id=<%=params[:id]%>">户型图</a></li>
+      <li class="line"></li>
+    <%end%>
+
+	</ul>
+  </div>
+
+<script type="text/javascript">
+window.onload = function(){
+}
+function gotopage(page){
+    window.open("/deco/house_list?page="+page+"&recordcount=<%=@recordcount%>&id=<%=params[:id]%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/deco/house_del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = "0";
+      for (i=0; i<document.form1.f_id.length;i++){
+          if (document.form1.f_id[i].checked)
+              ids += ", " + document.form1.f_id[i].value;
+      }
+      if (ids!="0") hideiframe.location="/deco/house_del?ids="+ids;
+    }
+}
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:12px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    color:#F27900;
+    text-decoration:none;
+  }
+</style>
+
+<div id="same1">
+<form name="form1">
+  <div style="font-family:Verdana; color:#DD4504; line-height:32px; font-size:12px; letter-spacing:1px; margin: 0px 0px 0px 15px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页　　
+        <a href="/deco/house_edit?caseid=<%=params[:id]%>" target="_blank" title="新建户型图">[新建户型图]</a>
+  </div>
+  <div style="height:640px;">
+  <table id="datalist" style="margin-left:7px; width:98%;">
+    <tr>
+            <th>编号</th>
+            <th>图片</th>
+            <th>图片类型</th>
+            <th>介绍</th>
+            <th>操作</th>
+    </tr>
+    <%for house in @houses%>
+    <tr align="center" style="background-color:#FFFDE6">
+      <td width="90"><input type="checkbox" name="f_id" value="<%=house.id%>" /> <%=house.id%></td>
+      <td width="100">
+        <a href="/uploads/deco_house/<%= house.IMAGENAME %>" target="_blank">
+        <img src="/uploads/deco_house/<%= house.IMAGENAME %>" border="0" width="90" height="90" />
+        </a>
+        </td>
+      <td>
+          <%=house.IMAGETYPE%>
+      </td>
+      <td align="left" width="300"><%=left(house.INTRODUCE, 320)%></td>
+      <td width="60">
+        <a href="/deco/house_edit?id=<%=house.id%>&caseid=<%=params[:id]%>" target="_blank">编辑</a>
+      </td>
+    </tr>
+    <% end %>
+    </table>
+    </div>
+
+    <div id="div_pagelist" style="margin:0px 10px 0px 10px;">
+      <div style="float:left">
+      <input onclick="SelectAll(document.form1.f_id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      </div>
+      <div style="float:right">
+        <script type="text/javascript">
+          recordcount = <%=@recordcount%>;
+          pagesize = <%=@pagesize%>;
+          curpage = <%=@curpage%>;
+          cur_list = 0;
+          listsize = <%=@listsize%>;
+          document.write("<span id='pagelist'></span>");
+          page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+        </script>
+      </div>
+    </div>
+</form>
+</div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>

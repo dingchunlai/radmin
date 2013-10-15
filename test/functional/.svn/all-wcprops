@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional
+END
+comment_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/comment_controller_test.rb
+END
+form_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/form_controller_test.rb
+END
+mobile_verifiy_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/mobile_verifiy_controller_test.rb
+END
+dingdan_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/dingdan_controller_test.rb
+END
+bad_words_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/bad_words_controller_test.rb
+END
+note_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/note_controller_test.rb
+END
+ruser_huser_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/ruser_huser_controller_test.rb
+END
+hejia_member_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/hejia_member_controller_test.rb
+END
+member_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/member_controller_test.rb
+END
+radmin_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/radmin_controller_test.rb
+END
+stat_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/stat_controller_test.rb
+END
+pinlei_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/pinlei_controller_test.rb
+END
+hejia_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/hejia_controller_test.rb
+END
+event_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/event_controller_test.rb
+END
+ad_spaces_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/ad_spaces_controller_test.rb
+END
+admin_case_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/admin_case_controller_test.rb
+END
+ad_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/ad_controller_test.rb
+END
+bardiss_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/bardiss_controller_test.rb
+END
+ruser_channel_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/ruser_channel_controller_test.rb
+END
+zhuanqu_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/zhuanqu_controller_test.rb
+END
+caseexcel_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/caseexcel_controller_test.rb
+END
+wenba_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/wenba_controller_test.rb
+END
+applicants_controller_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/test/functional/applicants_controller_test.rb
+END

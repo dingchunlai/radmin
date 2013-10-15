@@ -1,0 +1,18 @@
+
+<div id="tag" style="display:inline;">
+  添加标签类别：
+  <% form_remote_tag :url => '/admin_case/save_tag',
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" do -%>
+    父标签：<select name="tag[TAGFATHERID]">
+      <option value="4346">案例
+      <option value="6693">图片标签
+    </select>
+    <input name="tag[TAGESTATE]" type="hidden" value="0">
+    标签名字：<input name="tag[TAGNAME]">
+    标签url：<input name="tag[TAGURL]">
+    标签分类：<input name="tag[TAGCOMMENT]" value="">
+    重要？：<input name="tag[ISIMPORTANT]" type="checkbox" value="1">
+    <%= submit_tag '提交' %>
+    <%= button_to_function "移除", "$(this).up('#tag').remove()" %>
+  <% end -%>
+</div>

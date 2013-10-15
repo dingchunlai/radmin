@@ -1,0 +1,9 @@
+<form method="post" action="/pages/edit" enctype="multipart/form-data">
+	<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+	<input type="hidden" name="id" value="<%=@p.id%>">
+	<p>名字：<input type="text" name="remark" value="<%=@p.REMARK%>"></p>
+	<p>模版：<input type="file" name="file[myfile]"></p>
+	<p>domain：<input type="text" name="domain" value="<%=@p.DOMAIN%>"></p>
+	</div>
+    <p><input type="submit" /></p>
+</form>

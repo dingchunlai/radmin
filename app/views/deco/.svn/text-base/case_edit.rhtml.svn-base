@@ -1,0 +1,456 @@
+<script type="text/javascript" src="/javascripts/prototype.js"></script>
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+  tinyMCE.init({
+    mode : "exact",
+    //elements : "case_INTRODUCE",
+    language : "zh",
+    theme : "simple",
+    dialog_type : "modal",
+    convert_urls : false,
+    plugins : "advhr,advimage,advlink,emotions,fullscreen,preview,paste,table",
+    theme_advanced_layout_manager : "SimpleLayout",
+    theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,separator,forecolor,backcolor,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,link,unlink,advhr,image,advimage,advlink,emotions,pastetext,pasteword,fullscreen,selectall,code",
+    theme_advanced_buttons2 : "tablecontrols",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    extended_valid_elements : "fieldset[style],legend[style],a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+  });
+</script>
+
+<DIV class="user_right">
+
+  <DIV id=widebar>
+    <DIV id=nav_bottom></DIV>
+    <DIV id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 装修案例</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          在这里您可以添加和维护装修案例信息。以下有*的为必填项（注：每位用户当天最多创建10条案例;<font color="red">若没有绑定设计师，则设计师不显示</font>）
+        </div>
+      </div>
+    </DIV>
+    <DIV class=mainbox style="border:1px solid #f60;border-left:none;border-bottom:none;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/deco/case_edit?id=<%=params[:id]%>">基本信息</a></li>
+          <li class="line"></li>
+          <%if params[:id].to_i != 0%>
+            <li id="s1" class="menu_off"><a href="/deco/image_list?id=<%=params[:id]%>">装修实图</a></li>
+            <li class="line"></li>
+            <li id="s1" class="menu_off"><a href="/deco/house_list?id=<%=params[:id]%>">户型图</a></li>
+            <li class="line"></li>
+          <%end%>
+
+        </ul>
+      </div>
+
+      <script type="text/javascript">
+        window.onload = function(){
+        }
+        function onformsubmit(){
+          valReturn = true;
+          if (ge("case_NAME").value==""){
+            alert("案例名称必须填写！");
+            ge("case_NAME").focus();
+            valReturn = false;
+          }
+          if (ge("case_BUILDINGNAME").value==""){
+            alert("小区名称必须填写！");
+            ge("case_BUILDINGNAME").focus();
+            valReturn = false;
+          }
+          if (ge("case_INTRODUCE").value.length<80){
+            alert("案例简介须在80个字以上");
+            ge("case_INTRODUCE").focus();
+            valReturn = false;
+          }
+          if (ge("case_INTRODUCE").value.length<1){
+            alert("请填写案例简介");
+            ge("case_INTRODUCE").focus();
+            valReturn = false;
+          }
+          return valReturn
+        }
+
+      </script>
+      <%if @back.nil?%>
+        <script language="JavaScript" type="text/javascript">
+          var j=0;
+
+          function btn_Check_onclick(tagid){
+	 
+            //var myElement;
+            //var numberOfControls=document.form1.length;
+            //for(var i=0;i<numberOfControls;i++)
+            //{
+            //  myElement=document.form1[i];
+	   
+            //    if(myElement.checked==true)
+            //	{
+            //    count++;
+            //   }
+            // }
+            //j = j+count
+            //  count = 0;
+            //  if(j>5){
+            // 	alert("您只能选择5个标签");
+            // 	document.getElementById(tagid).checked=false;
+            //	j=5;
+            //  }
+            //  alert(j);
+  	
+          }
+        </script>
+      <%end%>
+      <div id="same1" style="padding:10px;">
+        <FORM action="/deco/case_edit_save" method="post" target="hideiframe" onsubmit="return onformsubmit(this);" name="form1" id="form1">
+          <TABLE width="50%" cellPadding=0 cellSpacing=0>
+            <TBODY>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center"><font color="red">*</font> 案例名称：</TD>
+                <TD><%=text_field("case","NAME",{:size=>50})%></TD>
+              </TR>
+              <%if @back%>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center"> 手动标签：</TD>
+                  <TD><input name="hand_tags" id="hand_tags" size="50" type="text" value="<%=@hand_tags%>" />　多个标签请用空格分隔</TD>
+                </TR>
+              <% end %>
+              <%if !@back.nil?%>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">装修方式：</TD>
+                  <TD>
+                    <%for t in @tag1%>
+                      <input name="tag1" type="radio" value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                    <%end%>
+                  </TD>
+                </TR>
+
+                <tr height="30">
+                  <td width="1%" align="center" style="font-weight:bold">&nbsp;</td>
+                  <td width="12%" align="center">装修分类：</td>
+                  <td>
+                    <%CASE_CATEGORY.sort.each do |a|%>
+                      <input name="case[category]" type="radio" value="<%= a[0] %>" <%= @case.category == a[0].to_i ? "checked":""%>/> <%= a[1] %>
+                    <% end %>
+                  </td>
+                </tr>
+
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">特别选项：</TD>
+                  <TD>
+                    <%for t in @teshu%>
+                      <input name="teshu[]" type="checkbox" value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                    <%end%>
+                  </TD>
+                </TR>
+              <%end%>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">费用：</TD>
+                <TD>
+                  <%if !@back%>
+                    <input name="tag2[]" type="radio" value="11621" id="11621" <%=@tagids.include?('11621') ? "checked":""%> onClick="btn_Check_onclick('11621');"/>8万以下
+                    <input name="tag2[]" type="radio" value="11623" id="11623" <%=@tagids.include?('11623') ? "checked":""%> onClick="btn_Check_onclick('11623');"/> 8-15万
+                    <input name="tag2[]" type="radio" value="11622" id="11622" <%=@tagids.include?('11622') ? "checked":""%> onClick="btn_Check_onclick('11622');"/> 15万-30万
+                    <input name="tag2[]" type="radio" value="11624" id="11624" <%=@tagids.include?('11624') ? "checked":""%> onClick="btn_Check_onclick('11624');"/> 30万-100万
+                    <input name="tag2[]" type="radio" value="41733" id="41733" <%=@tagids.include?('41733') ? "checked":""%> onClick="btn_Check_onclick('41733');"/> 100万以上
+                  <%else%>
+                    <input name="tag2[]" type="checkbox" value="4370" id="4370" <%=@tagids.include?('4370') ? "checked":""%> /> 经济型
+                    <input name="tag2[]" type="checkbox" value="4372" id="4372" <%=@tagids.include?('4372') ? "checked":""%>/> 富裕型
+                    <input name="tag2[]" type="checkbox" value="4373" id="4373" <%=@tagids.include?('4373') ? "checked":""%>/> 豪华型
+                    <input name="tag2[]" type="checkbox" value="11621" id="11621" <%=@tagids.include?('11621') ? "checked":""%>/>8万以下
+                    <input name="tag2[]" type="checkbox" value="11623" id="11623" <%=@tagids.include?('11623') ? "checked":""%>/> 8-15万
+                    <input name="tag2[]" type="checkbox" value="11622" id="11622" <%=@tagids.include?('11622') ? "checked":""%>/> 15万-30万
+                    <input name="tag2[]" type="checkbox" value="11624" id="11624" <%=@tagids.include?('11624') ? "checked":""%>/> 30万-100万
+                    <input name="tag2[]" type="checkbox" value="41733" id="41733" <%=@tagids.include?('41733') ? "checked":""%>/> 100万以上
+                  <%end%>
+
+                </TD>
+              </TR>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">风格：</TD>
+                <TD>
+                  <%if @back%>
+                    <%for t in @tag3%>
+                      <input name="tag3[]" type="checkbox" id="<%=t.tagid%>" value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%> <%if @back.nil?%>onClick="btn_Check_onclick('<%=t.tagid%>');"<%end%>/> <%=t.tagname%>
+                    <%end%>
+                  <%else%>
+                    <%for t in @tag3%>
+                      <input name="tag3[]" type="radio" id="<%=t.tagid%>" value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%> <%if @back.nil?%>onClick="btn_Check_onclick('<%=t.tagid%>');"<%end%>/> <%=t.tagname%>
+                    <%end%>
+                  <%end%>
+                </TD>
+              </TR>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">装修用途：</TD>
+                <TD>
+                  <%for t in @tag4%>
+                    <input name="tag4[]" type="checkbox" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%> <%if @back.nil?%>onClick="btn_Check_onclick('<%=t.tagid%>');"<%end%>/> <%=t.tagname%>
+                  <%end%>
+
+                </TD>
+              </TR>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">户型：</TD>
+                <TD>
+                  <%if @back%>
+                    <%for t in @tag5%>
+                      <input name="tag5[]" type="checkbox" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%> <%if @back.nil?%>onClick="btn_Check_onclick('<%=t.tagid%>');"<%end%>/> <%=t.tagname%>
+                    <%end%>
+                  <%else%>
+                    <%for t in @tag5%>
+                      <input name="tag5[]" type="radio" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%> <%if @back.nil?%>onClick="btn_Check_onclick('<%=t.tagid%>');"<%end%>/> <%=t.tagname%>
+                    <%end%>
+                  <%end%>
+                </TD>
+              </TR>
+
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">颜色：</TD>
+                <TD>
+                  <%for t in @tag6%>
+                    <input name="tag6[]" type="checkbox" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                  <%end%>
+                </TD>
+              </TR>
+              <%if @back%>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">案例类别：</TD>
+                  <TD>
+                    <%for t in @anli%>
+                      <input name="anli" type="radio" value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                    <%end%>
+                  </TD>
+                </TR>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">资讯案例：</TD>
+                  <TD>
+                    <%for t in @zixun%>
+                      <input name="zixun" type="radio" value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                    <%end%>
+                  </TD>
+                </TR>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">家居类别：</TD>
+                  <TD>
+                    <%for t in @leibie%>
+                      <input name="leibie[]" type="checkbox" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                    <%end%>
+                  </TD>
+                </TR>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">产品：</TD>
+                  <TD>
+                    <%for t in @chanpin%>
+                      <input name="chanpin[]" type="checkbox" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                    <%end%>
+                  </TD>
+                </TR>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center"><a href="javascript://" onclick="ge('span_ggkj').style.display='block';">公共空间</a>：</TD>
+                  <TD>
+                    <span id="span_ggkj" style="display:none;">
+                      <%for t in @gonggongkongjian%>
+                        <input name="gonggongkongjian[]" type="checkbox" id="<%=t.tagid%>"  value="<%=t.tagid%>" <%=@tagids.include?(t.tagid) ? "checked":""%>/> <%=t.tagname%>
+                      <%end%>
+                    </span>
+                  </TD>
+                </TR>
+
+              <%end%>
+              <% if @deco_company_id.to_i != 7 %>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center"><font color="red">*</font>小区：</TD>
+                  <TD>
+                    <%=text_field("case","BUILDINGNAME")%>
+                  </TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center"><font color="red">*</font>区域：</TD>
+                  <TD>
+                    省 / 市<select id="city" name="case[PROVINCE1]" onchange="new Ajax.Updater('select_city_area', '/deco/select_city_area_1', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+                      <%@cities.each do |c|%>
+                        <% if @case.PROVINCE1.to_i == 0 %>
+                          <option value="<%=c[0]%>" <%if c[0].to_i==11910 %> selected <%end%> ><%=c[1]%></option>
+                        <% else %>
+                          <option value="<%=c[0]%>" <%if @case.PROVINCE1.to_i==c[0].to_i%> selected <%end%> ><%=c[1]%></option>
+                        <% end %>
+
+                      <%end%>
+                    </select>
+                    市 / 区<span id="select_city_area">
+                      <%=select("case","PROVINCE2",@areas.invert)%>
+                    </span>
+                  </TD>
+                </TR>
+              <% end %>
+              <% if @back %>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">地址：</TD>
+                  <TD>
+                    <%=text_field("case","address")%>
+                  </TD>
+                </TR>
+              <% end %>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center"><font color="red">*</font> 案例简介：</TD>
+                <TD><%=text_area("case","INTRODUCE",{:style=>"height:60px;"})%><span style="color:red;">案例简介须大于80个字</span></TD>
+              </TR>
+              <%if @back%>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">装修主材：</TD>
+                  <TD><%=text_area("case","matrial",{:style=>"height:60px;"})%></TD>
+                </TR>
+              <% end %>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">设计师：</TD>
+                <TD><%=select("case","DESIGNERID",@designers)%></TD>
+              </TR>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">新案例标记：</TD>
+                <TD><%=radio_button("case","ISNEWCASE", 1)%>是 <%=radio_button("case","ISNEWCASE", 0)%>否</TD>
+              </TR>
+              <% if @back %>
+                <TR height="30">
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">精选标记：</TD>
+                  <TD><%=radio_button("case","ISCHOICENESS", 1)%>是 <%=radio_button("case","ISCHOICENESS", 0)%>否</TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">推荐案例：</TD>
+                  <TD><%=radio_button("case","ISCOMMEND", 1)%>是 <%=radio_button("case","ISCOMMEND", 0)%>否</TD>
+                </TR>
+              <% end %>
+              <TR height="30">
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">是否为装潢案例：</TD>
+                <TD><%=radio_button("case","ISZHUANGHUANG", 1)%>是 <%=radio_button("case","ISZHUANGHUANG", 0)%>否</TD>
+              </TR>
+              <% if @back %>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">是否为立邦提供案例：</TD>
+                  <TD><%=radio_button("case","STATUS", 1000)%>是 <%=radio_button("case","STATUS", 050)%>否</TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">是否为多乐士提供案例：</TD>
+                  <TD><%=radio_button("case","STATUS", "900")%>是 <%=radio_button("case","STATUS", "049")%>否</TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">户型排序：</TD>
+                  <TD><%=text_field("case","HUXINGORDER",{:size=>10})%></TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">预算排序：</TD>
+                  <TD><%=text_field("case","YUSUANORDER",{:size=>10})%></TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">风格排序：</TD>
+                  <TD><%=text_field("case","FENGGEORDER",{:size=>10})%></TD>
+                </TR>
+                <TR height="30" >
+                  <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="12%" align="center">用途排序：</TD>
+                  <TD><%=text_field("case","YONGTUORDER",{:size=>10})%></TD>
+                </TR>
+              <%end%>
+              <!-- 新添加 -->
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">家庭成员：</TD>
+                <TD><%=text_field "case_detail", "family_members",{:size=>10} %> </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">建筑面积：</TD>
+                <TD><%=text_field "case_detail", "construction_area",{:size=>10} %> </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">使用面积：</TD>
+                <TD><%=text_field "case_detail", "real_area",{:size=>10} %> </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">职业：</TD>
+                <TD><%=text_field "case_detail", "job",{:size=>10} %> </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">硬装费用：</TD>
+                <TD><%=text_field "case_detail", "hard_decoration_cost",{:size=>10} %> 万元 </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">软装费用：</TD>
+                <TD><%=text_field "case_detail", "soft_decoration_cost",{:size=>10} %> 万元 </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">设计费：</TD>
+                <TD><%=text_field "case_detail", "design_cost",{:size=>10} %> 万元 </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">管理费：</TD>
+                <TD><%=text_field "case_detail", "management_cost",{:size=>10} %> 万元 </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">人工费：</TD>
+                <TD><%=text_field "case_detail", "labor_cost",{:size=>10} %> 万元 </TD>
+              </TR>
+              <TR height="30" >
+                <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="12%" align="center">税金：</TD>
+                <TD><%=text_field "case_detail", "tax",{:size=>10} %> 万元 </TD>
+              </TR>
+
+              <!-- END -->
+              <TR height="30">
+                <TD align="center">&nbsp;</TD>
+                <TD align="center">&nbsp;</TD>
+                <TD>
+                  <BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON>
+                  <input type="hidden" name="id" value="<%=@id%>" />
+                </TD>
+              </TR>
+            </TBODY>
+          </TABLE></FORM>
+      </div>
+    </DIV>
+  </DIV>
+</DIV>
+
+</DIV>

@@ -1,0 +1,63 @@
+<% unless flash[:notice].blank? -%>
+  <div id='notice'><%=flash[:notice]%></div>
+<% end -%>
+<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+<form action="/company/index" method="get">
+	<p><input name="companyname" type="text" value="<%=@companyname%>">&nbsp;<input type="submit" value="搜索"></p>
+	<table border=1>
+		<tr style="background-color:#7389A4;">
+  			<th style="color:#FFFFFF;">公司名</th>
+			<th style="color:#FFFFFF;">操作</th>
+		</tr>
+		<tr>
+			<td>图库专用</td>
+			<td>
+				<a href="/company/linktofront?companyid=7" target="_blank">相关操作(跳转到前台)</a> &nbsp;
+				<a href="/company/show/7" target=_blank>修改信息</a>
+				<a href="#n" onclick="delcompany(7)">删除</a>
+				<div id='confirm_112171'>
+				  
+					<a href="#" onclick="new Ajax.Updater('confirm_7', '/company/deny/7', {asynchronous:true, evalScripts:true, onComplete:function(request){new Effect.Highlight(&quot;confirm_7&quot;,{});}}); return false;" style="color: red">取消认证</a>	
+				  
+				</div>
+				
+			</td>
+		</tr>	
+		<% @companylist.each do |company| %>
+
+		<tr style="background-color:#FFFDE6">
+			<td><%=company.CN_NAME%></td>
+			<td>
+				<a href="/company/linktofront?companyid=<%=company.ID%>" target="_blank">相关操作(跳转到前台)</a> &nbsp;
+				<a href="/company/show/<%=company.ID%>" target=_blank>修改信息</a>
+				<a href="#n" onclick="delcompany(<%=company.ID%>)">删除</a>
+				<a href="#n" onclick="checkpinglun('<%=company.ID%>')">评论</a>
+				<a href="/company/companyscore?companyid=<%=company.ID%>" target="_blank">分数</a>
+				<div id='confirm_<%= company.ID %>'>
+				  <% if company.confirm == 1 -%>
+					<%= link_to_remote "取消认证", {:update =>  "confirm_#{company.ID}", :url => {:action => "deny", :id => company.ID}, :complete => visual_effect(:highlight, "confirm_#{company.ID}")},{:style => "color: red"} %>	
+				  <% else -%>
+					<%= link_to_remote "进行认证", {:update =>  "confirm_#{company.ID}", :url => {:action => "confirm", :id => company.ID}, :complete => visual_effect(:highlight, "confirm_#{company.ID}")}, {:style => "color: black"} %>	
+				  <% end -%>
+				</div>
+				<%= link_to("修改密码", :action => "chpass", :user_id => company.USER_ID) unless company.USER_ID.blank?%>
+			</td>
+			
+		</tr>		
+		<%end -%>
+	</table>
+	<p align=center><%= will_paginate @companylist %>  </p>
+</form>
+</div>
+<script language="javascript">
+	function checkpinglun(id){
+		var s = id
+			window.open("/company/findform?id="+id);
+	}
+	function delcompany(id){
+		if(window.confirm('确定删除吗')){
+			location.href="/company/delete/"+id;
+			
+		}
+	}
+</script>

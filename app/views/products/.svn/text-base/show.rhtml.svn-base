@@ -1,0 +1,127 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">产品名称</td>
+		<td><%= @product.name -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属类别</td>
+		<td><%= link_to @product.category.name_zh, category_path(@product.category.tagid) if @product.category %></td>
+	</tr>
+	<tr>
+		<td class="label">所属商家</td>
+		<td><%= link_to @product.vendor.name_zh, vendor_path(@product.vendor) if @product.vendor -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属品牌</td>
+		<td><%= link_to @product.brand.name_zh, brand_path(@product.brand) if @product.brand -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属系列</td>
+		<td><%= @product.serie.name if @product.serie -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品型号</td>
+		<td><%= @product.model -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品类型</td>
+		<td><%= typehood_string(@product.typehood) -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品选项</td>
+		<td>
+			<% if @product.params %>
+				<% @product.params.each do |pp| %>
+					<%= pp.cparam.key %>：<%= pp.cparam_item.value if pp.cparam_item %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">产品属性</td>
+		<td>
+			<% if @product.properties %>
+				<% @product.properties.each do |pp| %>
+					<%= pp.cproperty.name %>：<%= pp.value %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">产品单位</td>
+		<td><%= @product.unit -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品类型</td>
+		<td>
+<%#= label_string(@product.label) -%>
+                  <%= "普通" if @product.is_normal_type %>
+                  <%= "推荐" if @product.is_recommend_type %>
+                  <%= "热销" if @product.is_hot_type %>
+                  <%= "精品" if @product.is_quality_type %>
+                  <%= "新品" if @product.is_new_type %>
+                </td>
+	</tr>
+	<tr>
+		<td class="label">推荐理由</td>
+		<td><%= @product.selected_reason -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品详情</td>
+		<td><%= @product.detail -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品标签</td>
+		<td><%= @product.tags -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品原价</td>
+		<td><%= @product.price -%>元</td>
+	</tr>
+	<tr>
+		<td class="label">产品现价</td>
+		<td><%= @product.now_price == 888888 ? "0.0" : @product.now_price -%>元</td>
+	</tr>
+	<tr>
+		<td class="label">价格时间</td>
+		<td><%= @product.price_start.to_date if @product.price_start -%>至<%= @product.price_end.to_date if @product.price_end -%></td>
+	</tr>
+	<tr>
+		<td class="label">促销价格</td>
+		<td><%= @product.special_price == 888888 ? "0.0" : @product.special_price -%>元 促销时间：<%= @product.special_start.to_date if @product.special_start -%>至<%= @product.special_end.to_date if @product.special_end -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品口碑</td>
+		<td><%= @product.public_praise -%></td>
+	</tr>
+	<tr>
+		<td class="label">核价活跃度</td>
+		<td><%= @product.liveness -%></td>
+	</tr>
+	<tr>
+		<td class="label">综合评分</td>
+		<td><%= @product.marking -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品状态</td>
+		<td>
+			<% if @product.is_delete %>
+				已删除
+			<% else %>
+				<%= product_status(@product.status) %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">产品图片</td>
+		<td>
+		<% @product.images.each do |image| %>
+		<%= image_tag(image.full_path(:thumb), :alt => image.filename) %>
+		<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= link_to "编辑产品", edit_product_path(:id => @product.productid) %></td>
+	</tr>
+</table>

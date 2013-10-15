@@ -1,0 +1,53 @@
+<% form_tag "/admin/photos/search" do %>
+	公司名称：<%= text_field_tag :firm_name, @firm_name %>
+	是否认证：<%= select_tag :is_certificated, "<option value='false'>未认证</option><option value='true'>已认证</option>" %>
+	<%= submit_tag "提交查询" %>
+<% end %>
+<br />
+<% form_tag "/admin/photos/operate", :id => "photos_form" do %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th><input id="checkbox_selector" type="checkbox" value="0" /></th>
+		<th>图片</th>
+		<th>所属公司</th>
+		<th>图片标题</th>
+		<th>图片简介</th>
+		<th>是否认证</th>
+		<th>创建日期</th>
+		<th>相关操作</th>
+	</tr>
+	<% @photos.each do |photo| %>
+	<tr>
+		<td><%= check_box_tag "photo_ids[]", photo.id %></td>
+		<td><%= image_tag(photo.image.url(:thumb), :alt => photo.title) %></td>
+		<td><%= link_to photo.firm.name_zh, admin_photos_path(:firm_id => photo.firm) %></td>
+		<td><%=h photo.title %></td>
+		<td><%=h photo.summary %></td>
+		<td><%= photo.is_certificated ? "已认证" : "未认证" %></td>
+		<td><%=h photo.created_at.to_s(:db) %></td>
+		<td>
+			<%= link_to "查看", admin_photo_path(photo) %>
+			<%= link_to "编辑", edit_admin_photo_path(photo) %>
+			<%= link_to "删除", admin_photo_path(photo), :confirm => '确认删除吗？', :method => :delete %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<%= submit_tag "通过认证", :name => "certificated" %>
+<%= submit_tag "取消认证", :name => "uncertificated" %>
+<% end %>
+
+<%= will_paginate @photos %>
+
+<script type="text/javascript" charset="utf-8">
+	
+	var checkboxes = $$("#photos_form input[type=checkbox]");
+	var cbControl = $("checkbox_selector");
+	
+	cbControl.observe("click", function(){
+		checkboxes.each(function(box){
+			box.checked = cbControl.checked;
+		});
+	});
+	
+</script>

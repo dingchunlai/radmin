@@ -1,0 +1,250 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 760;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%= @total_entries %>;
+    pagesize = <%=  @per_page %>;
+    curpage = <%=  @current_page %>;
+    cur_list = 0;
+    listsize = <%= @total_page %>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+<%if @ask_expert!=0%>ge("ask_expert").value=<%=@ask_expert%>;<%end%>
+<%if @user_type!=-500%>ge("user_type").value=<%=@user_type%>;<%end%>
+  }
+  /*
+  function gotopage(page){
+    window.open("/hejia_member/list?page="+page+"&recordcount=<%= @total_entries %>&riqi1=<%=@riqi1%>&riqi2=<%=@riqi2%>&username=<%=u(@username)%>&ask_expert=<%=@ask_expert%>&deco_id=<%=@deco_id%>", "_self");
+  }
+   */
+  function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/hejia_member/del?id="+id;
+  }
+  function hidden_record(ids){
+    ids = ids.split(",");
+    for (var id in ids){
+      if (ge('userid' + ids[id])!=null){
+        ge('userid' + ids[id]).value = '0';
+        ge('tr_' + ids[id]).style.display = "none";
+      }
+    }
+  }
+  function getids(){
+    var ids = [];
+    if (document.form1.userid.length==undefined){
+      if (document.form1.userid.checked) ids = document.form1.userid.value;
+    }else{
+      for (i=0; i<document.form1.userid.length;i++){
+        if (document.form1.userid[i].checked && document.form1.userid[i].value!='0') ids.push(document.form1.userid[i].value);
+      }
+      ids = ids.join(",");
+    }
+    if (ids==""){alert("请选择记录！"); return "";} else return ids;
+  }
+  function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        hideiframe.location="/hejia_member/member_del?ids=" + ids;
+        hidden_record(ids);
+      }
+    }
+  }
+  function set_expert(user_id, settype){
+    hideiframe.location = "/hejia_member/expert_set_save?user_id=" + user_id + "&settype=" + settype
+    hidden_record(user_id.toString());
+  }
+  function checkAll(num){
+    if (confirm('您确定要认证这些记录吗？')){
+      var ids = "0";
+      var arr = document.getElementsByName('userid');
+      for (i=0; i<arr.length;i++){
+        if (arr[i].checked)
+          ids += "," + arr[i].value;
+      }
+      if (ids!="0") window.open("/hejia_member/member_check?ids="+ids+"&num="+num);
+    }
+  }
+
+  var checkflag = "false";
+  function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = true;}
+      checkflag = "true";
+      return "false";
+    }
+    else {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = false; }
+      checkflag = "false";
+      return "true";
+
+    }
+  }
+  function set_deco_id(user_id){
+    var deco_id = prompt("请输入装修公司编号：","");
+    if (deco_id==null) deco_id="";
+    if (trim(deco_id)!=""){
+      hideiframe.location="/hejia_member/set_deco_id?user_id=" + user_id + "&deco_id=" + deco_id;
+    }
+  
+  }
+
+  $(document).ready(function() {
+    $('.supervisor').click(function() {
+      if ($(this).attr("checked") == true) {
+        $.post('/hejia_member/set_supervisor', {id: $(this).val()}, function(data) {
+          alert(data);
+        });
+      }else{
+        $.post('/hejia_member/cancel_supervisor', {id: $(this).val()}, function(data) {
+          alert(data);
+        });
+      };
+    });
+  });
+	
+
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <script type="text/javascript">
+    window.onload = function(){
+      document.getElementById('area').value = "<%= @area %>";<% if @area %>change_area("<%= @area %>")<% end %>
+      first_option();
+      document.getElementById('reg_city').value = '<%= @city.blank? ? 0 : @city %>';
+    }
+    function first_option()
+    {
+      obj_city = document.getElementById('reg_city')
+      oOption = new Option('全部','0')
+      var oPrevOption = obj_city.options[0]
+      obj_city.insertBefore(oOption,oPrevOption);
+    }
+    function choose_area(area)
+    {
+      change_area(area);
+      first_option();
+      document.getElementById('reg_city').value = '0';
+    }
+  </script>
+  <form name="form1" action="/hejia_member/list" id="form1" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      注册时间：<input name="riqi1" type="text" size="7" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="7" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />
+      最后登录时间：<input name="llogin1" type="text" size="7" value="<%= @llogin1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="llogin2" type="text" size="7" value="<%= @llogin2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />
+      用户名：<input name="username" type="text" size="6" value="<%= @username %>" />
+      邮箱：<input name="email" type="text" size="6" value="<%= @email %>" /><br />
+      所在城市：
+      <script type="text/javascript" src="http://js.51hejia.com/js/area_city.js?23834"></script>
+      <select name="area" id="area" onchange="choose_area(this.value);">
+        <option value="">省份</option>
+        <SCRIPT LANGUAGE="JavaScript">
+          for (var i=0;i<area_text.length;i++)
+          {
+            document.write("<option value='" + area_value[i] + "'>" + area_text[i] + "</option>");
+          }
+        </SCRIPT>
+      </select>
+      <select name="city" id="reg_city">
+      </select>
+      问吧专家：<select name="ask_expert" id="ask_expert"><option value="0">全　部</option><option value="1">申请中</option><option value="2">非专家</option><option value="3">问吧专家</option></select>
+      会员类型：<select name="user_type" id="user_type"><option value="-1">全　部</option><option value="-500">普通会员</option><option value="100">专  家</option><option value="200">马  甲</option></select>
+      有无权限：<select name="deco_id" id="deco_id"><option value="0">全部</option><option value="1" <%if @deco_id == 1%>selected<%end%>>有</option><option value="-1" <%if @deco_id == -1%>selected<%end%>>无</option></select>
+      <input type="submit" value="搜 索" onclick="document.form1.action = '/hejia_member/list';document.form1.submit();" />
+      <input type="submit" value="导出用户" onclick="document.form1.action = '/hejia_member/export_members';document.form1.submit();" /><br />
+
+      bbs主帖数大于等于：<input name="bbs_topic_count" type="text" size="6" value="<%= @bbs_topic_count %>" />
+      <input type="submit" value="搜 索" onclick="document.form1.action = '/hejia_member/list';document.form1.submit();" />
+      <input type="submit" value="导出用户" onclick="document.form1.action = '/hejia_member/export_members';document.form1.submit();" /><br />
+      问吧发帖数大于等于：<input name="wenba_topic_count" type="text" size="6" value="<%= @wenba_topic_count %>" />
+      <input type="submit" value="搜 索" onclick="document.form1.action = '/hejia_member/list';document.form1.submit();" />
+      <input type="submit" value="导出用户" onclick="document.form1.action = '/hejia_member/export_members';document.form1.submit();" /><br />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      总共搜索到<B><%= @total_entries %></B>条记录 当前显示第
+      <input name="current_page" type="text" size="7" value="<%= @current_page %>" />页
+      <input name="per_page" type="text" size="7" value="<%= @per_page %>" />条数据
+      共<B><%= @total_page %></B>页
+    </div>
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>用户名</th>
+        <th>性别</th>
+        <th>地区</th>
+        <th>城市</th>
+        <th>电话</th>
+        <th>MSN/QQ</th>
+        <th>EMAIL</th>
+        <th>注册时间</th>
+        <th>最后登录时间</th>
+        <th>问吧专家</th>
+        <th>会员类型</th>
+        <th>装修公司/监理</th>
+      </tr>
+      <% for m in @members %>
+        <tr align="center" style="background-color:#FFFDE6" id="tr_<%=m.id%>">
+          <td align="left"><input type="checkbox" name="userid" id="userid<%=m.id%>" value="<%=m.id%>" /> <%=m.id%></td>
+          <td><a href="/hejia_member/detail?user_id=<%=m.id%>" target="_blank"><%=m.USERNAME%></a></td>
+          <td><%= m.USERBBSSEX %> </td>
+          <td><%= Tag.get_tagname_by_tagid(m.AREA) %> </td>
+          <td><%= Tag.get_tagname_by_tagid(m.CITY) %> </td>
+          <td><%= m.USERBBSTEL %></td>
+          <td><%= m.MSN.nil? ? m.QQ : m.MSN %></td>
+          <td><%= m.USERBBSEMAIL %></td>
+          <td><%= m.CREATTIME.strftime("%Y-%m-%d") rescue "" %></td>
+          <td><%= m.LOGINDATE.strftime("%Y-%m-%d") rescue "" %></td>
+          <td>
+            <%if m.ask_expert.to_i < 0%>
+              申请中 <a href="javascript://" onclick="set_expert(<%=m.id%>, 1);">批准</a> <a href="javascript://" onclick="set_expert(<%=m.id%>, 2);">拒绝</a>
+            <%else%>
+              <%if m.ask_expert.to_i == 0%>
+                普通会员
+              <%else%>
+                <font color="#CC0000"><%=m.tag.name%>专家</font>
+              <%end%>
+            <%end%>
+          </td>
+          <td>
+            <% if m.USERTYPE.to_i == 100 %>专家<% elsif m.USERTYPE.to_i == 200%>马甲名<%else%>普通会员<%end%>
+          </td>
+          <td>
+            <%if m.deco_id==0%>
+              <a href="javascript://" onclick="set_deco_id(<%=m.id%>);">设置</a>
+            <%else%>
+              <%=m.deco_id%>
+              <%= check_box_tag "supervisor", m.id,  m.class_name == "Supervisor",:class=>"supervisor" %>
+            <%end%>
+
+          </td>
+        </tr>
+      <%end %>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+      <input onclick="SelectAll(document.form1.userid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="checkAll(1)" type="button" value="批量认证" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input onclick="checkAll(0)" type="button" value="取消认证" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <span id="pagelist"></span>
+    </div>
+  </form>
+</div>

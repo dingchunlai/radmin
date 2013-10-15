@@ -1,0 +1,35 @@
+<div class="search">
+	<% form_tag "/search" do %>
+  <ul class="clearfix">
+		<% if (controller.controller_name == "vendors" && controller.action_name == "show") || params[:type] == "vendor_products" %>
+  	<li><label>产品名称：</label><%= text_field_tag :keywords, @keywords %><%= hidden_field_tag :type, "vendor_products" %><%= hidden_field_tag :vendor_id, @vendor.id %></li>
+  	<% if @vendor.product_categories %>
+			<% if @vendor.product_categories.size > 0 %>
+			<li><label>产品类别：</label><%= select :product, :category_id, @vendor.product_categories.collect {|c| [c.name_zh, c.id]}, {:include_blank => true} %></li>
+			<% end %>
+  	<% end %>
+  	<li><label>产品状态：</label><%= select_tag :status, options_for_select([["所有产品", ""], ["待审核产品", "0"], ["已审核产品", "2"], ["待上架产品", "3"], ["已上架产品", "1"], ["待下架产品", "5"], ["已下架产品", "4"]], @status) %></li>
+		<% elsif (controller.controller_name == "vendors" && controller.action_name == "index") || params[:type] == "vendor"  %>
+  	<li><label>关键字：</label><%= text_field_tag :keywords, @keywords %><%= hidden_field_tag :type, "vendor" %></li>
+  	<li><label>录入时间：</label><%= text_field_tag :created_at_from, @created_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :created_at_to, @created_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+  	<li><label>修改时间：</label><%= text_field_tag :updated_at_from, @updated_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :updated_at_to, @updated_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+		<% elsif (controller.controller_name == "brands" && controller.action_name == "index") || params[:type] == "brand"  %>
+  	<li><label>关键字：</label><%= text_field_tag :keywords, @keywords %><%= hidden_field_tag :type, "brand" %></li>
+  	<li><label>录入时间：</label><%= text_field_tag :created_at_from, @created_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :created_at_to, @created_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+  	<li><label>修改时间：</label><%= text_field_tag :updated_at_from, @updated_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :updated_at_to, @updated_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+		<% else %>
+	<%if !@brand_id.nil?&&!@brand.nil?%><li><label>品牌：<%=@brand.name_zh%><%= hidden_field_tag :brand_id, @brand.id %></label></li>	<%end%>
+  	<li><label>关键字：</label><%= text_field_tag :keywords, @keywords %><%= hidden_field_tag :type, "product" %><%= hidden_field_tag :source, "zxj" if controller.action_name == "zxj" %></li>
+  	<li><label>录入时间：</label><%= text_field_tag :created_at_from, @created_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :created_at_to, @created_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+  	<li><label>修改时间：</label><%= text_field_tag :updated_at_from, @updated_at_from, :size => 9, :onclick => "new Calendar().show(this);" %>-<%= text_field_tag :updated_at_to, @updated_at_to, :size => 9, :onclick => "new Calendar().show(this);" %></li>
+  	<li><label>状态：</label><%= select_tag :status, options_for_select([["所有产品", ""], ["待审核产品", "0"], ["已审核产品", "2"], ["待上架产品", "3"], ["已上架产品", "1"], ["待下架产品", "5"], ["已下架产品", "4"]], @status) %></li>
+		<li><label>类别：</label>
+			<%= select :product, :category_parent_id, ProductCategory.first_class.collect {|c| [c.name_zh, c.id]}, { :include_blank => true } %>
+			<%= select_tag :category_id, [] -%>
+			<%= observe_field "product_category_parent_id", {:url => {:controller => 'common', :action => 'first_class_update_for_category'}, :with => "first_class_id"} %>
+		</li>
+		<% end %>
+  	<li><%= submit_tag "提交查询" %></li>
+	<% end %>
+    </ul>
+</div>

@@ -1,0 +1,31 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+	<tr>
+		<th>编号</th>
+		<th>类别</th>
+		<th>名称</th>
+		<th>排序</th>
+		<th>相关操作</th>
+	</tr>
+	<% @category_properties.each do |p| -%>
+  <tr class="<%= cycle("odd", "even")%>">
+    <td><%= p.id -%></td>
+    <td><%= link_to p.category.name_zh, category_properties_path(:category_id => p.category.tagid) if p.category -%></td>
+    <td><%= link_to p.name, property_path(p) -%></td>
+    <td><%= p.position -%></td>
+    <td>
+			<%= link_to "编辑", edit_property_path(p) -%>
+			<%= link_to "删除", property_path(p), :method => "delete" %>
+      <% unless p.first? -%>
+      <%= link_to "顶部", {:action => "move", :id => p.id, :method => "move_to_top"} -%>
+      <%= link_to "上移", {:action => "move", :id => p.id, :method => "move_higher"} -%>
+      <% end -%>
+      <% unless p.last? -%>
+      <%= link_to "下移", {:action => "move", :id => p.id, :method => "move_lower"} -%>
+      <%= link_to "底部", {:action => "move", :id => p.id, :method => "move_to_bottom"} -%>
+      <% end -%>
+    </td>
+  </tr>
+	<% end -%>
+</table>
+
+<%= will_paginate @category_properties %>

@@ -1,0 +1,86 @@
+<!-- <script type="text/javascript" src="/fckeditor/fckeditor.js"></script> -->
+<script type="text/javascript">
+/* function load_fckeditor(){
+    var oFCKeditor = new FCKeditor( 'lsbfmc2' ) ;
+    oFCKeditor.ToolbarSet = 'Default';  //Default or Basic
+    oFCKeditor.Height	= 400 ;
+    oFCKeditor.BasePath	= '/fckeditor/' ;
+    oFCKeditor.ReplaceTextarea() ;
+} */
+function submitForm(form){
+    set_action();
+    ge("p_category").style.color="#999999";
+    ge("p_lsbfmc1").style.color="#999999";
+    ge("p_lsbfmc2").style.color="#999999";
+    ge("p_lsbfmc3").style.color="#999999";
+    ge("p_lsbfmc4").style.color="#999999";
+    ge("p_lsbfmc5").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("category").value)==""){
+        ge("p_category").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("lsbfmc1").value)==""){
+        ge("p_lsbfmc1").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("lsbfmc2").value)==""){
+        ge("p_lsbfmc2").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("lsbfmc3").value)==""){
+        ge("p_lsbfmc3").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("lsbfmc4").value)==""){
+        ge("p_lsbfmc4").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("lsbfmc5").value)==""){
+        ge("p_lsbfmc5").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+
+<div class="formouter">
+            <div class="formleft">类  别：</div>
+            <div class="formcenter">
+                <select name="category" id="category">
+                  <option value="">请选择</option>
+                  <option value="first">first</option>
+                  <option value="second">second</option>
+                  <option value="third">third</option>
+                </select>
+            </div>
+            <div class="formright" id="p_category">请选择类别</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段1：</div>
+            <div class="formcenter"><input name="lsbfmc1" id="lsbfmc1" type="text" /></div>
+            <div class="formright" id="p_lsbfmc1">字段1必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段2：</div>
+            <div class="formcenter">
+              <input name="lsbfmc2" id="lsbfmc2" type="text" />
+              <!-- <textarea name="lsbfmc2" style="width: 100%;"><%#=@lsbfmc2%></textarea> -->
+            </div>
+            <div class="formright" id="p_lsbfmc2">字段2必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段3：</div>
+            <div class="formcenter"><input name="lsbfmc3" id="lsbfmc3" type="text" /></div>
+            <div class="formright" id="p_lsbfmc3">字段3必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段4：</div>
+            <div class="formcenter"><input name="lsbfmc4" id="lsbfmc4" type="text" /></div>
+            <div class="formright" id="p_lsbfmc4">字段4必须填写</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段5：</div>
+            <div class="formcenter"><input name="lsbfmc5" id="lsbfmc5" type="text" /></div>
+            <div class="formright" id="p_lsbfmc5">字段5必须填写</div>
+</div>

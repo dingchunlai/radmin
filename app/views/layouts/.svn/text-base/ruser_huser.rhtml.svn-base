@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title><%=WEBSITE_NAME%>[<%=WEBSITE_DOMAIN%>]</title>
+<meta name="keywords" content="<%=WEBSITE_NAME%>">
+<meta name="description" content="<%=WEBSITE_NAME%>">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<meta name="author" content="MSN: qq1713173@hotmail.com" />
+<script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+<link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.nav{ 
+background:url(http://www.51hejia.com/images/zhuangxiu805/iconav.png) left center no-repeat; 
+line-height:27px; 
+color:#666666; 
+padding-left:15px; 
+margin:10px 12px 0 12px; 
+}
+</style>
+</head>
+<body>
+	<div id="H_wrapper">
+            <%=render :file => "/bgmenu.rhtml"%>
+	</div>
+
+	<div id="L_wrapper">
+          <input onclick="self.location.href='/ruser_huser/index';" style="width:83px" type="button" value="绑定页面" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+                  
+	</div>
+
+	<div id="R_wrapper">
+		<style type="text/css">
+            .nav{ 
+			background:url(http://www.51hejia.com/images/zhuangxiu805/iconav.png) left center no-repeat; 
+			line-height:27px; 
+			color:#666666; 
+			padding-left:15px; 
+			margin:10px 12px 0 12px; 
+			}
+		</style>
+		<div class="nav" ><strong><a href='/admin/index'>首页</a>&nbsp;>BBS用户绑定</strong></div>
+            <%=yield%>
+	</div>
+
+<iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+</body>
+</html>

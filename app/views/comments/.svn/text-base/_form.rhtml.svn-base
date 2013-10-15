@@ -1,0 +1,31 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label required">产品</td>
+    <td>
+      <%= @product.name -%>
+      <%= hidden_field_tag "comment[brand_id]", @comment.brand_id %>
+      <%= hidden_field_tag "comment[product_id]", @comment.product_id %>
+      <%= hidden_field_tag "comment[vendor_id]", @comment.vendor_id %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label required">城市</td>
+    <td>
+      <%= f.select :province_id, City.province.collect {|c| [c.name_zh, c.id]}, { :prompt => "选择省" } -%>
+      <%= select_tag :city_id, @select_options -%>
+      <%= observe_field "comment_province_id", {:url => {:controller => 'common', :action => 'province_update_for_city'}, :with => "province_id"} %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">标题</td>
+    <td><%= f.text_field :title, :size => 61 -%></td>
+  </tr>
+  <tr>
+    <td class="label">内容</td>
+    <td><%= f.text_area :body, :cols => 55 -%></td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建" : "更新") -%></td>
+  </tr>
+</table>

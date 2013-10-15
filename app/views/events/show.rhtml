@@ -1,0 +1,16 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>编号</th>
+    <th>名称</th>
+    <th>分数</th>
+    <th>永久链接</th>
+    <th>操作</th>
+  </tr>
+  <tr>
+    <td><%= @event.id %></td>
+    <td><%= @event.name %></td>
+    <td><%= @event.point %></td>
+    <td><%= @event.permalink %></td>
+    <td><%= link_to '编辑', :action => 'edit', :id => @event %></td>
+  </tr>
+</table>

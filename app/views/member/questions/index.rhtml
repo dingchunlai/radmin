@@ -1,0 +1,197 @@
+<link href="http://js.51hejia.com/css/ucenter.css?53452345" rel="stylesheet" type="text/css" />
+<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+ <div id="right">
+    <div class="titlebox">
+      <h2>装修日记问答</h2>
+      <ul>
+        <li class="hoveron"><a href="/member/user_note_list">日记列表</a></li>
+        <li><a href="<%=compre(@user_note.created_at,Time.now) %>">新建日记</a></li>
+        <li><a href="/member/user_note_edit/<%if @user_note %><%=@user_note.id %><%else%><%=@user_photo.note_id %><%end%>">日记简介</a></li>
+        <!--<li><a href="#">点评</a></li>
+        <li><a href="#">问专家</a></li>-->
+      </ul>
+      <div class="ttrbox">
+      	<input type="submit" name="button3" class="bt2" id="button3" value="写装修日记" onClick="javascript:window.open('/member/user_photo_new/<%=@user_note.id%>')"/>
+      	<!--<a href="/member/user_note_new"  class="bt2">写装修日记</a>-->
+      </div>
+    </div>
+    <div class="ucbox margin10">
+      <h3><span class="dz"><%=h @user_note.title %></span></h3>
+      <div class="ucpic">
+        <h4><span class="jd"><%if @user_note%>装修阶段：
+							<%DecoFirm::ROOM.sort.each do |k| %>
+								<%if @user_note.room.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<%end%>
+							<%DecoFirm::PRICE.sort.each do |k| %>
+								<%if @user_note.price.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<%end %>
+							<%DecoFirm::MODELS.sort.each do |k| %>
+								<%if @user_note.methodtype.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<%end %>
+							<%DecoFirm::STYLES.sort.each do |k| %>
+								<%if @user_note.style.to_i==k[0].to_i%><%=k[1]%><%end%>
+							<%end %><%end%></span></h4>
+        <div class="pic uclist">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          	<%if @type.to_i == 1 %>
+            <tr>
+              <% lastphoto = get_last_photo_by_note_id(@user_note.id) %>
+              <td width="164"><a href="<%=lastphoto.imageurl %>" target="_blank"><img src="<%=lastphoto.imageurl %>" alt="<%=h lastphoto.title %>" /></a></td>
+              <td><div><strong>装修阶段：</strong><a href="#" target="_blank" title="家具软装"><%DecoFirm::STAGE.sort.each do |k|%> <% if k[0].to_i == lastphoto.stage.to_i %><%=k[1]%><%end %><%end%></a></div>
+                <div><strong>描述：</strong><%=h @user_note.content %></div>
+                <div class="pt"><span class="span01"><a onclick="show_a_div()" title="提问" class="bt3" onmouseover="this.style.cursor='hand'">我要提问</a></span><strong>发表时间：</strong><%=@user_note.created_at.strftime('%Y-%m-%d') %></div></td>
+            </tr>
+            <%else %>
+            <tr>
+              <td width="164"><a href="<%=@user_photo.imageurl %>" target="_blank"><img src="<%=@user_photo.imageurl %>" alt="<%=h @user_photo.title %>" /></a></td>
+              <td><div><strong>装修阶段：</strong><a href="#" target="_blank" title="家具软装"><%DecoFirm::STAGE.sort.each do |k|%> <% if k[0].to_i == @user_photo.stage.to_i %><%=k[1]%><%end %><%end%></a></div>
+                <div><strong>描述：</strong><%=h @user_photo.descript %></div>
+                <div class="pt"><span class="span01"><a onclick="show_a_div()" title="提问" class="bt3" onmouseover="this.style.cursor='hand'">我要提问</a></span><strong>发表时间：</strong><%=@user_photo.created_at.strftime('%Y-%m-%d') %></div></td>
+            </tr>
+            <%end %>
+            <tr>
+              <td colspan="2"><ul>
+              <%if @answers && @answers.size>0%>
+             	 <%@answers.each do |question|%>
+             	 	<%if question.is_q_a.to_i == 1%>
+                  		<li class="li01" style="width:730px;" onmouseover="document.getElementById('rev_but_<%=question.id%>').style.display='block';" onmouseout="document.getElementById('rev_but_<%=question.id%>').style.display='none';"><strong>提问：</strong><%=truncate(h(question.title),20,"...") %> <b>提问者：<%=h question.uname %>&nbsp;&nbsp;提问时间：<%=question.c_date.to_s(:db) %></b><span id="rev_but_<%=question.id%>" style="display:none;"><a title="回答"  onclick="show_q_div(<%=question.id %>,'<%=question.title %>')" class="bt3" onmouseover="this.style.cursor='hand'">我要回答</a></span><!--<br> <%if question.image_url %>图片 <IMG id="logoimg" style="margin-left:15px;" height="120" src="<%=question.image_url %>" width=90 ><%end%> --></li>
+                  			<%@answers.each do |answer|%>
+                  				<%if  answer.father_id.to_i == question.id && answer.is_q_a.to_i == 2%>
+                  					<li class="li03" style="width:730px;"><strong>回答：</strong><%=truncate(h(answer.context), 20, "...") %><br /><span>回答者：<%=h answer.uname %>&nbsp;&nbsp;回答时间：<%=answer.c_date.to_s(:db) %></span></li>
+                  				<%end%>
+                  			<%end%>
+					<%end%>
+				<%end%>
+			<%end%></ul>
+              </td>
+            </tr>
+          </table>
+          <div class="ucmsgbox1">
+        <div id="q"><h4><strong>我来提问</strong></h4></div>
+        <div id="a" style="display:none;"><h4><strong>我来回答</strong></h4></div>
+        <div class="div_ask">
+            <form id="form_ask" action="/member/questions/question_answer"  method="post" enctype="multipart/form-data" onsubmit="return check_null();">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:none;">
+            	<tr>
+                    <td><div id="tle">问题：<input id="title" name="title" size=100></div></td>
+                </tr>
+                <tr>
+                	<td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>备注/回答：<br/><textarea id="ask_context" name="ask_context" class="textarea" style="height:100px;width:600px;overflow-x:hidden;"></textarea></td>
+                </tr>
+                <tr>
+                	<td>&nbsp;</td>
+                </tr>
+                <tr>
+                	<td>上传图片：<input name="image[uploaded_data]" type="file" id="image_uploaded_data"  size="40"></td>
+                </tr>
+                <tr>
+                	<td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><input type="submit" name="button4" id="button4" value="提  交" /></td>
+                    <input type="hidden" name="answertargetid" value="<%=@id %>">
+					<input type="hidden" name="target_type" value="<%=@type %>">
+					<input type="hidden" name="father_id" id="father_id">
+					<input type="hidden" name="is_q_a" id="is_q_a" value="1">
+                </tr>
+            </table>
+            </form>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+			<script type="text/javascript">
+				function show_q_div(id,title){
+					document.getElementById("ask_context").value = "回答："+title;
+					document.getElementById("father_id").value = id;
+					document.getElementById("is_q_a").value = 2;
+					document.getElementById("q").style.display = "none";
+					document.getElementById("a").style.display = "block";
+					document.getElementById("tle").style.display = "none";
+					document.getElementById("title").value = "";
+				}
+				function show_a_div(){
+					var ask_context = document.getElementById("ask_context");
+					ask_context.value="";
+					document.getElementById("father_id").value = "";
+					document.getElementById("is_q_a").value = 1;
+					document.getElementById("q").style.display = "block";
+					document.getElementById("a").style.display = "none";
+					document.getElementById("tle").style.display = "block";
+					ask_context.focus();
+				}
+				
+				function check_null(){
+					var flg = true;
+					if(document.getElementById("is_q_a").value == 1)
+						if(document.getElementById("title").value == ""){
+							alert("请输入提问内容!");
+							flg = false;
+						}
+					else{
+						if(document.getElementById("ask_context").value == ""){
+							alert("请输入提问内容!");
+							flg = false;
+						}
+					}
+					return flg;
+				}
+			</script>
+    <div class="endbox margin10">
+      <!--<h4>系统推荐信息/广告</h4>
+      <ul>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+        <li><a href="#" target="_blank">·木工阶段注意要点图析</a></li>
+      </ul>-->
+    </div>
+   </div> 
+<%=render :partial => "/share/public_footer"%>

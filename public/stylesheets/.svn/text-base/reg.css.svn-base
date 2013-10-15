@@ -1,0 +1,96 @@
+body{
+	text-align:center;
+	}
+img{border:0px}
+.zhuce11 input{
+	width:269px;
+	height:26px;
+	font-size:16px;
+	background-image: url(http://www.51hejia.com/images/Images_zhuce/tongyi.gif);
+	background-repeat: no-repeat;
+	
+}
+td,div{word-break:break-all;word-wrap:break-word}
+div,tr{
+	text-align:left;
+	}
+p{
+	line-height:170%; 
+	color:#000;
+	margin:0 auto;
+	padding:0px;
+	}
+a{text-decoration:none;color:#001c48}
+a:hover{text-decoration:underline;color:#FA7200}
+.zhuce1{ color:#000; font-size:14px; font-weight:bold; height:40px; line-height:40px;}	
+.zhuce2{ color:#000; font-size:12px; font-weight:bold; line-height:30px;}
+.zhuce2 span{ color:#ff6600; font-weight:bold;}
+.zhuce3 { border:1px solid #A5ACB2; width:300px; height:19px; line-height:19px; padding-left:2px; padding-right:2px;}
+.zhuce4{ margin-top:5px; margin-bottom:15px;}
+.zhuce5{ border:1px solid #A5ACB2; width:300px; height:19px; line-height:19px; padding-left:2px; padding-right:2px;}
+.zhuce6 td { background-color:#F8F8F8; height:30px; line-height:30px; font-weight:bold; text-indent:5px; margin-top:7px;}
+.zhuce6 td a{ color:#ff6600;}
+.zhuce6 td a:hover{ color:#ff6600; text-decoration:underline;}
+.zhuce7 td input{padding-left:2px; padding-right:2px;}
+.zhuce8 { color:#0379C3; text-decoration:underline;}
+.zhuce9 td { color:#71717; height:28px;}
+.zhuce10 { text-align:right;}
+.zhuce11 { text-align:center;}
+td{ line-height:22px;}
+form{
+margin:0px;
+padding:0px
+}
+.STYLE1 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+}
+.STYLE2 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+.STYLE3 {
+	font-size: 12px;
+	color: #000;
+}
+.wrongtips {
+	font-size: 12px;
+	color: #ff0000;
+	background-image: url(http://www.51hejia.com/images/1000216.gif);
+	background-repeat: no-repeat;
+	padding-left:20px;
+}
+
+.tips1{
+	font-size: 12px;
+	color: #003cc8;
+	background-image: url(http://www.51hejia.com/images/tips1.jpg);
+	background-repeat: no-repeat;
+	padding-left:20px;
+}
+
+
+.STYLE4 {
+	font-size: 12px;
+	color: #000;
+	width:200px;
+	border:1px solid #999;
+	margin-right:7px;
+}
+
+
+.STYLE5 {
+	font-size: 12px;
+	color: #5a8f00;
+	background-image: url(http://www.51hejia.com/images/1000716.gif);
+	background-repeat: no-repeat;
+	padding-left:20px;
+}
+body,td,th {
+	font-size: 12px;
+	color: #333333;
+}
+#ttt {cursor:pointer;}
+#ttt a {color:#f60; }

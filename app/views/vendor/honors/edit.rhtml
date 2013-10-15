@@ -1,0 +1,5 @@
+<%= error_messages_for :honor %>
+<% form_for :honor, @honor, :url => vendor_honor_path(@honor), :html => {:method => "put", :multipart => true} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>
+

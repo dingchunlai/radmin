@@ -1,0 +1,203 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 750;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+<%if pp(@status)%>ge("status").value='<%=@status%>';<%end%>
+  }
+  function gotopage(page){
+    window.open("/form/data?page="+page+"&recordcount=<%=@recordcount%>&id=<%=params[:id]%>&riqi1=<%=@riqi1%>&riqi2=<%=@riqi2%>&status=<%=@status%>", "_self");
+  }
+  function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location = "/form/data_del?id=" + id;
+  }
+  function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!="") hideiframe.location = "/form/data_del?ids=" + ids;
+    }
+  }
+  function getids(){
+    var ids = "0";
+    if (document.form1.fdid.length==undefined){
+      if (document.form1.fdid.checked) ids = document.form1.fdid.value;
+    }else{
+      for (i=0; i<document.form1.fdid.length;i++){
+        if (document.form1.fdid[i].checked) ids += ", " + document.form1.fdid[i].value;
+      }
+    }
+    if (ids=="0"){alert("请选择表单记录！"); return "";} else return ids;
+  }
+  function dispose(){
+    if (ge("area").value==""){
+      alert("请选择区域!");
+      return false;
+    }
+    if (ge("remark").value=="" || ge("remark").value=="处理备注 ..."){
+      alert("请填写处理备注!");
+      return false;
+    }
+    var ids = getids();
+    if (ids!=""){
+      hideiframe.location = "/form/change_data_status?status=1&ids=" + ids + "&area=" + EncodeURI(ge("area").value) + "&remark=" + EncodeURI(ge("remark").value);
+    }
+  }
+  var checkflag = "false";
+  function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = true;}
+      checkflag = "true";
+      return "false";
+    }
+    else {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = false; }
+      checkflag = "false";
+      return "true";
+
+    }
+  }
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+
+
+  <form name="form0" action="/form/data" method="get" style="margin: 3px 0px 3px 5px;">
+    <div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px;">
+      <% cities = Fdata.find(:all,:select => "distinct c8",:conditions => ["formid = 185 and isdelete = 0"]).map{|fd|fd.c8}.compact %>
+      城市：
+      <select name="city" id="city">
+        <option value="">请选择</option>
+        <% for city in cities %>
+          <% if @city == city %>
+            <option value="<%= city %>" selected="selected"><%= city %></option>
+          <% else %>
+            <option value="<%= city %>"><%= city %></option>
+          <% end %>
+        <% end %>
+      </select>
+
+      提交日期：<input name="riqi1" type="text" size="10" onfocus="return SelectDate(this,'yyyy-MM-dd');" value="<%=@riqi1%>"/>-<input name="riqi2" type="text" size="10" onfocus="return SelectDate(this,'yyyy-MM-dd');" value="<%=@riqi2%>" />
+      状态：<select name="status" id="status">
+        <option value="">------</option>
+        <%0.upto(FORM_DATA_STATE.size-1) do |v|%>
+          <option value="<%=v%>"><%=FORM_DATA_STATE[v]%></option>
+        <%end%>
+      </select>　
+      <input name="id" type="hidden" value="<%=params[:id]%>" />
+      <input type="submit" value="搜索" />　
+      导出列数:<input id="export_cols" type="text" value="8" size="5" />　
+      导出记录数:<input id="export_rows"type="text" value="9999" size="5" />　
+      <input id="export_do" type="button" value="导出搜索结果到Excel" />
+
+      <script type="text/javascript">
+        $('#export_do').click(function(){
+          window.open('/hejia/export_form_data_to_excel/?status=<%=@status%>&riqi1=<%=@riqi1%>&riqi2=<%=@riqi2%>&city=<%=@city%>&form_id=<%=params[:id]%>&export_cols=' + $('#export_cols').val() + '&export_rows=' + $('#export_rows').val(), '_blank');
+        });
+      </script>
+
+    </div>
+  </form>
+
+  <hr style="border:1px solid #EEEEEE;" />
+
+  <div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+    <input value="全 选" onclick="SelectAll(document.form1.fdid);" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+    <input value="处理数据" onclick="dispose();" style="width:75px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+    <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+  </div>
+
+  <form name="form1" style="margin: 3px 0px 3px 5px;">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 5px 5px; ">
+		表单标题：<font color="#CE0000"><%=@title%></font> 总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+      <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>状态</th>
+        <th>处理时间</th>
+        <th>区域</th>
+        <th>处理备注</th>
+        <th>创建时间</th>
+        <%for col in @columns%>
+          <th><%=col.cname%></th>
+        <%end%>
+
+        <th>操作</th>
+      </tr>
+      <%for fd in @fdatas%>
+        <tr align="center" style="background-color:#FFFDE6">
+          <td nowrap><input type="checkbox" name="fdid" value="<%=fd.id%>" /> <%=fd.id%></td>
+          <td nowrap>
+            <%if fd.status==1%>
+              <font color="blue"><%=FORM_DATA_STATE[fd.status]%></font>
+            <%else%>
+              <%=FORM_DATA_STATE[fd.status]%>
+            <%end%>
+          </td>
+          <td nowrap><%= fd.ptime.utc.strftime("%m-%d %H:%M") if fd.ptime %></td>
+          <td nowrap><%= fd.area %></td>
+          <td><%= fd.remark %></td>
+          <td nowrap><%= fd.cdate.utc.strftime("%m-%d %H:%M") if fd.cdate %></td>
+          <%for col in @columns%>
+            <td>
+              <%if col.ctype==5 and pp(eval("fd.c#{col.sn}"))%>
+                <a href="/uploads/form_images/<%=eval("fd.c#{col.sn}")%>" target="_blank">点击浏览</a>
+              <%else%>
+                <%= h(eval("fd.c#{col.sn}")) %>
+              <%end%>
+            </td>
+          <%end%>
+          <td align="center">
+            <a href="javascript:del(<%=fd.id%>)">删除</a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <div style="margin-top:10px;">
+      <select name="area" id="area">
+        <option value="">请选择区域</option>
+        <%AREAS.split(",").each do |v|%>
+          <option value="<%=v%>"><%=v%></option>
+        <%end%>
+      </select>
+      <input name="remark" id="remark" type="text" size="50" value="处理备注 ..." style="color:#989898" onfocus="this.value=''; this.style.color='#333333'" />
+    </div>
+    <div id="div_pagelist" style="margin-top:7px;">
+      <input value="全 选" onclick="SelectAll(document.form1.fdid);" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="处理数据" onclick="dispose();" style="width:75px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <span id="pagelist"></span>
+    </div>
+
+  </form>
+</div>

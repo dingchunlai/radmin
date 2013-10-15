@@ -1,0 +1,12 @@
+<form action="/mobanmanager/addzhuanti" method="post">
+	<input type="hidden" name="mobanid" value="<%=@mobanid%>">
+	<p>模版名：<input type="text" name="mobanname"></p>
+	<p>样式：
+		<input type="radio" name="mobancss" value="001" checked>样式1 &nbsp;
+		<input type="radio" name="mobancss" value="002">样式2 &nbsp;
+		<input type="radio" name="mobancss" value="003">样式3 &nbsp;
+		<input type="radio" name="mobancss" value="004">样式4 &nbsp;
+		<input type="radio" name="mobancss" value="005">样式5
+	</p>
+	<p><input type="submit" value="确定"></p>
+</form>

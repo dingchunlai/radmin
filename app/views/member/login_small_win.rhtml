@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>和家网 - 用户登录</title>
+    <link rel="stylesheet" rev="stylesheet" href="http://www.51hejia.com/css/newback/login.css" type="text/css" media="all" />
+    <script type="text/javascript" src="http://www.51hejia.com/js/newback/login1.js"></script>
+    <script type="text/javascript">
+        document.domain="51hejia.com";
+        function Divopop(ID){
+            var Moled=document.getElementById(ID);
+            Moled.style.display="block";
+            var bodyw=document.body.scrollWidth;
+            var bodyh=document.body.scrollHeight;
+            var BgDiv=document.createElement("div");
+
+            var firefox=document.getElementById && !document.all;
+            BgDiv.style.position="absolute";
+            BgDiv.style.left="0";
+            BgDiv.style.top="0";
+            BgDiv.style.width=bodyw+"px";
+            BgDiv.style.height=bodyh+"px";
+            BgDiv.style.zindex="50";
+            BgDiv.style.backgroundColor="#000";
+            if(firefox==false){BgDiv.style.filter="Alpha(Opacity=50)";}else{BgDiv.style.opacity=".6";}
+            document.body.appendChild(BgDiv);
+            var As=document.getElementsByTagName("a");
+            for (var i=0;i<As.length;i++){
+                if(As[i].className=="Divopop-none"){
+                    As[i].onclick=function(){Moled.style.display="none";BgDiv.style.display="none";return false;};
+                }
+                else if(As[i].className=="othen"){
+                    As[i].onclick=function(){
+                        var othenId=this.getAttribute("toid");
+                        var othenDiv=document.getElementById(othenId);
+                        Moled.style.display="none";
+                        othenDiv.style.display="block";
+                        return false;
+                    };
+                }
+                else if(As[i].className=="Divopop-nonenei"){
+                    As[i].onclick=function(){this.parentNode.style.display="none";BgDiv.style.display="none";return false;};
+                }
+            }
+        }
+    </script>
+  </head>
+<body>
+<iframe name="hideiframe_login" width="0" height="0" style='display: none;'></iframe>
+  <div id="Login" style="margin-left:0;margin-top:0;left:0;top:0">
+    <h4><span>登陆/</span><a href="javascript://" onclick="top.document.getElementById('Loading').style.display='none';" title="关闭" class="Divopop-nonenei"><img src="http://www.51hejia.com/css/newback/images/x.png" alt="关闭" /></a></h4>
+    <form action="http://member.51hejia.com/member/login" target="hideiframe_login" method="post">
+
+      <input type="hidden" name="bbs" value="" />
+      <input type="hidden" name="dengludangshi" value="1" />
+      <fieldset>
+        <div>
+          <ul>
+            <li>用户名: &nbsp;<input name="s_username" type="text" style="width:110px;" /></li>
+            <li>密　码: &nbsp;<input name="s_userpwd" type="password" style="width:110px;" /></li>
+            <li><input name="category" type="radio" checked value="1" /> 普通用户
+            <input name="category" type="radio" value="2" /> 商家用户</li>
+            <li><select name="keeplogin">
+            <option value="0">不保持登录</option>
+            <option value="1">保持1个月</option>
+            <option value="3" selected>保持3个月</option>
+            <option value="12">保持一年</option>
+            </select>&nbsp;
+            <a href="/member/get_password" title="点这里取回密码...">忘记密码</a><input id="ihwenba" name="forward" type="hidden" value="" /></li>
+          </ul>
+        </div>
+        <p>
+          <input class="submit" type="button" value="注册" onclick="parent.open_userreg_div();" /> &nbsp; &nbsp; &nbsp;<input class="submit" type="submit" value="登录" /> &nbsp;
+        </p>
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>

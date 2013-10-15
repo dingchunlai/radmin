@@ -1,0 +1,32 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label">指数名称</td>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <td class="label">选择分类</td>
+    <td>
+      <table style="width:20%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <%= select :experience, :category_id, ProductCategory.first_class.collect {|c| [c.name_zh, c.id]}, {}, { :size => 15 } %>
+          </td>
+          <td>
+            <%= select_tag :category_id, @select_options, { :size => 15 } -%>
+            <%= observe_field "experience_category_id", {:url => {:controller => 'common', :action => 'first_class_update_for_category'}, :with => "first_class_id"} %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <% unless @experience.new_record? %>
+    <tr>
+      <td class="label">排序位置</td>
+      <td><%= f.text_field :position %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建" : "更新") -%></td>
+  </tr>
+</table>

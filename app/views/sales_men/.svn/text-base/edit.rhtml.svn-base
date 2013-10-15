@@ -1,0 +1,29 @@
+<%= link_to "Back to list", sales_men_path %> || <%= link_to "New", new_sales_man_path %>
+<br />
+<br />
+<%= show_flash_message %>
+<fieldset>
+  <legend>编辑 <%= @sales_man.name %> 信息</legend>
+<table>
+  <% form_for :sales_man, :url => sales_man_path(@sales_man), :html => {:method => :put} do |f| %>
+  <tr>
+    <td>姓名：</td><td><%= f.text_field :name %> * </td>
+  </tr>
+  <tr>
+    <td>地址：</td><td><%= f.text_field :address %></td>
+  </tr>
+  <tr>
+    <td>邮箱：</td><td><%= f.text_field :email %> * </td>
+  </tr>
+  <tr>
+    <td>城市：</td><td><%= f.text_field :city %> * Exp: shanghai </td>
+  </tr>
+  <tr>
+    <td>电话：</td><td><%= f.text_field :telephone %></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td><td><%= submit_tag "修改" %></td>
+  </tr>
+  <% end -%>
+</table>
+</fieldset>

@@ -1,0 +1,666 @@
+class AdminCaseController < ApplicationController
+
+  before_filter :user_validate, :except => :login #验证用户身份
+
+  def index
+    #
+  end
+
+  def tuku_preview
+    render :layout => false
+  end
+
+  def search_company
+    per_page = 15
+    page = params[:page]
+    name = params[:company_name]||session[:company_name]
+    session[:company_name] = name
+    @companys = HejiaCompany.query_by_name(name, page, per_page)
+    render :template => "admin_case/index"
+  end
+
+  def search_designer
+    per_page = 15
+    page = params[:page]
+    name = params[:designer_name]||session[:designer_name]
+    session[:designer_name] = name
+    @designers = HejiaDesignerModel.query_by_name(name, page, per_page)
+  end
+
+  def show_designer
+    @designer_id = params[:designer_id]||session[:designer_id]
+    @page = params[:page]
+    @per_page = 15
+    session[:designer_id] = @designer_id
+    session[:action_name] = "show_designer"
+    @cs = HejiaCase.find(:all,
+      :conditions => ["DESIGNERID = ? and STATUS != ?",
+        @designer_id, -100])
+    unless @cs.blank?
+      @pages, @cases = paginate_collection(@cs, {:page => @page, :per_page => @per_page})
+    end
+    session[:url] = request.request_uri()
+  end
+
+  def search_case
+    @case_name = params[:n]
+    @model = params[:m]
+    @cost = params[:p]
+    @style = params[:s]
+    @color = params[:c]
+    @use = params[:u]
+    @way = params[:w]
+    @page = params[:page]
+    tag_ids = put_in_array(@model,@cost,@style,@color,@use,@way)
+    session[:action_name] = "search_case"
+    session[:url] = request.request_uri()
+    @per_page = 15
+    @cs, entity_ids = HejiaCase.query_case(tag_ids, @case_name)
+    unless @cs.blank?
+      @pages, @cases = paginate_collection(@cs, {:page => @page, :per_page => @per_page})
+    end
+    render :template => "admin_case/show_designer"
+  end
+
+  def allocate_case_to_designer
+    HejiaCase.update(params[:case_id], {:DESIGNERID => params[:designer_id]})
+    @designer = HejiaDesignerModel.find(params[:designer_id])
+    @case = HejiaCase.find(params[:case_id])
+    @case_id = params[:case_id]
+  end
+
+  def abolish_designer_case
+    HejiaCase.update(params[:case_id], {:DESIGNERID => nil})
+    @designer = HejiaDesignerModel.find(params[:designer_id])
+    @case = HejiaCase.find(params[:case_id])
+    @case_id = params[:case_id]
+  end
+
+  def choose_designer
+    case_ids = params[:cases]
+    case_ids.each do |case_id|
+      HejiaCase.update(case_id, { :DESIGNERID => session[:designer_id]})
+    end
+    redirect_to session[:url]
+  end
+
+  def articles_to_cases_index
+    @per_page = 12
+    if current_staff.member_of?("兼职文章编辑")
+      editor_id = current_staff.id
+      case_ids = []
+      ecps = EditorCasePhoto.find(:all, :conditions => ["editor_id = ? and photo = 0", editor_id.to_i])
+      ecps.each{|object| case_ids << object.case_id}
+      if case_ids.empty?
+        con = "ID = 0"
+      else
+        con = "ID in (#{case_ids.join(",")})"
+      end
+      @users = [current_staff]
+      @pages, @cases = paginate :hejia_case, :per_page => @per_page,
+        :conditions => con
+    else
+      @pages, @cases = paginate :hejia_case, :per_page => @per_page,
+        :conditions => ["TYPE_ID != ?", -5]
+      @users = User.find(:all, :conditions => "role like '%138%'")
+    end
+    session[:location] = request.request_uri
+  end
+
+  def destory_cases
+    params[:case_id].each do |id|
+      @case = HejiaCase.find(:first, :conditions => "ID = #{id}")
+      @case.update_attributes(:TYPE_ID => -5)
+    end
+    redirect_to session[:location]
+  end
+
+  def allocate_case_to_editor
+    case_ids = params[:case_id]
+    editor_id = params[:editor_id]
+    case_ids.each do |id|
+      ee = EditorCasePhoto.find(:first, :conditions => "editor_id = #{editor_id} and case_id = #{id}")
+      if ee.nil?
+        EditorCasePhoto.destroy_all "case_id = #{id}"
+        EditorCasePhoto.create(:editor_id => editor_id, :case_id => id, :state => 1, :photo => 0)
+        photos = PhotoPhoto.find(:all, :select => "id",
+          :conditions => "case_id = #{id}")
+        photos.each do |p|
+          EditorCasePhoto.create(:editor_id => editor_id, :photo => p.id, :state => 1, :case_id => id)
+        end
+      end
+      HejiaCase.update(id, :STATE => 2)
+    end
+    @u = User.find(editor_id)
+    render :update do |page|
+      case_ids.each do |id|
+        @cid = id
+        page.replace_html("editor_#{id}", :partial => "admin_case/choose_tag/case_editor", :object => @cid )
+        page.replace_html("user_#{editor_id}", :partial => "admin_case/choose_tag/user_info", :object => @cid )
+        page.visual_effect(:highlight, "editor_#{id}")
+        page.visual_effect(:highlight, "user_#{editor_id}")
+      end
+    end
+  end
+  
+  def choose_tag_for_case
+    @case = HejiaCase.find(params[:id])
+    @per_page = 12
+    @pages, @photos = paginate :photo_photos, :per_page => @per_page,
+      :conditions => ["case_id = ?", params[:id]]
+    @fangshi = Tag.find(:all, :conditions => "TAGFATHERID = 4350 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#装修方式
+    @feiyong = Tag.find(:all, :conditions => "TAGFATHERID = 4349 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#费用
+    @fengge  = Tag.find(:all, :conditions => "TAGFATHERID = 4348 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#风格
+    @yongtu  = Tag.find(:all, :conditions => "TAGFATHERID = 4352 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#装修用途
+    @huxing  = Tag.find(:all, :conditions => "TAGFATHERID = 4347 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#户型
+    @yanse   = Tag.find(:all, :conditions => "TAGFATHERID = 6687 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#颜色
+    @tebie   = Tag.find(:all, :conditions => "TAGFATHERID = 31262 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#特别选项
+    @jiaju   = Tag.find(:all, :conditions => "TAGFATHERID = 30885 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#家居类别
+    @anli    = Tag.find(:all, :conditions => "TAGFATHERID = 4401 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#案例类别
+    @zixun   = Tag.find(:all, :conditions => "TAGFATHERID = 9079 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#资讯案例
+    @chanpin = Tag.find(:all, :conditions => "TAGFATHERID = 41662 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#产品
+    @gonggong = Tag.find(:all, :conditions => "TAGFATHERID = 42160 and TAGESTATE != -1",
+      :order => "ISIMPORTANT desc")#产品
+    @rs = HejiaTagEntityLink.find(:first, :conditions => "ENTITYID = #{params[:id]} and TAGID in (4346,41662,9079,30885) and LINKTYPE = 'case'")
+    @case_pic_tag_id = 6693
+    @tag_types = []
+    ts = Tag.find(:all, :conditions => ["TAGFATHERID = #{@case_pic_tag_id} and TAGESTATE != -1"])
+    ts.each do |t|
+      tt = Tag.find(:all, :conditions => ["TAGFATHERID = #{t.TAGID} and TAGESTATE != -1"],
+        :order => "ISIMPORTANT desc")
+      @tag_types << tt unless tt.empty?
+    end
+    session[:location] = request.request_uri
+    if @rs
+      case @rs.TAGID
+      when 4346
+        @tag_name = "案例类"
+        @tag_type = "anli"
+      when 41662
+        @tag_name = "产品类"
+        @tag_type = "chanpin"
+      when 9079
+        @tag_name = "新闻类"
+        @tag_type = "xinwen"
+      when 30885
+        @tag_name = "生活类"
+        @tag_type = "shenghuo"
+      else
+        @tag_name = "none"
+      end
+    else
+      @tag_name = "none"
+    end
+  end
+
+  def choose_tag_for_photo
+    @id = params[:id]
+    @case_id = params[:case_id]
+    @photo = PhotoPhoto.find(@id)
+    @case_pic_tag_id = 6693
+    @tag_types = []
+    ts = Tag.find(:all, :conditions => ["TAGFATHERID = #{@case_pic_tag_id} and TAGESTATE != -1"])
+    ts.each do |t|
+      tt = Tag.find(:all, :conditions => ["TAGFATHERID = #{t.TAGID} and TAGESTATE != -1"],
+        :order => "ISIMPORTANT desc")
+      @tag_types << tt unless tt.empty?
+    end
+    render :layout => false
+  end
+
+  def choose_case_type
+    case params[:type]
+    when "anli"
+      tag_id = 4346
+      @tag_name = "案例类"
+    when "chanpin"
+      tag_id = 41662
+      @tag_name = "产品类"
+    when "xinwen"
+      tag_id = 9079
+      @tag_name = "新闻类"
+    when "shenghuo"
+      tag_id = 30885
+      @tag_name = "生活类"
+    end
+    @id = params[:id]
+    @cid = params[:id]
+    HejiaTagEntityLink.destroy_all "ENTITYID = #{params[:id]} and TAGID in (4346,41662,9079,30885) and LINKTYPE = 'case'"
+    HejiaTagEntityLink.create(:ENTITYID => params[:id], :TAGID => tag_id,
+      :LINKTYPE => "case", :CREATEDATE => Time.now, :STATUS => 1)
+    if params[:from].blank?
+      render :update do |page|
+        page.replace_html("choose_case_type", :partial => "admin_case/choose_tag/choose_case_type")
+        page.show(params[:type])
+        page.visual_effect(:highlight, "choose_case_type")
+      end
+    else
+      render :update do |page|
+        page.replace_html("choose_case_type_#{params[:id]}", :partial => "admin_case/choose_tag/choose_case_type_all")
+        page.replace_html("case_pic_tags_#{params[:id]}", :partial => "admin_case/choose_tag/case_pic_tags", :object => @cid)
+        page.visual_effect(:highlight, "choose_case_type_#{params[:id]}")
+        page.visual_effect(:highlight, "case_pic_tags_#{params[:id]}")
+      end
+    end
+  end
+
+  def save_pic_tag
+    @case_pic_tag_id = 6693
+    @info = params[:info]
+    case_tags = Tag.find(:all, :conditions => "TAGFATHERID = #{@case_pic_tag_id} and TAGESTATE != -1")
+    #    p case_tags.size
+    PhotoPhotosTag.delete_all "photo_id = #{@info["id"]}"
+    case_tags.each do |t|
+      #      p t.TAGURL
+      unless t.TAGURL.blank?
+        in_tags = params[t.TAGURL.to_sym]
+        unless in_tags.nil?
+          in_tags.each do |tag|
+            #          p gb2312_to_utf8(tag)
+            photo_tag = PhotoTag.find(:first, :conditions => ["name = ?", tag])
+            type_id = t.TAGURL == "quyu" ? 1 : 0
+            if photo_tag
+              PhotoPhotosTag.create(:photo_id => @info["id"], :tag_id => photo_tag.id, :type_id => type_id)
+            else
+              pt = PhotoTag.create(:name => tag)
+              PhotoPhotosTag.create(:photo_id => pt.id, :tag_id => photo_tag.id, :type_id => type_id)
+            end
+          end
+        end
+      end
+    end
+    tn = PhotoPhotosTag.count "photo_id = #{@info["id"]}"
+    ee = EditorCasePhoto.find(:first, :conditions => ["photo = ?", @info["id"]])
+    if ee
+      if tn==0
+        ee.state = 1
+      else
+        ee.state = 2
+      end
+      ee.save
+    else
+      #
+    end
+    if session[:location]
+      redirect_to session[:location], :id => @info["case_id"]
+    else
+      redirect_to :action => "choose_tag_for_case", :id => @info["case_id"]
+    end
+  end
+
+  def save_case_tag
+    @case = params[:case]
+    @case_tag_id = 4346
+    HejiaCase.update(@case["ID"], :ISGOOD => @case["ISGOOD"],
+      :ISZHUANGHUANG => @case["ISZHUANGHUANG"], :STATUS => @case["STATUS"])
+    case_tags = Tag.find(:all, :conditions => "TAGFATHERID = #{@case_tag_id} and TAGESTATE != -1")
+    case_tags.each do |t|
+      in_tags = params[t.TAGURL.to_sym]
+      ts = Tag.find(:all, :conditions => ["TAGFATHERID = #{t.TAGID} and TAGESTATE != -1"])
+      ts.each do |tt|
+        tl = HejiaTagEntityLink.find(:first, :conditions => ["ENTITYID = #{@case["ID"]} and TAGID = #{tt.TAGID}"])
+        if tl
+          tl.destroy
+        end
+      end
+      unless in_tags.nil?
+        in_tags.each do |tag|
+          unless HejiaTagEntityLink.find(:first, :conditions => "ENTITYID = #{@case["ID"]} and TAGID = #{tag}")
+            HejiaTagEntityLink.create(:ENTITYID => @case["ID"], :TAGID => tag,
+              :LINKTYPE => "case", :CREATEDATE => Time.now, :STATUS => 1)
+          end
+        end
+      end
+    end
+    ee = EditorCasePhoto.find(:first, :conditions => ["case_id = #{@case["ID"]} and photo = 0"])
+    tn = HejiaTagEntityLink.count "ENTITYID = #{@case["ID"]} and TAGID not in (4346,41662,9079,30885) and LINKTYPE = 'case'"
+    if ee
+      if tn==0
+        HejiaCase.update(@case["ID"], :STATE => 2)
+        ee.state = 1
+      else
+        HejiaCase.update(@case["ID"], :STATE => 3) unless HejiaCase.find(@case["ID"]).STATE == 5
+        ee.state = 2
+      end
+      ee.save
+    else
+      if tn==0
+        HejiaCase.update(@case["ID"], :STATE => 1)
+      else
+        HejiaCase.update(@case["ID"], :STATE => 5)
+      end
+    end
+    redirect_to :action => "choose_tag_for_case", :id => @case["ID"]
+  end
+
+  def pass
+    params[:case_id].each do |id|
+      HejiaCase.update(id, :STATE => 5, :STATUS => "050")
+      ecps = EditorCasePhoto.find(:all, :conditions => "case_id = #{id}")
+      if ecps
+        ecps.each do |e|
+          e.state = 4
+          e.save
+        end
+      end
+    end
+    redirect_to session[:location]
+  end
+
+  def change_state
+    @result = params[:result]
+    @cid = params[:cid]
+    if @result == "fail"
+      HejiaCase.update(@cid, :STATE => 4, :STATUS => "-100")
+      HejiaTagEntityLink.destroy_all "ENTITYID = #{@cid} and LINKTYPE = 'case'"
+      ecps = EditorCasePhoto.find(:all, :conditions => "case_id = #{@cid}")
+      if ecps
+        ecps.each do |e|
+          e.state = 3
+          e.save
+        end
+      end
+      @photos = PhotoPhoto.find(:all, :select => "id", :conditions => ["case_id = ?", @cid])
+      @photos.each do |p|
+        PhotoPhotosTag.delete_all "photo_id = #{p.id}"
+      end
+    elsif @result == "pass"
+      HejiaCase.update(@cid, :STATE => 5, :STATUS => "050")
+      ecps = EditorCasePhoto.find(:all, :conditions => "case_id = #{@cid}")
+      if ecps
+        ecps.each do |e|
+          e.state = 4
+          e.save
+        end
+      end
+    end
+    @users = User.find(:all, :conditions => "role like '%#{138}%'")
+    @id = @cid
+    render :update do |page|
+      page.replace_html("case_pic_tags_#{@cid}", :partial => "admin_case/choose_tag/case_pic_tags", :object => @cid)
+      page.replace_html("choose_case_type_#{@cid}", :partial => "admin_case/choose_tag/choose_case_type_all")
+      page.replace_html("editor_#{@cid}", :partial => "admin_case/choose_tag/case_editor", :object => @cid )
+      page.replace_html("user_total_info", :partial => "admin_case/choose_tag/user_total_info", :object => @users )
+      page.visual_effect(:highlight, "case_pic_tags_#{@cid}")
+      page.visual_effect(:highlight, "choose_case_type_#{@cid}")
+      page.visual_effect(:highlight, "editor_#{@cid}")
+      page.visual_effect(:highlight, "user_total_info")
+    end
+  end
+
+  def case_pics_tags
+    @cid = params[:cid]
+    @cname = HejiaCase.find(:first, :conditions => "ID = #{@cid}").NAME
+    @c_tags = HejiaTagEntityLink.find(:all, :conditions => "ENTITYID = #{@cid} and LINKTYPE = 'case'")
+    @photos = PhotoPhoto.find(:all, :conditions => ["case_id = ?", @cid])
+  end
+
+  def search_article_to_cases
+    @state = params[:state]
+    @editor_id = params[:editor_id]
+    @case_name = params[:case_name]
+    @start_time = params[:start_time]
+    @end_time = params[:end_time]
+    @use_time = params[:use_time]
+    session[:location] = request.request_uri
+    redirect_to :action => "search_article_cases", :state => @state, :editor_id => @editor_id,
+      :case_name => @case_name, :start_time => @start_time, :end_time => @end_time, :use_time => @use_time
+  end
+
+  def search_article_cases
+    @state = params[:state]
+    @editor_id = params[:editor_id]
+    @case_name = params[:case_name]
+    @start_time = params[:start_time]
+    @end_time = params[:end_time]
+    @use_time = params[:use_time]
+    @per_page = 12
+    
+    if @editor_id.blank? && @state.blank?
+      use_time = @use_time.blank? ? "h.CREATEDATE > '#{@start_time}' and h.CREATEDATE < '#{@end_time}' and" : ""
+      sql = "SELECT h.ID as ID, h.NAME as NAME, h.CREATEDATE as CREATEDATE, h.INTRODUCE as INTRODUCE, h.MAINPHOTO as MAINPHOTO," +
+        " h.STATE as STATE FROM HEJIA_CASE h where #{use_time} h.TYPE_ID = 5 and h.NAME like '%#{@case_name}%';"
+    else
+      use_time = @use_time.blank? ? "p.updated_at > '#{@start_time}' and p.updated_at < '#{@end_time}' and" : ""
+      editor_id = @editor_id.blank? ? "" : "editor_id = #{@editor_id} and"
+      unless @state.blank?
+        case @state
+        when "0"
+          sql = "SELECT ID, NAME, CREATEDATE, INTRODUCE, MAINPHOTO, STATE FROM HEJIA_CASE where TYPE_ID = 5 and STATE = 1 and NAME like '%#{@case_name}%';"
+        else
+          state = "p.state = #{@state} and"
+          sql = "SELECT h.ID as ID, h.NAME as NAME, h.CREATEDATE as CREATEDATE, h.INTRODUCE as INTRODUCE, h.MAINPHOTO as MAINPHOTO," +
+            " h.STATE as STATE FROM HEJIA_CASE h, editor_case_photo p where #{use_time}" +
+            " #{editor_id} #{state} p.photo = 0 and h.ID=p.case_id and h.NAME like '%#{@case_name}%';"
+        end
+      else
+        state = ""
+        sql = "SELECT h.ID as ID, h.NAME as NAME, h.CREATEDATE as CREATEDATE, h.INTRODUCE as INTRODUCE, h.MAINPHOTO as MAINPHOTO," +
+          " h.STATE as STATE FROM HEJIA_CASE h, editor_case_photo p where #{use_time}" +
+          " #{editor_id} #{state} p.photo = 0 and h.ID=p.case_id and h.NAME like '%#{@case_name}%';"
+      end
+    end
+    @cs = HejiaCase.find_by_sql sql
+    @url_to = request.request_uri
+    @pages, @cases = paginate_collection(@cs, {:page => params[:page], :per_page => @per_page})
+    @users = User.find(:all, :conditions => "role like '%#{138}%'")
+    session[:location] = request.request_uri
+    render :template => "admin_case/articles_to_cases_index"
+  end
+
+  def tag_list
+    return false unless pvalidate("添加标签","管理员","文章编辑")
+    @case_tag_id = 4346
+    @case_pic_tag_id = 6693
+    @case_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", @case_tag_id, -1])
+    @case_pic_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", @case_pic_tag_id, -1])
+  end
+
+  def tags_show
+    @id = params[:id]
+    @father_name = Tag.find(:first, :conditions => "TAGID = #{@id}").TAGNAME
+    @tags = Tag.find(:all, :select => "tagid,tagname",
+      :conditions => "TAGFATHERID = #{@id} and TAGESTATE != -1")
+
+    array = []
+    tag = Tag.find(params[:id])
+    tmp_tag = tag
+    parent = tag.parent
+    while parent
+      array << [parent,tmp_tag]
+      tmp_tag = parent
+      parent = parent.parent
+    end
+
+    render :update do |page|
+      page.replace_html("show_option_tags", :partial => "show_option_tags", :locals => { :tags => array.reverse, :tag => tag})
+      page.replace_html("tag_list", :partial => "tag_list", :object => @tags)
+      page.visual_effect :highlight, "tag_list", :duration => 1.5
+    end
+  end
+
+  def tag_edit
+    @id = params[:id]
+    @tag = Tag.find(:first,
+      :conditions => "tagid = #{@id}")
+    @case_tag_id = Tag.find(:first,
+      :conditions => "tagid = #{@tag.TAGFATHERID}").TAGFATHERID
+    @case_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", @case_tag_id, -1])
+    @father_name = Tag.find(:first, :conditions => "TAGID = #{@tag.TAGFATHERID}").TAGNAME
+    @tags = Tag.find(:all, :select => "tagid,tagname",
+      :conditions => "TAGFATHERID = #{@tag.TAGFATHERID} and TAGESTATE != -1")
+
+    @array = []
+    tag = @tag
+    tmp_tag = tag
+    parent = tag.parent
+    while parent
+      @array << [parent,tmp_tag]
+      tmp_tag = parent
+      parent = parent.parent
+    end
+
+    render :update do |page|
+      page.replace_html("tag_list", :partial => "tag_list", :object => @tags)
+      page.replace_html("t", :partial => "tag_edit_form", :object => @tag)
+      page.visual_effect :highlight, "tag_list", :duration => 1.5
+    end
+  end
+
+  def save_tag
+    tag = params[:tag]
+    if tag["TAGID"]
+      @tag = Tag.update(tag["TAGID"], :TAGFATHERID => tag["TAGFATHERID"], :TAGNAME => tag["TAGNAME"], :TAGESTATE => tag["TAGESTATE"],
+        :TAGURL => tag["TAGURL"], :TAGCOMMENT => tag["TAGCOMMENT"], :ISIMPORTANT => tag["ISIMPORTANT"])
+    else
+      @tag = Tag.create(:TAGFATHERID => tag["TAGFATHERID"], :TAGNAME => tag["TAGNAME"], :TAGURL => tag["TAGURL"],
+        :TAGCOMMENT => tag["TAGCOMMENT"], :TAGESTATE => tag["TAGESTATE"], :TAGTYPE => "case", :TAGDATE => Time.now, :ISIMPORTANT => tag["ISIMPORTANT"])
+    end
+
+    if ["4346","6693"].include?(tag["TAGFATHERID"])
+      @case_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", 4346, -1])
+      render :update do |page|
+        page.replace_html("case_tags", :partial => "case_tags", :object => @case_tags)
+        page.visual_effect :highlight, "case_tags", :duration => 1.5
+      end
+    else
+      tag = @tag
+      parent = tag.parent
+      @root = parent
+      while parent
+        @root = parent
+        break if [6703,41891].include?(@root.TAGID)
+        parent = parent.parent
+      end
+      #@father_name = Tag.find(:first, :conditions => "TAGID = #{tag['TAGFATHERID']}").TAGNAME
+      @tags = Tag.find(:all, :select => "tagid,tagname",
+        :conditions => "TAGFATHERID = #{@root.TAGID} and TAGESTATE != -1")
+      render :update do |page|
+        page.replace_html("tag_list", :partial => "tag_list", :object => @tags)
+        page.visual_effect :highlight, "tag_list", :duration => 1.5
+      end
+    end
+  end
+
+  def delete_tag
+    tag = Tag.find(params[:id])
+    tag.TAGESTATE = -1
+    tag.save
+    if ["4346","6693"].include?(tag.TAGFATHERID)
+      @case_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", 4346, -1])
+      render :update do |page|
+        page.replace_html("case_tags", :partial => "case_tags", :object => @case_tags)
+        page.visual_effect :highlight, "case_tags", :duration => 1.5
+      end
+    else
+      @father_name = Tag.find(:first, :conditions => "TAGID = #{tag['TAGFATHERID']}").TAGNAME
+      @tags = Tag.find(:all, :select => "tagid,tagname",
+        :conditions => "TAGFATHERID = #{tag['TAGFATHERID']} and TAGESTATE != -1")
+      render :update do |page|
+        page.replace_html("tag_list", :partial => "tag_list", :object => @tags)
+        page.visual_effect :highlight, "tag_list", :duration => 1.5
+      end
+    end
+  end
+
+  def tag_case_num_list
+    @case_tags = Tag.find(:all, :conditions => ["TAGFATHERID = ? and TAGESTATE != ?", 4346, -1])
+  end
+
+  def tag_pic_num_list
+    @case_pic_tag_id = 6693
+    @ts = Tag.find(:all, :conditions => ["TAGFATHERID = #{@case_pic_tag_id} and TAGESTATE != -1"])
+  end
+
+  def tag_pic_index
+    @tag = PhotoTag.find(params[:id])
+    p_tags = PhotoPhotosTag.find(:all, :conditions => ["tag_id = ?", params[:id]])
+    @pics = PhotoPhoto.paginate :page => params[:page], :per_page => 15, 
+      :conditions => "id in (#{p_tags.collect{|c| c.photo_id}.join(",")})",
+      :order => "created_at desc"
+  end
+
+  def case_preview
+    @page = params[:page]||1
+    if params[:jinghua]
+      @tname = "精华案例"
+      @cases = HejiaCase.find :all, :select => "ID,NAME,MAINPHOTO,CASEUP,VIEWCOUNT,CREATEDATE,STATUS,TYPE_ID",
+        :conditions => "ISGOOD = 1 and STATUS != -100", :order => "CREATEDATE DESC"
+    elsif params[:nippon]
+      @tname = "立邦案例"
+      @cases = HejiaCase.find :all, :select => "ID,NAME,MAINPHOTO,CASEUP,VIEWCOUNT,CREATEDATE,STATUS,TYPE_ID",
+        :conditions => "STATUS = 1000", :order => "CREATEDATE DESC"
+    else
+      entity_ids = HejiaTagEntityLink.query_entity_id_by_tag_id_linktype(params[:id], "case")
+      @cases = HejiaCase.find :all, :select => "ID,NAME,MAINPHOTO,CASEUP,VIEWCOUNT,CREATEDATE,STATUS,TYPE_ID",
+        :conditions => "ID in (#{entity_ids.join(",")}) and STATUS != -100", :order => "CREATEDATE DESC"
+      @tname = Tag.find(params[:id]).TAGNAME
+    end
+    @pages, @results = paginate_collection(@cases, {:page => @page, :per_page => 24})
+    @fav_cases = [cookies[:hejia_case_id], cookies[:hejia_case_name], cookies[:hejia_case_image_url]]
+    ids = cookies[:hejia_case_id]
+    @ids = ids
+    render :layout => false
+  end
+
+
+  ## 标签多级联动
+  def option_tags
+    array = []
+    tag = Tag.find(params[:tag_id])
+    tmp_tag = tag
+    parent = tag.parent
+    while parent
+      array << [parent,tmp_tag]
+      tmp_tag = parent
+      parent = parent.parent
+    end
+    render :update do |page|
+      unless tag.children_tags.blank?
+        page.replace_html "option_tags", :partial => "admin_case/option_tags", :locals => { :tags => array.reverse, :tag => tag}
+      end
+    end
+  end
+
+  private
+  def put_in_array(model, cost, style, color, use, way)
+    tag_ids = []
+    tag_ids << model unless model.nil?
+    tag_ids << cost unless cost.nil?
+    tag_ids << style unless style.nil?
+    tag_ids << color unless color.nil?
+    tag_ids << use unless use.nil?
+    tag_ids << way unless way.nil?
+    return tag_ids
+  end
+
+  def paginate_collection(collection, options = {})
+    default_options = {:per_page => 1, :page => 1}
+    options = default_options.merge options
+
+    pages = Paginator.new self, collection.size, options[:per_page], options[:page]
+    first = pages.current.offset
+    last = [first + options[:per_page], collection.size].min
+    slice = collection[first...last]
+    return [pages, slice]
+  end
+
+  def gb2312_to_utf8(str)
+    begin
+      str ? Iconv.iconv("UTF-8", "gb2312", str).join("") : str;
+    rescue
+      str;
+    end
+  end
+end

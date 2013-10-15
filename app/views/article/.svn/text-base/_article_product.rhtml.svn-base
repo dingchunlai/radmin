@@ -1,0 +1,8 @@
+<tr>
+  <td td width="60%">
+
+	<%= check_box_tag "prodid[]", article_product.id, (@products.map {|t| t.id}.include? article_product.id.to_s) %><%=article_product.name%>
+  </td>
+  <td td width="40%">
+  </td>
+</tr>

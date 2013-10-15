@@ -1,0 +1,132 @@
+<html>
+<body>
+<div id="same1">
+<form name="form1" id="form1" action="/casemanager/list" method="get">
+  <div style="font-family:Verdana; color:#DD4504; line-height:32px; font-size:12px; letter-spacing:1px; margin: 0px 0px 0px 15px; ">
+  		<select name="tagId1" id="tagId">
+		<option value="">案例类型..</option>
+		<option value="4402" <%if @tagId1.to_s=='4402'%>selected<%end%>>编辑跟踪案例</option>
+		<option value="4403" <%if @tagId1.to_s=='4403'%>selected<%end%>>成套图库案例</option> 
+		</select>
+		<select name="tagId2" id="tagId2">
+		<option value="">装修方式..</option>
+		<option value="4374" <%if @tagId2.to_s=='4374'%>selected<%end%>>清包装修</option>
+		<option value="4375"  <%if @tagId2.to_s=='4375'%>selected<%end%>>半包装修</option>
+		<option value="4376" <%if @tagId2.to_s=='4376'%>selected<%end%>>全包装修</option>
+		</select>
+		<select name="tagId3" id="tagId3">
+		<option value="">费用..</option>
+		<option value="4370" <%if @tagId3.to_s=='4370'%>selected<%end%>>经济型</option>
+		<option value="4372" <%if @tagId3.to_s=='4372'%>selected<%end%>>富裕型</option>
+		<option value="4373" <%if @tagId3.to_s=='4373'%>selected<%end%>>豪华型</option>
+		</select>
+		<select name="tagId4" id="tagId4">
+		<option value="">风格..</option>
+		<option value="4361" <%if @tagId4.to_s=='4361'%>selected<%end%>>现代简约</option>
+		<option value="4362" <%if @tagId4.to_s=='4362'%>selected<%end%>>中式风格</option>
+		<option value="4363" <%if @tagId4.to_s=='4363'%>selected<%end%>>欧/美式</option>
+		<option value="4367" <%if @tagId4.to_s=='4367'%>selected<%end%>>田园风格</option>
+		<option value="4360" <%if @tagId4.to_s=='4360'%>selected<%end%>>混搭</option>
+		<option value="6680" <%if @tagId4.to_s=='6680'%>selected<%end%>>地中海</option>
+		<option value="6681" <%if @tagId4.to_s=='6681'%>selected<%end%>>其他</option>
+		</select>
+		<select name="tagId5" id="tagId5">
+		<option value="">装修用途..</option>
+		<option value="4380" <%if @tagId5.to_s=='4380'%>selected<%end%>>婚房装修</option>
+		<option value="4378" <%if @tagId5.to_s=='4378'%>selected<%end%>>旧房改造</option>
+		<option value="4383" <%if @tagId5.to_s=='4383'%>selected<%end%>>家有老人</option>
+		<option value="6682" <%if @tagId5.to_s=='6682'%>selected<%end%>>出租房</option>
+		<option value="6683" <%if @tagId5.to_s=='6683'%>selected<%end%>>重软装</option>
+		<option value="4381" <%if @tagId5.to_s=='4381'%>selected<%end%>>单身贵族</option>
+		<option value="4382" <%if @tagId5.to_s=='4382'%>selected<%end%>>三口之家</option>
+		<option value="6684" <%if @tagId5.to_s=='6684'%>selected<%end%>>家有宠物</option>
+		<option value="6685" <%if @tagId5.to_s=='6685'%>selected<%end%>>家有儿童</option>
+		<option value="4385" <%if @tagId5.to_s=='4385'%>selected<%end%>>设计师的家</option>
+		<option value="6686" <%if @tagId5.to_s=='6686'%>selected<%end%>>其他</option>
+		</select>
+		<select name="tagId6" id="tagId6">
+		<option value="">户型..</option>
+		<option value="4355" <%if @tagId6.to_s=='4355'%>selected<%end%>>小户型装修</option>
+		<option value="4356" <%if @tagId6.to_s=='4356'%>selected<%end%>>公寓装修</option>
+		<option value="4354" <%if @tagId6.to_s=='4354'%>selected<%end%>>别墅/复式</option>
+		</select>
+		<input name="name" type="type" value="<%=@name%>"/>
+		<input name="submit1" type="submit" value="搜索"/><a href="/casemanager/colorcreate" target="_blank">增加色卡</a>
+		<br>
+		<%= will_paginate @caselist,:prev_label=> "上一页",:next_label=> "下一页" %>
+  </div>
+  <div style="height:390px;">
+    <!-- ID as id, DESNAME, DESFEE, DESAGE, DESTEL, DESSCHOOL, DESSTYLE, DESRESUME -->
+  <table id="datalist" style="margin-left:7px; width:98%;">
+    <tr>
+    		<th>选择</th>
+            <th>案例编号</th>
+            <th>案例图片</th>
+            <th>案例名称</th>
+            <th>新</th>
+            <th>创建时间</th>
+            <th>作者</th>
+            <th>操作</th>
+    </tr>
+    <%for c in @caselist%>
+    <tr align="center" style="background-color:#FFFDE6">
+      <td width="20"><input type="checkbox" value="<%=c.ID%>" name="ids"></td>
+      <td width="90"><%=c.ID%></td>
+      <td width="90"><img src="http://d.51hejia.com/files/hekea/case_img/tn/<%=c.ID%>.jpg" width="90" height="72"/></td>
+      <td width="300" align="left"><a href="/deco/case_edit?id=<%=c.ID%>" target="_blank"><%= c.NAME %></a></td>
+      <td width="30"><%=  c.ISNEWCASE.to_i==1 ? "<font color='red'>是</font>":"否"%></td>
+      <td width="100"><%=c.CREATEDATE.strftime("%Y-%m-%d") rescue ""%></td>
+      <td width="50"><%if !c.userbbs.nil?%><%=c.userbbs.USERBBSNAME%></td><%end%>
+      <td width="250">
+        <a href="/casemanager/casecolor?id=<%=c.ID%>" target="_blank">关联色卡</a>
+        <a href="/casemanager/looks?id=<%=c.ID%>" target="_blank">色卡预览</a>
+      </td>
+    </tr>
+    <% end %>
+    </table>
+    </div>
+
+    <div id="div_pagelist" style="margin:0px 10px 0px 10px;">
+      <div style="float:left">
+      	<a href="#a" onclick="check(1)">全选</a>&nbsp;<a href="#a" onclick="check(0)">全不选</a> <a href="#a" onclick="checkAll(1)">认证</a> &nbsp;<a href="#a" onclick="checkAll(0)">取消认证</a>
+      </div>
+      <div style="float:left">
+        <%= will_paginate @caselist,:prev_label=> "上一页",:next_label=> "下一页" %>
+      </div>
+    </div>
+</form>
+<script language="javascript">
+	function check(num){
+		var chs = document.getElementsByName("ids");
+		
+		if(chs.length > 0){
+			for(var i=0;i<chs.length;i++){
+				var ch = chs[i];
+				if(num == '1')
+					ch.checked = true;
+				else
+					ch.checked = false;
+			}
+		}
+	}
+	
+function checkAll(num){
+    
+      var ids = "0";
+      var is = document.getElementsByName('ids');
+      for (i=0; i<is.length;i++){
+          if (is[i].checked)
+              ids += "," + is[i].value;
+      }
+      if(ids == '0'){
+      	alert("请选择案例");
+      	return false;
+      }
+    if (confirm('您确定要认证这些记录吗？')){
+      if (ids!="0") window.open("/casemanager/checkall?ids="+ids+"&num="+num);
+    }
+}
+</script>
+</div>
+</body>
+</html>

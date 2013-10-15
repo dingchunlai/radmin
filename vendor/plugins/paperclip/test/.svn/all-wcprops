@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test
+END
+database.yml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/database.yml
+END
+integration_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/integration_test.rb
+END
+iostream_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/iostream_test.rb
+END
+thumbnail_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/thumbnail_test.rb
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/.gitignore
+END
+storage_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/storage_test.rb
+END
+attachment_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/attachment_test.rb
+END
+interpolations_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/interpolations_test.rb
+END
+geometry_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/geometry_test.rb
+END
+paperclip_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/paperclip_test.rb
+END
+processor_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/processor_test.rb
+END
+helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/paperclip/test/helper.rb
+END

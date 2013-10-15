@@ -1,0 +1,76 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label required">品牌名称</td>
+    <td><%= f.text_field :name, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label required">原品牌</td>
+    <td><%= f.select :brand_id, ProductBrand.find(:all, :order => "initial").collect {|c| [c.initial ? c.initial.upcase + c.name_zh : c.name_zh, c.id]} -%></td>
+  </tr>
+  <tr>
+    <td class="label required">分类</td>
+    <td>
+      <%= f.select :category_parent_id, ProductCategory.find(:all, :conditions => "is_precinct = true").collect {|c| [c.name_zh, c.id]}, { :prompt => "选择分类" } -%>
+      <%= select_tag :category_id, @select_options -%>
+      <%= observe_field "library_brand_category_parent_id", {:url => {:controller => 'common', :action => 'first_class_update_for_category'}, :with => "first_class_id"} %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">产品排序</td>
+    <td><%= f.select :product_order, LibraryBrand::PRODUCT_ORDER.collect {|c| [c[1], c[0]]} -%></td>
+  </tr>
+  <tr>
+    <td class="label">品牌趋势</td>
+    <td><%= f.select :product_order, LibraryBrand::BRAND_TREND.collect {|c| [c[1], c[0]]} -%></td>
+  </tr>
+  <tr>
+    <td class="label">编辑评分</td>
+    <td><%= f.text_field :editor_point -%></td>
+  </tr>
+  <tr>
+    <td class="label">编辑关注度</td>
+    <td><%= f.text_field :editor_view_count -%></td>
+  </tr>
+  <!--
+  <tr>
+    <td class="label">网友关注度</td>
+<%#*<td><%= f.text_field :view_count -%></td>%>
+  </tr>
+  -->
+  <tr>
+    <td class="label">品牌问吧关键字</td>
+    <td><%= f.text_field :brand_question_query -%>  默认为原品牌名</td>
+  </tr>
+  <tr>
+    <td class="label">频道问吧关键字</td>
+    <td><%= f.text_field :category_question_query -%>  默认为分类名</td>
+  </tr>
+  <tr>
+    <td class="label">图库标签</td>
+    <td><%= f.text_field :picture_tag -%>  默认为分类名</td>
+  </tr>
+  <tr>
+    <td class="label required">必看精彩专题ID</td>
+    <td><%= f.text_field :brand_subject_id -%></td>
+  </tr>
+  <tr>
+    <td class="label required">频道精华文章ID</td>
+    <td><%= f.text_field :category_article_id -%></td>
+  </tr>
+  <tr>
+    <td class="label required">行情导购文章ID</td>
+    <td><%= f.text_field :shopping_article_id -%></td>
+  </tr>
+  <tr>
+    <td class="label required">点评摘要</td>
+    <td><%= f.text_area :comment, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label required">厂商资料</td>
+    <td><%= f.text_area :manufacturer, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建品牌" : "更新品牌") -%></td>
+  </tr>
+</table>

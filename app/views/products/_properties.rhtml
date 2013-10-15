@@ -1,0 +1,5 @@
+<% category.owned_properties.each do |property| %>
+	<%= property.name %>:
+	<%= hidden_field_tag "product[new_property_attributes][][property_id]", property.id %>
+	<%= text_field_tag "product[new_property_attributes][][value]" %>
+<% end %>

@@ -1,0 +1,59 @@
+<DIV id="sidebar_item2" style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+  <% if current_deco_id == 0 %>
+    <DIV class=container>
+      <A href="/member/note_list" title="您在和家论坛上发表的主帖" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">
+        我的短信</A>
+    </DIV>
+
+    <DIV class=container>
+      <A href="/member/usertopic" title="您在和家论坛上发表的主帖" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">
+        我的主帖</A>
+    </DIV>
+
+    <DIV class=container>
+      <A href="/member/userask" title="您在和家问吧上发表的问题" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">
+        我的问吧</A>
+    </DIV>
+
+    <DIV class=container>
+      <A href="http://blog.51hejia.com/u/<%= current_user.id if current_user %>" title="您的和家个人博客" target="_blank" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">
+        我的博客</A>
+    </DIV>
+
+    <DIV class=container>
+      <A href="/member/usercollections" title="您的和家个人收藏" target="_blank" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">
+        我的收藏</A>
+    </DIV>
+    <!--<DIV class=container>
+      <a href="/member/dianping_list" title="您的点评" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">点评</a>
+    </DIV>
+    <DIV class=container>
+      <a href="/member/reply_list" title="您的回应" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif)">回应</a>
+    </DIV>-->
+    <DIV class=container>
+      <span class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif); cursor:text; color: #323232;">装修日记</span>
+      <div><a href="/decoration_diaries" title="日记列表" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif);margin-left: 10px;">日记列表</a></div>
+      <div><a href="/decoration_diaries/new" title="新建日记" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/blog.gif);margin-left: 10px;">新建日记</a></div>
+    </DIV>
+  <% else %>
+    <ul id="sidebar_item">
+      <li><a href="/decos/edit" title="您可以在这里修改公司信息">公司信息</a></li>
+      <li><a href="/deco/factory_list" title="您可以在这里修改在建工地">在建工地</a></li>
+      <li><a href="/deco/designer_list" title="您可以在这里修改设计师信息">设计师</a></li>
+      <li><a href="/deco/case_list" title="您可以在这里修改装修案例信息">装修案例</a></li>
+      <li><a href="/decos/deco_ideas" title="您可以在这里修改设计理念"><%= (REDIS_DB.get("deco_idea_#{@firm.id}").nil? || REDIS_DB.get("deco_idea_#{@firm.id}") == "" || REDIS_DB.get("deco_idea_#{@firm.id}").squeeze(" ") == " ") ? '设计理念' : REDIS_DB.get("deco_idea_#{current_deco_id}")%></a></li>
+      <li><%= link_to "服务承诺","/decos/deco_services",:title => "您可以在这里修改服务承诺" %> </li>
+      <li><%= link_to "常规报价",quoted_prices_path,:title => "您可以在这里修改常规报价" %></li>
+      <li><a href="/decos/photos" title="您可以在这里修改施工图片信息">施工图片</a></li>
+      <li style='display:none;'><a href="/decos/diaries" title="您可以在这里修改装修日记信息">装修日记</a></li>
+      <li><a href="/decos/registers" title="您可以在这里查看活动报名信息">在建工地报名</a></li>
+      <li><a href="/decos/store_photos" title="您可以在这里上传公司门店照片">门店照片</a></li>
+      <li><a href="/decos/glory_certificates" title="您可以在这里上传公司荣誉证书">荣誉证书</a></li>
+      <li><%= link_to "预约免费量房报名",applicants_path,:title => "您可以在这里查看预约免费量房报名信息" %></li>
+      <li style="display:none;"><span ><a href="/decos/quotations" title="您可以在这里查看报价单信息">报价单</a></span></li>
+      <li><a href="/decos/manage_comments" title="您可以在这里查看报价单信息">留言管理</a></li>
+      <!--li><a href="/decos/bid_records" title="您可以在这里查看竞标列表信息">有效竞标列表</a></li-->
+    </ul>
+  <% end %>
+
+</DIV>

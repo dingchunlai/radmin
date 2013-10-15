@@ -1,0 +1,11 @@
+<% @categories.each do |category| %>
+  <h2><%= category.name_zh -%></h2>
+  <% category.valid_children.each do |c| %>
+  <h3><%= c.name_zh -%></h3>
+  <ul class="brands_list clearfix">
+    <% c.brands.each do |brand| %>
+    <li><%= link_to brand.name_zh, brand_path(brand) %>(<%= brand.products_count %>)</li>
+    <% end %>
+  </ul>
+  <% end %>
+<% end %>

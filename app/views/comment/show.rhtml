@@ -1,0 +1,183 @@
+function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+function blank_filter(str){		//过滤空格
+	while (str.indexOf(" ")>=0||str.indexOf("　")>=0){
+			str = str.replace(" ","").replace("　","");
+	}
+	return str;
+}
+function form_comment_submit(thisform){
+    var valReturn = true;
+    thisform.nickname.value = blank_filter(thisform.nickname.value);
+    if (thisform.nickname.value==""){
+        alert("请填写用户昵称！");
+        thisform.nickname.focus();
+        valReturn = false;
+    }
+    return valReturn;
+}
+function deco_reply(comment_id){
+  reply = prompt("请填写回复内容：","");
+  if (trim(reply)!=""){
+    hideiframe.location.href = "http://radmin.51hejia.com/comment/deco_reply?reply=" + EncodeURL(reply) + "&comment_id=" + comment_id;
+  }
+}
+
+function EncodeURL(str){
+    var   m="",sp="!'()*-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~"
+    for(var   i=0;i<str.length;i++){
+    if(sp.indexOf(str.charAt(i))!=-1){
+    m+=str.charAt(i)
+    }else{
+    var   n=str.charCodeAt(i)
+    var   t="0"+n.toString(8)
+    if(n>0x7ff)
+    m+=("%"+(224+parseInt(t.slice(-6,-4),8)).toString(16)+"%"+(128+parseInt(t.slice(-4,-2),8)).toString(16)+"%"+(128+parseInt(t.slice(-2),8)).toString(16)).toUpperCase()
+    else   if(n>0x7f)
+    m+=("%"+(192+parseInt(t.slice(-4,-2),8)).toString(16)+"%"+(128+parseInt(t.slice(-2),8)).toString(16)).toUpperCase()
+    else   if(n>0x3f)
+    m+=("%"+(64+parseInt(t.slice(-2),8)).toString(16)).toUpperCase()
+    else   if(n>0xf)
+    m+=("%"+n.toString(16)).toUpperCase()
+    else
+    m+=("%"+"0"+n.toString(16)).toUpperCase()
+    }
+    }
+    return   m;
+}
+
+document.writeln("<style type=\"text\/css\">");
+document.writeln("a {font-size:12px;text-decoration:none;color:black}");
+document.writeln("a:hover {color:red;}");
+document.writeln("#comment_table td{text-align:left}");
+document.writeln(".STYLE1 {");
+document.writeln("	font-size: 14px;");
+document.writeln("	color: #666666;");
+document.writeln("	font-weight: bold;");
+document.writeln("}");
+document.writeln(".STYLE2 {");
+document.writeln("	font-size: 12px;");
+document.writeln("	color: #242323;");
+document.writeln("}");
+document.writeln(".kuang {width:80%; height:86px;}");
+document.writeln(".menu { width:76px; height:22px;}");
+document.writeln(".STYLE4 {font-size: 12px; color: #4d4d4d; }");
+document.writeln("<\/style>");
+document.writeln("");
+document.writeln("<table id=\"comment_table\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">");
+document.writeln("  <tr>");
+document.writeln("    <td height=\"427\" bordercolor=\"#CCCCCC\" bgcolor=\"#f3f4f9\"><table width=\"100%\" height=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">");
+document.writeln("      <tr>");
+document.writeln("        <td height=\"10\"><\/td>");
+document.writeln("      <\/tr>")
+
+
+<%for comment in @comments%>
+  document.writeln("      <tr><td height=\"64\" bgcolor=\"#FFFFFF\" style=\"padding:0 4px;\">");
+  document.writeln("      <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+  document.writeln("      <tr>");
+  document.writeln("      <td height=\"35\" class=\"STYLE2\"><table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#ECEBEB\">");
+  document.writeln("      <tr>");
+  document.writeln("      <td height=\"28\" style=\"padding-left:12px;font-size:12px;\"><%=strip_tags(comment.nickname)%>：<\/td>");
+  document.writeln("      <td width=\"120\" style=\"font-size:12px;\"><%=comment.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%><\/td>");
+  document.writeln("      <\/tr>");
+  document.writeln("      <\/table><\/td>");
+  document.writeln("      <\/tr>");
+  <%if @sort_id!=0%>
+  document.writeln("      <tr>");
+  document.writeln("      <td width=\"0\" height=\"21\" class=\"STYLE2\" style=\"padding:1px 12px;color:#666666\">")
+    <%if @comment_sort.length != 0%>
+    <%1.upto(@comment_sort.length-1) do |i|%>
+     document.writeln("<%=@comment_sort[i]%>:");
+      <%pv = eval("comment.pv"+i.to_s)%>
+      <%1.upto(4) do |v|%>
+          <%if v <= pv.to_i%>
+          document.writeln("<img src=\"http:\/\/radmin.51hejia.com\/images\/comment\/01.gif\" width=\"16\" height=\"16\" align=\"absmiddle\" \/>");
+          <%else%>
+          document.writeln("<img src=\"http:\/\/radmin.51hejia.com\/images\/comment\/02.gif\" width=\"16\" height=\"16\" align=\"absmiddle\" \/>");
+          <%end%>
+      <%end%>
+    <%end%>
+    <%end%>
+  document.writeln("      <\/td>");
+  document.writeln("      <\/tr>");
+  <%end%>
+  document.writeln("      <tr>");
+  document.writeln("      <td height=\"21\" class=\"STYLE2\" style=\"padding:3px 12px;\">");
+  document.writeln("            评论内容：<%=strip_tags(comment.content)%>");
+  <%if @deco_id != 0%>
+  document.writeln("<div style=\"background-color:#F4F4F4;color:white;padding:5px;margin-top:3px;\"><input type='button' value='回复该评论' onclick='deco_reply(<%=comment.id%>);' /><\/div>");
+  <%end%>
+  <%unless comment.reply.nil?%>
+  document.writeln("<div style=\"background-color:#989898;color:white;padding:5px;margin-top:3px;\">回复内容：<%=strip_tags(comment.reply)%><\/div>");
+  <%end%>
+  document.writeln("      <\/td>");
+  document.writeln("      <\/tr>");
+  document.writeln("      <\/table>");
+  document.writeln("      <\/td><\/tr>");
+<%end%>
+
+document.writeln("<tr>");
+document.writeln("        <td height=\"248\"><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+document.writeln("          <tr>");
+document.writeln("            <td height=\"28\" bgcolor=\"#e4e8f3\"><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+document.writeln("              <tr>");
+document.writeln("                <td width=\"10\"><\/td>");
+document.writeln("                <td align=\"left\" height=\"30\">");
+document.writeln("            <span style=\"float:right;padding:5px 15px 0px 0px\"><a href=\"http:\/\/radmin.51hejia.com\/comment\/show_1?sort_id=<%=@sort_id%>&theme_id=<%=@theme_id%>\" target=\"_blank\">更多评论<\/a><\/span><span class=\"STYLE1\">我要评论<\/span><\/td>");
+document.writeln("              <\/tr>");
+document.writeln("            <\/table><\/td>");
+document.writeln("          <\/tr>");
+document.writeln("          <tr>");
+document.writeln("            <td height=\"220\">");
+
+document.writeln("    ");
+document.writeln("              <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+document.writeln("                <form name=\"form_comment\" action=\"http:\/\/radmin.51hejia.com\/comment\/comment_addnew\" target='hideiframe' method=\"post\" onsubmit=\"return form_comment_submit(this);\">");
+document.writeln("              <tr>");
+document.writeln("                <td width=\"10\" height=\"26\"><\/td>");
+document.writeln("                <td class=\"STYLE2\">");
+
+																	  <% unless @nick_name.blank? -%>																	  document.writeln("                  <strong class=\"STYLE4\">用户昵称：<\/strong><%=@nick_name %><input type=\"hidden\" value=\"<%=@nick_name%>\" name=\"nickname\" style=\"width:70px;\" \/>&nbsp;&nbsp;");
+																			<% else -%>
+							  document.writeln("                  <strong class=\"STYLE4\">用户昵称：<\/strong><input type=\"text\" name=\"nickname\" style=\"width:70px;\" \/>&nbsp;&nbsp;");																	  <% end -%>
+<%if @sort_id!=0%>
+<%1.upto(@comment_sort.length-1) do |i|%>
+document.writeln("                    <%=@comment_sort[i]%> <select name=\"pv<%=i%>\"><option value=\"0\">0<\/option><option value=\"1\">1<\/option><option value=\"2\">2<\/option><option value=\"3\">3<\/option><option value=\"4\">4<\/option><\/select>");
+<%end%>
+<%end%>
+document.writeln("                  <\/td>");
+document.writeln("              <\/tr>");
+document.writeln("              <tr>");
+document.writeln("                <td width=\"10\"><\/td>");
+document.writeln("                <td><\/td>");
+document.writeln("              <\/tr>");
+document.writeln("              <tr>");
+document.writeln("                <td width=\"10\" height=\"32\"><\/td>");
+document.writeln("                <td align=\"left\" style=\"padding-top:7px;\">");
+document.writeln("                 ");
+document.writeln("                    <textarea id=\"content\" name=\"content\" class=\"kuang\"><\/textarea>");
+document.writeln("                 <\/td>");
+document.writeln("              <\/tr>");
+document.writeln("              <tr>");
+document.writeln("                <td width=\"10\" height=\"40\" class=\"STYLE2\"><\/td>");
+document.writeln("                <td align=\"center\" class=\"STYLE2\">");
+document.writeln("                      <input name=\"r_url\" type=\"hidden\" value=\"" + top.location.href + "\" \/>");
+document.writeln("                      <input name=\"theme_id\" type=\"hidden\" value=\"<%=@theme_id%>\" \/>");
+document.writeln("                      <input name=\"sort_id\" type=\"hidden\" value=\"<%=@sort_id%>\" \/>");
+document.writeln("                      <input id=\"submit_button\" type=\"submit\" value=\"发表评论\" class=\"menu\" \/>");
+document.writeln("                <\/td>");
+document.writeln("              <\/tr>");
+document.writeln("              <tr>");
+document.writeln("                <td height=\"40\" class=\"STYLE2\"><\/td>");
+document.writeln("                <td class=\"STYLE4\">发言请遵守有关法律法规，并注意语言文明，您在51hejia.com发表的作品，51hejia.com有权转载或引用。<\/td>");
+document.writeln("              <\/tr>");
+document.writeln("              <\/form>");
+document.writeln("            <\/table>");
+document.writeln("");
+document.writeln("            <\/td>");
+document.writeln("          <\/tr>");
+document.writeln("        <\/table><\/td>");
+document.writeln("      <\/tr>");
+document.writeln("    <\/table><\/td>");
+document.writeln("  <\/tr>");
+document.writeln("<\/table><iframe name='hideiframe' width='0' height='0' style='display: none;'></iframe>");

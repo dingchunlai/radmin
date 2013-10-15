@@ -1,0 +1,29 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<form action="/article/editarticlecount" method="get">
+<select name="eid">
+<option value="">请选择</option>
+<%for u in @userlist%>
+<option value="<%=u.id%>" <%if u.id==@user.id%>selected<%end%>><%=u.rname%></option>
+<%end%>
+</select><%=@user.rname%>共<%=@article.total_entries%>篇文章
+<p>录入时间：
+<input type="text" name="begintime" onclick="new Calendar().show(this);" value="<%=@begintime%>">
+----
+<input type="text" name="endtime" onclick="new Calendar().show(this);" value="<%=@endtime%>"><input type="submit" value="查询"></p>
+</form>
+<table>
+<tr>
+	<td>标题</td>
+	<td>文章PV</td>
+	<td>文章时间</td>
+</tr>
+
+<%for a in @article%>
+<tr>
+	<td><%=a.TITLE%></td>
+	<td><%=a.PV%></td>
+	<td><%=a.CREATETIME.strftime("%Y-%m-%d")%></td>
+</tr>
+<%end%>
+</table>
+<%= will_paginate @article %>

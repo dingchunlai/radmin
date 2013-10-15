@@ -1,0 +1,24 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label required">事件名称</td>
+    <td><%= f.text_field :name -%></td>
+  </tr>
+  <tr>
+    <td class="label">分数</td>
+    <td><%= f.text_field :point -%></td>
+  </tr>
+  <tr>
+    <td class="label">永久链接</td>
+    <td>
+      <% if controller.action_name == "new" %>
+        <%= f.text_field :permalink -%>
+      <% else %>
+        <%= f.text_field :permalink, :disabled => true -%>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建" : "更新") -%></td>
+  </tr>
+</table>

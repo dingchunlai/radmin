@@ -1,0 +1,24 @@
+<%
+ecp = EditorCasePhoto.find(:first, :conditions => "case_id = #{@cid}")
+c = HejiaCase.find(:first, :conditions => "ID = #{@cid}")
+%>
+<% if ecp %>
+  <%
+begin
+ rname = User.find(ecp.editor_id).rname
+rescue
+  rname = "请重新分配"
+end
+%>
+  <strong><%= rname %></strong>
+<%= check_state(:type => "case", :state => "#{c.STATE}") %><br>
+  <%if isrole("管理员") || isrole("文章编辑") %>
+    <%= link_to_remote "打回", :url => { :action => "change_state", :result => "fail", :cid => @cid },
+      :loading => "Element.show('xx')", :complete => "Element.hide('xx')" %>
+    <%= link_to_remote "通过", :url => { :action => "change_state", :result => "pass", :cid => @cid },
+      :loading => "Element.show('xx')", :complete => "Element.hide('xx')" %>
+  <% end %>
+<% else %>
+  <%= check_state(:type => "case", :state => "#{c.STATE}") %>
+<% end %>
+<img id="xx" style="display: none;" src="http://radmin.51hejia.com/images/icons/indicator.gif" alt="Indicator"/>

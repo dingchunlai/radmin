@@ -1,0 +1,250 @@
+<DIV class="user_right">
+
+  <DIV id=widebar >
+    <DIV id=nav_bottom></DIV>
+    <DIV id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 装修案例</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          <% if flash[:notice].nil? %>
+            在这里您可以添加和维护装修案例信息。
+          <%else%>
+            <b><font color="red"><%= flash[:notice] %></font></b>
+          <% end %>
+        </div>
+      </div>
+    </DIV>
+    <DIV class=mainbox style="border:1px solid #f60;border-left:none;border-bottom:none;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/deco/case_list">案例列表</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/deco/case_edit" target="_blank">新建案例</a></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+
+      <script type="text/javascript">
+        window.onload = function(){
+        }
+        function gotopage(page){
+          window.open("/deco/case_list?page="+page+"&recordcount=<%=@recordcount%>", "_self");
+        }
+        function del(id){
+          if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/deco/case_del?id="+id;
+        }
+        function deleteAll(){
+          if (confirm('您确定要删除这些记录吗？')){
+            var ids = [];
+            if (document.form1.f_id.length==undefined){
+              if (document.form1.f_id.checked) ids = document.form1.f_id.value;
+            }else{
+              for (i=0; i<document.form1.f_id.length;i++){
+                if (document.form1.f_id[i].checked && document.form1.f_id[i].value!='0') ids.push(document.form1.f_id[i].value);
+              }
+              ids = ids.join(",");
+            }
+            if (ids=="")
+              alert("请至少选择1条记录！");
+            else
+              hideiframe.location="/deco/case_del?ids="+ids;
+          }
+        }
+        function recommendAll(){
+          var ids = [];
+          if (document.form1.f_id.length==undefined){
+            if (document.form1.f_id.checked) ids = document.form1.f_id.value;
+          }else{
+            for (i=0; i<document.form1.f_id.length;i++){
+              if (document.form1.f_id[i].checked && document.form1.f_id[i].value!='0') ids.push(document.form1.f_id[i].value);
+            }
+            ids = ids.join(",");
+          }
+          if (ids=="")
+            alert("请至少选择1条记录！");
+          else
+            hideiframe.location="/deco/case_recommend?ids="+ids;
+        }
+        function cancelRecommendAll(id){
+          var ids = [id];
+          hideiframe.location="/deco/cancel_case_recommend?ids="+ids;
+        }
+
+        var checkflag = "false";
+        function SelectAll(field) { //全选checkbox
+          if (checkflag == "false") {
+            for (i = 0; i < field.length; i++) {
+              field[i].checked = true;}
+            checkflag = "true";
+            return "false";
+          }
+          else {
+            for (i = 0; i < field.length; i++) {
+              field[i].checked = false; }
+            checkflag = "false";
+            return "true";
+
+          }
+        }
+      </script>
+      <style type="text/css">
+        #pagelist{
+          font-family:Verdana;
+          color:#999999;
+          font-size:12px;
+          letter-spacing:1px;
+          vertical-align: middle;
+        }
+        #pagelist a{
+          color:#000040;
+          text-decoration:none;
+        }
+        #pagelist a:hover{
+          color:#F27900;
+          text-decoration:none;
+        }
+      </style>
+
+      <div id="same1">
+        <form name="form1" id="form1" action="/deco/case_list" method="post">
+          <div style="font-family:Verdana; color:#DD4504; line-height:32px; font-size:12px; letter-spacing:1px; margin: 0px 0px 0px 15px; ">
+            <%if !@back.nil?%>
+              <select name="tagId1" id="tagId1">
+                <option value="">案例类型..</option>
+                <option value="4402" <%if @tagId1.to_s=='4402'%>selected<%end%>>编辑跟踪案例</option>
+                <option value="4403" <%if @tagId1.to_s=='4403'%>selected<%end%>>成套图库案例</option>
+              </select>
+              <select name="tagId2" id="tagId2">
+                <option value="">装修方式..</option>
+                <option value="4374" <%if @tagId2.to_s=='4374'%>selected<%end%>>清包装修</option>
+                <option value="4375"  <%if @tagId2.to_s=='4375'%>selected<%end%>>半包装修</option>
+                <option value="4376" <%if @tagId2.to_s=='4376'%>selected<%end%>>全包装修</option>
+              </select>
+              <select name="tagId3" id="tagId3">
+                <option value="">费用..</option>
+                <option value="4370" <%if @tagId3.to_s=='4370'%>selected<%end%>>经济型</option>
+                <option value="4372" <%if @tagId3.to_s=='4372'%>selected<%end%>>富裕型</option>
+                <option value="4373" <%if @tagId3.to_s=='4373'%>selected<%end%>>豪华型</option>
+              </select>
+              <select name="tagId4" id="tagId4">
+                <option value="">风格..</option>
+                <option value="4361" <%if @tagId4.to_s=='4361'%>selected<%end%>>现代简约</option>
+                <option value="4362" <%if @tagId4.to_s=='4362'%>selected<%end%>>中式风格</option>
+                <option value="4363" <%if @tagId4.to_s=='4363'%>selected<%end%>>欧/美式</option>
+                <option value="4367" <%if @tagId4.to_s=='4367'%>selected<%end%>>田园风格</option>
+                <option value="4360" <%if @tagId4.to_s=='4360'%>selected<%end%>>混搭</option>
+                <option value="6680" <%if @tagId4.to_s=='6680'%>selected<%end%>>地中海</option>
+                <option value="6681" <%if @tagId4.to_s=='6681'%>selected<%end%>>其他</option>
+              </select>
+              <select name="tagId5" id="tagId5">
+                <option value="">装修用途..</option>
+                <option value="4380" <%if @tagId5.to_s=='4380'%>selected<%end%>>婚房装修</option>
+                <option value="4378" <%if @tagId5.to_s=='4378'%>selected<%end%>>旧房改造</option>
+                <option value="4383" <%if @tagId5.to_s=='4383'%>selected<%end%>>家有老人</option>
+                <option value="6682" <%if @tagId5.to_s=='6682'%>selected<%end%>>出租房</option>
+                <option value="6683" <%if @tagId5.to_s=='6683'%>selected<%end%>>重软装</option>
+                <option value="4381" <%if @tagId5.to_s=='4381'%>selected<%end%>>单身贵族</option>
+                <option value="4382" <%if @tagId5.to_s=='4382'%>selected<%end%>>三口之家</option>
+                <option value="6684" <%if @tagId5.to_s=='6684'%>selected<%end%>>家有宠物</option>
+                <option value="6685" <%if @tagId5.to_s=='6685'%>selected<%end%>>家有儿童</option>
+                <option value="4385" <%if @tagId5.to_s=='4385'%>selected<%end%>>设计师的家</option>
+                <option value="6686" <%if @tagId5.to_s=='6686'%>selected<%end%>>其他</option>
+              </select>
+              <select name="tagId6" id="tagId6">
+                <option value="">户型..</option>
+                <option value="4355" <%if @tagId6.to_s=='4355'%>selected<%end%>>小户型装修</option>
+                <option value="4356" <%if @tagId6.to_s=='4356'%>selected<%end%>>公寓装修</option>
+                <option value="4354" <%if @tagId6.to_s=='4354'%>selected<%end%>>别墅/复式</option>
+              </select><%end%>
+            <select name="status">
+              <option value="" <%if !@status.nil?%><%else%>selected<%end%>>立邦案例</option>
+              <option value="1000" <%if !@status.nil?&&@status.to_s=='1000'%>selected<%else%><%end%>>是</option>
+              <option value="050" <%if !@status.nil?&&@status.to_s=='1000'%><%elsif !@status.nil?&&@status.to_s=='050'%>selected<%else%><%end%>>否</option>
+            </select>
+            <input name="name" type="type" value="<%=@name%>"/>
+            <input name="submit1" type="submit" value="搜索"/>
+            <br>
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+            <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+          </div>
+          <style type="text/css">
+            .allist{margin-left:7px; width:98%;}
+            .allist li{height:82px;line-height:82px;overflow:hidden;border-bottom: 1px solid #dbdbdb;}
+            .allist li span{display: block;float:left;padding:5px;}
+            .allist li input{vertical-align: middle;}
+            .allist_span01{width:60px;}
+            .allist_span02{width:90px;height:72px;}
+            .allist_span03{width:165px;}
+          </style>
+          <div class="allist">
+            <!-- ID as id, DESNAME, DESFEE, DESAGE, DESTEL, DESSCHOOL, DESSTYLE, DESRESUME -->
+            <ul>
+              <li class="clearfix" style="height:30px;line-height:30px;">
+                <span class="allist_span01">案例编号</span>
+                <span class="allist_span02">案例图片</span>
+                <span class="allist_span01">案例名称</span>
+                <span class="allist_span01">最新</span>
+                <span class="allist_span01">创建时间</span>
+                <!--<%#if !@back.nil?%><span class="allist_span01">创建人</span><%#end%>-->
+                <span>操作<font color="red">(↑↓进行拖动排序)</font></span>
+              </li>
+            </ul>
+            <ul id="cases">
+              <%for c in @cases%>
+                <li class="clearfix" id="case_<%=c.id%>" align="center" style="background-color:#FFFDE6">
+                  <span class="allist_span01"><input type="checkbox" name="f_id" value="<%=c.id%>" /> <%=c.id%></span>
+                  <span class="allist_span02"><img src="http://d.51hejia.com/files/hekea/case_img/tn/<%=c.id%>.jpg" width="90" height="72"/></span>
+                  <span class="allist_span01"><a href="http://tuku.51hejia.com/zhuangxiu/tuku-<%=c.id%>" target="_blank"><%= c.NAME %></a></span>
+                  <span class="allist_span01" style="width:20px;"><%= c.ISNEWCASE.to_i==1 ? "是":"否"%></span>
+                  <span class="allist_span01"><%=c.CREATEDATE.strftime("%Y-%m-%d") rescue ""%></span>
+                  <span>
+                    <%if @firm.id == 7 %>
+                      <a href="http://tuku.51hejia.com/zhuangxiu/tuku-<%=c.id%>" target="_blank">预览</a>
+                    <%else%>
+                      <a href="<%= c.url %>" target="_blank">预览</a>
+                    <%end%>
+                    <a href="/deco/case_edit?id=<%=c.id%>" target="_blank">基本信息</a>
+                    <a href="/deco/image_list?id=<%=c.id%>" target="_blank" title="装修实图">实图(<%=c.photos.count%>)</a>
+                    <a href="/deco/image_add?caseid=<%=c.id%>" target="_blank" title="新建装修实图">新实图</a>
+                    <a href="/deco/house_list?id=<%=c.id%>" target="_blank">户型图(<%=c.deco_houses.count%>)</a>
+                    <a href="/deco/house_edit?caseid=<%=c.id%>" target="_blank" title="新建户型图">新户型图</a>
+                    <a href="/deco/delete_cache?id=<%=c.id%>" target="_blank">清缓存</a>
+                    <% if c.is_recommend %>
+                      <a href="javascript:void(0)" onclick="cancelRecommendAll(<%= c.id %>)">取消推荐</a>
+                    <% end %>
+                    &nbsp;↑↓
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div id="div_pagelist" style="margin:0px 10px 0px 10px;">
+            <div style="float:left">
+              <input onclick="SelectAll(document.form1.f_id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+              <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+              <input onclick="recommendAll()" type="button" value="批量推荐" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+            </div>
+            <div style="float:right">
+              <script type="text/javascript">
+                recordcount = <%=@recordcount%>;
+                pagesize = <%=@pagesize%>;
+                curpage = <%=@curpage%>;
+                cur_list = 0;
+                listsize = <%=@listsize%>;
+                document.write("<span id='pagelist'></span>");
+                page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+              </script>
+            </div>
+          </div>
+        </form>
+      </div>
+    </DIV>
+  </DIV>
+</DIV>
+
+</DIV>
+<%= sortable_element('cases', :url => {:action => "sort"}) %>

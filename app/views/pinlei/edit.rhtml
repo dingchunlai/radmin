@@ -1,0 +1,113 @@
+<%= include_tiny_mce_if_needed %>
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 950;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height + 26;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:10px; height:32px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:500px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+  
+<form action="/pinlei/edit_save" name="form1" enctype="multipart/form-data" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+     <%if @id ==0%>创 建 新 记 录<%else%>编 辑 记 录<%end%>
+     <input type="hidden" name="id" value="<%=@id%>" />
+    </div>
+    
+    <script type="text/javascript">
+      function submitForm(form){
+          ge("p_name").style.color="#999999";
+          ge("p_sort_id").style.color="#999999";
+          ge("p_img_url").style.color="#999999";
+          ge("p_bgimg_url").style.color="#999999";
+          var valReturn = true;
+          if (trim(ge("pinlei_name").value)==""){
+              ge("p_name").style.color="red";
+              valReturn = false;
+          }
+          if (trim(ge("pinlei_sort_id").value)=="0"){
+              ge("p_sort_id").style.color="red";
+              valReturn = false;
+          }
+          if (trim(ge("pinlei_intro").value)==""){
+              ge("p_intro").style.color="red";
+              valReturn = false;
+          }
+          if (trim(ge("pinlei_title_color").value)==""){
+              alert("标题色必须选择！");
+              valReturn = false;
+          }
+          if (trim(ge("pinlei_intro_color").value)==""){
+              alert("简介色必须选择！");
+              valReturn = false;
+          }
+          return valReturn;
+      }
+      </script>
+<div class="formouter">
+            <div class="formleft">关 键 字：</div>
+            <div class="formcenter">
+                <%=text_field("pinlei","name",{:size=>44})%>
+                <%=select("pinlei","title_color",{"标题色"=>"","白色"=>"#FFFFFF","黑色"=>"#000000"})%>
+                <%=select("pinlei","intro_color",{"简介色"=>"","白色"=>"#FFFFFF","黑色"=>"#000000"})%>
+            </div>
+            <div class="formright" id="p_name">请填写关键字</div>
+</div>
+<div class="formouter">
+            <div class="formleft">分　类：</div>
+            <div class="formcenter"><%=select("pinlei","sort_id",array_to_hash(PINLEI_SORT,true))%></div>
+            <div class="formright" id="p_sort_id">请选择分类</div>
+</div>
+<div class="formouter" style="height:120px;">
+            <div class="formleft">图片：</div>
+            <div class="formcenter"><img src="<%= pp(@pinlei.img_url) ? @pinlei.img_url : "http://member.51hejia.com/images/nil.gif"%>" width="120" height="100" /> <input type="file" name="img_url" id="img_url" size="30" /></div>
+            <div class="formright" id="p_img_url">请选择图片</div>
+</div>
+<div class="formouter" style="height:120px;">
+            <div class="formleft">背景图片：</div>
+            <div class="formcenter"><img src="<%= pp(@pinlei.bgimg_url) ? @pinlei.bgimg_url : "http://member.51hejia.com/images/nil.gif"%>" width="120" height="100" /> <input type="file" name="bgimg_url" id="bgimg_url" size="30" /></div>
+            <div class="formright" id="p_bgimg_url">请选择背景图片</div>
+</div>
+<div class="formouter">
+            <div class="formleft">所属子类：</div>
+            <div class="formcenter">
+                <%=radio_button("pinlei","subsort", 1)%>子类一　
+                <%=radio_button("pinlei","subsort", 2)%>子类二</div>
+            <div class="formright" id="p_subsort">请选择子类</div>
+</div>
+<div class="formouter" style="height:120px;">
+            <div class="formleft">简介：</div>
+            <div class="formcenter"><%=text_area("pinlei","intro",{:style=>"width:450px;height:100px;"})%></div>
+            <div class="formright" id="p_intro">请填写介绍信息</div>
+</div>
+<div class="formouter" style="height:280px;">
+            <div class="formleft">相关属性：</div>
+            <div class="formcenter"><%=text_area("pinlei","property",{:class=>"mceEditor",:style=>"height:250px;"})%></div>
+</div>
+<div class="formouter" style="padding:30px 0px 0px 280px;">
+
+  <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+
+</div>
+     
+</form>
+</div>

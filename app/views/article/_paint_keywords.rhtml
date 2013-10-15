@@ -1,0 +1,15 @@
+<% if article.nil? %>
+<td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>油工关键词：</strong></td>
+<td bgcolor="#F7FAFF" style="padding:5px">
+	<% for paint_keyword in PaintKeyword.find(:all) %>
+	<%= check_box_tag "paint_keywords[]", paint_keyword.id, nil %><%= paint_keyword.name %>
+	<% end %>
+</td>
+<% else %>
+<td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>油工关键词：</strong></td>
+<td bgcolor="#F7FAFF" style="padding:5px">
+	<% for paint_keyword in PaintKeyword.find(:all) %>
+	<%= check_box_tag "paint_keywords[]", paint_keyword.id, article.paint_keyword_articles.map{|pka|pka.paint_keyword_id}.include?(paint_keyword.id) %><%= paint_keyword.name %>
+	<% end %>
+</td>
+<% end %>

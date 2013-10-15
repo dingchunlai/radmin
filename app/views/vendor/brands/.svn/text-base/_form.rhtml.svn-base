@@ -1,0 +1,65 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+		<td class="label">中文名称</td>
+		<td><%= f.text_field :name_zh, :size => 60 -%></td>
+	</tr>
+	<tr>
+		<td class="label">英文名称</td>
+		<td><%= f.text_field :name_en -%></td>
+	</tr>
+	<tr>
+		<td class="label">永久链接</td>
+		<td><%= f.text_field :permalink -%></td>
+	</tr>
+	<tr>
+		<td class="label">品牌网站</td>
+		<td><%= f.text_field :website -%></td>
+	</tr>
+	<tr>
+		<td class="label">首字母</td>
+		<td><%= f.text_field :initial -%></td>
+	</tr>
+	<tr>
+		<td class="label">产品数量</td>
+		<td><%= f.text_field :products_count -%></td>
+	</tr>
+	<tr>
+		<td class="label">选择图片</td>
+		<td><%= file_field 'image', :uploaded_data %></td>
+	</tr>
+	<tr>
+		<td class="label">是否合作</td>
+		<td><%= f.check_box :is_cooperation %> 合作品牌</td>
+	</tr>
+	<tr>
+		<td class="label">是否推荐</td>
+		<td><%= f.check_box :is_recommend %> 推荐品牌</td>
+	</tr>
+	<tr>
+		<td class="label">是否隐藏</td>
+		<td><%= f.check_box :is_hidden %> 隐藏该品牌</td>
+	</tr>
+	<tr>
+		<td class="label">所属类别</td>
+		<td>
+			<ul class="category_list">
+				<% ProductCategory.first_class.each do |category| -%>
+				<li><strong><%= category.name_zh -%>：</strong>
+					<% category.valid_children.each do |c| -%>
+					<%= check_box_tag "brand[category_ids][]", c.id, @brand.categories.include?(c) %>
+					<%= c.name_zh -%>
+					<% end -%>
+				</li>
+				<% end -%>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">品牌简介</td>
+		<td><%= f.text_area :description, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建品牌" : "更新品牌") -%></td>
+	</tr>
+</table>

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/!svn/ver/724/51hejia/repos/radmin/release/lib
+END
+pic.rb
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/!svn/ver/99/51hejia/repos/radmin/release/lib/pic.rb
+END
+score.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/!svn/ver/99/51hejia/repos/radmin/release/lib/score.rb
+END
+validate_image.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/99/51hejia/repos/radmin/release/lib/validate_image.rb
+END
+hodel_3000_compliant_logger.rb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/lib/hodel_3000_compliant_logger.rb
+END
+form_token.rb
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/99/51hejia/repos/radmin/release/lib/form_token.rb
+END
+user_module.rb
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/99/51hejia/repos/radmin/release/lib/user_module.rb
+END
+smtp_tls.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/99/51hejia/repos/radmin/release/lib/smtp_tls.rb
+END
+authenticated_system.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/lib/authenticated_system.rb
+END
+secure_random.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/99/51hejia/repos/radmin/release/lib/secure_random.rb
+END

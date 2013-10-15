@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>室内装修设计,家庭室内装潢,家居装饰图片,家装效果图库-和家网</title>
+<meta name="keywords" content="家庭装修,室内装潢,房子装潢,房屋装修,室内装修设计图片,家居装修图片,家装效果图,室内装修效果图片,室内装饰效果图片,装修论坛">
+<meta name="description" CONTENT="中国最大最专业的装修家居信息服务网站，已经覆盖上海,北京,广州,深圳，主要包括家庭装修,室内装潢,房子装潢,房屋装修,室内装修设计图片">
+<style type="text/css">
+body{margin:3px 0; font-family:"宋体"; font-size:12px; color:#333; line-height:18px;}
+html,body { height:100%;} 
+a{color:#333;text-decoration:none;}
+a:hover {color:#f60; text-decoration:underline}
+li {list-style:none;line-height:20px;}
+img{border:0;}
+p,em,span,form,select,input,option,ol,ul,li,dd,dt,dl,h1,h2,h3,h4,h5,h6{ margin:0; padding:0;}
+h3,h4 {font-size:14px;}
+.hejiatuliao{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:26px; left:20px;}
+<%if @count==1%>
+.background{ background:url(http://www.51hejia.com/images/libang/background1.gif) no-repeat; width:499px; height:376px; margin:0 auto; position:relative;}
+.yanse1{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:178px; left:101px;}
+.yansetu1{ position:absolute; left:236px; top:175px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='1'%><%=c.COLOR%><%end%><%end%><%end%>;}
+<%elsif @count==2%>
+.background{ background:url(http://www.51hejia.com/images/libang/background2.gif) no-repeat; width:499px; height:376px; margin:0 auto; position:relative;}
+.yanse1{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:59px; left:177px;}
+.yanse2{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:329px; left:43px;}
+.yansetu1{ position:absolute; left:318px; top:97px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='1'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu2{ position:absolute; left:157px; top:253px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='2'%><%=c.COLOR%><%end%><%end%><%end%>;}
+<%elsif @count==3%>
+.background{ background:url(http://www.51hejia.com/images/libang/background3.gif) no-repeat; width:499px; height:376px; margin:0 auto; position:relative;}
+.yanse1{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:60px; left:176px;}
+.yanse2{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:179px; left:100px;}
+.yanse3{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:328px; left:46px;}
+.yansetu1{ position:absolute; left:318px; top:96px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='1'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu2{ position:absolute; left:237px; top:178px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='2'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu3{ position:absolute; left:157px; top:254px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='3'%><%=c.COLOR%><%end%><%end%><%end%>;}
+<%elsif @count==4%>
+.background{ background:url(http://www.51hejia.com/images/libang/background4.gif) no-repeat; width:499px; height:376px; margin:0 auto; position:relative;}
+.yanse1{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:61px; left:44px;}
+.yanse2{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:61px; left:367px;}
+.yanse3{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:329px; left:46px;}
+.yanse4{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:331px; left:358px;}
+.yansetu1{ position:absolute; left:158px; top:96px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='1'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu2{ position:absolute; left:317px; top:96px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='2'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu3{ position:absolute; left:156px; top:256px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='3'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu4{ position:absolute; left:318px; top:256px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='4'%><%=c.COLOR%><%end%><%end%><%end%>;}
+<%elsif @count==5%>
+.background{ background:url(http://www.51hejia.com/images/libang/background5.gif) no-repeat; width:499px; height:376px; margin:0 auto; position:relative;}
+.yanse1{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:60px; left:44px;}
+.yanse2{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:60px; left:368px;}
+.yanse3{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:181px; left:101px;}
+.yanse4{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:330px; left:45px;}
+.yanse5{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:330px; left:359px;}
+.yansetu1{ position:absolute; left:157px; top:95px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='1'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu2{ position:absolute; left:316px; top:95px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='2'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu3{ position:absolute; left:239px; top:176px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='3'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu4{ position:absolute; left:157px; top:254px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='4'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu5{ position:absolute; left:317px; top:254px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='5'%><%=c.COLOR%><%end%><%end%><%end%>;}
+<%elsif @count==6%>
+.background{ background:url(http://www.51hejia.com/images/libang/background.gif) no-repeat; width:499px; height:376px; margin:0 auto; position:relative;}
+.yanse1{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:115px; left:10px;}
+.yanse2{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:67px; left:113px;}
+.yanse3{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:137px; left:367px;}
+.yanse4{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:331px; left:10px;}
+.yanse5{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:295px; left:271px;}
+.yanse6{ position:absolute; font-size:14px; color:#000; font-weight:bold; top:251px; left:359px;}
+.yansetu1{ position:absolute; left:110px; top:152px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='1'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu2{ position:absolute; left:218px; top:107px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='2'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu3{ position:absolute; left:319px; top:61px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='3'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu4{ position:absolute; left:101px; top:257px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='4'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu5{ position:absolute; left:209px; top:221px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='5'%><%=c.COLOR%><%end%><%end%><%end%>;}
+.yansetu6{ position:absolute; left:309px; top:175px; width:52px; height:50px; background-color:<%if !@color.nil?%><%for c in @color%><%if c.ADDRESS.to_s!=''&&c.ADDRESS.to_s=='6'%><%=c.COLOR%><%end%><%end%><%end%>;}
+<%else%>
+<%end%>
+.tieshi{ position:absolute; left:90px; top:353px;}
+</style>
+</head>
+
+<body align="center">
+<div class="background">
+
+	<div class="hejiatuliao">和家推荐涂料配置方案</div>
+	<%if !@color.nil?%>
+	<%#for c in @color%>
+	<% @color.each_with_index  do |c,i| %>
+		<%if i+1<=@count%>
+		<div class="yanse<%=i+1%>"><%=c.NAME%></div>	
+		<div class="yansetu<%=i+1%>"></div>
+		<%end%>
+	<%end%>
+	<%end%>
+	<div class="tieshi">小贴士：由于显示原因，图片色卡与实际标准色卡可能存在色差</div>	
+</div>
+</body>
+</html>

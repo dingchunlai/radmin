@@ -1,0 +1,95 @@
+<% if flash[:alert] %>
+  <%# 页面刷新的时候，出错时产生的错误信息 %>
+  <div style="color: red; border: solid 1px orange;"><%= flash[:alert] %></div>
+  <% if flash[:errors] %>
+    <div>点击<a href="#" onclick="document.getElementById('errors').style.display = 'block'; return false;">这里</a>查看更多错误信息。</div>
+    <div id="errors" style="display:none;"><%= flash[:errors] %></div>
+  <% end %>
+<% end %>
+<form action="/pages/index" method="get">
+
+	<p align=center> <input type="text" name="fname" value="<%=@fname%>">
+		<input type="submit" value="查询">
+	</p>
+	<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+	<table align="center" border=1>
+		<tr style="background-color:#7389A4;">
+  			<th style="color:#FFFFFF;">名字</th>
+			<th style="color:#FFFFFF;">日期</th>
+			<th style="color:#FFFFFF;">发布</th>
+			<th style="color:#FFFFFF;">状态</th>
+			<th style="color:#FFFFFF;">操作</th>
+		</tr>
+		<% @ps.each do |pa| -%>
+		<tr style="background-color:#FFFDE6">
+			<td><%=pa.REMARK%></td>
+			<td>
+				<%if pa.PUBLISHTIME%>
+					<%=pa.PUBLISHTIME.utc.strftime("%Y-%m-%d %H:%M:%S")%>
+				<%end%>
+			</td>
+			<td>
+			    <%if !pa.SHOW.nil?&&pa.SHOW.to_s == '1'%>
+			    	已发布
+				<%else%>
+					未发布
+				<%end%>
+			</td>
+			<td>
+				<%if pa.PAGENOS == 1%>
+					新页面
+				<%elsif pa.PAGENOS == 2%>
+					模版页面
+				<%elsif pa.PAGENOS == 3%>
+					专区页面
+				<%else%>
+					老页面
+				<%end%>
+			</td>
+			<td>
+
+				<%if pa.PAGENOS == 1%>
+					<a href="/pages/show/<%=pa.ID%>" target="_blank">修改</a>
+					
+					<a href="#n" onclick="delpage('<%=pa.ID%>')">删除</a>
+					<a href="/pages/preview/<%=pa.ID%>" target="_blank">预览</a>
+					<a href="/pages/refresh/<%=pa.ID%>">刷新</a>
+					<%if pa.HTMLFILE && pa.HTMLFILE != ''%>
+						<a href="/files/outfile/<%=pa.HTMLFILE%>" target="_blank">静态地址</a>
+					<%end%>
+				<%elsif pa.PAGENOS == 2%>
+					<a href="/pages/showmoban/<%=pa.ID%>" target="_blank">修改</a>
+					<a href="/pages/editother?pageid=<%=pa.ID%>" target="_blank">修改属性</a>
+					<a href="#n" onclick="delpage('<%=pa.ID%>')">删除</a>
+					<a href="/files/outfile/temp<%=pa.HTMLFILE%>" target="_blank">预览</a>
+					<a href="/pages/refreshmoban?pageid=<%=pa.ID%>">刷新</a>
+					<a href="/files/outfile/<%=pa.HTMLFILE%>" target="_blank">静态地址</a>
+				<%elsif pa.PAGENOS == 3%>
+					<a href="/pages/showmobanedit/<%=pa.ID%>" target="_blank">修改</a>
+					<a href="/pages/editothernew?pageid=<%=pa.ID%>" target="_blank">修改属性</a>
+					<a href="#n" onclick="delpage('<%=pa.ID%>')">删除</a>
+					<a href="/files/outfile/<%=pa.HTMLFILE%>" target="_blank">静态地址</a>
+					<a href="/pages/showmobannew?pageid=<%=pa.ID%>" target="_blank">预览</a>
+					<a href="/pages/refreshmobannew?pageid=<%=pa.ID%>">刷新</a>
+				<%end%>
+
+			</td>
+		</tr>
+		<% end %>
+                <% if params[:page].blank? || params[:page] == "1" %>
+                <tr>
+                  <td colspan="5"><%= link_to "图库首页预览", "/admin_case/tuku_preview", :target => "_blank" %></td>
+                </tr>
+                <% end %>
+	</table>
+	</div>
+	<p align="center"><%= will_paginate @ps %></p>
+	
+</form>
+<script language="javascript">
+	function delpage(id){
+		if(window.confirm('确定删除吗?')){
+			location.href='/pages/delete/'+id;
+		}
+	}
+</script>

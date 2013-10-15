@@ -1,0 +1,135 @@
+<link href="http://js.51hejia.com/css/ucenter.css?22333333" rel="stylesheet" type="text/css"/>
+<form action="" method="get" id="fmid" name="fmid">
+  <div class="user_right">
+    <div class="titlebox">
+      <h2>留言管理</h2>
+    </div>
+    <style type="text/css">
+      .ucbox_lylist_s{ padding:15px 0; border-bottom:1px dashed #666;}
+      .zxrj_hf_btn2{ background:url(http://js.51hejia.com/img/sdeco/bt05.gif) no-repeat; border:none; color:#822307; font-size:12px; width:88px; height:20px; line-height:20px; text-align:center;}
+      .ucbox_lylist_l{ margin:10px 0;}
+      .ucbox_lylist_tb01{ background:#f17900; border-bottom:none;}
+      .ucbox_lylist_tb01 td{ text-align:center;color:#fff; height:26px; line-height:26px;}
+      .ucbox_lylist_tb02{ background:#f1f1f1; border-top:none;}
+      .ucbox_lylist_tb02 td{ text-align:center;color:#333; height:26px; line-height:26px;}
+      .ucbox_lylist_tb02 input{ vertical-align:middle;}
+      .ucbox_lylist_tb02 a,.ucbox_lylist_tb02 a:visited{ color:#333;}
+      .ucbox_lylist_tb02 a:hover{ color:#f60;}
+      .ucbox_lylist_tb03{ background:#e3e2e2; border-top:none;}
+      .ucbox_lylist_tb03 td{color:#333; height:26px; line-height:26px; padding:0 12px;}
+      .ucbox_lylist_tb03 input{ vertical-align:middle;}
+      .ucbox_lylist_tb03 span{ float:right;}
+      .zxrj_hf_btn3{ background:url(http://js.51hejia.com/img/zxdpimg/zxrj_btnbg.gif) center no-repeat; border:none; color:#822307; font-size:12px; width:56px; height:20px; line-height:20px; text-align:center;}
+      .pagination{ float: none; text-align: right;}
+    </style>
+    <div class="ucbox margin10">
+      <div class="ucbox_lylist_s">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>用户名:<input type="text" name="username" value="<%=@username%>"/></td>
+            <td>
+		类型：<select name="remark_type">
+                <option value="" <%= 'selected' if @remark_type.blank? %>>请选择</option>
+                <option value="1" <%= 'selected' if @remark_type.to_i == 1%>>公司</option>
+                <option value="2" <%= 'selected' if @remark_type.to_i == 2%>>日记</option>
+                <option value="3" <%= 'selected' if @remark_type.to_i == 3%>>优惠券</option>
+                <option value="4" <%= 'selected' if @remark_type.to_i == 4%>>案例</option>
+              </select>
+            </td>
+            <td align="right"><input name="" type="submit" value="开始查询" class="zxrj_hf_btn2" /></td>
+          </tr>
+        </table>
+      </div>
+      <div class="ucbox_lylist_l">
+        <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#d6d6d6" class="ucbox_lylist_tb01">
+          <tr>
+            <td width="40">序号</td>
+            <td width="110">用户名</td>
+            <td width="230">摘要</td>
+            <td width="90">日期</td>
+            <td width="70">类型</td>
+            <td width="90">操作</td>
+          </tr>
+        </table>
+        <%@comments.each do |comment|%>
+          <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#d6d6d6" class="ucbox_lylist_tb02">
+            <tr>
+              <td width="40"><label><input name="comment_id[]" type="checkbox" value="<%= comment.id %>" /></label></td>
+              <td width="110">
+                <%= comment.hejia_user_bbs.blank? ? "" : comment.hejia_user_bbs.USERNAME%></td>
+              <td width="230"><%= strip_tags(comment.content).to_s.split(//u)[0,20] %></td>
+              <td width="90"><%=h comment.created_at.strftime("%Y-%m-%d")%></td>
+              <td width="70">
+                <%= show_page(comment)  %>
+              </td>
+              <td width="90">
+                <% if comment.is_replied %>
+                  <%= link_to "查看回复" ,:action => 'reply_comment', :id => comment %>
+                <% else %>
+                  暂无
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        <%end%>
+        <table width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#d6d6d6" class="ucbox_lylist_tb03">
+          <tr>
+<%#*<td><input type="checkbox" name="" id="checkAll" onchange="chackAllBox();"/>全选%>
+<%#*<input type="button" value="删除" onclick="delselectall()" class="zxrj_hf_btn3"/></td>%>
+          </tr>
+        </table>
+        <%= will_paginate @comments%>
+      </div>
+    </div>
+  </div>
+</form>
+<input type="hidden" name="dele" id="dele"/>
+<script type="text/javascript">
+  //全选或全不选
+  var chall = document.getElementById("checkAll");
+  var chone = document.getElementsByName("comment_id[]");
+  function chackAllBox(){
+    if(chall.checked){
+      for(i=0;i<chone.length;i++){
+        chone[i].checked = true;
+      }
+    }else{
+      for(i=0;i<chone.length;i++){
+        chone[i].checked = false;
+      }
+    }
+  }
+
+  //选择留言
+  function chooseimg(id){
+    document.getElementById(id+'id').checked=true;
+  }
+  //删除所选择的留言
+  function delselectall(){
+    var chs = document.getElementsByName("comment_id[]");
+    if(chs.length > 0){
+      var count = 0;
+      for(var i=0;i<chs.length;i++){
+        if(chs[i].checked == true)
+          count++;
+      }
+      if(count == 0){
+        alert('请选择要删除的留言');
+        return false;
+      }else{
+        var ids="";
+        if (confirm('确定要删除这些留言？  ')){
+          for(var i=0;i<chs.length;i++){
+            if(chs[i].checked == true)
+              ids += chs[i].value + ",";
+          }
+          document.getElementById("dele").value = ids;
+          document.getElementById("fmid").action = '/decos/delete_all';
+          document.getElementById("fmid").submit();
+        }
+      }
+    }else{
+      return false;
+    }
+  }
+</script>

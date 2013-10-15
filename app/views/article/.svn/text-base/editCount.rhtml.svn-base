@@ -1,0 +1,28 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<form id="fmid" action="/article/editCount" method="post">
+<select name="userid">
+<option value="">请选择</option>
+<%for u in @userlist%>
+<option value="<%=u.id%>" <%if u.id==@id.to_i%>selected<%end%>><%=u.rname%></option>
+<%end%>
+
+</select>
+
+<p>录入时间：
+<input type="text" name="begintime" onclick="new Calendar().show(this);" value="<%=@begintime%>">
+----
+<input type="text" name="endtime" onclick="new Calendar().show(this);" value="<%=@endtime%>"><input type="submit" value="查询"></p>
+<table width="80%">
+<tr>
+	<td width="20%">编辑</td>
+	<td width="20%">文章数</td>
+</tr>
+<%@list.each do |user|%>
+<%c = HejiaLog.articlecount(user.user_id,@begintime,@endtime)%>
+<tr>
+	<td><%=user.article_author_new.rname%></td>
+	<td><%=c%></td>
+</tr>
+<%end%>
+</table>
+</form>

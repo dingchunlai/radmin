@@ -1,0 +1,3 @@
+<%= render :partial => "shared/product_filter" if controller.action_name == "index" -%>
+<%= render :partial => "shared/search" %>
+<%= render :partial => "shared/products" -%>

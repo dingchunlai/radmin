@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor
+END
+edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/edit.rhtml
+END
+change_password.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/change_password.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/index.rhtml
+END
+login.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/login.rhtml
+END
+userinfo.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/userinfo.rhtml
+END
+vendor.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/vendor.rhtml
+END
+_leftmenu.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/_leftmenu.rhtml
+END
+profile.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/profile.rhtml
+END
+_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/vendor/_form.rhtml
+END

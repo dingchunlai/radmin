@@ -1,0 +1,44 @@
+<%= include_tiny_mce_if_needed %>
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 最新公告</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以修改企业的最新公告。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:480px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on">最新公告</li>
+    <li class="line"></li>
+    <li class="more"></li>
+	</ul>
+  </div>
+  <script type="text/javascript">
+  window.onload = function(){
+    
+  }
+  function onformsubmit(){
+
+  }
+  </script>
+
+  <div id="same1" style="padding:10px;">
+  <FORM action="/deco/notice_save" target="hideiframe" method="post" ONSUBMIT="return onformsubmit();">
+    <%=text_area("deco","INFO",{:style=>"height:350px", :class => "mceEditor"})%> <br />
+    <BUTTON name="pmsend" type="submit" style="margin-top:10px;">提交保存</BUTTON>
+  </FORM>
+    </div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>

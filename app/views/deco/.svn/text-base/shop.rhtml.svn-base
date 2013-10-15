@@ -1,0 +1,120 @@
+<html>
+<head>
+<title></title>
+<style type="text/css">
+<!--
+.STYLE1 {color: #ffffff}
+-->
+</style>
+
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><script language="javascript">
+	function check(form){
+		var shopName = document.getElementById('shop.shopName');
+		var shopTel = document.getElementById('shop.shopTel');
+		var shopFax = document.getElementById('shop.shopFax');
+		var shopAdd = document.getElementById('shop.shopAdd');
+		var shopContact = document.getElementById('shop.shopContact');
+		if(shopName.value.length < 1){
+			alert('请输入门店名称');
+			return false;
+		}
+		if(shopTel.value.length < 1){
+			alert('请输入电话');
+			return false;
+		}
+		if(shopFax.value.length < 1){
+			alert('请输入传真');
+			return false;
+		}
+		if(shopAdd.value.length < 1){
+			alert('请输入门店地址');
+			return false;
+		}
+		if(shopContact.value.length < 1){
+			alert('请输入门店联系人');
+			return false;
+		}0001
+20		return true;
+	}
+</script>
+<table>
+	<tr>
+		<td>门店名称 </td>
+		<td>门店地址 </td>
+		<td>
+			操作
+		</td>
+	</tr>
+	<%for s in @shop%>
+	<tr>
+		<td><%=s.SHOPNAME%></td>
+		<td><%=s.SHOPADD%></td>
+		<td>
+			<a href="/deco/shop_edit?id=<%=s.ID%>" target="_blank">编辑</a><a href="/deco/shop_del?id=<%=s.ID%>" target="_blank">删除</a>
+		</td>
+	</tr>
+	<%end%>
+</table>
+<form action="/deco/shop_save" method="post"  onsubmit="return check(this)">
+<center>
+添加门店
+<table>
+	<tr>
+		<td>门店名称:</td>
+		<td>
+			<input type="text" name="shopName" id='shop.shopName' >
+		</td>
+	</tr>
+	<tr>
+		<td>门店区域:</td>
+		<td>
+			<select name="address">
+			<option value="">请选择</option>
+			<%for a in @areas%>
+			<option value="<%=a[0]%>"><%=a[1]%></option>
+			<%end%>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>门店电话:</td>
+		<td>
+			<input type="text" name="shopTel" id='shop.shopTel' >
+		</td>
+	</tr>
+	<tr>
+		<td>门店传真:</td>
+		<td>
+			<input type="text" name="shopFax" id='shop.shopFax' >
+		</td>
+	</tr>
+	<tr>
+		<td>门店地址:</td>
+		<td>
+			<input type="text" name="shopAdd" id='shop.shopAdd' >
+		</td>
+	</tr>
+	<tr>
+		<td>门店联系人:</td>
+		<td>
+			<input type="text" name="shopContact" id='shop.shopContact' >
+		</td>
+	</tr>
+
+	<tr>
+		<td><input type="submit" value="保存"></td>
+	</tr>
+</table>
+</form></td>
+  </tr>
+</table>
+
+
+</body>
+    
+</html>
+

@@ -1,0 +1,2 @@
+module WebpmHelper
+end

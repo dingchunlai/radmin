@@ -1,0 +1,5 @@
+<h1>Upfile#upload</h1>
+<% form_for(:attachment_metadata, :url => {:action=>"upload"}, :html => {:multipart=>true}) do |form| -%>
+select image to upload: <%= form.file_field :uploaded_data %><p>
+<%= submit_tag "upload now" %>
+<% end -%>   

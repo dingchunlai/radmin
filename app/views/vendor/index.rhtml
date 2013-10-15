@@ -1,0 +1,8 @@
+<div class="dashboard">
+	<h3>欢迎访问和家网营销客户管理系统</h3>
+	<p>尊敬的用户：<strong><%= @vendor.login %></strong> 您好！您的总投资额 <%= number_to_currency(@vendor.total_investment, :unit => "&yen;") %> 元。</p>
+	<p>您的帐号自 <%= @vendor.effected_at.to_date if @vendor.effected_at %> 起生效，合作截至日期 <%= @vendor.expired_at.to_date if @vendor.expired_at %>。</p>
+	<p>当前剩余日期 <%= (@vendor.expired_at.to_date - Time.now.to_date) if @vendor.expired_at %> 天。请续交费用，以免影响业务</p>
+	<p>您有<%= @vendor.shelve_count %>个商品在架上，你总共有<%= @vendor.products_count %>个商品，<%= link_to "点击查看", vendor_merchandises_path %></p>
+	<p>您有<%= @vendor.pricings_count - @vendor.completed_count %>个核价单需要处理，您总共有<%= @vendor.pricings_count %>个核价单，<%= link_to "点击查看", vendor_pricings_path %></p>
+</div>

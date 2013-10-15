@@ -1,0 +1,9 @@
+<ul class="clearfix">
+	<% promotion.images.each do |image| %>
+	<li id="image_<%= image.id %>">
+	<%= image_tag(image.public_filename(:thumb), :alt => image.filename) %><br />
+	<%= image.is_primary ? radio_button_tag("primary_image", image.id, :checked => true) : radio_button_tag("primary_image", image.id) %>设为主图
+	<%= link_to_remote "删除", :url => {:controller => "vendor/common", :action => "remove_promotion_image", :id => image.id}, :confirm => "确认删除该图片吗？" %>
+	</li>
+	<% end %>
+</ul>

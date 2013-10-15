@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment
+END
+comment_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/comment_list.rhtml
+END
+show_old.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/show_old.rhtml
+END
+test.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/test.rhtml
+END
+show.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/show.rhtml
+END
+show_1.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/show_1.rhtml
+END
+replies.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/replies.rhtml
+END
+reply_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/comment/reply_list.rhtml
+END

@@ -1,0 +1,76 @@
+<script type="text/javascript">
+function submitForm(form){
+    ge("p_cname").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("cname").value)==""){
+        ge("p_cname").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<div class="formouter">
+            <div class="formleft">序号：</div>
+            <div class="formcenter">
+              <select name="sn" id="sn">
+                <%1.upto(35) do |v| %>
+                <option value="<%=v%>"><%=v%></option>
+                <%end%>
+              </select>
+            </div>
+            <div class="formright" id="p_sn">同一个表单的任何两个字段的序号都不能重复</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段名：</div>
+            <div class="formcenter"><input style="width:190px;" name="cname" id="cname" type="text" value="<%=@cname%>" /></div>
+            <div class="formright" id="p_cname">您必须填写字段名</div>
+</div>
+<div class="formouter">
+            <div class="formleft">类型：</div>
+            <div class="formcenter">
+              <select name="ctype" id="ctype">
+                <%0.upto(@f_ctype.size-1) do |v| %>
+                <option value="<%=v%>"><%=@f_ctype[v]%></option>
+                <%end%>
+              </select>
+            </div>
+            <div class="formright" id="p_ctype">请选择字段类型，序号30是专为超过256个汉字(或512个字符)的长文本类型预留的。</div>
+</div>
+<div class="formouter">
+            <div class="formleft">是否统计：</div>
+            <div class="formcenter">
+              <select name="sep_type" id="ctype">
+                <option value="" <%if !@sep_type.nil?&&@sep_type=1%><%else%>selected<%end%>>不统计</option>
+                <option value="1" <%if !@sep_type.nil?&&@sep_type=1%>selected<%end%>>统计</option>
+              </select>
+            </div>
+            <div class="formright" id="p_ctype">请选择统计类型。<%=@set_type%></div>
+</div>
+<div class="formouter">
+            <div class="formleft">需要统计的字段：</div>
+            <div class="formcenter"><input style="width:190px;" name="sep_value" id="cname" type="text" value="<%=@sep_value%>" /></div>
+            <div class="formright" id="p_cname">以"|"分割,前面为统计项,后面为权值,如果需要统计第2项,则记录2|1,如果需要统计1-4项,则记1,2,3,4|0.25,0.25,0.25,0.25</div>
+</div>
+<div class="formouter">
+            <div class="formleft">候选项：</div>
+            <div class="formcenter"><input style="width:190px;" name="ovalue" id="ovalue" type="text" value="<%=@ovalue%>" /></div>
+            <div class="formright" id="p_ovalue">请填写候选项(使用英文逗号分隔)</div>
+</div>
+<div class="formouter">
+            <div class="formleft">默认值：</div>
+            <div class="formcenter"><input style="width:190px;" name="dvalue" id="dvalue" type="text" value="<%=@dvalue%>" /></div>
+            <div class="formright" id="p_dvalue">请填写默认值</div>
+</div>
+<div class="formouter">
+            <div class="formleft">必填项：</div>
+            <div class="formcenter">
+              <input name="mustfill" type="radio" value="1" <%=@mustfill?"checked":""%>>是
+              <input name="mustfill" type="radio" value="0" <%=@mustfill?"":"checked"%>>否
+            </div>
+            <div class="formright" id="p_mustfill">请选择该字段是否为必填项</div>
+</div>
+<div class="formouter">
+            <div class="formleft">字段备注：</div>
+            <div class="formcenter"><textarea name="remark" id="remark" rows="4" style="width:190px;"><%=@remark%></textarea></div>
+            <div class="formright" id="p_remark">您可以在这里填写该字段的相关备注信息</div>
+</div>

@@ -1,0 +1,10 @@
+<div>
+  <p>新建   <font color="red"> <%= @tagname.fathername %> </font>  与标签之间的对应</p>
+</div>
+<form action="" method="post">
+  请输入标签对应关系:<br />
+  <input name="keyword" id ="father_tag" type="text" value="" size="20"/> --->
+  <input name="tag" id ="tag_tag" type="text" value="" size="40"/><br />
+  <input type="hidden" name="fatherid" value="<%= params[:id] %>">
+  <input name="submit" type="submit" value="提交" />
+</form>

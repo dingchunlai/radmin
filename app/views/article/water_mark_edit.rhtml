@@ -1,0 +1,207 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>在线打水印</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type>
+<SCRIPT type=text/javascript src="/javascripts/Image_Cropper_files/jquery-latest.pack.js"></SCRIPT>
+<SCRIPT src="/javascripts/Image_Cropper_files/ui.core.js"></SCRIPT>
+<SCRIPT src="/javascripts/Image_Cropper_files/ui.draggable.js"></SCRIPT>
+<SCRIPT src="/javascripts/Image_Cropper_files/ui.resizable.js"></SCRIPT>
+<STYLE type=text/css>BODY {
+	PADDING-BOTTOM: 50px; LINE-HEIGHT: 14px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #333; FONT-SIZE: 12px; PADDING-TOP: 50px
+}
+FORM {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+OL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H1 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H2 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H3 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H4 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H5 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H6 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+P {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+INPUT {
+	FONT-SIZE: 12px
+}
+TEXTAREA {
+	FONT-SIZE: 12px
+}
+SELECT {
+	FONT-SIZE: 12px
+}
+BUTTON {
+	FONT-SIZE: 12px
+}
+IMG {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BORDER-TOP: medium none; BORDER-RIGHT: medium none
+}
+EM {
+	FONT-STYLE: normal
+}
+CITE {
+	FONT-STYLE: normal; COLOR: #999; FONT-SIZE: 12px
+}
+SMALL {
+	FONT-STYLE: normal; COLOR: #999; FONT-SIZE: 12px
+}
+ADDRESS {
+	FONT-STYLE: normal; COLOR: #999; FONT-SIZE: 12px
+}
+A {
+	COLOR: #00f; TEXT-DECORATION: underline
+}
+#box {
+	PADDING-BOTTOM: 20px; MARGIN: 0px 50px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; BACKGROUND: #999; FONT-SIZE: 14px; PADDING-TOP: 20px
+}
+#box H1 {
+	LINE-HEIGHT: 50px; HEIGHT: 90px; FONT-SIZE: 40px
+}
+#box H3 {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 16px; PADDING-TOP: 20px
+}
+CODE {
+	MARGIN: 10px; DISPLAY: block; COLOR: #333; FONT-SIZE: 12px
+}
+#box OL {
+	LIST-STYLE-POSITION: inside; PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: decimal; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+#box OL LI {
+	LINE-HEIGHT: 18px; MARGIN: 0px 0px 20px
+}
+#box OL LI SPAN {
+	COLOR: #00f; CURSOR: pointer; TEXT-DECORATION: underline
+}
+#box OL LI STRONG {
+	DISPLAY: block
+}
+#box P {
+	LINE-HEIGHT: 18px
+}
+#setFace {
+	POSITION: relative; MARGIN: 50px 0px; WIDTH: 556px; HEIGHT: 526px
+}
+#imgBox_pre {
+	WIDTH: 100px; FLOAT: left; MARGIN-LEFT: 50px
+}
+#imgBox_pre STRONG {
+	TEXT-ALIGN: center; DISPLAY: block; FONT-SIZE: 12px
+}
+#imgBox_pre BUTTON {
+	MARGIN: 0px auto; WIDTH: 70px; DISPLAY: block
+}
+#imgBox_pre DIV {
+	BORDER-BOTTOM: #666 5px solid; BORDER-LEFT: #666 5px solid; MARGIN: 5px auto 20px; WIDTH: 48px; HEIGHT: 48px; OVERFLOW: hidden; BORDER-TOP: #666 5px solid; BORDER-RIGHT: #666 5px solid
+}
+#imgBox {
+	BORDER-BOTTOM: #333 3px solid; BORDER-LEFT: #333 3px solid; FLOAT: left; BORDER-TOP: #333 3px solid; BORDER-RIGHT: #333 3px solid
+}
+#imgCut {
+	BORDER-BOTTOM: #fff 1px dashed; POSITION: absolute; BORDER-LEFT: #fff 1px dashed; BORDER-TOP: #fff 1px dashed; TOP: 3px; CURSOR: move; BORDER-RIGHT: #fff 1px dashed; LEFT: 3px
+}
+#faceImg {
+	FILTER: alpha(opacity=50); opacity: 0.5
+}
+#data {
+	CLEAR: both; PADDING-TOP: 20px
+}
+</STYLE>
+</HEAD>
+<BODY>
+<DIV id=box>
+	
+<FORM id=setFace method=post name=setFace action="/article/water_mark_create">
+  <DIV id=imgBox><IMG id=faceImg src="<%=@image%>?<%=rand(1000)%>">
+  <input type="hidden" name="id" value="<%= @id %>" />
+<DIV id=imgCut><img src="/images/watermark_logo2.png" width="100%" height="100%" /></DIV></DIV>
+<DIV id=imgBox_pre style="display: none"><STRONG>图像预览</STRONG>
+<DIV><IMG id=faceImg_pre src="<%=@image%>?<%=rand(1000)%>%>"></DIV></DIV>
+<DIV id=data>
+	left<INPUT id=left readOnly size=3 type=text name=left> 
+	top<INPUT id=top readOnly size=3 type=text name=top> 
+	width<INPUT id=width readOnly size=3 type=text name=width> 
+	height<INPUT id=height readOnly size=3 type=text name=height> 
+</DIV>
+<input type="hidden" name="image" value="<%=@image%>">
+<input type="hidden" name="logo" value="/images/watermark_logo2.png">
+<BUTTON type=submit>保存水印</BUTTON>
+</FORM>
+<SCRIPT type=text/javascript>
+var scale=1;
+var imgH=new Number;
+var imgW=new Number;
+var src=$("#faceImg").attr("src");
+var scale=48/96;
+$("#faceImg").load(function(){
+  //imgH=$("#faceImg").height();
+  //imgW=$("#faceImg").width();
+  imgH=80;
+  imgW=240;
+  $("#imgBox").width(imgW).height(imgH);
+  $("#setFace").width(700).height(imgH+4);
+  $("#imgCut").css("background","url("+src+") -20px -20px no-repeat");
+  $("#faceImg_pre").height(imgH*scale);
+  $("#imgBox_pre div").scrollTop(20*scale).scrollLeft(20*scale);
+  $("#width").val($("#imgCut").width());
+  $("#height").val($("#imgCut").height());
+  $("#left").val(($("#imgCut").offset().left-$("#faceImg").offset().left));
+	$("#top").val(($("#imgCut").offset().top-$("#faceImg").offset().top));
+});
+$("#imgCut").draggable({
+  containment:$("#faceImg"),
+  drag:function(){
+    var temp_top=$(this).offset().top-$("#faceImg").offset().top;
+	var temp_left=$(this).offset().left-$("#faceImg").offset().left;
+    scale=48/$(this).height();
+    $("#faceImg_pre").height(imgH*scale);
+	$(this).css("background","url("+src+") -"+(temp_left+1)+"px -"+(temp_top+1)+"px no-repeat");
+    $("#imgBox_pre div").scrollTop(temp_top*scale).scrollLeft(temp_left*scale);
+  },
+  stop:function(){
+    $("#width").val($(this).width());
+	$("#height").val($(this).height());
+	$("#left").val(($(this).offset().left-$("#faceImg").offset().left));
+	$("#top").val(($(this).offset().top-$("#faceImg").offset().top));
+  }
+});
+$("#imgCut").resizable({
+  containment:$("#faceImg"),
+  handles:"all",
+  knobHandles:true,
+  aspectRatio:true,
+  minWidth:48,
+  minHeight:48,
+  resize:function(){
+    var temp_top=$(this).offset().top-$("#faceImg").offset().top;
+	var temp_left=$(this).offset().left-$("#faceImg").offset().left;
+    scale=48/$(this).height();
+    $("#faceImg_pre").height(imgH*scale);
+	$(this).css("background","url("+src+") -"+(temp_left+1)+"px -"+(temp_top+1)+"px no-repeat");
+    $("#imgBox_pre div").scrollTop(temp_top*scale).scrollLeft(temp_left*scale);
+  },
+  stop:function(e,ui){
+    $("#width").val($(this).width());
+	$("#height").val($(this).height());
+	$("#left").val(($(this).offset().left-$("#faceImg").offset().left));
+	$("#top").val(($(this).offset().top-$("#faceImg").offset().top));
+  }
+});
+</SCRIPT>
+</BODY></HTML>

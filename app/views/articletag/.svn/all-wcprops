@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag
+END
+create.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/create.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/index.rhtml
+END
+index1.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/index1.rhtml
+END
+index2.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/index2.rhtml
+END
+index3.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/index3.rhtml
+END
+show.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/show.rhtml
+END
+delete.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/articletag/delete.rhtml
+END

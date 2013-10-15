@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title><%= page_title -%>-和家网</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="robots" content="noindex, nofollow" />
+    <%= javascript_include_tag :defaults, "menu" %>
+    <script type="text/javascript" src="/javascripts/WebCalendar.js" charset="utf8"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen, projection" />
+  </head>
+
+  <body id="body-<%= controller.controller_name -%>">
+    <div class="container">
+      <div id="header" class="clearfix">
+        <!--<div id="logo"><a href="/">管理后台</a></div>-->
+        <div id="menu">
+          <ul class="level1 clearfix" id="root">
+            <li><a href="/">首页</a></li>
+            <li><%= link_to "图库广告", photo_ads_path %></li>
+          </ul>
+        </div>
+      </div>
+      <div id="content">
+        <% flash.each do |key, msg| -%>
+          <%= content_tag :div, msg, :class => key -%>
+        <% end -%>
+        <h2><%= page_title -%><%= image_tag 'icons/indicator.gif', :id => 'indicator', :style => 'display:none;' %><span><%= common_actions %></span></h2>
+        <%= yield %>
+      </div>
+      <div id="footer">
+        <ul class="clearfix">
+          <li><a href="/" title="返回管理首页">返回管理首页</a></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<%if flash[:success]%>
+  <p><font color="red"><%= flash[:success] %></font></p>
+<%end%>
+<p>
+  针对公司的印象. 评论. 等分模块管理.. 单独的模块可以定义操作类型.
+  操作类型限定如: 正常、先审后发、禁止。
+</p>
+<form action="/decocompany/popedom_update" method="post">
+  <input type="hidden" name="companyid" value="<%=@company.id%>"/>
+  <table border=1>
+    <tr>
+      <td>公司名</td>
+      <td><%=@company.name_zh%></td>
+    </tr>
+    <tr>
+      <td>权限</td>
+      <td><input type="radio" name="popedom" value="1" <%if @company.popedom == 1%>checked<%end%>/>正常 &nbsp;<br/>
+        <input type="radio" name="popedom" value="0" <%if @company.popedom == 0%>checked<%end%>/>先发后审 &nbsp;<br/>
+        <input type="radio" name="popedom" value="-1" <%if @company.popedom == -1%>checked<%end%>/>禁止 &nbsp;
+      </td>
+    </tr>
+
+
+    <tr>
+      <td align=center colspan=2><input type="submit" value="确定"></td>
+    </tr>
+  </table>
+</form>

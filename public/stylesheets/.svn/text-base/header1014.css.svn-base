@@ -1,0 +1,147 @@
+/* CSS Document */
+
+*{padding:0;}
+body{
+	font-family:"宋体"; font-size:12px; line-height:20px;
+	color:#000;
+	margin:0 auto;
+
+}
+body{
+	text-align:center;
+	}
+.Div_center{
+	margin:0 auto;
+	width:960px;
+	background-color:#fff;
+}
+div,tr{
+	text-align:left;
+	}
+p{
+	line-height:170%;
+	color:#000;
+	margin:0 auto;
+	padding:0px;
+	}
+ul,li{
+	padding:0px;
+	margin:0px;
+	list-style-type: none;
+}
+img{border:0px}
+html,body { height:100%;} 
+a{text-decoration:none; text-align:left}
+img{border:0}
+li{list-style:none}
+td {text-align:left}
+.clear{clear:both}
+
+
+
+
+
+.Top_title {width:960px; margin:0 auto; position:relative; border-bottom:1px solid #BFBFBF; border-top:1px solid #BFBFBF; overflow:hidden; margin-top:8px;}
+.Top_title ul{ height:47px; float:left; margin-left:10px;}
+.Top_Navtion li{display:inline; font-size:14px; line-height:47px;}
+.Top_Navtion li a{ color:#7F7F7F; background:url(http://www.51hejia.com/images/Images1014/GrayLine.gif) no-repeat 0 40%; padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px;}
+.Top_Navtion .Linew a{ color:#7F7F7F; background:none;}
+.Top_Navtion .RedNavZhong a{ background:none; background-color:#F20000; color:#fff; padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px;}
+.Top_title img{ float:left;}
+.Top_title span img{ margin-top:11px;}
+.Top_Anniu{ right:7px; float:right; line-height:47px;}
+.Top_Anniu img{ margin-right:5px; margin-top:13px;}
+.Top_Anniu span {float:left;}
+.Top_Navtion li a:hover{ background:none; background-color:#F20000; color:#fff; padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px; }
+.Pindao{ height:40px; margin-top:5px;}
+.Pindao li { display:inline; height:40px; cursor:pointer; float:left;}
+.Pindao li a{ color:#575757;}
+.Pindao li a:hover{ color:#ff6600;}
+.Pindao .line{ background-color:#ECECEC; width:2px; height:40px; margin-left:10px; margin-right:10px;}
+.Pindao .Red{ color:#D8403F;}
+
+
+
+.Top_title a {color:#545454;}
+.Top_title Selected a {color:#FC0404; font-weight:bold;}
+.Top_title .Top_Reg a{
+	color:#FC0404;
+	font-size:12px;
+	font-weight:bold;
+}
+.Top_title #Top_Reg a{
+	color:#FC0404;
+	font-size:12px;
+	font-weight:bold;
+}
+#logo {float:left; width:160px; margin:0px; padding:0px; height:30px; overflow:hidden;}
+#SH {float:left;}
+#SH {width:36px; 20px; margin-top:4px; margin-right:7px;}
+#slidetabsmenu {float:left;width:420px;font-size:12px;line-height:normal; float:left; margin-top:4px; height:30px; overflow:hidden; margin-bottom:0px;}
+#slidetabsmenu li{display:inline;}
+#slidetabsmenu a { color:#000000; float:left;width:66px; height:20px;text-align:center; padding-top:7px; font-size:14px; font-weight:bold; border:1px solid #dadfe2; margin-right:2px;}
+#slidetabsmenu a:hover { background-color:#E60000; color:#fff; width:66px; float:left;}
+#slidetabsmenu .current a { background-color:#E60000; float:left; color:#fff;text-align:center;width:66px; float:left;}
+#slidetabsmenu .current1 a { float:left; color:#FD0003;text-align:center;width:66px; float:left;}
+.Gray_Line{
+	height:34px;
+	background-image:url(http://www.51hejia.com/images/Common/Lin_Gray1.gif);
+	background-repeat:repeat-x;
+}
+#hdsearch { float:left; margin-top:4px; color:#333; line-height:22px; padding-left:7px;}
+#hdsearch input {height:18px; border:1px solid #cecece; padding-left:2px; padding-right:2px; margin:0; line-height:16px; margin-left:2px; width:130px;}
+#hdsearch select { height:18px; height:20px !important; width:50px; border:1px solid #cecece; overflow:hidden;font-size:12px; line-height:16px;}
+#hdsearch img {margin-right:0px;}
+.Top_Line{
+	height:50px;
+	background-image:url(http://www.51hejia.com/images/Common/Top_Line.gif);
+	background-repeat:repeat-x;
+	margin-bottom:4px;
+}
+#hdnav { width:955px; float:left; color:#CCCCCC; padding-top:5px; padding-bottom:5px; padding-left:5px;}
+#hdnav a {color:#535353;}
+#hdnav a:hover{text-decoration:underline; color:#FF6600;}
+#hdnav ul {float:left; margin-right:4px;}
+#hdnav li {line-height:19px;}
+#hdnav .pin {border-right:1px solid #cecece; padding-right:14px;}
+.Hdnav_1{
+	color:#535353;
+}
+.C_M a{
+	color:#525252;
+}
+#hdnav .A_Hove{
+	color:#FF6600;
+}
+.A_Hove{
+	color:#FF6600;
+}
+#Login .denglu {position:absolute; right:55px; top:4px; font-size:12px; font-weight:normal;}
+#Login .denglu a{color:#f60; text-decoration:underline}
+#Login{background:#fff;width:220px;border:1px solid #ccc;position:absolute;z-index:100;left:50%;top:50%;margin-left:-100px; margin-top:-135px;color:#000}
+#Login h4 span,#zhuce h4 span{background:url(http://www.51hejia.com/css/newback/images/titlebg1.gif) no-repeat left center;float:left; text-indent:20px; line-height:26px}
+#Login h4 a,#zhuce h4 a{float:right;margin-right:10px;margin-top:6px}
+#Login h4 span a{float:none;margin:0 0 0 5px}
+#Login fieldset{margin:10px 0}
+#Login legend strong{font-size:14px;display:block;background:url(http://www.51hejia.com/css/newback/images/btbg.gif) no-repeat 32% 0;line-height:40px; text-align:center;color:#000}
+#Login fieldset p{text-align:center;margin:10px 0}
+#Login label{display:block;font-size:12px;margin:5px 0}
+#Login fieldset div{margin-left:30px}
+a.Divopop-nonenei{position:absolute;z-index:9999;right:20px;top:6px;display:block}
+.Pho_Right{
+	float:right;
+	margin-right:2px;
+}
+.Pho_Right img {width:232px; height:41px;}
+.Top_Reg{
+	color:#FC0404;
+	font-size:12px;
+	font-weight:bold;
+}
+#show_login { float:left;}
+
+
+.font_link_s2 a {color:#333;}
+#footer a {color:#333;}
+#footer span a {color:#333;}
+#footer table {color:#333;}

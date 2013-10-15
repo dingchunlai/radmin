@@ -1,0 +1,23 @@
+<form action="/decocompany/vedioedit" method=post>
+<input type="hidden" name="id" value="<%=@id%>">
+<table align=center>
+	<tr>
+		<td>标题</td>
+		<td><input type="text" name="title" value="<%=@vedio.title%>"></td>
+	</tr>
+	<tr>
+		<td>视频代码</td>
+		<td><textarea name="content" cols=50 rows=20><%=@vedio.content%></textarea></td>
+	</tr>
+	<tr>
+		<td>推荐</td>
+		<td><input type=radio name="tuijian" value="0" <%if @vedio.tuijian.to_i == 0%>checked<%end%>>不推荐
+			<input type=radio name="tuijian" value="1" <%if @vedio.tuijian.to_i == 1%>checked<%end%>>推荐
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="确定"></td>
+	</tr>
+</table>
+</form>

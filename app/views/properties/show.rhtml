@@ -1,0 +1,16 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+	<tr>
+		<th>编号</th>
+		<th>类别</th>
+		<th>名称</th>
+		<th>排序</th>
+		<th>相关操作</th>
+	</tr>
+  <tr class="<%= cycle("odd", "even")%>">
+    <td><%= @property.id -%></td>
+    <td><%= link_to @property.category.name_zh, category_properties_path(:category_id => @property.category.tagid) if @property.category -%></td>
+    <td><%= link_to @property.name, property_path(@property) -%></td>
+    <td><%= @property.position -%></td>
+    <td><%= link_to "编辑", edit_property_path(@property) -%></td>
+  </tr>
+</table>

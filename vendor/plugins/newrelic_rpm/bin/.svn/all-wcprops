@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/bin
+END
+newrelic_cmd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/bin/newrelic_cmd
+END
+mongrel_rpm
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/bin/mongrel_rpm
+END

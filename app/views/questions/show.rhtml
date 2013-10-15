@@ -1,0 +1,17 @@
+<% title @question.title  %>
+
+<p>
+  <strong>分类:</strong>
+  <%=h get_question_category(@question.category) %>
+</p>
+
+<p>
+  <strong>选项:</strong><br />
+  <% form_for @option do |f| -%>
+    "选项:"
+  <% end -%>
+</p>
+
+<p>
+  <%= link_to "返回问题列表", activity_questions_path(@activity) %>
+</p>

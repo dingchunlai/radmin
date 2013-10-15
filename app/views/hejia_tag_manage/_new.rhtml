@@ -1,0 +1,24 @@
+<script>
+  $(document).ready(function(){
+    $(".create_hejia_tag").click(function(){
+      $.post("/hejia_tag_manage/subdirectories_update",{
+        'type': 'new',
+        'tagfatherid': $("#tagfatherid").val(),
+        'city_name': $("#city_name").val(),
+        'city_pinyin': $("#city_pinyin").val()
+      },function(data){
+        if(data == "ok"){
+        alert("操作已完成");}
+      });
+    });
+  });
+</script>
+<div>
+  <p>新建子项目</p>
+</div>
+<form action="">
+  <input type="hidden" name="tagfatherid" id="tagfatherid" value="<%= @tag.TAGID %>"/>
+  请输入省/市/县/区:<input name="city_name" id ="city_name" type="text" value="" size="10"/>
+  pinyin:<input name="city_pinyin" id ="city_pinyin" type="text" value="" size="10"/>
+  <input name="" type="button" value="新建" class="create_hejia_tag" />
+</form>

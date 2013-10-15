@@ -1,0 +1,83 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 1000;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  }
+  function gotopage(page){
+    window.open("/wenba/section_topics?page="+page+"&recordcount=<%=@recordcount%>&start_id=<%= @start_id %>&end_id=<%= @end_id %>", "_self");
+  }
+</script>
+<style type="text/css">
+  .ellipsis{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap
+  }
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="topics_list" action="/wenba/section_topics" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      起始ID：<%= text_field_tag :start_id,@start_id %>&nbsp;&nbsp;结束ID：<%= text_field_tag :end_id,@end_id %>
+      <input type="submit" value="搜 索" onclick="document.topics_list.action = '/wenba/section_topics';document.topics_list.submit();" />
+      <input type="submit" value="删 除" onclick="document.topics_list.action = '/wenba/section_topics_del';document.topics_list.submit();" /><br />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+      <script type="text/javascript">
+        document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));
+      </script>
+        页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>问题标题</th>
+        <th>回复数</th>
+        <th>用户</th>
+        <th>板块名</th>
+        <th>创建时间</th>
+      </tr>
+      <%for topic in @topics%>
+        <tr align="center" style="background-color:#FFFDE6" id="tr_<%=topic.id%>">
+          <td align="left"><input type="checkbox" name="arid" id="arid<%=topic.id%>" value="<%=topic.id%>" /> <%=topic.id%></td>
+          <td align="left"><div class="ellipsis" style="width:400px;">
+              <a href="http://wb.51hejia.com/q/<%=topic.id%>.html" target="_blank"><%=topic.subject%></a>
+            </div></td>
+          <td><%=topic.post_counter%></td>
+          <td><%if topic.user_id==0%>游客<%else%><a href="http://blog.51hejia.com/u/<%=topic.user_id%>" target="_blank"><%=topic.user.USERNAME rescue "<font color='red'>未知用户</font>"%></a><%end%></td>
+          <td><%=get_tag_name_by_tag_id(topic.tag_id)%></td>
+          <td><%=topic.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+        </tr>
+      <%end %>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+      <span id="pagelist"></span>
+    </div>
+  </form>
+</div>

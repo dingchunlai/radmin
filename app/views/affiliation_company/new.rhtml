@@ -1,0 +1,136 @@
+<%= javascript_include_tag :defaults %>
+
+<script src="/javascripts/tiny_mce/tiny_mce_src.js?1241055414" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+tinyMCE.init({
+convert_urls : false,
+editor_selector : 'mceEditor',
+language : 'zh',
+mode : 'textareas',
+plugins : "table,fullscreen,upload",
+relative_urls : false,
+theme : 'advanced',
+theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontselect,fontsizeselect,|,outdent,indent,blockquote,|,undo,redo',
+theme_advanced_buttons2 : 'tablecontrols,|,hr,removeformat,visualaid,code |,hr,removeformat,visualaid,|,link,unlink,anchor,image,upload,cleanup,|,forecolor,backcolor,code',
+theme_advanced_buttons3 : '',
+theme_advanced_resize_horizontal : false,
+theme_advanced_resizing : true,
+theme_advanced_statusbar_location : 'bottom',
+theme_advanced_toolbar_align : 'left',
+theme_advanced_toolbar_location : 'top',
+visual : false,
+width : '300px',
+height : '200px'
+});
+//]]>
+
+
+  
+</script>
+<% unless flash[:errors].blank? -%>
+<div id='errors'><%= flash[:errors]  -%></div>
+<% end -%>
+<% form_for :company, @company, :url => {:action => "create"} do |f|%>
+<p>
+
+<label for="公司名称">公司名称</label>  
+  <br />
+<%= f.text_field :CN_NAME -%>
+</p>
+<p>
+
+  <label for="公司地址">公司地址</label><br />
+  
+<%= f.text_field :ADDRESS -%>
+</p>
+<p>
+  <label for="登录帐号">登录帐号</label><br />  
+  <%= text_field :user, :USERNAME -%>
+</p>
+
+<p>
+  <label for="密码">密码</label><br />  
+  <%=password_field_tag :PASSWORD -%>
+</p>
+
+<p>
+  <label for="确认密码">确认密码</label><br />  
+  <%=password_field_tag :CONFIRM_PASSWORD -%>
+</p>
+
+<p>
+  <label for="邮箱">邮箱</label><br />  
+  <%= f.text_field :EMAIL -%>
+</p>
+
+<p>
+  <label for="联系电话">联系电话</label><br />  
+  <%= f.text_field :TEL -%>
+</p>
+<p>
+  <label for="手机">手机</label><br />  
+  <%= f.text_field :MOBELTELEPHONE -%>
+</p>
+
+<p>
+
+  <label for="公司所在区域">公司所在区域</label><br />
+  <div style='float: left;margin-right: 12px;'>
+  <%= f.select(:COMPANYCITY, @cities, {:selected => "11910"}, {  :onchange => "new Ajax.Updater('region_id', '/affiliation_company/select_city', {asynchronous:true, evalScripts:true, parameters:'city='+this.value})"} ) %>
+  </div>
+  
+  <div id='region_id' >
+  <%= f.select(:COMPANYAREA, @regions) %>
+  </div>
+</p>
+
+<p>
+  <label for="公司主推风格">公司主推风格</label><br />
+  <%= f.select(:primary_style, @style)  %>
+</p>
+
+<p>
+  <label for="公司主打优势">公司主打优势</label><br />  
+  <%= f.select(:primary_vantag, @vantage)  %>
+</p>
+
+<p>
+  <label for="首选价位段">首选价位段</label><br />  
+  <% @values.each do |value| -%>
+	<%= check_box_tag "selected_ids[]", value.tagid %>
+	<%= value.tagname %>
+  <% end -%>
+
+</p>
+
+<p>
+  <label for="公司简介">公司简介</label><br />  
+  <textarea name="company[DESCRIBE]" class="mceEditor"></textarea>
+</p>
+<style type="text/css" media="screen">
+#terms_content {
+
+width:300px;
+border: solid 1px ;
+padding:10px 20px 10px 10px;
+height:100px;
+overflow:scroll;
+font-size: 11px;
+}
+
+</style>
+阅读合家网合作协议
+<div id="terms_content">
+  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+</div>
+<br/>
+<p>
+  <%= check_box_tag :accept %>我已阅读并接受"合作协议"
+</p>
+
+<%= submit_tag "确认"%>
+<%= button_to_function "取消", "document.forms[0].reset();return false;"%>
+
+<% end %>
+

@@ -1,0 +1,134 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 700;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/hejiatag/inner_link_list?page="+page+"&recordcount=<%=@recordcount%>&stext=<%=u(@stext)%>", "_top");
+}
+function hidden_record(ids){
+  ids = ids.split(",");
+  for (var id in ids){
+    if (ge('arid' + ids[id])!=null){
+      ge('arid' + ids[id]).value = '0';
+      ge('tr_' + ids[id]).style.display = "none";
+    }
+  }
+}
+function getids(){
+    var ids = [];
+    if (document.form1.arid.length==undefined){
+        if (document.form1.arid.checked) ids = document.form1.arid.value;
+    }else{
+        for (i=0; i<document.form1.arid.length;i++){
+            if (document.form1.arid[i].checked && document.form1.arid[i].value!='0') ids.push(document.form1.arid[i].value);
+        }
+        ids = ids.join(",");
+    }
+    if (ids==""){alert("请选择记录！"); return "";} else return ids;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        hideiframe.location="/hejiatag/inner_link_del?ids=" + ids;
+        hidden_record(ids);
+      }
+    }
+}
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+<style type="text/css">
+  .ellipsis{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap
+  }
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1" action="/hejiatag/inner_link_list" target="_top" method="post" style="margin:0px;padding:0px;">
+  <div style="font-family:Verdana; color:#7389A4; line-height:30px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    关键词：<input name="stext" type="text" size="15" value="<%=@stext%>" />　
+    <input type="submit"value="搜 索" />
+  </div>
+  </form>
+  <form name="form1" action="/hejiatag/inner_link_save" target="hideiframe" method="post" style="margin:0px;padding:0px;">
+  <div style="font-family:Verdana; color:#7389A4; line-height:30px; font-size:14px; letter-spacing:2px; margin: 0px 0px 5px 5px; ">
+    关键词：<input name="keyword" type="text" size="15" value="<%=@keyword%>" />　
+    链接：http:// <input name="kw_url" type="text" size="30" value="<%=@kw_url%>" />　
+    <input type="submit"value="添 加" />
+  </div>
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>关键词</th>
+            <th>链接</th>
+            <th>创建时间</th>
+    </tr>
+    <%for r in @rs%>
+    <tr align="center" style="background-color:#FFFDE6" id="tr_<%=r.id%>">
+      <td align="left"><input type="checkbox" name="arid" id="arid<%=r.id%>" value="<%=r.id%>" /> <%=r.id%></td>
+      <td><%=r.keyword%></td>
+      <td><a href="http://<%=r.url%>" target="_blank"><%=r.url%></a></td>
+      <td><%=r.created_at.strftime("%Y-%m-%d") rescue ""%></td>
+    </tr>
+    <%end %>
+    </table>
+    <div style="padding:10px 0px 0px 10px">
+
+     
+    </div>
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input onclick="SelectAll(document.form1.arid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+	<input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/rack
+END
+metric_app.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/rack/metric_app.rb
+END
+mongrel_rpm.ru
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/rack/mongrel_rpm.ru
+END
+newrelic.yml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/rack/newrelic.yml
+END

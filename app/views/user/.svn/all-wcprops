@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user
+END
+_user_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user/_user_form.rhtml
+END
+hlogin.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user/hlogin.rhtml
+END
+edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user/edit.rhtml
+END
+login.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user/login.rhtml
+END
+new.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user/new.rhtml
+END
+list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/user/list.rhtml
+END

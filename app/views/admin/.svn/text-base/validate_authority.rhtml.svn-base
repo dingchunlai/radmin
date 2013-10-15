@@ -1,0 +1,18 @@
+<script type="text/javascript">
+  window.onload = function(){
+
+  }
+</script>
+<form action="/admin/validate_authority" method="post" onsubmit="document.getElementById('submit_button').disabled = true;">
+  <center>
+    <br /><br /><br />
+    请输入外部访问密码： <input name="opw" type="password" style="width: 150px;" />　
+  <input type="submit" id="submit_button" value="继续访问" />
+  <br /><br /><br />
+  <span style="color:#CE0000">操作提示：<%=@notice%></span>
+  </center>
+</form>
+
+
+<iframe name="hideiframe" id="hideiframe" width="0" height="0" style="display: none;"></iframe>
+

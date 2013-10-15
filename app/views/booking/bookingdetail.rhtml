@@ -1,0 +1,125 @@
+<table align="center">
+	<tr>
+		<td>
+			姓名
+		</td>
+		<td>
+			<%=@bookingdeco.name%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			地址
+		</td>
+		<td>
+			<%=@bookingdeco.address%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			邮政编码
+		</td>
+		<td>
+			<%=@bookingdeco.zip_code%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			小区名字
+		</td>
+		<td>
+			<%=@bookingdeco.xiaoqu_name%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			电话
+		</td>
+		<td>
+			<%=@bookingdeco.tel%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			email
+		</td>
+		<td>
+			<%=@bookingdeco.email%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			预计装修时间
+		</td>
+		<td>
+			<%if @bookingdeco.preview_time%>
+				<%=@bookingdeco.preview_time.strftime("%Y-%m-%d")%>
+			<%end%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			地区
+		</td>
+		<td>
+			<%=@bookingdeco.city.TAGNAME%>&nbsp;<%=@bookingdeco.region.TAGNAME%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			房型
+		</td>
+		<td>
+			
+			<%if @bookingdeco.fang %>
+				<%=@bookingdeco.fang%>房
+			<%end%>
+			
+			<%if @bookingdeco.ting %>
+				<%=@bookingdeco.ting%>厅
+			<%end%>			
+			
+			<%if @bookingdeco.wei %>
+				<%=@bookingdeco.wei%>卫
+			<%end%>				
+		</td>
+	<tr>
+	<tr>
+		<td>
+			房型图
+		</td>
+		<td>
+			<%if @bookingdeco.house_photo_path%>
+				<img src="<%=@bookingdeco.house_photo_path%>" length=100 height=100>
+			<%end%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			建筑面积
+		</td>
+		<td>
+			<%=@bookingdeco.building_area%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			装修房子类型
+		</td>
+		<td>
+			<%if @bookingdeco.deco_type == 1%>
+				新房
+			<%elsif @bookingdeco.deco_type == 2%>
+				二手房
+			<%end%>
+		</td>
+	<tr>
+	<tr>
+		<td>
+			装修需求
+		</td>
+		<td>
+			<%=@bookingdeco.deco_requirement%>
+		</td>
+	<tr>
+</table>

@@ -1,0 +1,228 @@
+<style type="text/css">
+  * {
+    margin:0px;
+    padding:0px;
+  }
+  ul {
+    list-style-type:none;
+    width:960px;
+  }
+  li {
+    list-style-type:none;
+    line-height:30px;
+  }
+  #photo_tag li {line-height:20px;}
+  .right {
+    float:right;
+  }
+  .left {
+    float:left;
+  }
+  .text_right {
+    text-align:right;
+  }
+  .text_left {
+    text-align:left;
+  }
+  #page {
+    margin:0 auto;
+    width:960px;
+  }
+  #case_pics img{border:none}
+  #case_pics a{padding:0px;margin:0px}
+  #case_pics a:hover{padding:0px;margin:0px}
+</style>
+<script type="text/javascript">
+  function ch(id){
+    i = document.getElementById(id);
+    if(i.checked){
+      i.checked = false;
+    } else {
+      i.checked = true;
+    }
+  }
+  function ss(id){
+    if(document.getElementById(id).style.display == "inline"){
+      document.getElementById(id).style.display = "none";
+    } else {
+      document.getElementById(id).style.display = "inline"
+    }
+  }
+</script>
+<script type="text/javascript" src="/javascripts/builder.js"></script>
+<script type="text/javascript" src="/javascripts/modalbox.js"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/modalbox.css"></link>
+<div id="page">
+  <h2 style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:28px;">
+    <a href="/admin_case/articles_to_cases_index" style="font-size:15px;">打标签首页</a>
+    <span class="right text_right" id="choose_case_type">
+      <% if @tag_name == "none" %>
+        <%= link_to_remote "案例类", :url => {:action => "choose_case_type",
+          :id => @case.ID, :type => "anli"}, :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" %>
+        <%= link_to_remote "产品类", :url => {:action => "choose_case_type",
+          :id => @case.ID, :type => "chanpin"}, :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" %>
+        <%= link_to_remote "新闻类", :url => {:action => "choose_case_type",
+          :id => @case.ID, :type => "xinwen"}, :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" %>
+        <%= link_to_remote "生活类", :url => {:action => "choose_case_type",
+          :id => @case.ID, :type => "shenghuo"}, :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" %>
+        <img id="indicator" style="display: none;" src="http://radmin.51hejia.com/images/icons/indicator.gif" alt="Indicator"/>
+      <% else %>
+        <%= render :partial => "admin_case/choose_tag/choose_case_type" %>
+      <% end %>
+    </span>
+  </h2>
+  <br />
+  <h3 style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:22px;margin-bottom:5px;">
+    <%= @case.NAME %>
+  </h3>
+  <p>
+    <%= @case.INTRODUCE %>
+  </p>
+  <br />
+  <% link_tags = HejiaTagEntityLink.find(:all, :conditions => ["LINKTYPE = 'case' and ENTITYID = ?", @case.ID]) %>
+  <%
+  chanpin = HejiaTagEntityLink.find(:first, :conditions => ["LINKTYPE = 'case' and ENTITYID = ? and TAGID = ?", @case.ID, 41662])
+  xinwen = HejiaTagEntityLink.find(:first, :conditions => ["LINKTYPE = 'case' and ENTITYID = ? and TAGID = ?", @case.ID, 9079])
+  shenghuo = HejiaTagEntityLink.find(:first, :conditions => ["LINKTYPE = 'case' and ENTITYID = ? and TAGID = ?", @case.ID, 30885])
+  anli = HejiaTagEntityLink.find(:first, :conditions => ["LINKTYPE = 'case' and ENTITYID = ? and TAGID = ?", @case.ID, 4346])
+  if chanpin.nil? && xinwen.nil? && shenghuo.nil? && anli.nil?
+    dis = true
+  else
+    dis = false
+  end
+%>
+  <% if chanpin || dis %>
+    <div id="chanpin" style="display:none;">
+      <form action="/admin_case/save_case_tag" method="post">
+        <ul>
+          <%= render :partial => "admin_case/choose_tag/choose_tag_head" %>
+          <input type="hidden" name="case[ID]" value="<%= @case.ID %>" />
+          <li onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');">
+            <% unless @chanpin.empty? %>
+              <%
+              tname = query_tag(@chanpin[0].TAGFATHERID).TAGNAME
+              turl = query_tag(@chanpin[0].TAGFATHERID).TAGURL
+            %>
+              <strong><%= tname %>：</strong>
+              <% @chanpin.each do |tag| %>
+                <input type="checkbox" name="<%= turl %>[]" value="<%= tag.TAGID %>" id="tag_<%= tag.TAGID %>" <%= is_checked(link_tags, tag.TAGID) %> />
+                <span><%= tag.TAGNAME %></span>
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+        <input type="submit" value="提交" />
+      </form>
+    </div>
+  <% end %>
+  <% if xinwen || dis %>
+    <div id="xinwen" style="display:none;">
+      <form action="/admin_case/save_case_tag" method="post">
+        <ul>
+          <%= render :partial => "admin_case/choose_tag/choose_tag_head" %>
+          <input type="hidden" name="case[ID]" value="<%= @case.ID %>" />
+          <li onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');">
+            <% unless @zixun.empty? %>
+              <%
+              tname = query_tag(@zixun[0].TAGFATHERID).TAGNAME
+              turl = query_tag(@zixun[0].TAGFATHERID).TAGURL
+            %>
+              <strong><%= tname %>：</strong>
+              <% @zixun.each do |tag| %>
+                <input type="checkbox" name="<%= turl %>[]" value="<%= tag.TAGID %>" id="tag_<%= tag.TAGID %>" <%= is_checked(link_tags, tag.TAGID) %> />
+                <span><%= tag.TAGNAME %></span>
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+        <input type="submit" value="提交" />
+      </form>
+    </div>
+  <% end %>
+  <% if shenghuo || dis %>
+    <div id="shenghuo" style="display:none;">
+      <form action="/admin_case/save_case_tag" method="post">
+        <ul>
+          <%= render :partial => "admin_case/choose_tag/choose_tag_head" %>
+          <input type="hidden" name="case[ID]" value="<%= @case.ID %>" />
+          <li onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');">
+            <% unless @jiaju.empty? %>
+              <%
+              tname = query_tag(@jiaju[0].TAGFATHERID).TAGNAME
+              turl = query_tag(@jiaju[0].TAGFATHERID).TAGURL
+            %>
+              <strong><%= tname %>：</strong>
+              <% @jiaju.each do |tag| %>
+                <input type="checkbox" name="<%= turl %>[]" value="<%= tag.TAGID %>" id="tag_<%= tag.TAGID %>" <%= is_checked(link_tags, tag.TAGID) %> />
+                <span><%= tag.TAGNAME %></span>
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+        <input type="submit" value="提交" />
+      </form>
+    </div>
+  <% end %>
+  <% if anli || dis %>
+    <div id="anli" style="display:none;">
+      <form action="/admin_case/save_case_tag" method="post">
+        <ul>
+          <%= render :partial => "admin_case/choose_tag/choose_tag_head" %>
+          <input type="hidden" name="case[ID]" value="<%= @case.ID %>" />
+          <% ts = [@huxing,@fengge,@feiyong,@yanse,@fangshi,@yongtu,@tebie,@anli] %>
+          <% ts.each do |t1| %>
+            <li style="background-color:<%= cycle("#CCE8CF", "#fff") -%>;">
+              <% g = t1.group_by { |x| x.TAGCOMMENT } %>
+              <% g.each do |key, t| %>
+                <% unless t.nil? %>
+                  <%
+                  tname = query_tag(t[0].TAGFATHERID).TAGNAME
+                  turl = query_tag(t[0].TAGFATHERID).TAGURL
+                %>
+                  <span style="color:#336699;width:150px;display:block;float:left;"><strong><%= tname+"：" %></strong><%= key %></span>
+                  <% t.each do |tag| %>
+                    <input type="checkbox" name="<%= turl %>[]" value="<%= tag.TAGID %>" id="<%= turl %>" <%= is_checked(link_tags, tag.TAGID) %> />
+                    <span><%= tag.TAGNAME %></span>
+                  <% end %><br />
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+          <li style="background-color:<%= cycle("#CCE8CF", "#fff") -%>;">
+            <% g = @gonggong.group_by { |x| x.TAGCOMMENT } %>
+            <% g.each do |key, t| %>
+              <% unless t.nil? %>
+                <%
+                tname = query_tag(t[0].TAGFATHERID).TAGNAME
+                turl = query_tag(t[0].TAGFATHERID).TAGURL
+              %>
+                <span style="color:#336699;width:150px;display:block;float:left;"><strong><%= link_to_function tname+"：", "$('gonggongkongjian').toggle();" %></strong><%= key %></span>
+                <span style="display:none;" id="gonggongkongjian">
+                  <% t.each do |tag| %>
+                    <input type="checkbox" name="<%= turl %>[]" value="<%= tag.TAGID %>" id="<%= turl %>" <%= is_checked(link_tags, tag.TAGID) %> />
+                    <span><%= tag.TAGNAME %></span>
+                  <% end %></span><br />
+              <% end %>
+            <% end %>
+          </li>
+        </ul>
+        <input type="submit" value="提交" />
+      </form>
+    </div>
+  <% end %>
+  <div id="case_pics">
+    <% if @photos %>
+      <% @photos.each do |p| %>
+        <a href="/admin_case/choose_tag_for_photo?id=<%= p.id %>&case_id=<%= @case.ID %>" onclick="Modalbox.show(this.href, {title: this.title, width: 990, height: 600}); return false;">
+          <img src="<%= p.get_photo_url %>" height="140" width="200" />
+        </a>
+      <% end %>
+    <% end %>
+  </div>
+  <br />
+  <div class="paginate">
+    <%= link_to '&laquo; 上一页', { :page => @pages.current.previous.to_i, :id => @case.ID } if @pages.current.previous %>
+    <%= pagination_links(@pages, :params => { :id => @case.ID }, :window_size => 14) %>
+    <%= link_to '下一页 &raquo;', { :page => @pages.current.next.to_i, :id => @case.ID } if @pages.current.next %>
+  </div>
+</div>

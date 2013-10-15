@@ -1,0 +1,72 @@
+<style type="text/css">
+table {
+	border:1px solid #CCC;
+	border-collapse:collapse ;
+	width:100%;
+}
+th, td {
+	border:1px solid #DDD;
+	border-left:0;
+	border-right:0;
+	padding:.3em .5em;
+}
+
+tr{ 
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]); 
+}
+</style>
+<form id="fmid" action="/review/base_data_index" >
+<p align=right></p>
+<p align=center>名字：<input type="text" name="keyname" value="<%=@keyname%>">&nbsp;<input type="submit" value="查询">&nbsp;&nbsp;<a href="/review/base_data_add" >新增</a></p>
+<input type="hidden" name="delid" id="delid">
+<table align=center border=1>
+	<tr>
+		<td>类型</td>
+		<td>名字</td>
+		<td>关键字</td>
+		<td>开始</td>
+		<td>结束</td>
+		<td>定值</td>
+		<td>操作</td>
+	</tr>
+	<%k1 = ''%>
+	<%k2 = ''%>
+	<%@datas.each do |d,index| -%>
+	<%k2 = d.keyword%>
+	<tr>
+		<td>
+			<%if k2 != k1 && index != 0%>
+				<%if d.keytype == 1%>
+					定值
+				<%elsif d.keytype == 2%>
+					范围
+				<%elsif d.keytype == 3%>
+					时间
+				<%end%>
+			<%else%>
+			
+			<%end%>
+		</td>
+		<td><%=d.name%></td>
+		<td><%=d.keyword%></td>
+		<td><%=d.start_num || '&nbsp;' %></td>
+		<td><%=d.end_num || '&nbsp;' %></td>
+		<td><%=d.value || '&nbsp;'%></td>
+		
+		<td><a href="/review/base_data_edit?id=<%=d.id%>" target="_blank">修改</a>&nbsp;
+			<a href="#n" onclick="deldata(<%=d.id%>)">删除</a></td>			
+	</tr>
+	<%k1 = d.keyword%>
+	<%end -%>
+</table>
+<p align=center><%= will_paginate @datas %></p>
+</form>
+<script language="javascript">
+	function deldata(dataid){
+		if (window.confirm('确定删除这条记录吗')){
+			document.getElementById('delid').value = dataid;
+			document.getElementById('fmid').action = '/review/base_data_delete';
+			document.getElementById('fmid').submit();
+		}
+	}
+</script>

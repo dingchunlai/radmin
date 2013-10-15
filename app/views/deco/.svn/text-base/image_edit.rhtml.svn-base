@@ -1,0 +1,193 @@
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+      tinyMCE.init({
+        mode : "exact",
+        #elements : "description",
+        language : "zh",
+        theme : "simple",<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+      tinyMCE.init({
+        mode : "exact",
+        #elements : "description",
+        language : "zh",
+        theme : "simple",
+        dialog_type : "modal",
+        convert_urls : false,
+        plugins : "advhr,advimage,advlink,emotions,fullscreen,preview,paste,table",
+        theme_advanced_layout_manager : "SimpleLayout",
+        theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,separator,forecolor,backcolor,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,link,unlink,advhr,image,advimage,advlink,emotions,pastetext,pasteword,fullscreen,selectall,code",
+        theme_advanced_buttons2 : "tablecontrols",
+        theme_advanced_buttons3 : "",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        extended_valid_elements : "fieldset[style],legend[style],a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+      });
+</script>
+
+<DIV class="user_right">
+
+<DIV id=widebar  STYLE="height:1030px;">
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 装修案例</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以添加和维护装修案例信息。以下有*的为必填项
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:950px;">
+	<div class="same_cha">
+    <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/deco/case_edit?id=<%=params[:caseid]%>">基本信息</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/deco/image_list?id=<%=params[:caseid]%>">装修实图</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/deco/house_list?id=<%=params[:caseid]%>">户型图</a></li>
+          <li class="line"></li>
+	</ul>
+  </div>
+  
+  <script type="text/javascript">
+  window.onload = function(){
+  }
+  function onformssubmit(form){
+  	var flg=true;
+ 	var img=document.getElementById('photo[uploaded_data]').value;
+ 	var imgsrc=document.getElementById('logoimg').value;
+ 	if(imgsrc.match('nil.gif') == 'nil.gif')
+	 	if(img.length == 0 ){
+	 		alert("请选择要上传的图片 . . .     ");
+	 		flg = false;
+	 	}
+	}
+    return flg;
+  }
+  </script>
+
+  <div id="same1" style="padding:10px;">
+  <FORM action="/deco/image_edit_save" method="post" enctype="multipart/form-data"  onsubmit="return onformssubmit(this);">
+  <TABLE width="50%" cellPadding=0 cellSpacing=0>
+        <TBODY>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center"><font color="red">*</font> 图 片：</TD>
+            <TD>
+              <%if pp(@img.filepath)%>
+                <a href="../files/hekea/case_img/<%=@img.filepath%>" target="_blank">
+                <img id="logoimg" src="../files/hekea/case_img/<%=@img.filepath%>" border="0" width="100" height="100" onmouseover="show(this)" onmouseout="hide(this)"/>
+                </a>
+              <%else%>
+                <img id="logoimg" src="/images/nil.gif" height="110"/>
+              <%end%>　
+            <input type="file" id="photo[uploaded_data]" name="photo[uploaded_data]" size="50"  onchange="document.getElementById('logoimg').src=this.value;"/>
+            </TD>
+          </TR>
+
+         <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center"><font color="red">*</font> 手动标签：</TD>
+            <TD><input name="imageHandTags" size="90" type="text" value="<%= @imageHandTags%>" />　多个标签请用空格分隔</TD>
+          </TR>
+		  
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">区域：</TD>
+            <TD>
+            
+            <% @tag1.each do |t1|  %>
+             	<input name="tag1[]" type="checkbox" value="<%=t1.tagname %>" <%=@tagids.include?(t1.tagid.to_s) ? "checked":""%>/><%=t1.tagname %>
+             <% end  %>
+            
+            </TD>
+          </TR>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">颜色：</TD>
+            <TD>
+            
+            <% @tag2.each do |t2|  %>
+              		<input name="tag2[]" type="checkbox" value="<%=t2.tagname %>" <%=@tagids.include?(t2.tagid.to_s) ? "checked":""%>/><%=t2.tagname %>
+            <% end %>
+            
+            </TD>
+          </TR>
+          <%if @coo.to_s=="7"%>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">区域产品：</TD>
+            <TD>
+            
+            <% @tag3.each do |t3|  %>
+            	<input name="tag3[]" type="checkbox" value="<%=t3.tagname %>" <%=@tagids.include?(t3.tagid.to_s) ? "checked":""%>/><%=t3.tagname %>
+            <% end %>
+            </TD>
+          </TR>
+          <%end%>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">图片属性：</TD>
+            <TD>
+            <% @tag4.each do |t4|  %>
+              	<input name="tag4[]" type="checkbox" value="<%=t4.tagname %>" <%=@tagids.include?(t4.tagid.to_s) ? "checked":""%>/> <%=t4.tagname %>
+             <% end %>
+            </TD>
+          </TR>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">风格：</TD>
+            <TD>
+            <% @tag5.each do |t5|  %>
+              	<input name="tag5[]" type="checkbox" value="<%=t5.tagname %>" <%=@tagids.include?(t5.tagid.to_s) ? "checked":""%>/> <%=t5.tagname %>
+             <% end %>
+            </TD>
+          </TR>
+          <TR height="30">
+            <TD width="1%" align="center" style="font-weight:bold">&nbsp;</TD>
+            <TD width="12%" align="center">介 绍：</TD>
+            <TD><textarea cols="40" id="description" name="description" rows="20" style="height:80px;"><%=@img.description %></textarea></TD>
+          </TR>
+          <TR height="30">
+            <TD align="center">&nbsp;</TD>
+            <TD align="center">&nbsp;</TD>
+            <TD>
+              <BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON>
+              <input type="hidden" name="id" value="<%=@id%>" />
+              <input type="hidden" name="page" value="<%=params[:page] || 1%>" />
+              <input type="hidden" name="caseid" value="<%=params[:caseid]%>" />
+            </TD>
+          </TR>
+        </TBODY>
+      </TABLE></FORM>
+  </div>
+</DIV>
+</DIV>
+</DIV>
+<div id="enlarge_images" style="position: absolute; z-index:101"></div> 
+<script language="javascript" type ="text/javascript" >
+	function show(_this) { 
+	    document.getElementById("enlarge_images").innerHTML = "<img src='" + _this.src + "' width='600px' height='600px'>"; 
+	} 
+	function hide(_this) { 
+	    document.getElementById("enlarge_images").innerHTML = ""; 
+	} 
+	function move_layer(event){ 
+	    event = event || window.event; 
+	     var x,y;
+	   if(typeof event.pageX!='undefined'){
+	      x=event.pageX; 
+	      y=event.pageY;
+	   }else{
+	    x=event.clientX+(document.documentElement.scrollLeft ? document.documentElement.scrollLeft :document.body.scrollLeft);
+	    y=event.clientY+(document.documentElement.scrollTop ?document.documentElement.scrollTop : document.body.scrollTop); 
+	    }
+	    enlarge_images.style.left=x+20; 
+	    enlarge_images.style.top=y-30 ; 
+	    } 
+	document.onmousemove =move_layer; 
+</script>
+
+ 

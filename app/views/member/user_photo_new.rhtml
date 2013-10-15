@@ -1,0 +1,275 @@
+	<link href="http://js.51hejia.com/css/ucenter.css?53452345" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" ><!--src="/javascripts/note_photo.js" -->
+	var ud=function(id){return document.getElementById(id)}
+	function choosemain(vlu){
+        if(document.getElementById('logoimg'+vlu).src != "http://js.51hejia.com/images/up.gif"){
+      		if(document.getElementById("main_"+vlu).innerHTML == "设为主图"){
+      			if(parseInt(document.getElementById("main").value) != 0){
+      				document.getElementById("main_"+parseInt(document.getElementById("main").value)).innerHTML = "设为主图";
+      			}
+      			document.getElementById("main").value = vlu;
+      			document.getElementById("main_"+vlu).innerHTML = "<span style='color:red;'>取消(主图)</span>";
+      		}else{
+      			document.getElementById("main_"+vlu).innerHTML = "设为主图";
+      			document.getElementById("main").value = 0;
+      		}
+  		}else{
+  		    document.getElementById("main_"+vlu).innerHTML = "设为主图";
+      		document.getElementById("main").value = 0;
+  		}
+  	}
+    function clearFile(num){ 
+        var fileHTML = ud('image'+num+'_uploaded_data').outerHTML; 
+        var endIndex = fileHTML.indexOf("value"); 
+        if(endIndex!=-1){ 
+            ud('image'+num+'_uploaded_data').outerHTML = "<input name='image"+num+"[uploaded_data]' type='file' id='image"+num+"_uploaded_data'' onchange='getFullPath("+num+",this);'  size='40' style='float:left;'>"; 
+        } 
+    }
+  	function getFullPath(num,obj){   
+        var fileText =obj.value.substring(obj.value.lastIndexOf("."),obj.value.length);
+        if (fileText!='.jpg'){
+            alert("对不起，系统仅支持标准格式(.jpg)的照片，请您调整格式后重新上传，谢谢 ！");
+    	    ud('logoimg'+num).src = "http://js.51hejia.com/images/up.gif";
+    	    if (window.navigator.userAgent.indexOf("MSIE")>=1) { 
+    	        clearFile(num);
+    	    	choosemain(num);
+    	   	}else if(window.navigator.userAgent.indexOf("Firefox")>=1){ 
+    	    	ud('image'+num+'_uploaded_data').value = "";
+    	   	}
+        }else{
+            var filesize = 0;
+            var filesize2 = 0;
+            if(obj) 
+            { 
+                if (window.navigator.userAgent.indexOf("MSIE")>=1) 
+                { 
+                    obj.select(); 
+	                var filePath = obj.value;
+			        var image=new Image();    
+			        image.dynsrc=filePath;      
+			        filesize=image.fileSize;
+			        var image2 = new Image();    
+			        image2.src=filePath;      
+			        filesize2 = image.fileSize;
+			        if(filesize >= 1024*100||filesize2 >= 1024*100){
+			        	alert("对不起，请重新选择小于100K之后重新上传，谢谢 ！");
+			        	ud('logoimg'+num).src = "http://js.51hejia.com/images/up.gif";
+			        	clearFile(num);
+			        	choosemain(num);
+			        }else{
+			        	ud('logoimg'+num).src = document.selection.createRange().text;	
+			        }
+                }else if(window.navigator.userAgent.indexOf("Firefox")>=1){ 
+                    if(obj.files) 
+                    { 
+                        filesize = obj.files[0].fileSize;
+	                    if(filesize >= 1024*100){
+	                        alert("对不起，请重新选择小于100K之后重新上传，谢谢 ！");
+	                        ud('logoimg'+num).src = "http://js.51hejia.com/images/up.gif";
+			        		ud('image'+num+'_uploaded_data').value = "";
+			        		choosemain(num);
+	                    }else{
+	                        ud('logoimg'+num).src = obj.files.item(0).getAsDataURL();
+	                    }
+                    } 
+                } 
+            } 
+        }
+    } 
+    
+    function checkimg(filePath,num){
+        var fileText = filePath.substring(filePath.lastIndexOf("."),filePath.length);
+        var fileName = fileText.toLowerCase();//转化为小写
+        if ((fileName!='.jpg')&&(fileName!='.gif')&&(fileName!='.jpeg')&&(fileName!='.png')&&(fileName!='.bmp'))
+        {
+            alert("对不起，系统仅支持标准格式的照片，请您调整格式后重新上传，谢谢 ！");
+            document.getElementById('image'+num+'_uploaded_data').value = "";
+            document.getElementById('logoimg'+num).src = "http://js.51hejia.com/images/up.gif";
+        }
+        else
+        {
+            alert(filePath);
+            document.getElementById('logoimg'+num).src = filePath;
+        }
+    }
+    function checkinfo(){
+        var flg = true;
+        if(ud('image1_uploaded_data').value == 0 && ud('image2_uploaded_data').value == 0 && ud('image3_uploaded_data').value == 0 && ud('image4_uploaded_data').value == 0 && ud('image5_uploaded_data').value == 0 ){
+    	 	alert("请选择.jpg格式 | 且小于100K的图片进行上传，谢谢 ！ ");
+    	 	flg = false;
+    	}
+    	if(ud('all').checked){
+    	   if( ud('descriptidall').value == "" ){//ud('titleidall').value == "" ||
+    	       alert("请输入统一的描述，装修阶段，局部空间信息！ ");
+    	 	   flg = false;
+    	   }
+    	}else{
+    	   for(i=1;i<=5;i++){
+        	   if(ud('image'+i+'_uploaded_data').value != 0){
+        	       if( ud('descript'+i).value == "" ){//ud('title'+i).value == "" ||
+            	       alert('请为第 '+i+' 张图片添加描述，装修阶段，局部空间信息！ ');
+            	 	   flg = false;
+            	 	   break;
+            	   }
+        	   }
+    	   }
+    	}
+  	    return flg;
+  	}
+	</script> 
+<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+	<DIV class=user_left>
+		<DIV id=sidebar>
+		<div id="logo_bottom"></div>
+		  <DIV id=sidebar_content>
+		    <DIV id=sidebar_item1>
+		      <DIV class=app_list>
+		        <DIV class=list_item>
+		          <DIV class=container>
+		          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+		          </DIV>
+		          <DIV class=container>
+		          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+		          </DIV>
+		        </DIV>
+		      </DIV>
+		    </DIV>
+		    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+		      <DIV class=app_list>
+		        <DIV class=list_item style="PADDING-LEFT: 50px">
+		          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+		        </DIV>
+		      </DIV>
+		    </DIV>
+		    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+		      <DIV class=app_list>
+		        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+		
+		        <%=render :partial => "/common/leftmenu" %>
+		
+		        <BR class=clear>
+		      </DIV>
+		      <BR class=clear>
+		    </DIV>
+		  </DIV></DIV>
+		</DIV>
+		<%
+			require 'date'
+			d = Date.today
+		    datet = d>>3
+			@note = UserNote.get_note_has(@userid)
+		%>
+		
+		<DIV class="user_right">
+		
+			<div class="titlebox">
+		      <h2>装修日记</h2>
+		      <ul>
+		        <li><a href="/member/user_note_list">日记列表</a></li>
+		        <li><%if @note.size>0%><a href="#" onclick="javascript:alert('请三个月之后再新建日记!');">新建日记</a><%else%><a href="/member/user_note_new">新建日记</a><%end%></li>
+		        <%if @note.size>0%><li class="hoveron"><a href="/member/user_note_edit/<%=@note_id%>">日记简介</a></li><%end%>
+		      </ul>
+		      <div class="ttrbox">
+		        
+		      </div>
+		    </div>
+		    <div class="ucbox margin10">
+		<form id="fmid" action="/member/user_photo_new" method=post enctype="multipart/form-data" onsubmit="return checkinfo()">
+		<input type="hidden" name="id" value="<%=@note_id%>">
+		<input type="hidden" name="main" id="main" value="0">
+		<div>
+			<div><h3>续写日记信息</h3></div><br />
+			<div style="border: 1px #CCCCCC solid;">
+				<div><span style='color:red'><%if params[:message].to_s=='1'%>部分信息错误!请重新输入！<%end%></span></div>
+				<div>
+					<span style="font-size:13px;">为图片统一添加相同的标题和描述以及标签</span>&nbsp;&nbsp; <input type="checkbox" name="all" id="all" value="1"><span style="color:red;">请勾选</span>
+					&nbsp;&nbsp;<span style="color:red">(注：单图大小不能超过100K)</span>
+				<br />
+				<table>
+					<!--<tr>
+						<td width=60px;>标题：</td>
+						<td ></td>
+					</tr>-->
+					<input type="hidden" name="titleall" id="titleidall" style="width:690px">
+					<tr>
+						<td width=60px;>描述：</td>
+						<td ><textarea name="descriptall" id="descriptidall" style="width:690px;height:70px;overflow:hidden" ></textarea></td>
+					</tr>
+					<tr>
+						<td width=70px;>装修阶段：</td>
+						<td><select name="stageall">
+							<%DecoFirm::STAGE.sort.each do |k|%>
+								<option value='<%=k[0]%>'><%=k[1]%></option>
+							<%end%>
+						</td>
+					</tr>
+					<tr>
+						<td width=70px;>局部空间：</td>
+						<td>
+							<% UserPhoto::SPACE.sort.each do |k| %>
+			            		<input type="radio" name="spaceall" value="<%=k[0]%>" <%if k[1]=='厨房'%>checked<%end%>/><%=k[1]%>
+			            	<%end%>
+						</td>
+					</tr>
+				</table>
+				</div>
+			</div><br />
+			<%1.upto(5) do |i| %>
+				<div style="border: 1px #CCCCCC solid;">
+				<table align=center STYLE="margin:5px 5px 5px 5px;">
+					<tr>
+					  <td width=122 >
+					  	<IMG id="logoimg<%=i%>" height=120 src="http://js.51hejia.com/images/up.gif" width=120 height=160 style="margin:15px 15px 15px 15px;border:1px solid #CCCCCC;" >
+					  	<span style="font-size:14px"><a id="main_<%=i%>" onclick="javascript:choosemain(<%=i%>)" STYLE="margin-left:30px;margin-botton:30px;" onmouseover="this.style.cursor='pointer'">设为主图</a></span>
+					  </td>
+					  <td>
+						<table>
+							<!--<tr>
+								<td width=60px;>标题：</td>
+								<td ></td>
+							</tr>-->
+							<input type="hidden" name="title<%=i%>" id="title<%=i%>" style="width:530px">
+							<tr>
+								<td width=60px;>描述：</td>
+								<td ><textarea name="descript<%=i%>" id="descript<%=i%>" style="width:530px;height:70px;overflow:hidden" ></textarea></td>
+							</tr>
+							<tr>
+								<td width=80px;>装修阶段：</td>
+								<td><select name="stage<%=i%>">
+									<%DecoFirm::STAGE.sort.each do |k|%>
+										<option value='<%=k[0]%>'><%=k[1]%></option>
+									<%end%>
+								</td>
+							</tr>
+							<tr>
+								<td width=80px;>局部空间：</td>
+								<td>
+									<% UserPhoto::SPACE.sort.each do |k| %>
+					            		<input type="radio" name="space<%=i%>" value="<%=k[0]%>" <%if k[1]=='厨房'%>checked<%end%>/><%=k[1]%>
+					            	<%end%>
+								</td>
+							</tr>
+							<tr>
+								<td width=60px;>图片：</td>
+								<td>
+									<input name="image<%=i%>[uploaded_data]" type="file" id="image<%=i%>_uploaded_data" onchange="getFullPath(<%=i%>,this);"  size="40" style="float:left;">
+								</td>
+							</tr>
+						</table>
+					  </td>
+					</tr>
+				</table>
+				</div><br/>
+			<%end%>
+			<div><input name="btn" type="submit" class="bt2" value="确定"/></div>
+			<br />
+		</div>
+		</form>
+		</div>
+		</DIV>
+		</DIV>
+	</DIV>
+</DIV>
+<%=render :partial => "/share/public_footer"%>

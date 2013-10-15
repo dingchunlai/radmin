@@ -1,0 +1,149 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/!svn/ver/724/51hejia/repos/radmin/release/lib/tasks
+END
+clear_8_days_statistics.rake
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/clear_8_days_statistics.rake
+END
+article_migrate_indexes.rake
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/article_migrate_indexes.rake
+END
+indexes_migrate_indexes_keywords.rake
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/indexes_migrate_indexes_keywords.rake
+END
+shanchu_firm_impression.rake
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/shanchu_firm_impression.rake
+END
+refresh_deco_firm_remark_count.rake
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/refresh_deco_firm_remark_count.rake
+END
+noncooperative_firms_impressions_import.rake
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/noncooperative_firms_impressions_import.rake
+END
+recover_created_at.rake
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/recover_created_at.rake
+END
+send_email_on_sales.rake
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/send_email_on_sales.rake
+END
+refresh_praise2.rake
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/refresh_praise2.rake
+END
+tel2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/tel2.xml
+END
+refresh_praise3.rake
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/724/51hejia/repos/radmin/release/lib/tasks/refresh_praise3.rake
+END
+add_firms_for_city.rake
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/add_firms_for_city.rake
+END
+import_tags_diaries.rake
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/import_tags_diaries.rake
+END
+refresh_score.rake
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/refresh_score.rake
+END
+import_xml.rake
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/import_xml.rake
+END
+copy_haier_diaocha.rake
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/copy_haier_diaocha.rake
+END
+recover_city.rake
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/recover_city.rake
+END
+update_noncooperation_firms_contacts.rake
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/update_noncooperation_firms_contacts.rake
+END
+refresh_praise.rake
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/refresh_praise.rake
+END
+hoptoad_notifier_tasks.rake
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/hoptoad_notifier_tasks.rake
+END
+refresh_pv.rake
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/refresh_pv.rake
+END
+reversion_diary.rake
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/reversion_diary.rake
+END
+first_summary.rake
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/first_summary.rake
+END
+init_url_hejia_indexes.rake
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/lib/tasks/init_url_hejia_indexes.rake
+END

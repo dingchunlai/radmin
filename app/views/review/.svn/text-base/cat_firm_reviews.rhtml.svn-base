@@ -1,0 +1,83 @@
+<div>
+  <div><h3> ><%= @firm.name_zh %></h3></div>
+  <div style="margin-left:20px;">
+    <form action="/review/cat_firm_reviews" method="get">
+      <input type="hidden" name="firmid" value="<%=@firm.id%>"/>
+      <table width="90%">
+        <tr>
+          <td>查询条件：</td>
+          <td>用户名：<input type="text" name="user_name" id="user_name" value="<%if @user_name%><%= @user_name %><%end%>" size=20/></td>
+          <td>
+				有无日记：<select id="diary" name="diary">
+              <option value="" <%= 'selected' if @diary.blank?%>>请选择</option>
+              <option value="1" <%= 'selected' if @diary.to_i == 1%>>有</option>
+              <option value="2" <%= 'selected' if @diary.to_i == 2%>>无</option>
+            </select>
+          </td>
+          <td>
+				有无留言：<select id="comment" name="comment">
+              <option value="" <%= 'selected' if @comment.blank?%>>请选择</option>
+              <option value="1" <%= 'selected' if @comment.to_i == 1%>>有</option>
+              <option value="2" <%= 'selected' if @comment.to_i == 2%>>无</option>
+            </select>
+          </td>
+          <td><input type="submit" class="btn" value="查 询"/></td>
+        </tr>
+      </table>
+    </form>
+  </div><br />
+  <div>
+    <table width="98%" align="center" border="0" cellspacing="1" cellpadding="1" style="text-align:center;">
+      <tr >
+        <td>评价编号</td>
+        <td>用户名</td>
+        <td>手机号</td>
+        <td>评价时间</td>
+        <td>评分值</td>
+        <td>日记地址</td>
+        <td>评价内容</td>
+      </tr>
+      <% @remarks.each do |remark| -%>
+        <tr >
+          <td><%=remark.id%></td>
+          <td><%= remark.hejia_user_bbs.USERNAME unless remark.hejia_user_bbs.nil? %></td>
+          <td><%= remark.hejia_user_bbs.USERBBSMOBELTELEPHONE unless remark.hejia_user_bbs.nil? %></td>
+          <td><%= remark.created_at.strftime("%Y-%m-%d") %></td>
+          <td><%= remark.praise %></td>
+          <td><%if remark.other_id %><a href="<%= genration_diary_path(remark.other_id) %>" target="_blank"><%= genration_diary_path(remark.other_id) %></a><%else%><%= '' %><%end%></td>
+          <td><%= remark.content.split(//u)[0,20] %></td>
+        </tr>
+      <%end -%>
+    </table>
+  </div>
+  <br />
+  <div>
+    <p align=center>搜索到 <%=@remarks.total_entries%> 条留言</p>
+    <div style="text-align:center"><%= will_paginate @remarks %></div>
+  </div>
+</div>
+<style type="text/css">
+  /* <![CDATA[ */
+
+  table, td
+  {
+    border-color: #7EBF4F;
+    border-style: solid;
+  }
+
+  table
+  {
+    border-width: 0 0 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td
+  {
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+  }
+
+  /* ]]> */
+</style>

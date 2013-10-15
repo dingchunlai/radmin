@@ -1,0 +1,63 @@
+<script type="text/javascript">
+function submitForm(form){
+    ge("p_title").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("title").value)==""){
+        ge("p_title").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<div class="formouter">
+            <div class="formleft">表单标题：</div>
+            <div class="formcenter"><input style="width:190px;" name="title" id="title" type="text" value="<%=@title%>" /></div>
+            <div class="formright" id="p_title">您必须填写表单标题</div>
+</div>
+<%if @cnum != 0%>
+<div class="formouter">
+            <div class="formleft">字段数量：</div>
+            <div class="formcenter"> <%=@cnum%> </div>
+            <div class="formright">这里显示的是该表单当前的字段数量</div>
+</div>
+<%end%>
+<div class="formouter">
+            <div class="formleft">转向地址：</div>
+            <div class="formcenter"><input style="width:190px;" name="forward" id="forward" type="text" value="<%=@forward%>"  /></div>
+            <div class="formright">请输入当用户提交表单成功后转向的地址，为空既不转向。</div>
+</div>
+<div class="formouter">
+            <div class="formleft">成功提示：</div>
+            <div class="formcenter"><input style="width:190px;" name="alert" id="alert" type="text" value="<%=@alert%>"  /></div>
+            <div class="formright">请输入当用户提交表单成功后提示的语句，为空既不提示。</div>
+</div>
+<div class="formouter">
+            <div class="formleft">时间间隔：</div>
+            <div class="formcenter">
+              <select name="submit_interval" id="submit_interval">
+                <option value="0">不限制</option>
+                <%1.upto(24) do |i|%>
+                <option value="<%=i*60%>" <%="selected" if @submit_interval==i*60%>><%=i%>小时</option>
+                <%end%>
+              </select>
+            </div>
+            <div class="formright">同一台电脑在该时间内无法重复提交表单</div>
+</div>
+<div class="formouter">
+            <div class="formleft">所属部门：</div>
+            <div class="formcenter"><%=get_formselect("department", "公用表单", "", @department)%></div>
+            <div class="formright">请选择该表单所属部门</div>
+</div>
+<div class="formouter">
+            <div class="formleft">备注信息：</div>
+            <div class="formcenter"><textarea name="remark" id="remark" rows="4" style="width:190px;"><%=@remark%></textarea></div>
+            <div class="formright">您可以在这里填写该表单的相关备注信息</div>
+</div>
+<div class="formouter">
+            <div class="formleft">表单状态：</div>
+            <div class="formcenter">
+              <input name="status" type="radio" value="1" <%if @status==1%>checked<%end%> />正常
+              <input name="status" type="radio" value="0" <%if @status==0%>checked<%end%> />隐藏
+            </div>
+            <div class="formright">您可以在这里设置该表单的状态</div>
+</div>

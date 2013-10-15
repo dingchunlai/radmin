@@ -1,0 +1,70 @@
+<% if @products %>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+		<tr>
+			<th>编号</th>
+			<th>中文名称</th>
+			<th>所属父类</th>
+			<th>添加产品</th>
+			<th>英文名称</th>
+			<th>永久链接</th>
+			<th>是否显示</th>
+			<th>相关操作</th>
+		</tr>
+		<tr class="<%= cycle("odd", "even")%>">
+			<td><%= @category.id -%></td>
+			<td><%= @category.name_zh -%>(<%= @category.products_count -%>)</td>
+			<td><%= link_to @category.parent.name_zh, category_path(:id => @category.parent.tagid) if @category.parent -%></td>
+			<td><%= link_to "添加产品", new_product_path(:category_id => @category) %></td>
+			<td><%= @category.name_en -%></td>
+			<td><%= @category.permalink -%></td>
+			<td><%= @category.position -%></td>
+			<td><%= check_box_tag "category_id", @category.id, @category.is_valid, {:onclick => remote_function( :url => is_valid_category_path(@category), :with => "'cvalue='+this.checked", :method => "put")} -%> 是否显示
+			<%= button_to "同步关联品牌和商家", :controller => "common", :action => "sync_category_brands_vendors", :id => @category %>
+			</td>
+		</tr>
+	</table>
+	<%= render :partial => "shared/products" -%>
+<% else %>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+		<tr>
+			<th>编号</th>
+			<th>中文名称</th>
+			<th>添加产品</th>
+			<th>英文名称</th>
+			<th>永久链接</th>
+			<th>父编号</th>
+			<th>子编号</th>
+			<th>排序</th>
+			<th>是否显示</th>
+			<th>相关操作</th>
+		</tr>
+		<% @category.children.each do |c| -%>
+		<tr class="<%= cycle("odd", "even")%>" id="<%= c.dom_id -%>">
+			<td><%= c.id -%></td>
+			<td><%= link_to c.name_zh, category_path(:id => c.tagid) -%>(<%= c.products_count -%>)</td>
+			<td><%= link_to "添加产品", new_product_path(:category_id => c) %></td>
+			<td><%= c.name_en -%></td>
+			<td><%= c.permalink -%></td>
+			<td><%= c.tagfatherid -%></td>
+			<td><%= c.tagid -%></td>
+			<td><%= c.position -%></td>
+			<td><%= check_box_tag "category_id", c.id, c.is_valid, {:onclick => remote_function( :url => is_valid_category_path(c), :with => "'cvalue='+this.checked", :method => "put")} -%></td>
+			<td>
+				<%= link_to_remote "清除关联缓存", :url => {:controller => "common", :action => "delete_category_related_cache", :id => c.tagid} -%>
+				<%= link_to "所属品牌", category_brands_path(:category_id => c.tagid) %>
+				<%= link_to "所属商家", category_vendors_path(:category_id => c.tagid) %>
+				<%= link_to "所属属性", category_params_path(:category_id => c.tagid) %>
+				<%= link_to "编辑", edit_category_path(:id => c.tagid) -%>
+				<% unless c.first? -%>
+				<%= link_to "顶部", {:action => "move", :id => c.id, :method => "move_to_top"} -%>
+				<%= link_to "上移", {:action => "move", :id => c.id, :method => "move_higher"} -%>
+				<% end -%>
+				<% unless c.last? -%>
+				<%= link_to "下移", {:action => "move", :id => c.id, :method => "move_lower"} -%>
+				<%= link_to "底部", {:action => "move", :id => c.id, :method => "move_to_bottom"} -%>
+				<% end -%>
+			</td>
+		</tr>
+		<% end -%>
+	</table>
+<% end %>

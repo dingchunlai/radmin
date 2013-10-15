@@ -1,0 +1,23 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="comments_list">
+  <tr>
+    <th>编号</th>
+    <th>标签</th>
+    <th>操作</th>
+  </tr>
+  <% @ad_codes.each do |code| %>
+    <tr class="<%= cycle("odd", "even")%>" id="<%= code.dom_id -%>">
+      <td><%= code.id %></td>
+      <td><%= link_to Tag.find(code.tag_id).TAGNAME, photo_ad_path(code) %></td>
+      <td>
+        <%= link_to_function "查看代码", "$('code_#{code.dom_id}').toggle();" %>
+        <%= link_to "编辑", edit_photo_ad_path(code) %>
+        <%= link_to_remote "删除", :url => photo_ad_path(code), :confirm => "确认删除该代码吗？", :method => :delete %>
+      </td>
+    </tr>
+    <tr id="code_<%= code.dom_id %>" style="display:none;">
+      <th>内容</th>
+      <td colspan="2"><%= code.ad_code %></td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @ad_codes %>

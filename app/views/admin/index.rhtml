@@ -1,0 +1,55 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 400;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+</script>
+<style type="text/css">
+a {
+    color: #2853FF;
+    text-decoration: none;
+}
+a:hover {
+    color: #FD352B;
+    text-decoration: none;
+}
+.formouter{
+    width:100%; clear:left; padding-bottom:10px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:180px; float:left;
+}
+.formcenter input{
+    width:150px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+
+<form action="new_save" name="form1" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+     和家网内部管理系统
+    </div>
+
+    <div style="font-size:12pt;letter-spacing:2px;line-height:30px;color:#5F5F5F">
+        <p><%= current_staff.name %> 你好：</p>
+        <p>　　欢迎使用和家网内部管理系统。您的用户角色是：<span style="color:#CE0000"><%= current_staff.roles.join('、') %></span> ，所属部门是：<span style="color:#CE0000"><%=get_webpm("department")[current_staff.department] rescue""%></span> 。
+        使用中有任何问题请与技术部联系。这是您第 <span style="color:#CE0000"><%=current_staff.login_num%></span> 次登录本系统，最后一次登录时间为 <span style="color:#CE0000"><%=current_staff.last_login.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></span> 。
+        </p>
+        <p>
+        　　首次登录请<a href="/admin/change_password" target="_blank">点这里修改密码</a>。
+        </p>
+    </div>
+</form>
+</div>

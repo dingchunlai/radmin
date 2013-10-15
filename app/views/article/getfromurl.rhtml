@@ -1,0 +1,16 @@
+<form action="/article/getfromurl" method="post">
+	<p align=center><%if @message%><font color="red"><%=@message%></font><%end%></p>
+	<p align=center><input id="uid" type="text" name="url" size=50><input type="submit"  value="确定" ></p>
+</form>
+<script language="javascript">
+function checkurl()
+{
+	var urlreg = /(http\:\/\/)?([\w.]+)(\/[\w- \.\/\?%&=]*)?/gi ;
+	var url = document.getElementById("uid").value;
+	if (!urlreg.test(url))
+	{
+	  alert("网址不合法！");
+	  return false;
+	} 
+}
+</script>

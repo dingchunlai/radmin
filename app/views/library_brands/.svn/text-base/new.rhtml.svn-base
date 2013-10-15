@@ -1,0 +1,5 @@
+<%= error_messages_for :library_brand %>
+<% form_for :library_brand, @brand, :url => { :action => "create" }, :html => {:method => "post", :multipart => true} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>
+

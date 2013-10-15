@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag
+END
+_hejiatag_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/_hejiatag_form.rhtml
+END
+hejiatag_edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/hejiatag_edit.rhtml
+END
+inner_link_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/inner_link_list.rhtml
+END
+hejiatag_new.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/hejiatag_new.rhtml
+END
+hejiatag_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/hejiatag_list.rhtml
+END
+get_initial.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/get_initial.rhtml
+END
+hejiatag_list2.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejiatag/hejiatag_list2.rhtml
+END

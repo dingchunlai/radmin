@@ -1,0 +1,203 @@
+<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+
+
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+<DIV id=widebar_content>
+  <div id=userprofile>
+    <div class=top>
+      <div class=profile_name>我的和家 - 我的短信</div>
+    </div>
+    <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+      在这里您可以和其它和家会员相互沟通。
+    </div>
+  </div>
+</DIV>
+<DIV class=mainbox style="height:480px;">
+	<div class="same_cha">
+    <ul>
+	<li class="line"></li>
+    <li id="s1" class="menu_on"><a href="/member/note_list">收件箱</a></li>
+    <li class="line"></li>
+    <li id="s2" class="menu_on"><a href="/member/note_send_list">已发送</a></li>
+    <li class="line"></li>
+    <li id="s3" class="menu_on"><a href="javascript://" onclick="note_send('');">写短信</a></li>
+    <li class="line"></li>
+    <li class="more"></li>
+	</ul>
+  </div>
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/OpenDiv.js"></SCRIPT>
+<script type="text/javascript">
+window.onload = function(){
+  //div_main_height = 440;
+  //ge("div_main").style.height = div_main_height;
+  //ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/member/userask?page="+page+"&recordcount=<%=@recordcount%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/member/note_sender_del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!="") hideiframe.location = "/member/note_sender_del?ids=" + ids;
+    }
+}
+
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+    if (field.length==undefined)
+      field.checked = true;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = true;
+    checkflag = "true";
+    return "false";
+  }
+  else {
+    if (field.length==undefined)
+      field.checked = false;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = false;
+    checkflag = "false";
+    return "true";
+  }
+}
+
+function getids(){
+    var ids = "0";
+    if (document.form1.pkey_id.length==undefined){
+        if (document.form1.pkey_id.checked) ids = document.form1.pkey_id.value;
+    }else{
+        for (i=0; i<document.form1.pkey_id.length;i++){
+            if (document.form1.pkey_id[i].checked) ids += ", " + document.form1.pkey_id[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择记录！"); return "";} else return ids;
+}
+
+function note_send(receiver){
+    OpenDiv(403,260,"<iframe scrolling='no' width='400' height='258' src='/member/note_send?receiver="+receiver+"'></iframe>");
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:12px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    color:#F27900;
+    text-decoration:none;
+  }
+</style>
+<div id="Loading" style="display:none" ondblclick="this.style.display='none'"></div>
+<div id="same1">
+<form name="form1">
+  <div style="font-family:Verdana; color:#DD4504; line-height:32px; font-size:12px; letter-spacing:1px; margin: 0px 0px 0px 15px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+  </div>
+  <div style="height:390px;">
+  <table id="datalist" style="margin-left:7px; width:98%;">
+    <tr>
+            <th></th>
+            <th>收件人</th>
+            <th>内容</th>
+            <th>状态</th>
+            <th>时间</th>
+            <th>操作</th>
+
+    </tr>
+    <%for note in @notes%>
+    <tr style="background-color:#FFFDE6">
+      <td width="20" align="center"><input type="checkbox" name="pkey_id" value="<%=note.id%>" /></td>
+      <td width="110" align="center"><a href="javascript://" onclick="note_send('<%=u(@receiver_name[note.receiver_id])%>');"><%=@receiver_name[note.receiver_id]%></a></td>
+      <td><%= note.content %></td>
+      <td width="50" align="center"><%if note.is_read==1%>已阅读<%else%><font color="blue">未阅读</font><%end%></td>
+      <td width="85" align="center">
+          <%if Time.now.strftime("%Y-%m-%d")==note.created_at.strftime("%Y-%m-%d")%>
+            <font color="black"><%=note.created_at.strftime("%H:%M:%S") %></font>
+          <%else%>
+            <%=note.created_at.strftime("%Y-%m-%d") %>
+          <%end%>
+      </td>
+      <td width="70" align="center">
+        <a href="javascript://" onclick="del(<%=note.id%>);">删除</a>
+      </td>
+    </tr>
+    <% end %>
+    </table>
+    </div>
+
+    <div id="div_pagelist" style="margin:0px 10px 0px 10px;">
+      <div style="float:left">
+      <input onclick="SelectAll(document.form1.pkey_id)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      </div>
+      <div style="float:right"><span id="pagelist"></span></div>
+    </div>
+</form>
+</div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>
+
+
+<%=render :partial => "/share/public_footer"%>

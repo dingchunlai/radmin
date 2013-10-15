@@ -1,0 +1,73 @@
+<div id="products_list">
+  <% form_tag "/comments/operate", :id => "comments_form" do %>
+    <ul class="button_list clearfix">
+      <li><%= submit_tag "删除", :name => "destroy_all", :onclick => "return confirm('你确定吗?')" %></li>
+    </ul>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="comments_list">
+      <tr>
+        <th><input id="checkbox_selector" type="checkbox" value="0" /></th>
+        <th>编号</th>
+        <th>咨询主题</th>
+        <th>咨询者</th>
+        <th>当前状态</th>
+        <th>相关商家</th>
+        <th>相关产品</th>
+        <th>咨询时间</th>
+        <th>相关操作</th>
+      </tr>
+      <% @comments.each do |comment| %>
+        <tr class="<%= cycle("odd", "even")%>" id="<%= comment.dom_id -%>">
+          <td><%= check_box_tag "comment_ids[]", comment.id %></td>
+          <td><%= comment.id %></td>
+          <td><%=h comment.title %></td>
+          <td><%= comment.user ? comment.user.USERNAME : "和家网友" %></td>
+          <td><%= comment_state(comment.state) %></td>
+          <td><%= link_to comment.vendor.name_zh, vendors_comments_path(:vendor_id => comment.vendor.id) if comment.vendor %>
+          <%= link_to "<i>[合作]</i>", vendor_path(comment.vendor) if comment.vendor && comment.vendor.is_cooperation %></td>
+          <td><%= link_to comment.product.name, product_comments_path(:product_id => comment.product.id) if comment.product %>
+            <i>[<%= link_to "查看", "http://p.51hejia.com/products/#{comment.product.productid}", :target => "_blank" if comment.product %>]</i>
+          </td>
+          <td><%= comment.created_at.to_s(:db) %></td>
+          <td><%= link_to_function "查看", "$('body_#{comment.dom_id}').toggle();" %>
+            <%= link_to "编辑", edit_comment_path(comment) %>
+            <%= link_to_function "回复", "$('body_#{comment.dom_id}').show();$('reply_#{comment.dom_id}').toggle();" %>
+            <%= link_to_remote "删除", :url => comment_path(comment), :confirm => "确认删除该评论吗？", :method => :delete %>
+          </td>
+        </tr>
+        <tr id="body_<%= comment.dom_id -%>" style="display:none;">
+          <td colspan="6">
+            <div id="<%= "comments_#{comment.dom_id}" -%>">
+              <div class="main_body"><%=h comment.body %></div>
+              <%= render :partial => "comment", :collection => comment.children %>
+            </div>
+
+            <div class="reply_form" id="<%= "reply_#{comment.dom_id}" -%>" style="display:none;">
+              <% form_remote_for :comment, :url => comments_path, :html => {:id => "comment_form"} do |f| %>
+                <%= f.text_area :body, :rows => 3, :cols => 70 %>
+                <%= hidden_field_tag "comment[title]", comment.title %>
+                <%= hidden_field_tag "comment[parent_id]", comment.id %>
+                <%= hidden_field_tag "comment[product_id]", comment.product_id %>
+                <%= hidden_field_tag "comment[vendor_id]", comment.vendor_id %>
+                <div class="btn"><%= submit_tag "提交回复" %> <%= link_to_function "取消", "$('reply_#{comment.dom_id}').hide();" %></div>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <%= will_paginate @comments %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  var checkboxes = $$("#comments_form input[type=checkbox]");
+  var cbControl = $("checkbox_selector");
+
+  cbControl.observe("click", function(){
+    checkboxes.each(function(box){
+      box.checked = cbControl.checked;
+    });
+  });
+
+</script>

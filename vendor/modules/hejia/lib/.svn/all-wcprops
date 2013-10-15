@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/modules/hejia/lib
+END
+ip_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/modules/hejia/lib/ip_helper.rb
+END
+hejia_coupon_serializable.rb
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/modules/hejia/lib/hejia_coupon_serializable.rb
+END
+chunzhen_ip.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/modules/hejia/lib/chunzhen_ip.rb
+END
+chinese_dictionary.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/modules/hejia/lib/chinese_dictionary.rb
+END
+public_module.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/modules/hejia/lib/public_module.rb
+END

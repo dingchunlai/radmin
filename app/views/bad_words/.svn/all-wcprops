@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bad_words
+END
+case_name_search.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bad_words/case_name_search.rhtml
+END
+_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bad_words/_form.rhtml
+END
+index_case.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bad_words/index_case.rhtml
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/bad_words/index.rhtml
+END

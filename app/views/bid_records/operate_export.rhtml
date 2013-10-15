@@ -1,0 +1,24 @@
+<div id="div_main">
+  <form action="/bid_records/export_bids" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      结果导出
+    </div>
+    <div>
+      <p>
+        <%= flash[:notice] if flash[:notice] %>
+      </p>
+      <p>
+        <label>选择月份</label>
+        <% options = (1..12).map{|i| [ "#{i}月",i ]} %>
+        <%= select_tag "month", options_for_select(options, params[:month].blank? ? Time.now.month : params[:month].to_i) %>
+      </p>
+      <p>
+        <label>选择地区</label>
+        <%= select_tag "city", options_for_select(Bid::CITY, params[:city]) %>
+      </p>
+      <p>
+        <%= submit_tag "导出excel表格" %>
+      </p>
+    </div>
+  </form>
+</div>

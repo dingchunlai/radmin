@@ -1,0 +1,40 @@
+<div class="user_right">
+
+  <div id=widebar >
+    <div id=nav_bottom></div>
+    <div id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 常规报价</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+	  在这里您可以添加和维护常规报价信息。
+        </div>
+      </div>
+    </div>
+
+    <div class=mainbox style="height:480px;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on">
+            <%= link_to "报价列表",quoted_prices_path %>
+          </li>
+          <li class="line"></li>
+          <li id="s2" class="menu_on">
+            <%= link_to "新建报价",new_quoted_price_path %>
+          </li>
+          <li class="more"></li>
+        </ul>
+      </div>
+
+
+      <% form_for(:quoted_price,@quoted_price,:url=> { :action => 'update' }, :html => {:method => :put}) do |f| %>
+
+        <%= render :partial => 'form',:locals => { :quoted_price => @quoted_price } %>
+        <div class="clear" style="text-align:center;padding:10px 0;">
+          <%= submit_tag "提交保存",:style => 'padding:5px 15px;' %></div>
+        <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+<% form_for :event, @event, :url => { :action => "create" }, :html => {:method => "post", :multipart => true} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>

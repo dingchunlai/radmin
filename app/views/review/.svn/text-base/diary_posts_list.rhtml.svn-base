@@ -1,0 +1,126 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+    font-size:12px;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]);
+  }
+</style>
+<form action="/review/diary_posts_list" method="get" id="fmid">
+  <p align=center>
+    编号(日记ID):<input type="text" name="diary_id" value="<%=@diary_id%>"/>
+    标题:<input type="text" name="title" value="<%=@title%>"/>
+		公司：<input type='text' name='companyname' value='<%=@companyname%>'/>
+    作者：<input type="text" name="author" value="<%=@author%>"/><br/>
+		城市：<select name='city'>
+      <option value='0'>选择</option>
+      <%@CITIES.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if @city.to_i == k%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+		是否审核：<select name='state'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @state.to_i == 1%>selected<%end%>>未审核</option>
+      <option value='2' <%if @state.to_i == 2%>selected<%end%>>已修改</option>
+    </select>
+    开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>/>
+	结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>/>
+    <input type="button" name="sub" value="搜索" onclick='selectnotes();'/>
+  </p>
+
+  <table align=center border=1>
+    <tr>
+      <td><input type='checkbox' id='all_check_id' onclick='all_check();'/>全选</td>
+      <td>日记ID</td>
+      <td>日记标题</td>
+      <td>作者</td>
+      <td>公司</td>
+      <td>状态</td>
+      <td>更新时间</td>
+    </tr>
+    <%@posts.each do |post|%>
+      <% if diary = post.decoration_diary %>
+        <tr>
+          <td><input type='checkbox' value='<%=post.id%>' name='note[selected_ids][]'/><%= post.id %></td>
+          <td><%= link_to diary.id, diary.status == 1 ? diary.url : diary.url(:preview), :target => "_blank"%></td>
+          <td><%= link_to diary.title, diary.status == 1 ? diary.url : diary.url(:preview), :target => "_blank"%></td>
+          <td><a href='/review/see_user?id=<%= diary.user_id %>' target='_blank'>
+              <%= diary.user_name %>
+            </a></td>
+          <td><%= diary.deco_firm.name_zh if diary.deco_firm %></td>
+          <td><a href="/review/diary_post_content?post_id=<%=post.id%>" target="_blank"><%= "未审核" unless post.state %><%= "已修改" if post.marker %></a></td>
+          <td><%= post.updated_at.utc.strftime("%Y-%m-%d %X")%></td>
+        </tr>
+      <% end %>
+    <%end%>
+  </table>
+  <p align=center>
+
+    <a href='#n' onclick='shenhe();'>审核</a>&nbsp;&nbsp;
+  </p>
+  <script type="text/javascript">
+    function selectnotes(){
+      document.getElementById('fmid').submit();
+    }
+    function all_check(){
+      if(document.getElementById('all_check_id').checked == true)
+        check(1);
+      else
+        check(0);
+
+    }
+    function check(num){
+      var chs = document.getElementsByName("note[selected_ids][]");
+
+      if(chs.length > 0){
+        for(var i=0;i<chs.length;i++){
+          var ch = chs[i];
+          if(num == '1')
+            ch.checked = true;
+          else
+            ch.checked = false;
+        }
+      }
+    }
+
+    function checkselected(){
+      var chs = document.getElementsByName("note[selected_ids][]");
+      if(chs.length > 0){
+        var count = 0;
+        for(var i=0;i<chs.length;i++){
+          if(chs[i].checked == true)
+            count++;
+        }
+      }else{
+        return false;
+      }
+      if(count == 0){
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    function shenhe(){
+
+      if (!checkselected()){
+        alert('请选择要审核的内容');
+        return false;
+      }
+      if(window.confirm('确定操作吗？')){
+        document.getElementById('fmid').action = '/review/posts_list_update';
+        document.getElementById('fmid').submit();
+      }
+    }
+  </script>

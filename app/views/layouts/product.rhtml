@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title><%= page_title %>-和家网</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="robots" content="noindex, nofollow" />
+    <%= javascript_include_tag :defaults, "menu" %>
+    <script type="text/javascript" src="/javascripts/WebCalendar.js" charset="utf8"></script>
+    <%= include_tiny_mce_if_needed %>
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen, projection" />
+  </head>
+
+  <body id="body-<%= controller.controller_name -%>">
+    <div class="container">
+      <div id="header" class="clearfix">
+        <!--<div id="logo"><a href="/">管理后台</a></div>-->
+        <div id="menu">
+          <ul class="level1 clearfix" id="root">
+            <li><a href="/">首页</a></li>
+            <li><a href="/products" title="产品管理">产品管理</a>
+              <ul class="level2">
+                <li><a href="/products/new" title="新建产品">新建产品</a></li>
+                <li><a href="/products/zxj" title="装修家">装修家</a></li>
+                <li><a href="/products/special" title="特价产品">特价产品</a></li>
+              </ul>
+            </li>
+            <li><a href="/vendors" title="商铺管理">商铺管理</a>
+              <ul class="level2">
+                <li><a href="/vendors/new" title="新建商铺">新建商铺</a></li>
+              </ul>
+            </li>
+            <li><a href="/brands" title="品牌管理">品牌管理</a>
+              <ul class="level2">
+                <li><a href="/brands/new" title="新建品牌">新建品牌</a></li>
+                <!--
+                <li><%= link_to "品牌体验项管理", brand_experiences_path %></li>
+                -->
+                <li><%= link_to "品牌评论管理", brand_comments_path %></li>
+                <li><%= link_to "品牌库管理", library_brands_path %></li>
+								<li><%= link_to "系列管理", series_path %></li>
+              </ul>
+            </li>
+            <% if has_role?("产品组长") %>
+              <li><a href="/markets" title="卖场管理">卖场管理</a>
+                <ul class="level2">
+                  <li><a href="/markets/new" title="新建卖场">新建卖场</a></li>
+                </ul>
+              </li>
+              <li><a href="/categories" title="分类管理">分类管理</a>
+                <ul class="level2">
+                  <li><a href="/categories/new" title="新建分类">新建分类</a></li>
+                </ul>
+              </li>
+              <li><a href="/params" title="选项管理">选项管理</a>
+                <ul class="level2">
+                  <li><a href="/params/new" title="选项属性">新建选项</a></li>
+                </ul>
+              </li>
+              <li><a href="/properties" title="属性管理">属性管理</a>
+                <ul class="level2">
+                  <li><a href="/properties/new" title="新建属性">新建属性</a></li>
+                </ul>
+              </li>
+              <li><a href="/experiences" title="体验指数">体验指数</a>
+                <ul class="level2">
+                  <li><a href="/experiences/new" title="新建指数">新建指数</a></li>
+                </ul>
+              </li>
+              <li><a href="/comments" title="咨询管理">咨询管理</a>
+              <ul class="level2">
+                  <li><a href="/comments" title="产品点评">产品点评</a></li>
+                  <li><a href="/vendor_points" title="商家点评">商家点评</a></li>
+                </ul>
+              </li>
+              <li><a href="/charge" title="合作商铺">合作商铺</a>
+                <ul class="level2">
+                  <li><a href="/charge/vendors" title="商铺管理">商铺管理</a></li>
+                  <li><a href="/charge/promotions" title="促销管理">促销管理</a></li>
+                </ul>
+              </li>
+            <li><a href="/events" title="事件管理">事件管理</a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div id="content">
+        <% flash.each do |key, msg| -%>
+          <%= content_tag :div, msg, :class => key -%>
+        <% end -%>
+        <h2><%= page_title -%><%= image_tag 'icons/indicator.gif', :id => 'indicator', :style => 'display:none;' %><span><%= common_actions %></span></h2>
+        <%= yield %>
+      </div>
+      <div id="footer">
+        <ul class="clearfix">
+          <li><a href="/" title="返回管理首页">返回管理首页</a></li>
+        </ul>
+      </div>
+    </div>
+    <% logger.info "*******************product" %>
+  </body>
+</html>

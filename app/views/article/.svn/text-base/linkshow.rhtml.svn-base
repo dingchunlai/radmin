@@ -1,0 +1,37 @@
+	<a href="show/<%=@article.id%>" target="_top">上一层</a><br/><br/>
+	<%if  @article.FIRSTCATEGORY.to_i == 42092 && @article.SECONDCATEGORY.to_i != 0%>
+         <h3>该文章属于	{品牌库-<%=@category.TAGNAME %> 品类}</h3><BR />
+         <%if @product_brand && @product_brand.size >0 %>
+	         <form  id="save" action="/article/savelink" method="get">
+	         <input type="hidden" name="articleid" value="<%=@id%>"/>
+	         <input type="hidden" name="categoryid" value="<%=@article.SECONDCATEGORY%>"/>
+	         <table width="90%">
+	          <TR>
+	          	<TD>
+					<%@product_brand.each do |p_b| %>
+						<input type="checkbox" name="brand[]" value="<%=p_b.id%>"
+						<%if @brandt && @brandt.size > 0%>
+							<%@brandt.each do |bid| %> 
+								<% if p_b.id.to_i == bid.id.to_i %>
+									checked
+								<%end%>
+							<%end%>
+						<%end%>
+						>
+						<%=p_b.name_zh %>
+					<%end%>
+	          	</TD>
+	          </TR>
+	          <TR>
+	          	<TD>
+	          		</span><input type="submit" name="submit1" value=" 保 存 "/>
+	          	</TD>
+	          </TR>
+	          </table>
+			</from>
+		<%else%>
+			该分类下暂无品牌
+		<%end%>
+	<%else%>
+		该文章信息不属于品牌库分类
+	<%end%>

@@ -1,0 +1,222 @@
+<link href="http://js.51hejia.com/css/ucenter.css?22333333" rel="stylesheet" type="text/css" />
+	<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+<%
+	require 'date'
+	d = Date.today
+    datet = d>>3
+	@note = UserNote.get_note_has(@userid)
+%>
+<DIV class="user_right">
+	<div class="titlebox">
+      <h2>装修日记</h2>
+      <ul>
+        <li><a href="/member/user_note_list">日记列表</a></li>
+        <li><%if @note.size>0%><a href="#" onclick="javascript:alert('请三个月之后再新建日记!');">新建日记</a><%else%><a href="/member/user_note_new">新建日记</a><%end%></li>
+      </ul>
+    </div>
+    <div class="ucbox margin10">
+      <h3><span class="dz">发表新日记</span></h3>
+      <div class="wzj">
+      <script language="javascript">
+      	function checkinfo(){
+      		var firm = document.getElementById("selectproductinput").value;
+      		//var note = document.getElementById("notedescriptid").value;
+      		var addressid = document.getElementById("addressid").value;
+      		//var titleid= document.getElementById("titleid").value;
+      		var descriptid= document.getElementById("descriptid").value;
+      		var imagesize =  document.getElementById("image_uploaded_data").value;
+      		if (firm.length>0){
+	  		}else{
+	  			alert("案例所属装修公司不能为空");
+	  			return false;
+	  		}
+	  		//if (note.length>0){
+	  		//}else{
+	  		//	alert("简介不能为空");
+	  		//	return false;
+	  		//}
+	  		if (addressid.length>0){
+	  		}else{
+	  			alert("标题不能为空");
+	  			return false;
+	  		}
+	  		//if (titleid.length>0){
+	  		//}else{
+	  		//	alert("图片标题不能为空");
+	  		//	return false;
+	  		//}
+	  		//if (descriptid.length>0){
+	  		//}else{
+	  		//	alert("添加描述不能为空");
+	  		//	return false;
+	  		//}
+	  		//if (imagesize.length>0){
+	  		//}else{
+	  		//	alert("上传图片不能为空");
+	  		//	return false;
+	  		//}
+	  		
+	  		document.getElementById("fmid").submit();
+      	}
+      </script>
+        <form id="fmid" action="/member/user_note_new" method=post enctype="multipart/form-data">
+          <ul>
+          	<li class="clearfix">
+          	<div style="float:left;height:20px;line-height:20px;">案例所属装修公司<input id="selectproductinput" name="name_zh" type="text" value="" readOnly=true/></div><span class="n5" id="st1" onclick="k('t1')"><a onFocus="blur()">选择装修公司</a></span>
+            </li>
+            <script language="javascript" type="text/javascript">
+      
+function w(vd)
+{
+  var ob=document.getElementById(vd);
+  if(ob.style.display=="block" || ob.style.display=="")
+  {
+     ob.style.display="none";
+     var ob2=document.getElementById('s'+vd);
+  }
+  else
+  {
+    ob.style.display="block";
+    var ob2=document.getElementById('s'+vd);
+  }
+}
+function k(vd)
+{
+  var ob=document.getElementById(vd);  
+  if(ob.style.display=="block")
+  {
+     ob.style.display="none";
+     var ob2=document.getElementById('s'+vd);
+  }
+  else
+  {
+    ob.style.display="block";
+    var ob2=document.getElementById('s'+vd);
+  }
+}
+</script>
+<div id="t1" class="border1" style="display:none;">
+       <iframe src="/member/companylist" style="width:707px; height:200px" frameborder="0" scrolling="no"></iframe>
+      </div>
+            <li>标题*：
+              <input type="text" class="w" name="address" id="addressid" size="50" style=" width:220px;"/>
+            </li>
+            <!--<li>故事对应点评：
+              <select name="dianping_id" id="">
+              <%if @reviews.size>0%>
+	              <%@reviews.each do |r|%>
+					<option value='<%=r.id%>'><%=r.title%></option>
+				  <%end%>
+              <%else%>
+              	  <option value=''s>请发表点评</option>
+              <%end%>
+              </select>
+            </li>-->
+            <li>为你的日记写开头语：
+              <textarea cols="" rows="5" class="w" name="notedescript" id="notedescriptid" style=" height:100px;"></textarea>
+            </li>
+            <li>所属房型：
+              <select name="room" id="">
+							<%DecoFirm::ROOM.sort.each do |k|%>
+								<option value='<%=k[0]%>'><%=k[1]%></option>
+							<%end%>
+              </select>
+              装修价格：
+              <select name="price" size="1" id="">
+							<% DecoFirm::PRICE.sort.each do |k| %>
+								<option value='<%=k[0]%>'><%=k[1]%></option>
+							<% end %>
+              </select>
+              装修方式：
+              <select name="method" id="">
+							<% DecoFirm::MODELS.sort.each do |k| %>
+								<option value='<%=k[0]%>'><%=k[1]%></option>
+							<% end %>
+              </select>
+              装修风格：
+              <select name="style" id="">
+							<% DecoFirm::STYLES.sort.each do |k| %>
+								<option value='<%=k[0]%>'><%=k[1]%></option>
+							<% end %>
+              </select>
+            </li>
+          </ul>
+          <ul class="ul">
+          	<!--<li>图片标题*：
+              <input type="text" name="title"  id="titleid"><input type="hidden" name="main" value="main" >
+            </li>-->
+            <li>上传图片*：（图片最佳尺寸360*270px,长宽比4：3）&nbsp;&nbsp;&nbsp;&nbsp;
+            <IMG id=logoimg height=90 src="http://js.51hejia.com/img/moren.jpg?1" width=120  style="border:1px solid #666;margin-left:10px;"><br>
+              
+		      <input name="image[uploaded_data]" type="file" id="image_uploaded_data" onchange="document.getElementById('logoimg').src=this.value" size="40">
+		      <span style="color:red"><%if params[:message].to_s=='1'%>图片不能为空或图片大于100K<%elsif params[:message].to_s=='2'%>图片必须为jpg格式<%else%>(注：单图大小不能超过100K)<%end%></span>
+		      <span style='color:red'></span>
+            </li>
+            <li>添加描述*：
+              <textarea name="descript" class="w" id="descriptid" style=" height:100px;"></textarea>
+            </li>
+            <li>
+              装修阶段：<select name="stage"  id="">
+              		<option value='9'>装修准备</option>
+              		<option value='1'>风格设计</option>
+              		<option value='8'>建材选购</option>
+              		<option value='2'>隐蔽工程</option>
+              		<option value='3'>泥瓦工程</option>
+              		<option value='4'>木工工程</option>
+              		<option value='5'>油漆工程</option>
+              		<option value='6'>安装收尾</option>
+              		<option value='7'>装修完工</option>
+              </select>
+            </li>
+            <li>局部空间：<% UserPhoto::SPACE.sort.each do |k| %>
+            	<input type="radio" name="space" value="<%=k[0]%>" <%if k[1]=='厨房'%>checked<%end%>/><%=k[1]%>
+            	<%end%>
+            </li>
+            <li class="li">
+              <input name="btn" type="button" class="bt2" value="发表日记" onclick="checkinfo()"/>
+            </li>
+          </ul>
+        </form>
+      </div>
+      </DIV>
+</DIV>
+</DIV>
+</DIV>
+<%=render :partial => "/share/public_footer"%>

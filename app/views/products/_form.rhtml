@@ -1,0 +1,125 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label required">产品名称</td>
+    <td><%= f.text_field :name, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label">产品型号</td>
+    <td><%= f.text_field :model -%></td>
+  </tr>
+  <tr>
+    <td class="label">产品标签</td>
+    <td><%= f.text_field :tags, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label required">所属类别</td>
+    <td>
+      <%= f.select :category_parent_id, ProductCategory.first_class.collect {|c| [c.name_zh, c.id]}, { :include_blank => true } %>
+      <%= @product.category_id ? (f.collection_select :category_id, @product.category.sibling, :id, :name_zh) : (select :product, :category_id, []) -%>
+      <%= observe_field "product_category_parent_id", {:url => {:controller => 'common', :action => 'first_class_update'}, :with => "first_class_id"} %>
+      <%= observe_field "product_category_id", {:url => {:controller => 'common', :action => 'second_class_update'}, :with => "second_class_id"} %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">所属商家</td>
+    <td><%= f.collection_select :vendor_id, ProductVendor.find(:all), :id, :name_zh -%></td>
+  </tr>
+  <tr>
+    <td class="label">所属品牌</td>
+    <td><%= belongs_to_auto_completer :product, :brand, :name_zh, :allow_free_text => false %></td>
+  </tr>
+  <tr>
+    <td class="label">所属系列</td>
+    <td><%= f.collection_select :serie_id, ProductSerie.find(:all), :id, :name, { :include_blank => true } -%></td>
+  </tr>
+  <tr>
+    <td class="label">产品选项</td>
+    <td>
+      <div id="product_params">
+        <%= (render :partial => "param", :collection => @product.params) unless @product.params.empty? %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">产品属性</td>
+    <td>
+      <div id="product_properties">
+        <%= (render :partial => "property", :collection => @product.properties) unless @product.properties.empty? %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">产品原价</td>
+    <td><%= f.text_field :price, :size => 7 -%>元</td>
+  </tr>
+  <tr>
+    <td class="label">产品现价</td>
+    <td><%= f.text_field :now_price, :size => 7 -%>元</td>
+  </tr>
+  <tr>
+    <td class="label">产品单位</td>
+    <td><%= f.text_field :unit -%></td>
+  </tr>
+  <tr>
+    <td class="label">促销价格</td>
+    <td><%= f.text_field :special_price, :size => 7 -%>元</td>
+  </tr>
+  <tr>
+    <td class="label">促销时间</td>
+    <td><%= text_field_tag "product[special_start]", (@product.special_start ? @product.special_start.to_date : ""), :onclick => "new Calendar().show(this);" -%> 至 <%= text_field_tag "product[special_end]", (@product.special_end ? @product.special_end.to_date : ""), :onclick => "new Calendar().show(this);" -%></td>
+  </tr>
+  <tr>
+    <td class="label">产品口碑</td>
+    <td><%= f.text_field :public_praise, :size => 7 -%></td>
+  </tr>
+  <tr>
+    <td class="label">核价次数</td>
+    <td><%= f.text_field :liveness, :size => 7 -%></td>
+  </tr>
+  <tr>
+    <td class="label">综合评分</td>
+    <td><%= f.text_field :marking, :size => 7 -%></td>
+  </tr>
+  <tr>
+    <td class="label">产品类型</td>
+    <td><%= f.radio_button(:typehood, "0") -%>核价 <%= f.radio_button(:typehood, "1") -%>超低价 <%= f.radio_button(:typehood, "2") -%>陪购 <%= f.radio_button(:typehood, "3") -%>电询</td>
+  </tr>
+  <tr>
+    <td class="label required">选择图片</td>
+    <td>
+      <div id="images"><%= render :partial => "image", :locals => {:product => @product} unless @product.images.empty? %></div>
+      <div><%= add_image_link "添加新图片" %> (注意：图片大小请控制在2M以内！)</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">产品详情</td>
+    <td><%= f.text_area :detail, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label">推荐理由</td>
+    <td><%= f.text_area :selected_reason, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label">产品类型</td>
+    <!--<td><%= f.select :label, Product::LABELS.map{|k, v| [v, k]}, { :include_blank => true } %></td>-->
+    <td>
+      <%= f.check_box :is_normal_type %> 普通
+      <%= f.check_box :is_recommend_type %> 推荐
+      <%= f.check_box :is_hot_type %> 热销
+      <%= f.check_box :is_quality_type %> 精品
+      <%= f.check_box :is_new_type %> 新品 
+    </td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td>
+      <%= submit_tag(controller.action_name == "new" ? "创建产品" : "更新产品", :class => "btn") -%>&nbsp;&nbsp;
+      <%= submit_tag "通过审核", :name => "audit" if (@product.status == 0 || @product.status == 4) %>&nbsp;&nbsp;
+      <% if controller.action_name == "new" %>
+        <input type='submit' value='预览' onclick="this.form.target='_blank';this.form.action='/products/new/preview'; return true;">
+      <% else %>
+        <%= submit_tag "预览", :onclick => "this.form.target='_blank';this.form.action='#{preview_product_path(@product)}'; return true;" %>
+      <% end %>
+    </td>
+  </tr>
+</table>

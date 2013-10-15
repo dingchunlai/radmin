@@ -1,0 +1,49 @@
+<% form_for :vendor, @vendor, :url => install_vendor_path(@vendor), :html => {:method => :put} do |f| %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">合作关系</td>
+		<td><%= f.check_box :is_cooperation %> 合作商铺</td>
+	</tr>
+	<tr>
+		<td class="label">账户</td>
+		<td><%= f.text_field :login %></td>
+	</tr>
+	<tr>
+		<td class="label">密码</td>
+		<td><%= f.password_field :plain_password %></td>
+	</tr>
+	<tr>
+		<td class="label">联系人</td>
+		<td><%= f.text_field :contact %></td>
+	</tr>
+	<tr>
+		<td class="label">客服经理</td>
+		<td><%= f.text_field :customer_manager %></td>
+	</tr>
+	<tr>
+		<td class="label">联系电话</td>
+		<td><%= f.text_field :telephone %></td>
+	</tr>
+	<tr>
+		<td class="label">业务经理</td>
+		<td><%= f.text_field :operation_manager %></td>
+	</tr>
+	<tr>
+		<td class="label">投资总额</td>
+		<td><%= f.text_field :total_investment %></td>
+	</tr>
+	<tr>
+		<td class="label">可上架商品数量</td>
+		<td><%= f.text_field :upper_count %></td>
+	</tr>
+	<tr>
+		<td class="label">合作期限</td>
+		<td><%= f.text_field :effected_at, :size => 10, :onclick => "new Calendar().show(this);" %>-<%= f.text_field :expired_at, :size => 10, :onclick => "new Calendar().show(this);" %></td>
+	</tr>
+
+	<tr>
+		<td class="label"></td>
+		<td><%= submit_tag "提交" %></td>
+	</tr>
+</table>
+<% end %>

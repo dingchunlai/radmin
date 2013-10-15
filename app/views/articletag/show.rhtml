@@ -1,0 +1,23 @@
+<form action="/articletag/edit" method="post">
+<input type="hidden" name="id" value="<%=@tag.TAGID%>">
+<table>
+	<tr>
+		<td>标签名字：</td>
+		<td><input type="text" name="tagname" value="<%=@tag.TAGNAME%>"></td>
+	</tr>
+	<tr>
+		<td>标签拼音：</td>
+		<td><input type="text" name="tagurl" value="<%=@tag.TAGURL%>"></td>
+	</tr>
+	<tr>
+		<td>标签说明：</td>
+		<td><textarea name="tagvalue" cols="50" rows="10"><%=@tag.TAGVALUE%></textarea></td>
+	</tr>
+	<tr>
+		<td colspan=2><input type="submit" value="确定"></td>
+	</tr>
+</table>
+</form>
+<script language="javascript">
+	window.opener.location.reload();
+</script>

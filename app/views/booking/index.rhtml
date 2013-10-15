@@ -1,0 +1,54 @@
+<form id="fmid" action="/booking/index" method="get">
+<p align="center">
+状态：
+<select name="status">
+	<option value="">请选择</option>
+		<option value="0" <%if @status == '0'%>selected<%end%>>提交中</option>
+		<option value="1" <%if @status == '1'%>selected<%end%>>通过</option>
+		<option value="-1" <%if @status == '-1'%>selected<%end%>>废弃</option>
+</select>
+<input type="submit" value="确定"></p>
+<table align=center border=1>
+	<tr>
+		<td>姓名</td>
+		<td>地址</td>
+		<td>电话</td>
+		<td>面积</td>
+		<td>状态</td>
+		<td>时间</td>
+		<td>操作</td>
+	<tr>
+	<%@bookinglist.each do |b| -%>
+	<tr>
+		<td><%=b.name%></td>
+		<td><%=b.address%></td>
+		<td><%=b.tel%></td>
+		<td><%=b.building_area%></td>
+		<td>
+			<%if b.status == 1%>
+				通过
+			<%elsif b.status == 0%>
+				提交中
+			<%elsif b.status == -1%>
+				废弃
+			<%end%>
+		</td>
+		<td><%if b.created_at%><%=b.created_at.utc.strftime("%Y-%m-%d %H:%M:%S")%><%end%></td>
+		<td><a href="/booking/bookingdetail/<%=b.id%>" target="_blank">详细</a> &nbsp; 
+		<a href="#n" onclick="checkinfo('<%=b.id%>','1')">通过</a> &nbsp; 
+		<a href="#n" onclick="checkinfo('<%=b.id%>','-1')">废弃</a></td>
+	<tr>
+	<%end -%>
+</table>
+<p align=center><%= will_paginate @bookinglist ,:prev_label=> '上一页',:next_label=> '下一页'%> </p>
+<input type="hidden" name="id" id="nid">
+<input type="hidden" name="checkstate" id="cid">
+</form>
+<script language="javascript">
+	function checkinfo(id,state){
+		document.getElementById('nid').value = id;
+		document.getElementById('cid').value = state;
+		document.getElementById('fmid').action='/booking/check';
+		document.getElementById('fmid').submit();
+	}
+</script>

@@ -1,0 +1,77 @@
+<div class="search">
+	<% form_tag "/vsearch" do %>
+  <ul class="clearfix">
+  	<li><label>关键字：</label><%= text_field_tag :keywords, @keywords %><%= hidden_field_tag :type, "product" %></li>
+		<!--<% if @vendor.product_categories && @vendor.product_categories.size > 0 %>
+		<li><label>产品类别：</label><%= select :product, :category_id, @vendor.categories.collect {|c| [c.name_zh, c.id]}, {:include_blank => true} %></li>
+		<% end %>-->
+  	<li><label>状态：</label><%= select_tag :status, options_for_select([["所有产品", ""], ["待审核产品", "0"], ["已审核产品", "2"], ["待上架产品", "3"], ["已上架产品", "1"], ["待下架产品", "5"], ["已下架产品", "4"]], @status) %></li>
+		<%#*<li><input type="button" onclick="s_s()" value="提交查询"/></li>%>
+		<li><input type="submit" value="查询"/></li>
+	</ul>
+	<% end %>
+</div>
+
+<div id="products_list">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="products" id="products_table">
+		<tr>
+			<th>缩略图</th>
+			<th>产品名称</th>
+			<th>所属品牌</th>
+			<th>所属分类</th>
+			<th>型号/单位</th>
+			<th>状态</th>
+			<% if controller.controller_name == "merchandises" %>
+			<th>报价</th>	
+			<th>报价日期</th>
+			<% end %>
+			<th>相关操作</th>
+		</tr>
+		<% @products.each do |product| -%>
+		<% @product = product %>
+		<tr class="<%= cycle("odd", "even")%>" id="<%= product.dom_id-%>">
+			<td class="thumb"><%= link_to image_tag(product.primary_image_path(:thumb), :alt => product.name), vendor_merchandise_path(:id => product.productid), :title => product.name -%></td>
+			<td><%= link_to product.name, vendor_merchandise_path(:id => product.productid), :title => product.name, :target => "_blank" %></td>
+			<td><%= product.brand.name_zh if product.brand %></td>
+			<td><%= product.category.name_zh if product.category %></td>
+			<td><%= product.model %> <%= product.unit %></td>
+			<td id="<%= product.dom_id("status")-%>"><%= product_status(product.status) %></td>
+			<% if controller.controller_name == "merchandises" %>
+			<td><%= @vendor.product_quote(product).price %></td>
+			<td><%= @vendor.product_quote(product).created_at.to_s(:db) %></td>
+			<% end %>
+			<td>
+				<%= link_to "显示", vendor_merchandise_path(:id => product.productid) -%><br />
+				<% if product.vendors.include?(@vendor) %>
+				<%= link_to "查看报价", vendor_quote_path(product.quote(@vendor)) %><br />
+				<%= link_to "编辑报价", edit_vendor_quote_path(@vendor.product_quote(product)) %>
+				<% else %>	
+				<%= link_to "我要报价", new_vendor_quote_path(:id => product.id), :target => "_blank" %>
+				<% end %>
+			</td>
+		</tr>
+		<% end -%>
+	</table>
+	<%= will_paginate @products, :renderer => 'CustomPaginationRenderer' -%>
+</div>
+<script type="text/javascript">
+    function s_s(){
+      var kw = document.getElementById("keywords").value;
+      var t = document.getElementById("type").value;
+      var s = document.getElementById("status").value;
+      var url = "/vsearch?keywords="+kw+"&"+"type="+t+"&"+"status="+s
+      window.open(url,"_self")
+    }
+    function onKeypress(e){
+      var isie = (document.all) ? true : false;
+      var key;
+      if(isie){
+        key = window.event.keyCode;
+      }else{
+        key = e.which;
+      }
+      if(key==13){
+        s_s()
+      }
+    }
+  </script>

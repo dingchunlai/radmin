@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejia_keyword_tag
+END
+index.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejia_keyword_tag/index.rhtml
+END
+new_keyword_tag.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejia_keyword_tag/new_keyword_tag.rhtml
+END
+view_keyword_tag.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejia_keyword_tag/view_keyword_tag.rhtml
+END
+new_father_tag.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejia_keyword_tag/new_father_tag.rhtml
+END
+update_tag.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/hejia_keyword_tag/update_tag.rhtml
+END

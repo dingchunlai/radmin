@@ -1,0 +1,8 @@
+<li onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');">
+  <input type="checkbox" name="case[ISZHUANGHUANG]" value="1" <%= "checked" if @case.ISZHUANGHUANG == "1" %>>
+  <span>是否装潢公司案例</span>
+  <input type="checkbox" name="case[ISGOOD]" value="1" <%= "checked" if @case.ISGOOD == 1 %>>
+  <span>是否精华案例</span>
+  特定客户案例：<input type="checkbox" name="case[STATUS]" value="1000" <%= "checked" if @case.STATUS == "1000" %>>
+  <span>立邦</span>
+</li>

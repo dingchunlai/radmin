@@ -1,0 +1,38 @@
+<div class="user_right">
+	<div id="widebar">
+		<div id="nav_bottom"></div>
+		<div id="widebar_content">
+			<div id="userprofile">
+				<div class="top">
+					<div class="profile_name">我的和家 - 装修报价单</div>
+				</div>
+				<div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护装修报价单信息。</div>
+			</div>
+		</div>
+		<div class="mainbox">
+			<div class="same_cha">
+				<ul>
+					<li class="line"></li>
+					<li id="s1" class="menu_on"><a href="/decos/quotations">报价单列表</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/quotations/new">新建报价单</a></li>
+					<li class="line"></li>
+				</ul>
+			</div>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<% @quotations.each do |quotation| %>
+				<tr>
+					<td><%=quotation.id %></td>
+					<td><%=h quotation.title %></td>
+					<td>
+						<%= link_to "查看", deco_quotation_path(quotation) %>
+						<%= link_to "编辑", edit_deco_quotation_path(quotation) %>
+						<%= link_to "删除", deco_quotation_path(quotation), :confirm => '确认删除吗？', :method => :delete %>
+					</td>
+				</tr>
+				<% end %>
+			</table>
+			<%= will_paginate @quotations %>
+		</div>
+	</div>
+</div>

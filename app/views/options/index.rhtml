@@ -1,0 +1,27 @@
+<% title (" 选项列表") %>
+<div style="width:300px;background-color:#66CC66;font-size:12px;padding:2px">
+	提示: 绿色背景色表示该选项被设置为正确选项。<br/>
+	<%= @currect_option.size == 1 ? ("当前设置:<strong>" + @currect_option.first.content + "</strong>") : "您还没有为该问题设置正确选项。" %>
+</div>
+	<table border="0" cellspacing="2" cellpadding="2" >
+		<tr>
+			
+			<th>内容</th>
+			<th>操作</th>		
+			
+		</tr>
+			<%  @options.each do |option| %>
+			<tr>		
+				<td style="background-color:<%= option.is_currect? ? ' #66CC66' : '#DDDDDD'  %>"><%= option.content%></td>		
+				<td  ><%= button_to "正确选项", question_option_path(@question,option) ,:method => :put %></td>
+					<td >	<%= link_to "删除", question_option_path(@question,option), :confirm => 'Are you sure?', :method => :delete %> 	</td>
+			</tr>
+			<% end -%>
+			<tr>
+			<% form_for :option ,@option,:url => question_options_path(@question) do |f| -%>
+				<td><%= f.text_field :content,:size=>55 %></td>
+				<td><%= submit_tag("增加") %>	</td>
+			</tr>
+		<% end -%>
+	</table>
+<p><%= link_to "返回问题列表", activity_questions_path(@activity) %></p>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>和家网 - 用户登录</title>
+    <link rel="stylesheet" rev="stylesheet" href="http://www.51hejia.com/css/newback/loginindex.css" type="text/css" media="all" />
+    <script type="text/javascript" src="http://www.51hejia.com/js/newback/login1.js"></script>
+    <script type="text/javascript">
+      function Divopop(ID){
+        var Moled=document.getElementById(ID);
+        Moled.style.display="block";
+        var bodyw=document.body.scrollWidth;
+        var bodyh=document.body.scrollHeight;
+        var BgDiv=document.createElement("div");
+
+        var firefox=document.getElementById && !document.all;
+        BgDiv.style.position="absolute";
+        BgDiv.style.left="0";
+        BgDiv.style.top="0";
+        BgDiv.style.width=bodyw+"px";
+        BgDiv.style.height=bodyh+"px";
+        BgDiv.style.zIndex="2999";
+        BgDiv.style.backgroundColor="#000";
+        if(firefox==false){BgDiv.style.filter="Alpha(Opacity=50)";}else{BgDiv.style.opacity=".6";}
+        document.body.appendChild(BgDiv);
+        var As=document.getElementsByTagName("a");
+        for (var i=0;i<As.length;i++){
+          if(As[i].className=="Divopop-none"){
+            As[i].onclick=function(){Moled.style.display="none";BgDiv.style.display="none";return false;};
+          }
+          else if(As[i].className=="othen"){
+            As[i].onclick=function(){
+              var othenId=this.getAttribute("toid");
+              var othenDiv=document.getElementById(othenId);
+              Moled.style.display="none";
+              othenDiv.style.display="block";
+              return false;
+            };
+          }
+          else if(As[i].className=="Divopop-nonenei"){
+            As[i].onclick=function(){this.parentNode.style.display="none";BgDiv.style.display="none";return false;};
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <iframe name="hideiframe_login" width="0" height="0" style='display: none;'></iframe>
+
+    <div id="Login" style="left:0;top:0; margin:0; width:222px; height:224px;">
+      <h4><span>登陆/</span></h4>
+      <form action="/member/login" target="hideiframe_login" method="post">
+
+        <input type="hidden" name="bbs" value="" />
+
+        <input type="hidden" name="dengludangshi" value="1" />
+        <fieldset>
+          <div style="margin-left:20px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td height="39">用户名: &nbsp;</td>
+                <td><input name="s_username" type="text" style="width:110px;" /></td>
+              </tr>
+              <tr>
+                <td height="39">密　码: &nbsp;</td>
+                <td><input name="s_userpwd" type="password" style="width:110px;" /></td>
+              </tr>
+              <!--
+              <tr>
+                <td colspan="2" height="32">
+                  <input name="category" type="radio" checked value="1" /> 会员
+                  <input name="category" type="radio" value="1" /> 专家
+                  <input name="category" type="radio" value="2" /> 商家</td>
+              </tr>
+              -->
+              <tr>
+                <td colspan="2" height="50"><select name="keeplogin">
+                    <option value="0">不保持登录</option>
+                    <option value="1">保持1个月</option>
+                    <option value="3" selected>保持3个月</option>
+                    <option value="12">保持一年</option>
+                  </select>
+                  &nbsp;
+                  <a href="/member/get_password" title="点这里取回密码...">忘记密码</a>
+
+                  <input id="ihwenba" name="forward" type="hidden" value="<%=params[:forward]%>" />
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" align="center" height="40">
+                  <input class="submit" type="submit" value="" /> &nbsp;
+                  <!-- <a href="#psw" onclick="Divopop('pswwar');return false;">忘记密码？</a> --></td>
+              </tr>
+            </table></div></fieldset>
+      </form>
+    </div>
+
+    <div id="zhucewar" style="display:none">
+      <a href="#guanbi" title="关闭" class="Divopop-nonenei"><img src="http://www.51hejia.com/css/newback/images/x.png" alt="关闭" /></a>
+    </div>
+  </body>
+</html>

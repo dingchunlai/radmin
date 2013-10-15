@@ -1,0 +1,7 @@
+<select id="firm_area" name="firm[area]">
+						<option value="0">请选择</option>
+					<%if @area2 %>
+						<%@area2.each do |a|%>
+							<option value="<%=a[0] %>" <%if @firm.area.to_i==a[0].to_i%>selected<%end%> ><%=a[1]%></option>
+						<%end%>
+					<%end%>

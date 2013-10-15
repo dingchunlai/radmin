@@ -1,0 +1,19 @@
+<form name="form1" method="post" action="/company/edit" style="margin:0">
+<input type="hidden" name="id" value="<%=@company.ID%>">
+<table border=1>
+<tr><td>
+	公司名字:</td><td><%=@company.CN_NAME%>&nbsp;
+</td></tr>
+<tr><td>
+	星级:</td><td><input type="text" name="starclass" value="<%=@company.STARCLASS%>"> &nbsp;
+</td></tr>
+<tr><td>
+	合作公司:</td><td>
+		是<input type="radio" name="special" value=1 <%if @company.SPECIAL == 1%>checked<%end%>>&nbsp;
+		否<input type="radio" name="special" value=0 <%if @company.SPECIAL == 1%><%else%>checked<%end%>>
+</td></tr>
+<tr><td colspan=2 align=center>
+	<input type="submit" value="确定">
+</td></tr>
+</table>
+</form>

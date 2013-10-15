@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/charge
+END
+promotions_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/charge/promotions_controller.rb
+END
+vendors_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/charge/vendors_controller.rb
+END
+products_controller.rb
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/app/controllers/charge/products_controller.rb
+END

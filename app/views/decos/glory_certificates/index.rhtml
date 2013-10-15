@@ -1,0 +1,40 @@
+<div class="user_right">
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id="userprofile">
+        <div class="top">
+          <div class="profile_name">我的和家 - 荣誉证书</div>
+        </div>
+        <div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护荣誉证书信息。</div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/decos/glory_certificates">荣誉证书列表</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/decos/glory_certificates/new">上传荣誉证书</a></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+      <style type="text/css">
+        #glory_certificates {padding:0 10px;}
+        #glory_certificates li{padding:10px 0;border-bottom:1px dashed #dedede;}
+        .glory_certificate_box01{width:300px;}
+        .glory_certificate_box02{width:400px;margin-left:10px;}
+      </style>
+      <ul id="glory_certificates">
+        <% @glory_certificates.each do |glory_certificate|%>
+          <li id="glory_certificate_<%= glory_certificate.id %>" class="clearfix">
+            <div class="glory_certificate_box01 f_l"><%= image_tag(glory_certificate.picture.url, :size => '100x100') %></div><div class="glory_certificate_box02 f_l"><%= glory_certificate.description %><br/><%= link_to "编辑", edit_deco_glory_certificate_path(glory_certificate) %>
+              <%= link_to "删除", deco_glory_certificate_path(glory_certificate.id),:method => :DELETE, :confirm => '确定删除' %></div>
+          </li>
+        <% end %>
+      </ul>
+
+    </div>
+  </div>
+</div>
+<%= sortable_element 'glory_certificates', :url => {:action => :sort} %>

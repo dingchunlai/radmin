@@ -1,0 +1,138 @@
+<div>
+  <div><h3> > 案例管理页面</h3></div>
+  <div style="margin-left:20px;">
+    <form action="/review/case_list" method="get">
+      <table width="90%">
+        <tr>
+          <td>查询条件：</td>
+          <td>案例ID：<input type="text" name="case_id" id="case_id" value="<%if @case_id%><%=@case_id %><%end%>" size=8/></td>
+          <td>案例标题：<input type="text" name="case_title" id="case_title" value="<%if @case_title%><%=@case_title %><%end%>" size=20/></td>          
+        </tr>
+        <tr>
+          <td>公司ID：<input type="text" name="firm_id" id="firm_id" value="<%if @firm_id%><%=@firm_id %><%end%>" size=8/></td>
+          <td>公司名称：<input type="text" name="firm_name" id="firm_name" value="<%if @firm_name%><%=@firm_name %><%end%>" size=20/></td>
+          <td><input type="submit" class="btn" value="查 询"/></td>
+        </tr>
+      </table>
+    </form>
+  </div><br />
+  <div>
+    <table width="98%" align="center" border="0" cellspacing="1" cellpadding="1" style="text-align:center;">
+      <tr >
+        <td style="font-size:18px;width:70px"><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAllBox();"/>反/全选</td>
+        <td style="font-size:18px;font-weight: 700">标题</td>
+        <td style="font-size:18px;font-weight: 700">公司ID</td>
+        <td style="font-size:18px;font-weight: 700">公司名称</td>
+        <td style="font-size:18px;font-weight: 700">地址</td>
+        <td style="font-size:18px;font-weight: 700">发表时间</td>
+        <td style="font-size:18px;font-weight: 700">操作</td>
+      </tr>
+      <% @cases.each do |anli| -%>
+        <tr >
+          <td><input type="checkbox" name="ids" id="ids" value="<%= anli.ID %>" onchange="check()"/><%= anli.ID %></td>
+          <td><%= anli.NAME %></td>
+          <td><%= anli.COMPANYID %></td>
+          <td><%= show_firm_name_zh(anli.COMPANYID) %></td>
+          <td><%= anli.BUILDINGNAME %></td>
+          <td><%= anli.CREATEDATE.strftime("%Y-%m-%d")%></td>
+          <td><%= link_to "修改信息", "http://radmin.51hejia.com/review/radmin_case_edit/#{anli.ID}", :target => "_blank" %></td>
+        </tr>
+
+      <%end -%>
+    </table>
+
+  </div><br />
+  <div>
+    <div style="float:left;">
+      <input type="button" class="btn" value="批量删除" style="margin-left:10px;" onclick="deleteAll();"/>
+      <form id="batch" action="" method="post">
+            <input type="hidden" name="case_ids" id="case_ids" value="" />
+      </form>
+    </div>
+    <p align=center>搜索到 <%=@cases.total_entries%> 篇案例</p>
+    <div style="text-align:center"><%= will_paginate @cases %></div>
+  </div>
+</div>
+<script type="text/javascript">
+  var j = 0;
+  var ids = new Array();
+  var all = document.getElementById("checkAll");
+  var is_box = document.getElementsByName("ids");
+  var submit_form = document.getElementById("batch");
+  var remark_ids = document.getElementById("case_ids");
+  // 全选按钮点击事件
+  function checkAllBox(){
+    for(var i = 0; i < is_box.length; i++)
+    {
+      is_box[i].checked = all.checked;
+    }
+  }
+  // 复选框触发事件
+  function check(){
+    var flg = true;
+    for(var i = 0; i < is_box.length; i++)
+    {
+      if(is_box[i].checked == false)
+        flg = false;
+    }
+    if(flg){
+      all.checked = true;
+    }else{
+      all.checked = false;
+    }
+  }
+  function validate(){
+    var flg = true;
+    for(var i = 0; i < is_box.length; i++)
+    {
+      if(is_box[i].checked == true)
+        flg = false;
+    }
+    return flg;
+  }
+
+  // 批量删除
+  function deleteAll(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      remark_ids.value = ids;
+      submit_form.action = "/review/cases_destroy";
+      submit_form.submit();
+    }
+  }
+
+</script>
+<style type="text/css">
+  /* <![CDATA[ */
+
+  table, td
+  {
+    border-color: #7EBF4F;
+    border-style: solid;
+  }
+
+  table
+  {
+    border-width: 0 0 1px 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td
+  {
+    margin: 0;
+    padding: 4px;
+    border-width: 1px 1px 0 0;
+  }
+
+  /* ]]> */
+</style>

@@ -1,0 +1,2 @@
+module Deco::EventsHelper
+end

@@ -1,0 +1,21 @@
+<div id="div_main">
+  <form name="ftiwen" id="ftiwen" action="/statistics/delete_all" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      日期：<input name="riqi" type="text" size="6" value="<%= @riqi %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />
+      类型：
+      <select name="code">
+        <option value="" <%="selected" if @code == "" %>>全部</option>
+        <option value="zb-ad-js" <%="selected" if @code == "zb-ad-js" %>>招标弹出广告</option>
+        <option value="zd-swf" <%="selected" if @code == "zd-swf" %>>资讯通栏FLASH广告</option>
+        <option value="gongyi_ad_gif" <%="selected" if @code == "gongyi_ad_gif" %>>超级管家飘带广告</option>
+      </select>
+      <input type="submit"value="删 除" />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      <p>招标弹出广告:<%= Statistic.count(:conditions => ["code = ?", "zb-ad-js"]) %></p>
+      <p>资讯通栏FLASH广告:<%= Statistic.count(:conditions => ["code = ?", "zd-swf"]) %></p>
+      <p>超级管家飘带广告<%= Statistic.count(:conditions => ["code = ?", "gongyi_ad_gif"]) %></p>
+    </div>
+  </form>
+</div>
+

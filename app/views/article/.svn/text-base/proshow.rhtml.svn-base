@@ -1,0 +1,50 @@
+<div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+<%= link_to "上一层", :action => "show", :id => @id %>
+
+<h3> 删除关联的产品</h3>
+<% form_tag :action => "delete_prod" do %>
+<input type="hidden" name="id" value="<%=@id%>"/>
+<%if !@productlink.nil? -%>
+<table width="100%">
+
+  <% @productlink.each do |prod| -%>
+	<tr>
+	  <td td width="60%">
+		<%= check_box_tag("prodid[]", prod.id) %><%=prod.name%>
+	  </td>
+	  <td td width="40%">
+	  </td>
+	</tr>
+  <% end -%>
+</table>
+<% end -%>
+<%= submit_tag "删除" %>
+
+<% end %>
+
+<table width="100%">
+<tr>
+<td width="60%">
+<form name="form1" method="post" action="/article/proshow" style="margin:0" enctype="multipart/form-data" >
+<input type="hidden" name="id" value="<%=@id%>"/>
+<p>关联产品：<input name="title" value="<%=@title%>" type="text"/>
+<input type="submit" value="搜索"/>
+</form>
+</td>
+<td width="40%">
+
+</td>
+</p>
+</tr>
+<form name="form2" action="/article/productlink" style="margin:0" enctype="multipart/form-data" >
+<input type="hidden" name="id" value="<%=@id%>"/>
+<%= render(:partial=>"article_product" ,:collection=>@products)%>
+<tr>
+	<td>
+	<input type="submit" value="添加"/>
+	</td>
+<tr>
+</form>
+</table>
+</div>
+<%= will_paginate @products,:prev_label=> "上一页",:next_label=> "下一页" %> 

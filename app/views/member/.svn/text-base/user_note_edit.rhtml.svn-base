@@ -1,0 +1,122 @@
+	<link href="http://js.51hejia.com/css/ucenter.css?53452345" rel="stylesheet" type="text/css" />
+	<%=render :partial => "/share/public_header"%>
+
+<DIV id="usermain" style="margin-top:5px;" class="clearfix">
+<DIV class=user_left>
+<DIV id=sidebar>
+<div id="logo_bottom"></div>
+  <DIV id=sidebar_content>
+    <DIV id=sidebar_item1>
+      <DIV class=app_list>
+        <DIV class=list_item>
+          <DIV class=container>
+          	<A href="/member/userinfo" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/account.gif)">个人资料</A>
+          </DIV>
+          <DIV class=container>
+          	<A href="/member/userpw" class=link_title style="BACKGROUND-IMAGE: url(http://www.51hejia.com/images/user/introduce.gif)">修改密码</A>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px">
+          <DIV class=fontgray><B><!--我自己的--></B></DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+    <DIV id=sidebar_item2 style="BORDER-BOTTOM: #d6d6d6 1px solid; height:479px;">
+      <DIV class=app_list>
+        <DIV class=list_item style="PADDING-LEFT: 50px"></DIV>
+
+        <%=render :partial => "/common/leftmenu" %>
+
+        <BR class=clear>
+      </DIV>
+      <BR class=clear>
+    </DIV>
+  </DIV></DIV>
+</DIV>
+<%
+	require 'date'
+	d = Date.today
+    datet = d>>3
+	@note = UserNote.get_note_has(@userid)
+%>
+
+<DIV class="user_right">
+	<div class="titlebox">
+      <h2>装修日记</h2>
+      <ul>
+        <li><a href="/member/user_note_list">日记列表</a></li>
+        <li><%if @note.size>0%><a href="#" onclick="javascript:alert('请三个月之后再新建日记!');">新建日记</a><%else%><a href="/member/user_note_new">新建日记</a><%end%></li>
+        <%if @note.size>0%><li class="hoveron"><a href="/member/user_note_edit/<%=@notemodel.id%>">日记简介</a></li><%end%>
+      </ul>
+      <div class="ttrbox">
+        <%if @note.size>0%><input type="submit" name="button3" class="bt2" id="button3" value="写装修日记" onClick="javascript:window.open('/member/user_photo_new/<%=@note[0].id%>')"/><%else%><%end%>
+      </div>
+    </div>
+    <div class="ucbox margin10">
+      <h3><span class="dz">发表新日记</span></h3>
+      <div class="wzj">
+        <form action="/member/user_note_edit" method=post enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<%=@notemodel.id%>">
+          <ul>
+            <li>标题*：
+              <input type="text" class="w" name="address" value="<%=@notemodel.title%>" id="addressid"/>
+            </li>
+            <!--<li>故事对应点评：
+              <select name="dianping_id" id="">
+              <%if @reviews.size>0%>
+              	  <option value=''>请选择</option>
+	              <%@reviews.each do |r|%>
+					<option value='<%=r.id%>' <%if @notemodel.dianping_id.to_i==r.id.to_i%>selected<%end%>><%=r.title%></option>
+				  <%end%>
+              <%else%>
+              	  <option value="">请发表点评</option>
+              <%end%>
+              </select>
+            </li>-->
+            <li>简介*：
+              <textarea cols="" rows="5" class="w" name="notedescript" id="notedescriptid"><%=@notemodel.content%></textarea>
+            </li>
+            <li>所属房型：
+              <select name="room">
+							<option value='0'>请选择</option>
+							<%DecoFirm::ROOM.sort.each do |k|%>
+								<option value='<%=k[0]%>' <%if @notemodel.room.to_i==k[0].to_i%>selected<%end%>><%=k[1]%></option>
+							<%end%>
+              </select>
+              装修价格：
+              <select name="price" size="1">
+							<option value='0'>请选择</option>
+							<% DecoFirm::PRICE.sort.each do |k| %>
+								<option value='<%=k[0]%>' <%if @notemodel.price.to_i==k[0].to_i%>selected<%end%>><%=k[1]%></option>
+							<% end %>
+              </select>
+              装修方式：
+              <select name="method">
+							<option value='0'>请选择</option>
+							<% DecoFirm::MODELS.sort.each do |k| %>
+								<option value='<%=k[0]%>' <%if @notemodel.methodtype.to_i==k[0].to_i%>selected<%end%>><%=k[1]%></option>
+							<% end %>
+              </select>
+              装修风格：
+              <select name="style">
+							<option value='0'>请选择</option>
+							<% DecoFirm::STYLES.sort.each do |k| %>
+								<option value='<%=k[0]%>' <%if @notemodel.style.to_i==k[0].to_i%>selected<%end%>><%=k[1]%></option>
+							<% end %>
+              </select>
+            </li>
+            <li class="li">
+              <input name="" type="submit" class="bt2" value="发表日记" />
+            </li>
+          </ul>
+        </form>
+      </div>
+      </DIV>
+</DIV>
+</DIV>
+</DIV>
+<%=render :partial => "/share/public_footer"%>

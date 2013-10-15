@@ -1,0 +1,80 @@
+<script type="text/javascript">
+function submitForm(form){
+    ge("p_name").style.color="#999999";
+    ge("p_password").style.color="#999999";
+    ge("p_rname").style.color="#999999";
+    ge("p_role").style.color="#999999";
+    ge("p_idate").style.color="#999999";
+    var valReturn = true;
+    if (trim(ge("name1").value)==""){
+        ge("p_name").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("password1").value)==""){
+        ge("p_password").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("rname").value)==""){
+        ge("p_rname").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("role").value)==""){
+        ge("p_role").style.color="red";
+        valReturn = false;
+    }
+    if (trim(ge("idate1").value)==""){
+        ge("p_idate").style.color="red";
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<div class="formouter">
+            <div class="formleft">用 户 名：</div>
+            <div class="formcenter"><input name="name1" id="name1" type="text" /></div>
+            <div class="formright" id="p_name">您必须填写用户名</div>
+</div>
+<div class="formouter">
+            <div class="formleft">密　　码：</div>
+            <div class="formcenter"><input name="password1" id="password1" type="password" /></div>
+            <div class="formright" id="p_password">您必须填写用户密码</div>
+</div>
+<div class="formouter">
+            <div class="formleft">用户姓名：</div>
+            <div class="formcenter"><input name="rname" id="rname" type="text" /></div>
+            <div class="formright" id="p_rname">您必须填写用户姓名</div>
+</div>
+<div class="formouter">
+            <div class="formleft">所属部门：</div>
+            <div class="formcenter"><%=get_formselect("department", "请选择", "", @department)%></div>
+            <div class="formright" id="p_rname">请选择该用户所属部门</div>
+</div>
+<div class="formouter">
+            <div class="formleft">用户角色：</div>
+            <div class="formcenter">
+                   <%=get_formselect_user("role","","size='10' multiple",@roles)%>
+            </div>
+            <div class="formright" id="p_role">请选择用户的角色</div>
+</div>
+<div class="formouter">
+            <div class="formleft">职责领导：</div>
+            <div class="formcenter">
+            <select id="r_manager" name="r_manager">
+            	<option value="0">请选择</option>
+            	<%for r in @edit_role %>
+            		<option value="<%=r.id %>" <% if r.id.to_s == @parent_id.to_s %>selected<% end %> ><%=r.rname %></option>
+            	<% end %>
+            </select>
+            </div>
+            <div class="formright" id="r_manager">可选选项</div>
+</div>
+<div class="formouter">
+            <div class="formleft">失效日期：</div>
+            <div class="formcenter"><input name="idate1" id="idate1" type="text" /></div>
+            <div class="formright" id="p_idate">您必须设定用户帐号的失效时间</div>
+</div>
+<div class="formouter">
+            <div class="formleft">用户描述：</div>
+            <div class="formcenter"><textarea name="description" id="description" rows="4" style="width:150px;"><%=@description%></textarea></div>
+            <div class="formright" id="p_description">用户描述并不是必填项</div>
+</div>

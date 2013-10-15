@@ -1,0 +1,65 @@
+<script type="text/javascript">
+window.onload = function(){
+  setValue();
+  div_main.style.height = 290;
+  L_wrapper.style.height = parseInt(div_main.style.height)+26;
+}
+function setValue(){
+    form1.id.value = "<%=@hejiatag.id%>";
+    form1.name.value = "<%=@hejiatag.name%>";
+    form1.level.value = "<%=@hejiatag.level%>";
+    form1.parent_id.value = "<%=@hejiatag.parent_id%>";
+    form1.initial.value = "<%=@hejiatag.initial%>";
+}
+function set_action(){
+    if (form1.actionurl[0].checked)
+        form1.action = form1.actionurl[0].value;
+    else
+        form1.action = form1.actionurl[1].value;
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-top:5px; padding-bottom:5px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:255px; float:left;
+}
+.formcenter input{
+    width:235px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+
+<div id="div_main" style="padding:10px;">
+  
+<form action="hejiatag_edit_save" name="form1" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <input name="id" type="hidden" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                编辑记录
+    </div>
+    
+    <%=render :partial => "hejiatag_form"%>
+
+    <div class="formouter">
+            <div class="formleft">保存方式:</div>
+            <div style="font-size:12px;padding-top:3px;">
+              <input name="actionurl" type="radio" value="hejiatag_edit_save" checked /> 更新记录
+              <input name="actionurl" type="radio" value="hejiatag_new_save" /> 另存为新记录
+            </div>
+    </div>
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+</div>

@@ -1,0 +1,101 @@
+<div id="filter">
+  <h3>当前分类共有<span><%= @products.total_entries -%></span>款产品：（点击下框，缩小搜索范围）</h3>
+  <% if params[:brand] || params[:category] || params[:price] || params[:query] -%>
+  <h4>删除所应用的筛选条件</h4>
+  <ul id="search-close" class="clearfix">
+    <% if params[:brand] -%>
+    <li><%= link_to @brand.name_zh, products_path(params.merge(:controller => "products", :brand => nil, :page => nil, :id => nil)) -%></li>
+    <% end -%>
+    <% if params[:category] -%>
+    <li><%= link_to @category.name_zh, products_path(params.merge(:controller => "products", :category => nil, :page => nil, :id => nil)) -%></li>
+    <% end -%>
+    <% if params[:price] -%>
+    <li><%= link_to params[:price], products_path(params.merge(:controller => "products", :price => nil, :page => nil, :id => nil)) -%></li>
+    <% end -%>
+    <% if params[:query] -%>
+      <li><%= link_to params[:query], products_path(params.merge(:controller => "products", :query => nil, :search_type => nil, :page => nil, :id => nil)) -%></li>
+    <% end -%>
+  </ul>
+  <% end -%>
+  <% if @category && @category.valid_children.size > 0 -%>
+  <h4 class="filter-category">请选择分类</h4>
+  <ul class="clearfix">
+    <% @category.valid_children.each do |category| %>
+    <li><%= link_to category.name_zh, products_path(params.merge(:controller => "products", :category => category.id, :page => nil, :id => nil)) %></li>
+    <% end -%>
+  </ul>
+  <% end -%>
+  <% if @brands %>
+	<% if @brands.size > 0 -%>
+  <h4 class="filter-brand">请选择品牌</h4>
+  <ul class="clearfix">
+    <% @brands.each do |brand| -%>
+    <% if @category %>
+    <% if brand.products_count > 0 -%>
+    <li><%= link_to brand.name_zh, products_path(params.merge(:controller => "products", :brand => brand.id, :category => @category.id, :page => nil, :id => nil)) %></li>
+    <% end -%>
+    <% else -%>
+    <% if brand.products_count > 0 -%>
+    <li><%= link_to brand.name_zh, products_path(params.merge(:controller => "products", :brand => brand.id, :page => nil, :id => nil)) %></li>
+    <% end -%>
+    <% end -%>
+    <% end -%>
+  </ul>
+  <% end -%>
+  <% end %>
+  <h4 class="filter-price">请选择价格范围</h4>
+  <ul class="clearfix">
+    <% if @category %>
+    <li><%= link_to "1 - 100", products_path(params.merge(:controller => "products", :price => "1-100", :category => @category.id, :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "100 - 500", products_path(params.merge(:controller => "products", :price => "100-500", :category => @category.id, :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "500 - 1000", products_path(params.merge(:controller => "products", :price => "500-1000", :category => @category.id, :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "1000 - 2000", products_path(params.merge(:controller => "products", :price => "1000-2000", :category => @category.id, :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "2000 - 5000", products_path(params.merge(:controller => "products", :price => "2000-5000", :category => @category.id, :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "5000 +", products_path(params.merge(:controller => "products", :price => "5000+", :category => @category.id, :page => nil, :id => nil)) -%></li>
+    <% else %>
+    <li><%= link_to "1 - 100", products_path(params.merge(:controller => "products", :price => "1-100", :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "100 - 500", products_path(params.merge(:controller => "products", :price => "100-500", :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "500 - 1000", products_path(params.merge(:controller => "products", :price => "500-1000", :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "1000 - 2000", products_path(params.merge(:controller => "products", :price => "1000-2000", :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "2000 - 5000", products_path(params.merge(:controller => "products", :price => "2000-5000", :page => nil, :id => nil)) -%></li>
+    <li><%= link_to "5000 +", products_path(params.merge(:controller => "products", :price => "5000+", :page => nil, :id => nil)) -%></li>
+    <% end %>
+  </ul>
+</div>
+<div id="category-title" class="clearfix">
+  <ul id="category-tabs" class="ui-tabs-nav category-tabs" class="clearfix">
+    <% if @category %>
+    <li class="ui-tabs-selected"><%= link_to "<span>#{@category.name_zh}</span>", products_path(params.merge(:controller => "products", :category => @category.id, :type => nil, :page => nil, :id => nil)) -%></li>
+    <li class="direct"><%= link_to "<span>直销产品</span>", products_path(params.merge(:controller => "products", :category => @category.id, :type => 1, :page => nil, :id => nil)) -%></li>
+    <li class="hot-pricing"><%= link_to "<span>核价热门</span>", products_path(params.merge(:controller => "products", :category => @category.id, :type => 0, :page => nil, :id => nil)) -%></li>
+    <% else %>
+    <li class="ui-tabs-selected"><%= link_to "<span>#{page_title}</span>", products_path(params.merge(:controller => "products", :type => nil, :page => nil, :id => nil)) -%></li>
+    <li class="direct"><%= link_to "<span>直销产品</span>", products_path(params.merge(:controller => "products", :type => 1, :page => nil, :id => nil)) -%></li>
+    <li class="hot-pricing"><%= link_to "<span>核价热门</span>", products_path(params.merge(:controller => "products", :type => 0, :page => nil, :id => nil)) -%></li>
+    <% end %>
+  </ul>
+  <form>
+    排序方式：
+    <select name="select" onchange="javascript:location.href=this.value;">
+      <% if @category %>
+      <option value="<%= products_path(params.merge(:controller => "products", :order => "sortdesc", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'sortdesc' -%>>价格从高到低</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "sortasc", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'sortasc' -%>>价格从低到高</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "new", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'new' -%>>全新上架</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "class", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'class' -%>>店铺等级</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "awareness", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'awareness' -%>>品牌热度</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "faith", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'faith' -%>>诚信服务</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "praise", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='true'" unless params[:order] -%><%= "selected='true'" if params[:order] == 'praise' -%>>产品口碑</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "active", :category => @category.id, :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'active' -%>>核价活跃度</option>
+      <% else %>
+      <option value="<%= products_path(params.merge(:controller => "products", :order => "sortdesc", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'sortdesc' -%>>价格从高到低</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "sortasc", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'sortasc' -%>>价格从低到高</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "new", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'new' -%>>全新上架</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "class", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'class' -%>>店铺等级</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "awareness", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'awareness' -%>>品牌热度</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "faith", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'faith' -%>>诚信服务</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "praise", :page => nil, :id => nil)) -%>" <%= "selected='true'" unless params[:order] -%><%= "selected='true'" if params[:order] == 'praise' -%>>产品口碑</option>
+	   	<option value="<%= products_path(params.merge(:controller => "products", :order => "active", :page => nil, :id => nil)) -%>" <%= "selected='selected'" if params[:order] == 'active' -%>>核价活跃度</option>
+      <% end %>
+    </select>
+  </form>
+</div>

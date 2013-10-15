@@ -1,0 +1,5 @@
+<ul>
+  <% @viewkey.each do |vk| %>
+  <li><%= h vk.keyword %> ----> <%= h vk.tag %> [<%= link_to '修改',{:action =>'update_tag',:id =>vk.id} %>]</li>
+  <% end %>
+</ul>

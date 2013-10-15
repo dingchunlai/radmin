@@ -1,0 +1,45 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="categories">
+	<tr>
+		<th>编号</th>
+		<th>类别</th>
+		<th>名称</th>
+		<th>所属选项 <span>（点击可编辑）</span></th>
+		<th>排序</th>
+		<th>是否可检索</th>
+		<th>是否显示</th>
+		<th>tagid</th>
+		<th>tagfatherid</th>
+		<th>相关操作</th>
+	</tr>
+	<% @category_params.each do |p| -%>
+  <tr class="<%= cycle("odd", "even")%>">
+    <td><%= p.id -%></td>
+    <td><%= link_to p.category.name_zh, category_params_path(:category_id => p.category.tagid) if p.category -%></td>
+    <td><%= link_to p.key, param_path(p) -%></td>
+		<td>
+			<% p.param_items.each do |pi| %>
+			<%= link_to pi.value, edit_param_item_path(pi) %>
+			<% end %>
+		</td>
+    <td><%= p.position -%></td>
+		<td><%= check_box_tag "param_id", p.id, p.is_searchable, {:onclick => remote_function( :url => is_searchable_param_path(p), :with => "'cvalue='+this.checked", :method => "put")} -%> 可检索</td>
+		<td><%= check_box_tag "param_id", p.id, p.is_valid, {:onclick => remote_function( :url => is_valid_param_path(p), :with => "'cvalue='+this.checked", :method => "put")} -%> 隐藏</td>
+		<td><%= p.tagid -%></td>
+    <td><%= p.tagfatherid -%></td>
+    <td>
+      <%= link_to "添加选项", new_param_item_path(:param_id => p.id) %>
+			<%= link_to "编辑", edit_param_path(p.id) -%>
+      <% unless p.first? -%>
+      <%= link_to "顶部", {:action => "move", :id => p.id, :method => "move_to_top"} -%>
+      <%= link_to "上移", {:action => "move", :id => p.id, :method => "move_higher"} -%>
+      <% end -%>
+      <% unless p.last? -%>
+      <%= link_to "下移", {:action => "move", :id => p.id, :method => "move_lower"} -%>
+      <%= link_to "底部", {:action => "move", :id => p.id, :method => "move_to_bottom"} -%>
+      <% end -%>
+    </td>
+  </tr>
+	<% end -%>
+</table>
+
+<%= will_paginate @category_params %>

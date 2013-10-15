@@ -1,0 +1,2 @@
+module Decos::RegistersHelper
+end

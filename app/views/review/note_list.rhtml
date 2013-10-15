@@ -1,0 +1,345 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+    font-size:12px;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  tr{
+    background-color:expression("#F0F0F0,#DDD".split(',')[rowIndex%2]);
+  }
+</style>
+<form action="/review/note_list" method="get" id="fmid">
+  <p align=center>
+    编号(日记ID):<input type="text" name="diary_id" value="<%=@diary_id%>" />
+    标题:<input type="text" name="title" value="<%=@title%>" />
+    公司：<input type='text' name='companyname' value='<%=@companyname%>' />
+    作者：<input type="text" name="author" value="<%=@author%>" /><br/>
+    城市：<select name='city'>
+      <option value='0'>选择</option>
+      <% cities_for_query.each do |k,v| %>
+        <option value='<%=k%>' <%if @city.to_i == k%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    价格：<select name='price'>
+      <option value='0'>选择</option>
+      <%PRICE.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if @price.to_i == k%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+		方式：<select name='model'>
+      <option value='0'>选择</option>
+      <%MODELS.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if @model.to_i == k%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+    风格：<select name='style'>
+      <option value='0'>选择</option>
+      <%STYLES.sort.each do |k,v|%>
+        <option value='<%=k%>' <%if @style.to_i == k%>selected<%end%>><%=v%></option>
+      <%end%>
+    </select>
+		精华:<select name='isgood'>
+      <option value='0'>选择</option>
+      <option value='1' <%if @isgood.to_i == 1%>selected<%end%>>精华</option>
+    </select>
+		是否审核：<select name='status'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @status.to_i == 1%>selected<%end%>>已审核</option>
+      <option value='2' <%if @status.to_i == 2%>selected<%end%>>未审核</option>
+    </select>
+    是否验证：<select name='is_verified'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @is_verified.to_i == 1%>selected<%end%>>已验证</option>
+      <option value='2' <%if @is_verified.to_i == 2%>selected<%end%>>未验证</option>
+    </select><br/>
+    开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>/>
+	结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>/>
+    投票：<select name='vote'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @vote.to_i == 1%>selected<%end%>>总票数</option>
+      <option value='2' <%if @vote.to_i == 2%>selected<%end%>>当月票数</option>
+    </select>
+    <input type="button" name="sub" value="搜索" onclick='selectnotes();'/>
+  </p>
+
+
+  <table align=center border=1>
+    <tr>
+      <td><input type='checkbox' id='all_check_id' onclick='all_check();'/>全选</td>
+      <td>标题</td>
+      <td>作者</td>
+      <td>公司</td>
+      <td>状态</td>
+      <td>验证</td>
+      <td>打分情况</td>
+      <td>浏览量</td>
+      <td>总票数</td>
+      <td>当月票数</td>
+      <td>调整值</td>
+      <td>创建时间</td>
+      <td>最后续写时间</td>
+      <td>操作</td>
+    </tr>
+    <%@notes.each do |n|%>
+      <tr>
+        <td><input type='checkbox' value='<%=n.id%>' name='note[selected_ids][]'/><%= n.id %></td>
+        <td><%= link_to h(truncate_u(n.title,30,"...")), n.status == 1 ? n.url : n.url(:preview), :target => "_blank"%></td>
+        <td><a href='/review/see_user?id=<%=n.user_id%>' target='_blank'>
+            <%= h(n.user_name) %>
+          </a></td>
+        <td><%= h(n.deco_firm.name_zh.to_s.split(//u)[0,6]) if n.deco_firm %></td>
+        <td><%= n.status.to_s == '1' ? "已审核" : "未审核" %>/<%= n.is_good.to_i == 1 ? "精华" : "非精华" %>/<%= n.finished ? "已完结" : "未完结" %></td>
+        <td><%= n.is_verified.to_s == '1' ? "已验证" : "未验证" %></td>
+        <td><%= n.praise.nil? ? "未打分" : "已打分" %></td>
+        <td width="100"><% if isrole("页面制作") ||isrole("管理员") -%>
+            <input type='hidden' id="diary<%=n.id%>" value="<%=n.id%>" />
+            <input type="text" size="5" id="pv<%=n.id%>" value="<%=n.pv%>"/><input type="button" onclick="return pv_ajax(<%=n.id%>);" value="更新"/>
+          <% end -%>
+        </td>
+        <td><%= n.votes_sum %></td>
+        <td><%= n.votes_current_month %></td>
+        <td>
+          <input type='hidden' id="diary<%=n.id%>" value="<%=n.id%>" />
+          <input type="text" size="5" id="adjust_vote<%=n.id%>" value="<%=n.adjust_vote%>"/><input type="button" onclick="return adjust_vote_ajax(<%=n.id%>);" value="调整"/>
+        </td>
+        <td><%= n.created_at.strftime("%Y-%m-%d")%></td>
+        <td><%= n.order_time.strftime("%Y-%m-%d") if n.order_time %></td>
+        <td>
+          <%= link_to "修改信息", "http://member.51hejia.com/stories/editDecorationDiaries/#{n.id}" %>
+          <%= link_to "修改内容", "http://member.51hejia.com/stories/addstorieses/#{n.id}" %>
+          <%= link_to "修改留言", edit_remark_path(n.remark) if n.remark %>&nbsp;&nbsp;
+          <a href="/review/update_diary_praise?diaryid=<%=n.id%>" target="_blank">修改口碑</a>
+          <%= link_to "打标签", edit_decoration_diary_label_path(n), :target => "_blank"%>
+          <a href="/review/diary_posts_show?diaryid=<%=n.id%>" target="_blank">修改(已审:<%= n.verified_diary_posts.size %>;未审:<%= n.unverified_diary_posts.size %>)</a>
+          <%= link_to "关联案例",note_relate_to_case_index_path(n.id)%>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+</form>
+<p align=center>
+
+  <a href='#n' onclick='shenhe();'>审核</a>&nbsp;&nbsp;
+  <a href='#n' onclick='quxiaoshenhe();'>取消审核</a>&nbsp;&nbsp;
+  <a href='#n' onclick='be_verified();'>验证</a>&nbsp;&nbsp;
+  <a href='#n' onclick='quxiao_verified();'>取消验证</a>&nbsp;&nbsp;
+  <a href='#n' onclick='note_finished();'>完结</a>&nbsp;&nbsp;
+  <a href='#n' onclick='note_not_finished();'>取消完结</a>&nbsp;&nbsp;
+
+  <a href='#n' onclick='deletenote();'>删除</a>&nbsp;&nbsp;
+
+  <a href='#n' onclick='jinghuanote();'>精华</a>&nbsp;&nbsp;
+  <a href='#n' onclick='quxiao_jinghuanote();'>取消精华</a>&nbsp;&nbsp;
+  <a href='#n' onclick='jinghuachecknote();'>精华并审核</a>
+</p>
+<p align=center>搜索到 <%=@notes.total_entries%> 篇日记<%= will_paginate @notes %>  </p>
+<input type='hidden' name='page' value="<%=params[:page]%>" id="pageid"/>
+<script type="text/javascript">
+  function selectnotes(){
+    document.getElementById('pageid').value='';
+    document.getElementById('fmid').submit();
+  }
+  function all_check(){
+    if(document.getElementById('all_check_id').checked == true)
+      check(1);
+    else
+      check(0);
+
+  }
+  function check(num){
+    var chs = document.getElementsByName("note[selected_ids][]");
+
+    if(chs.length > 0){
+      for(var i=0;i<chs.length;i++){
+        var ch = chs[i];
+        if(num == '1')
+          ch.checked = true;
+        else
+          ch.checked = false;
+      }
+    }
+  }
+
+  function checkselected(){
+    var chs = document.getElementsByName("note[selected_ids][]");
+    if(chs.length > 0){
+      var count = 0;
+      for(var i=0;i<chs.length;i++){
+        if(chs[i].checked == true)
+          count++;
+      }
+    }else{
+      return false;
+    }
+    if(count == 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  function quxiaoshenhe(){
+
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_update_quxiaoshenhe';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function shenhe(){
+
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_update';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function jinghuachecknote(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_jinghua_shenhe';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function deletenote(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定删除吗？')){
+      document.getElementById('fmid').action = '/review/note_delete';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function be_verified(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_derified';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function quxiao_verified(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_quxiao_derified';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function note_finished(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_finished';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function note_not_finished(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_not_finished';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function jinghuanote(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_jinghua';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function quxiao_jinghuanote(){
+    if (!checkselected()){
+      alert('请选择故事');
+      return false;
+    }
+    if(window.confirm('确定操作吗？')){
+      document.getElementById('fmid').action = '/review/note_quxiao_jinghua';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function pv_ajax(mark){
+    diary_mark = 'diary' + mark;
+    pv_mark = 'pv' + mark;
+    diary_id = document.getElementById(diary_mark).value;
+    pv = document.getElementById(pv_mark).value;
+    if(pv.length == 0){
+      alert("PV值不能为空");
+      return false;
+    }else if(isNaN(pv)){
+      alert("请填写数字");
+      return false;
+    }
+    url = '/review/update_adjusted_pv';
+    par = 'diary=' + diary_id +'&pv=' + pv
+    new Ajax.Updater('',url,
+    {asynchronous:true,
+      evalScripts:true,
+      parameters:par,
+      method: 'post',
+      onLoading: loading()
+    });
+    return false;
+  }
+
+  function adjust_vote_ajax(mark){
+    diary_mark = 'diary' + mark;
+    adjust_vote_mark = 'adjust_vote' + mark;
+    diary_id = document.getElementById(diary_mark).value;
+    adjust_vote = document.getElementById(adjust_vote_mark).value;
+    if(adjust_vote.length == 0){
+      alert("值不能为空");
+      return false;
+    }else if(isNaN(adjust_vote)){
+      alert("请填写数字");
+      return false;
+    }
+    url = '/review/update_adjusted_votes';
+    par = 'diary=' + diary_id +'&adjust_vote=' + adjust_vote
+    new Ajax.Updater('',url,
+    {asynchronous:true,
+      evalScripts:true,
+      parameters:par,
+      method: 'post',
+      onLoading: loading()
+    });
+    return false;
+  }
+
+  function loading(){
+    alert("更新成功");
+    window.location.reload();
+  }
+
+</script>

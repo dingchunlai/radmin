@@ -1,0 +1,203 @@
+
+<%= javascript_include_tag :defaults %>
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script> 
+<div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 5px 5px; ">
+<form id="fmid" action="/wordmanager/articlekey" method="get">
+<p>
+
+文章类别：
+<!-- 大类 -->
+<select id="first" name="first" onchange="new Ajax.Updater('select_second', '/article/select_second', {asynchronous:true, evalScripts:true, parameters:'first='+this.value})">
+	<option value="0">请选择</option>
+	<% for t1 in @categories %>
+		<option value="<%=t1.TAGID%>"
+			<%if t1.TAGID && t1.TAGID.to_s == @first%>
+				selected
+			<%end%>
+		><%=t1.TAGNAME%></option>
+	<% end %>
+</select>
+<!-- 小类 -->
+<span id='select_second'>
+	<select name="second" id="second" onchange="new Ajax.Updater('select_third', '/article/select_third', {asynchronous:true, evalScripts:true, parameters:'second='+this.value})">
+		<option value="0">请选择</option>
+		<%if @first && @first != '0'%>
+			<% for t1 in @secondcategories %>
+				<option value="<%=t1.TAGID%>" 
+					<%if t1.TAGID.to_s == @second %>
+						selected
+					<%end%> 
+				>
+				<%=t1.TAGNAME%>
+				</option>
+			<% end %>				
+		<%end%>
+	</select>
+</span>
+
+<!-- 第三级类 -->
+<span id='select_third'>
+	<select name="third" id="third">
+		<option value="0">请选择</option>
+		<%if @second && @second != '0'%>
+			<% for t1 in @thirdcategories %>
+				<option value="<%=t1.TAGID%>" 
+					<%if t1.TAGID.to_s == @third %>
+						selected
+					<%end%> 
+				>
+				<%=t1.TAGNAME%>
+				</option>
+			<% end %>				
+		<%end%>
+	</select>
+</span>
+&nbsp;&nbsp;&nbsp;
+文章作者：<input type="text" name="author" value="<%=@author%>">
+</p>
+<P>
+
+	
+文章标题：<input type="text" name="title" value="<%=@title%>">
+&nbsp;&nbsp;&nbsp;
+录入时间：
+<input type="text" name="begintime" onclick="new Calendar().show(this);" value="<%=@begintime%>">
+----
+<input type="text" name="endtime" onclick="new Calendar().show(this);" value="<%=@endtime%>">
+&nbsp;&nbsp;&nbsp;
+<input type="submit"  size=25 value="查 询">
+</p>
+<%= render :partial => "article_list" %>
+</form>
+</div>
+<script language="javascript">
+	//全选，全不选
+	function check(num){
+		if(num == '1'){
+			document.getElementById("checkall").checked = true;
+			document.getElementById("checknone").checked = false;
+		}
+		else{
+			document.getElementById("checkall").checked = false;
+			document.getElementById("checknone").checked = true;				
+		}
+		
+		var chs = document.getElementsByName("article[selected_ids][]");
+		
+		if(chs.length > 0){
+			for(var i=0;i<chs.length;i++){
+				var ch = chs[i];
+				if(num == '1')
+					ch.checked = true;
+				else
+					ch.checked = false;
+			}
+		}
+	}
+	
+	//选择文章
+	function chooseimg(id){
+		document.getElementById(id+'id').checked=true;
+	}
+	
+	//按tag生成
+	function generatecodebytag(){
+		if(document.getElementById('aid').value == '' || isNaN(document.getElementById('aid').value)){
+			alert('请正确输入需要显示多少条记录');
+			return false;
+		}
+		if(document.getElementById('bid').value == '' || isNaN(document.getElementById('bid').value)){
+			alert('请正确输入从第几条记录开始显示');
+			return false;
+		}	
+		
+		document.getElementById("gid").value='1';
+		document.getElementById('fmid').action = '/article/generate_article';
+		document.getElementById('fmid').submit();
+	}
+	
+	//按文章id生成
+	function generatecodebyid(){
+		var chs = document.getElementsByName("article[selected_ids][]");
+		
+		if(chs.length > 0){
+			var count = 0;
+			for(var i=0;i<chs.length;i++){
+				if(chs[i].checked == true)
+					count++;
+			}
+			if(count == 0){
+				alert('请选择要显示的文章');
+				return false;
+			}
+		}else{
+			return false;
+		}
+				
+		document.getElementById("gid").value='2';
+		document.getElementById('fmid').action = '/article/generate_article';
+		document.getElementById('fmid').submit();
+	}
+
+	//删除文章
+	function deletearticle(id){
+		if(window.confirm('确定删除吗')){
+			document.getElementById('delid').value=id;
+			document.getElementById('fmid').action = '/article/delete';
+			document.getElementById('fmid').submit();
+		}
+	}
+
+	//审核，发布等操作
+	function checkarticle(stype,arid){
+		document.getElementById('stid').value=stype;
+		document.getElementById('arid').value=arid;
+		document.getElementById('fmid').action = '/article/checkarticle';
+		document.getElementById('fmid').submit();
+	}
+	
+	//批量审核，发布等操作
+	function checkarticles(stype){
+		var chs = document.getElementsByName("article[selected_ids][]");
+		
+		if(chs.length > 0){
+			var count = 0;
+			for(var i=0;i<chs.length;i++){
+				if(chs[i].checked == true)
+					count++;
+			}
+			if(count == 0){
+				alert('请选择要显示的文章');
+				return false;
+			}
+		}else{
+			return false;
+		}	
+	
+		document.getElementById('stid').value=stype;
+		document.getElementById('fmid').action = '/article/checkarticles';
+		document.getElementById('fmid').submit();
+	}	
+	
+	//设置排序
+	function setorder(value,id){
+		var typenum = 1;
+		<%if @third && @third != '0'%>
+			typenum = 3;
+		<%elsif @second && @second != '0'%>
+			typenum = 2
+		<%end%>
+		
+		document.getElementById('tid').value=typenum;
+		document.getElementById('arid').value=id;
+		document.getElementById('oid').value=value;
+		
+		document.getElementById('fmid').action = '/article/setorder';
+		document.getElementById('fmid').submit();		
+	}
+</script>
+
+
+
+
+

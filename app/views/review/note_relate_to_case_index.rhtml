@@ -1,0 +1,15 @@
+<style type="text/css">
+  .relate_class li{list-style:none;line-height:30px}
+  li span{padding: 0 20px 0 0;}
+</style>
+<form action="/review/note_relate_to_case" method="post">
+  <ul class="relate_class">
+    <li style="color:red;"><%= flash[:error] if flash[:error]%></li>
+    <li><span>日记所属公司ID:</span><%= @decoration_diary.deco_firm.id %></li>
+    <li><span>公司名:</span><%= @decoration_diary.deco_firm.name_abbr %></li>
+    <li><span>日记ID:</span><%= @decoration_diary.id %><input type="hidden" value="<%= @decoration_diary.id %>" name="diary_id"/></li>
+    <li><span>日记标题:</span><%= @decoration_diary.title %></li>
+    <li><span>关联案例ID:</span><input type="text" name="case_id" value="<%= @decoration_diary.hejia_case.ID if @decoration_diary.hejia_case %>"/></li>
+    <li><input type="submit" value="提 交"/></li>
+  </ul>
+</form>

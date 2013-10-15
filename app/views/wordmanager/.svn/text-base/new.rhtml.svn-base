@@ -1,0 +1,34 @@
+<script>
+	function tongyong(){
+		document.getElementById('tongyong').style.display='block';
+		document.getElementById('zhuangyong').style.display='none';
+		//document.getElementById(id).style.display
+	}
+	function zhuangyong(){
+		document.getElementById('zhuangyong').style.display='block';
+		document.getElementById('tongyong').style.display='none';
+	}
+</script>
+<form action="/wordmanager/save" method="post">
+	<%if !@father.nil?%>上级关键词：<input type="text" name="fatherword" value="<%=@father.name%>"/>
+	<input type="hidden" name="fatherid" value="<%=@father.id%>"/><br/>
+		<%if @father.level.to_s=='1'%>
+			<input type="hidden" name="level" value="2"/>
+		<%elsif @father.level.to_s=='2'%>
+			<input type="hidden" name="level" value="3"/>
+		<%end%>
+	<%else%>
+		<input type="hidden" name="fatherid" value="0"/>
+		<input type="hidden" name="level" value="1"/>
+	<%end%>
+	关键词：<input type="text" name="name"/><%=@message%><br/>
+	专区URL：<input type="text" name="zhuangquurl"/><br/>
+	内联URL：<input type="text" name="inlineurl"/><br/>
+	<!--同义词：<input type="text" name="sameword"/>使用,（半角）分隔<br/>-->
+	搜索热度：<input type="text" name="hot"/><br/>
+	日流量：<input type="text" name="day"/><br/>
+	关键字类型：通用<input type="radio" name="keytype" value="1" onclick="tongyong();" checked/> 专用<input type="radio" name="keytype" value="2" onclick="zhuangyong();"/><br/>
+	关键字类别：<div id="tongyong" >产品<input type="radio" name="keyclass" value="11"/>装饰家具<input type="radio" name="keyclass" value="12"/>装修<input type="radio" name="keyclass" value="13"/></div>
+	<div id="zhuangyong" style="display:none;">品牌<input type="radio" name="keyclass" value="21"/>展会<input type="radio" name="keyclass" value="22"/>设计师<input type="radio" name="keyclass" value="23"/>卖场<input type="radio" name="keyclass" value="24"/></div><br/>
+	<input type="submit" name="submit" value="提交"/>
+</form>

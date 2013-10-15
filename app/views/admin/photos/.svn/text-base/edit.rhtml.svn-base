@@ -1,0 +1,28 @@
+<%= error_messages_for :photo %>
+<% form_for( :photo, :url => admin_photo_path(@photo), :html => {:method => :put, :multipart => true} ) do |f| -%>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>图片标题：</td>
+		<td><%= f.text_field :title, :size => 60 %></td>
+	</tr>
+	<tr>
+		<td>图片简介：</td>
+		<td><%= f.text_area :summary, :rows => 5, :cols => 50 %></td>
+	</tr>
+	<tr>
+		<td>选择图片：</td>
+		<td>
+		<%= image_tag(@photo.image.url(:medium)) %><br />
+		<%= f.file_field :image, :size => 60 %>
+		</td>
+	</tr>
+	<tr>
+		<td>是否认证：</td>
+		<td><%= f.check_box :is_certificated %> 已认证</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建图片" : "更新图片") -%></td>
+	</tr>
+</table>
+<% end -%>

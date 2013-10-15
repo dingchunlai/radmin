@@ -1,0 +1,18 @@
+<%= @father_name %>：
+<% @tags.each do |tag| %>
+  <%= link_to_remote tag.tagname, :url => {:action => "tag_edit", :id => tag.tagid},
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')" %>
+    <%= link_to_remote image_tag("http://www.51hejia.com/css/newback/images/x.png"), :url => {:action => "delete_tag", :id => tag.tagid},
+    :loading => "Element.show('indicator')", :complete => "Element.hide('indicator')", :confirm => "确定删除吗？" %>
+<% end %>
+<br><br>
+
+  <% if flash[:success] %>
+    <% flash.each do |key, msg| -%>
+      <%= content_tag :div, msg, :class => key, :id => "flash_message" -%>
+    <% end -%>
+    <script type="text/javascript">
+      setTimeout("new Effect.Fade('flash_message');", 4000)
+    </script>
+  <% end %>
+<div id="t"></div>

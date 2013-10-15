@@ -1,0 +1,99 @@
+<table style="width:100%;">
+  <tr>
+    <td style="font-weight:inherit;color:#336699;text-align:left;line-height:25px;font-size:14px;width:50%;">
+      <strong> <a href="/admin_case" style="font-size:14px;">搜索设计师或公司</a>
+      <a href="/admin_case/show_designer" style="font-size:14px;">搜索案例</a> </strong>
+      <% unless @cs.blank?
+        n = @cs.size
+      else
+        n = 0
+      end %>
+      <% if session[:action_name] == "search_case" %>
+      一共搜索到<strong><%= n %></strong>个案例
+      <% end %>
+    </td>
+    <td style="width:50%;color:#336699;text-align:right;">
+      设计师：
+      <strong id="designer_info">
+        <%= link_to query_designer_name_by_id(session[:designer_id]), { :action => "show_designer", :designer_id => session[:designer_id]} %>(<%= query_case_num_by_designer_id(session[:designer_id]) %>)
+      </strong>
+    </td>
+  </tr>
+</table><br>
+<form action="" method="post" style="display:inline;">
+  按户型:
+  <select name="model" id="model">
+    <option value="">请选择</option>
+    <option value="4355">小户型装修</option>
+    <option value="4356">公寓装修</option>
+    <option value="4354">别墅/复式</option>
+  </select>
+  按费用:
+  <select name="cost" id="cost">
+    <option value="">请选择</option>
+    <option value="4370">经济型</option>
+    <option value="4372">富裕型</option>
+    <option value="4373">豪华型</option>
+    <option value="11621">5万以下</option>
+    <option value="11620">5－8万</option>
+    <option value="11623">8－12万</option>
+    <option value="11619">12－20万</option>
+    <option value="11622">20－30万</option>
+    <option value="11624">30万以上</option>
+  </select>
+  按风格:
+  <select name="style" id="style">
+    <option value="">请选择</option>
+    <option value="4361">现代简约</option>
+    <option value="4362">中式风格</option>
+    <option value="4363">欧/美式</option>
+    <option value="4367">田园风格</option>
+    <option value="4360">混搭</option>
+    <option value="6680">地中海</option>
+    <option value="6681">其他</option>
+  </select>
+  按颜色:
+  <select name="color" id="color">
+    <option value="">请选择</option>
+    <option value="6689">黄色</option>
+    <option value="6690">绿色</option>
+    <option value="6692">紫色</option>
+    <option value="8819">黑色</option>
+    <option value="8821">橙色</option>
+    <option value="11721">棕色</option>
+    <option value="6688">红色</option>
+    <option value="6691">白色</option>
+    <option value="6746">蓝色</option>
+    <option value="8820">粉色</option>
+    <option value="11720">灰色</option>
+  </select>
+  按装修用途:
+  <select name="use" id="use">
+    <option value="">请选择</option>
+    <option value="4380">婚房装修</option>
+    <option value="4378">旧房改造</option>
+    <option value="4383">家有老人</option>
+    <option value="6682">出租房</option>
+    <option value="6683">重软装</option>
+    <option value="4381">单身贵族</option>
+    <option value="4382">三口之家</option>
+    <option value="6684">家有宠物</option>
+    <option value="6685">家有儿童</option>
+    <option value="4385">设计师的家</option>
+    <option value="6686">其他</option>
+  </select>
+  按特别选项:
+  <select name="way" id="way">
+    <option value="">请选择</option>
+    <option value="31263">原创赏析</option>
+    <option value="31266">本地图库</option>
+    <option value="31267">生活方式</option>
+    <option value="31265">解决方案</option>
+    <option value="31269">海外人家</option>
+    <option value="31264">编辑推荐</option>
+    <option value="31268">桌面壁纸</option>
+  </select>
+  关键字:
+  <input name="case_name" type="text" size="40" id="case_name" onkeypress="onKeypress(event)" />
+  <input type="button" value="搜索" class="input2" onclick="s_s()"/>
+</form>

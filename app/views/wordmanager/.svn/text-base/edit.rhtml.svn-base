@@ -1,0 +1,35 @@
+<script>
+	function tongyong(){
+		document.getElementById('tongyong').style.display='block';
+		document.getElementById('zhuangyong').style.display='none';
+		//document.getElementById(id).style.display
+	}
+	function zhuangyong(){
+		document.getElementById('zhuangyong').style.display='block';
+		document.getElementById('tongyong').style.display='none';
+	}
+</script>
+<form action="/wordmanager/update" method="post">
+	<input type="hidden" name="id" value="<%=@word.id%>"/>
+	<%if !@word.nil?&&@word.level.to_s!='1'&&@word.fatherid.to_s!='0'%>上级关键词：<%=getleadword(@word.fatherid)%><br/>
+	<input type="hidden" name="level" value="<%=@word.level%>"/>
+	<%end%>
+	关键词：<input type="text" name="name" value="<%=@word.name%>"/><%=@message%><br/>
+	专区URL：<input type="text" name="zhuangquurl" value="<%=@word.zhuanqu%>" size="50"/><br/>
+	内联URL：<input type="text" name="inlineurl" value="<%=@word.inline%>" size="50"/><br/>
+	<!--同义词：<input type="text" name="sameword"/>使用,（半角）分隔<br/>-->
+	搜索热度：<input type="text" name="hot" value="<%=@word.hot%>"/><br/>
+	日流量：<input type="text" name="day" value="<%=@word.dayflow%>"/><br/>
+	关键字类型：通用<input type="radio" name="keytype" value="1" onclick="tongyong();" <%if @word.keytype.to_s=='1'%>checked<%end%>/> 
+			  专用<input type="radio" name="keytype" value="2" onclick="zhuangyong();" <%if @word.keytype.to_s=='2'%>checked<%end%>/><br/>
+	关键字类别：<div id="tongyong" <%if @word.keytype.to_s=='1'%><%else%>style="display:none;"<%end%>>
+			品类<input type="radio" name="keyclass" value="11" <%if @word.keyclass.to_s=='11'%>checked<%end%>/>
+			空间<input type="radio" name="keyclass" value="12" <%if @word.keyclass.to_s=='12'%>checked<%end%>/>
+			其他<input type="radio" name="keyclass" value="13" <%if @word.keyclass.to_s=='13'%>checked<%end%>/></div>
+	<div id="zhuangyong" <%if @word.keytype.to_s=='2'%><%else%>style="display:none;"<%end%>>
+			品牌<input type="radio" name="keyclass" value="21" <%if @word.keyclass.to_s=='21'%>checked<%end%>/>
+			公司<input type="radio" name="keyclass" value="22" <%if @word.keyclass.to_s=='22'%>checked<%end%>/>
+			产品<input type="radio" name="keyclass" value="23" <%if @word.keyclass.to_s=='23'%>checked<%end%>/>
+	</div><br/>
+	<input type="submit" name="submit" value="提交"/>
+</form>

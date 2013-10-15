@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf8" />
+	<title>&#x4E0A;&#x4F20;&#x56FE;&#x7247;</title>
+  <script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+  <script language="javascript" type="text/javascript" src="../../utils/form_utils.js"></script>
+  <script language="javascript" type="text/javascript" src="../../utils/validate.js"></script>
+</head>
+<body>
+	<form action="/pages/zhuanti_picture_upload" enctype="multipart/form-data" id="binary-edit-form" method="post">
+		<p><label for="binary">&#x9009;&#x62E9;&#x56FE;&#x7247;&#xFF1A;</label>
+		<input id="pages_uploaded_data" name="pages[uploaded_data]" size="30" type="file" /></p>
+
+		<p><label for="binary_title">&#x6DFB;&#x52A0;&#x6807;&#x9898;&#xFF1A;</label>
+		<input id="pages_title" name="pages[title]" size="30" type="text" value="" /></p>
+
+		<div class="mceActionPanel">
+			<div style="float: left">
+				<input type="submit" id="insert" name="insert" value="{#insert}" />
+			</div>
+
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+			</div>
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test
+END
+backtrace_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/backtrace_test.rb
+END
+logger_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/logger_test.rb
+END
+notifier_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/notifier_test.rb
+END
+helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/helper.rb
+END
+rack_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/rack_test.rb
+END
+sender_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/sender_test.rb
+END
+notice_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/notice_test.rb
+END
+hoptoad_tasks_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/hoptoad_tasks_test.rb
+END
+configuration_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/configuration_test.rb
+END
+catcher_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/catcher_test.rb
+END
+rails_initializer_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/gems/hoptoad_notifier-2.2.2/test/rails_initializer_test.rb
+END

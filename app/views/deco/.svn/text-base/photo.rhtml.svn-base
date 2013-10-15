@@ -1,0 +1,106 @@
+<DIV class="user_right">
+
+<DIV id=widebar >
+<DIV id=nav_bottom></DIV>
+
+<DIV class=mainbox style="height:480px;">
+<div class="main">
+  <div class="xleft">
+    <h3>上传帮助</h3>
+    <ul class="tongzhi">
+      <li>1、每次最多可以上传5张照片，每张照片的大小不超过500K。支持.jpg .gif .png格式。</li>
+      <li>2、请您遵守中华人民共和国相关法律、法规，承担一切因您的行为而直接或间接引起的法律责任。</li>
+      <li>更多帮助信息，请<a href="#"><strong>点击这里</strong></a>。</li>
+      <li><% unless flash[:errors].blank? -%>
+		  <%= flash[:errors]  -%>
+		  <% end -%></li>
+    </ul>
+  </div>
+</div>
+<script>
+	function checklenth(){
+		if(document.getElementById("photo_content_1").value.length>10){
+			alert('描述不能大于10个字');
+			return false;
+		}
+		if(document.getElementById("photo_content_2").value.length>10){
+			alert('描述不能大于10个字');
+			return false;
+		}
+		if(document.getElementById("photo_content_3").value.length>10){
+			alert('描述不能大于10个字');
+			return false;
+		}
+		if(document.getElementById("photo_content_4").value.length>10){
+			alert('描述不能大于10个字');
+			return false;
+		}
+		if(document.getElementById("photo_content_5").value.length>10){
+			alert('描述不能大于10个字');
+			return false;
+		}
+	}
+</script>
+<div class="xright1" style=" background-color:#F9F9F9;">
+    <div class="zhaopiansh" ><strong><p align="center">上传照片</p></strong></div>
+    <div id="msg"></div>
+    <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" class="table5">
+    	<tr>
+    	<td>
+    		图片
+    	</td>
+    	<td>
+    		图片描述
+    	</td>
+    	<td>
+    		图片操作
+    	</td>
+    	</tr>
+    	<%for p in @photo%>
+    	
+    	<tr>
+    	<td>
+    		<img src="/files/hekea/companyphoto_img/<%=p.IMAGENAME%>?<%=rand(100000)%>" alt="<%if !p.CONTENT.nil?%><%=p.CONTENT%><%end%>" border="0" wedth="42" height="90"/>
+    	</td>
+    	<td>
+    		<%if !p.CONTENT.nil?%><%=p.CONTENT%><%end%>
+    	</td>
+    	<td>
+    		<a href="/deco/photo_edit?id=<%=p.ID%>">修改</a>  <a href="/deco/photo_delte?id=<%=p.ID%>">删除</a>
+    	</td>
+    	</tr>
+    	<%end%>
+      <form name="form" id="form" action="/deco/photo_save" method="post" enctype="multipart/form-data" >
+        <% 1.upto(5) do |i| %>
+          <tr>
+          	<td>
+    		<img id="logoimg<%= i %>" src="/images/nil.gif" alt="暂无图片" border="0" wedth="42" height="90"/>
+    		</td>
+            <td>第<%= i %>张：</td>
+            <td>
+              <input id="photo_<%= i %>_uploaded_data" name="photo_<%= i %>[uploaded_data]" size="30" type="file"  onchange="document.getElementById('logoimg<%= i %>').src=this.value">
+              图片描述<input id="photo_content_<%= i %>" name="photo_content_<%= i %>" type="text"/>
+            </td>
+            <%#*<td><img src="imagesuser/images3.gif" alt="佳饰橱柜" border="0" /></td>%>
+          </tr>
+        <% end %>
+        
+              <tr>
+                <td colspan="2" align="center"><input type="submit" name="submit" value="上传" id="upload_file"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </form>
+    </table>
+  </div>
+</div>
+
+    
+</form>
+</div>
+</DIV>
+</DIV>
+</DIV>
+
+</DIV>

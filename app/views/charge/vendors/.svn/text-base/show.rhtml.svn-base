@@ -1,0 +1,26 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">店铺名称</td>
+		<td><%= @vendor.name_zh %></td>
+		<td class="label">联系人</td>
+		<td><%= @vendor.contact %></td>
+	</tr>
+	<tr>
+		<td class="label">客服经理</td>
+		<td><%= @vendor.customer_manager %></td>
+		<td class="label">联系电话</td>
+		<td><%= @vendor.telephone %></td>
+	</tr>
+	<tr>
+		<td class="label">业务经理</td>
+		<td><%= @vendor.operation_manager %></td>
+		<td class="label">投资总额</td>
+		<td><%= @vendor.total_investment %></td>
+	</tr>
+	<tr>
+		<td class="label">可上架商品数量</td>
+		<td><%= @vendor.upper_count %></td>
+		<td class="label">合作期限</td>
+		<td><%= @vendor.effected_at.to_date %>-<%= @vendor.expired_at.to_date %></td>
+	</tr>
+</table>

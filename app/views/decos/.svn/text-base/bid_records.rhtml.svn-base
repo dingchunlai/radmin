@@ -1,0 +1,43 @@
+<div class="user_right">
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>
+            我的和家 - 有效竞标列表
+          </div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          在这里您可以参加竞标。
+        </div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on">竞标列表信息</li>
+          <li class="line"></li>
+          <li class="more"></li>
+        </ul>
+      </div>
+
+      <div id="same1">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <% for bid_record in @bid_records %>
+            <tr style="background-color:#FFFDE6">
+              <td>
+                <%= link_to("#{bid_record.bid_month}月竞标", "/decos/bid_records/#{bid_record.id}") %>
+              </td>
+              <td>
+                <%= link_to("参加竞标", "/decos/bid_records/#{bid_record.id}") %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

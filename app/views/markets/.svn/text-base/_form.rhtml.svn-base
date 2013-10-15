@@ -1,0 +1,82 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">中文名称</td>
+		<td><%= f.text_field :name_zh -%></td>
+	</tr>
+	<tr>
+		<td class="label">英文名称</td>
+		<td><%= f.text_field :name_en -%></td>
+	</tr>
+	<tr>
+		<td class="label">永久链接</td>
+		<td><%= f.text_field :permalink -%></td>
+	</tr>
+	<tr>
+		<td class="label">卖场网站</td>
+		<td><%= f.text_field :website -%></td>
+	</tr>
+	<tr>
+		<td class="label">卖场简介</td>
+		<td><%= f.text_area :description, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">营业时间</td>
+		<td><%= f.text_field :open_time -%></td>
+	</tr>
+	<tr>
+		<td class="label">停车泊位</td>
+		<td><%= f.text_field :parking_space -%></td>
+	</tr>
+	<tr>
+		<td class="label">商业面积</td>
+		<td><%= f.text_field :business_area -%></td>
+	</tr>
+	<tr>
+		<td class="label">商业类型</td>
+		<td><%= f.text_field :business_type -%></td>
+	</tr>
+	<tr>
+		<td class="label">服务内容</td>
+		<td><%= f.text_area :service_content, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">周边交通</td>
+		<td><%= f.text_area :transport, :class => "mceEditor" -%></td>
+	</tr>
+	<tr>
+		<td class="label">卖场地址</td>
+		<td><%= f.text_field :address -%></td>
+	</tr>
+	<tr>
+		<td class="label">所在省市</td>
+		<td><%= f.text_field :province, :size => "10" -%> <%= f.text_field :city, :size => "10" -%></td>
+	</tr>
+	<tr>
+		<td class="label">邮政编码</td>
+		<td><%= f.text_field :zip_code -%></td>
+	</tr>
+	<tr>
+		<td class="label">联&nbsp;系&nbsp;人</td>
+		<td><%= f.text_field :contact -%></td>
+	</tr>
+	<tr>
+		<td class="label">电话号码</td>
+		<td><%= f.text_field :telephone -%></td>
+	</tr>
+	<tr>
+		<td class="label">传真号码</td>
+		<td><%= f.text_field :fax -%></td>
+	</tr>
+	<tr>
+		<td class="label">电子邮件</td>
+		<td><%= f.text_field :email -%></td>
+	</tr>
+	<tr>
+		<td class="label">上传标志</td>
+		<td><%= file_field 'image', :uploaded_data %></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建卖场" : "更新卖场") -%></td>
+	</tr>
+</table>

@@ -1,0 +1,80 @@
+<div id="div_main">
+  <form action="" method="post" id="export_form" name="export_form">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      结果导出
+    </div>
+    <div>
+      <p>
+        <%= flash[:notice] if flash[:notice] %>
+      </p>
+      <p>
+        <label>选择地区</label>
+        <%= select_tag "city", options_for_select(CITIES.to_a.map {|c|c.reverse}, params[:city]) %>
+      </p>
+      <p>
+        <input type="submit" value="网友关注最多TOP10" onclick="document.export_form.action = '/exports/guanzhu_dfs';document.export_form.submit();" /><br />
+        <input type="submit" value="活跃装修日记TOP10" onclick="document.export_form.action = '/exports/huoyue_dfs';document.export_form.submit();" /><br />
+        <input type="submit" value="上月日记投票数汇总" onclick="document.export_form.action = '/exports/diary_votes_summary?month=10';document.export_form.submit();" /><br />
+        <input type="submit" value="小区名称汇总" onclick="document.export_form.action = '/exports/building_names_summary';document.export_form.submit();" /><br />
+        <input type="submit" value="网站后台有效用户" onclick="document.export_form.action = '/exports/users';document.export_form.submit();" /><br />
+      </p>
+    </div>
+  </form>
+
+  <hr />
+  
+  <form action="/exports/paint_questionnaires" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      油工问卷调查数据导出
+    </div>
+    <div>
+      <p>
+        日期：<input name="riqi1" type="text" size="6" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      </p>
+      <p>
+        <input type="submit"value="导出" />
+      </p>
+    </div>
+  </form>
+  
+  <hr />
+  
+  <form action="/exports/export_by_sql" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      <p>
+        导出表单名称：<%= text_field_tag :excel_name %>
+      </p>
+      <p>
+        模型名称：<%= text_field_tag :model_name %>
+      </p>
+      <p>
+        sql语句：<%= text_field_tag :sql %>
+      </p>
+    </div>
+    <div>
+      <p>
+        日期：<input name="riqi1" type="text" size="6" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      </p>
+      <p>
+        <input type="submit"value="导出" />
+      </p>
+    </div>
+  </form>
+
+    <hr />
+
+  <form action="/exports/export_articles" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      文章数据导出
+    </div>
+    <div>
+      <p>
+        日期：<input name="riqi1" type="text" size="6" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      </p>
+      <p>
+        <input type="submit"value="导出" />
+      </p>
+    </div>
+  </form>
+
+</div>

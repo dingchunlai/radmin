@@ -1,0 +1,27 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label">品牌名称</td>
+    <td>
+      <h1><%= @brand_experience.brand.name_zh %></h1>
+      <%= hidden_field :brand_experience, :brand_id, :value => @brand_experience.brand.id %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">体验项名称</td>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <td class="label">所属分类</td>
+    <td><%= f.select :category_id, @brand_experience.brand.categories.collect {|c| [c.name_zh, c.id]} -%></td>
+  </tr>
+  <% unless @brand_experience.new_record? %>
+    <tr>
+      <td class="label">排序位置</td>
+      <td><%= f.text_field :position %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" || controller.action_name == "setup" ? "创建" : "更新") -%></td>
+  </tr>
+</table>

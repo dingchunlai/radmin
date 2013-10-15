@@ -1,0 +1,14 @@
+<p>
+<table align=center border=1>
+	<tr>
+		<%@names.each do |na|%>
+			<td><%=na%></td>
+		<%end%>
+	</tr>
+	<tr>
+		<%@scores.each do |sc|%>
+			<td><%=sc%></td>
+		<%end%>
+	</tr>
+</table>
+</p>

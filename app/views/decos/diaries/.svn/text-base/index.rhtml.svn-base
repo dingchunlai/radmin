@@ -1,0 +1,46 @@
+<div class="user_right">
+
+	<div id="widebar">
+		<div id="nav_bottom"></div>
+		<div id="widebar_content">
+			<div id="userprofile">
+				<div class="top">
+					<div class="profile_name">我的和家 - 装修日记</div>
+				</div>
+				<div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护装修日记信息。</div>
+			</div>
+		</div>
+		<div class="mainbox">
+			<div class="same_cha">
+				<ul>
+					<li class="line"></li>
+					<li id="s1" class="menu_on"><a href="/decos/diaries">日记列表</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/diaries/new">新建日记</a></li>
+					<li class="line"></li>
+				</ul>
+			</div>
+
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<% @diaries.each do |diary| %>
+				<tr>
+					<td><%= diary.id %></td>
+					<td><%=h diary.title %></td>
+					<td><%=h diary.url %></td>
+					<td><%=h diary.owner %></td>
+					<td><%= diary.created_at.to_s(:db) %></td>
+					<td>
+						<%= link_to "编辑", edit_deco_diary_path(diary) %>
+						<%= link_to "删除", deco_diary_path(diary), :confirm => '确认删除吗？', :method => :delete %>
+					</td>
+				</tr>
+				<% end %>
+			</table>
+
+			<%= will_paginate @diaries %>
+
+		</div>
+	</div>
+
+
+</div>

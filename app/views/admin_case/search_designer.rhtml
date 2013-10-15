@@ -1,0 +1,35 @@
+<%= render :partial => 'search_company_and_designer' %>
+<table style="width:100%;">
+  <tr style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:20px;">
+    <td>设计师</td>
+    <td>公司</td>
+    <td>毕业院校</td>
+    <td>设计师简介</td>
+  </tr>
+  <% if @designers %>
+    <% @designers.each do |designer| %>
+      <tr style="line-height:20px;" onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');">
+        <td>
+          <a href="/admin_case/show_designer?designer_id=<%= designer.ID %>" style="font-size:14px;">
+            <%= designer.DESNAME %>(<%= query_case_num_by_designer_id(designer.ID) %>)
+          </a>
+        </td>
+        <td>
+          <a href="#" style="font-size:14px;">
+            <%= query_company_cn_name_by_company_id(designer.COMPANY) %>
+          </a>
+        </td>
+        <td>
+          <%= designer.DESSCHOOL %>
+        </td>
+        <td>
+          <%= designer.DESRESUME.chars[0, 40] if designer.DESRESUME %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<br>
+<% if @designers %>
+  <%= will_paginate @designers, :previous_label => "上一页", :next_label => "下一页", :inner_window => 3, :class => "digg_pagination" %>
+<% end %>

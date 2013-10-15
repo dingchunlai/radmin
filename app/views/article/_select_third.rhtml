@@ -1,0 +1,19 @@
+<% if params[:show] %>
+
+    <select id="third" name="third">
+	<option value="0">请选择</option>
+	<% for u in @thirdlist %>
+		<option value="<%=u.id%>"><%=u.name%></option>
+	<% end %>
+    </select>
+
+<% else %>
+
+<select id="third" name="third">
+	<option value="0">请选择</option>
+	<% for u in @thirdlist %>
+		<option value="<%=u.TAGID%>"><%=u.TAGNAME%></option>
+	<% end %>
+</select>
+
+<% end %>

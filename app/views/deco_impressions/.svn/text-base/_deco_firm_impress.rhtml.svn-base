@@ -1,0 +1,110 @@
+<script type="text/javascript">
+  var j = 0;
+  var ids = new Array();
+  var all = document.getElementById("checkAll");
+  var is_box = document.getElementsByName("ids");
+  var submit_form = document.getElementById("batch");
+  var impressions = document.getElementById("impressions");
+  // 全选按钮点击事件
+  function checkAllBox(){
+    for(var i = 0; i < is_box.length; i++)
+    {
+      is_box[i].checked = all.checked;
+    }
+  }
+  // 复选框触发事件
+  function check(){
+    var flg = true;
+    for(var i = 0; i < is_box.length; i++)
+    {
+      if(is_box[i].checked == false)
+        flg = false;
+    }
+    if(flg){
+      all.checked = true;
+    }else{
+      all.checked = false;
+    }
+  }
+  function validate(){
+    var flg = true;
+    for(var i = 0; i < is_box.length; i++)
+    {
+      if(is_box[i].checked == true)
+        flg = false;
+    }
+    return flg;
+  }
+
+  // 批量删除
+  function deleteAll(){
+    var flg = validate();
+    if(flg){
+      alert("请选择后再进行操作! ");
+    }else{
+      for(var i = 0; i < is_box.length; i++)
+      {
+        if(is_box[i].checked){
+          ids[j] = is_box[i].value;
+          j += 1;
+        }
+      }
+      impressions.value = ids;
+      submit_form.action = "/deco_impressions/destory_deco_impression";
+      submit_form.submit();
+    }
+  }
+  function impression_ajax(value, mark){
+    //score_mark = 'impression' + mark; //impression value
+    score = value;
+    name_mark = 'impression_name' + mark; //impression name
+    impression = document.getElementById(name_mark).value;
+    if(score.length == 0){
+      alert("投票数不能为空");
+      return false;
+    }else if(isNaN(score)){
+      alert("请填写数字");
+      return false;
+    }
+    $.ajax({
+      url: '/deco_impressions/update_firm_impression_score',
+      type: 'Post',
+      dataType: 'html',
+      data: {
+        impression : impression,
+        score : score,
+        deco_firm_id : document.getElementById("deco_firm_id").value
+      },
+      success: function(data) {
+        alert(data);
+      }
+    });
+  }
+</script>
+<table border="0" cellspacing="0" cellpadding="3" width="320">
+  <tr>
+    <th width="80">公司印象</th>
+    <th width="140">投票数</th>
+    <th><input type="checkbox" name="checkAll" id="checkAll" onclick="checkAllBox();"/>反/全选</th>
+  </tr>
+  <% if @firm_impressions %>
+    <% @firm_impressions.each_with_index do |impression, index| %>
+      <tr>
+        <td width="80"><%= impression[:name] %></td>
+        <td width="140"><input type='hidden' id="impression_name<%= index %>" value="<%= impression[:name] %>" />
+          <input type='hidden' id="deco_firm_id" value="<%= @deco_firm_id %>" />
+          <input type="text" size="5" id="impression<%= index %>" value="<%= impression[:score] %>"/>
+          <input type="button" onclick="return impression_ajax($(this).siblings('input[type=text]').attr('value'), <%= index %>);" value="更新"/>
+        </td>
+        <td><input type="checkbox" name="ids" id="ids" value="<%= impression[:name] %>" onchange="check()"/></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<div style="float:left;">
+  <input type="button" class="btn" value="批量删除" style="margin-left:10px;" onclick="deleteAll();"/>
+  <form id="batch" action="" method="post">
+    <input type="hidden" name="impressions" id="impressions" value="" />
+    <input type="hidden" name="deco_firm_id" id="deco_firm_id" value="<%= @deco_firm_id if @deco_firm_id %>" />
+  </form>
+</div>

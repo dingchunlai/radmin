@@ -1,0 +1,13 @@
+<h1>编辑留言</h1>
+
+<% form_for :remark , @remark ,:url => "/remarks/update" do |f| %>
+	<input type="hidden" name="url" value="<%= request.env["HTTP_REFERER"]%>" id="url">
+	<input type="hidden" name="id" value="<%= params[:id]%>" id="url">
+  <p>
+    留言给<%= @remark.resource.name_zh%>:<br />
+    <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= submit_tag '更新' %>
+  </p>
+<% end %>

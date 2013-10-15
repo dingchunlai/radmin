@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acl_system2/test
+END
+test_helper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acl_system2/test/test_helper.rb
+END
+access_control_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acl_system2/test/access_control_test.rb
+END

@@ -1,0 +1,11 @@
+<ul class="menu">
+  <li class="<%= 'current' if controller.action_name == 'detail' %>">
+    <%= link_to("<h2>用户基本信息</h2>","/hejia_member/detail?user_id=#{@member.id}") %>
+  </li>
+  <li class="<%= 'current' if controller.action_name == 'bbs_detail' %>">
+    <%= link_to("<h2>BBS论坛帖子</h2>","/hejia_member/bbs_detail?user_id=#{@member.id}") %>
+  </li>
+  <li class="<%= 'current' if controller.action_name == 'wenba_detail' %>">
+    <%= link_to("<h2>问吧发帖</h2>","/hejia_member/wenba_detail?user_id=#{@member.id}") %>
+  </li>
+</ul>

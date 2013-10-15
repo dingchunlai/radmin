@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>新装潢公司 - <%=WEBSITE_NAME%>[<%=WEBSITE_DOMAIN%>]</title>
+    <meta name="keywords" content="<%=WEBSITE_NAME%>">
+      <meta name="description" content="<%=WEBSITE_NAME%>">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="robots" content="all" />
+        <meta name="author" content="MSN: qq1713173@hotmail.com" />
+        <script type="text/javascript" src="/javascripts/public2.js" charset="gb2312"></script>
+        <script type="text/javascript" src="/javascripts/WebCalendar.js"></script>
+        <%= javascript_include_tag :defaults %>
+        <link href="/stylesheets/wrapper01.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+          #datalist {
+            border-collapse:collapse;
+            border:1px solid #BED0E2;
+          }
+          #datalist th
+          {
+            text-align:center;
+            font-family:Verdana;
+            padding: 5px 15px 3px 15px;
+            letter-spacing: 12px;
+            background-color: #45719C;
+            font-size: 14px;
+            color: white;
+            font-weight: normal;
+            text-decoration: none;
+            border:1px solid white;
+          }
+          #datalist td {
+            color: #757575;
+            font-family:Verdana;
+            padding: 5px 8px 5px 8px;
+            letter-spacing: 1px;
+            font-size: 9pt;
+            border:1px solid #D9E3EE;
+          }
+          #datalist a {
+            color: #2853FF;
+            text-decoration: none;
+          }
+          #datalist a:hover {
+            color: #FD352B;
+            text-decoration: none;
+          }
+        </style>
+        </head>
+        <body>
+          <div id="H_wrapper">
+            <%=render :file => "/bgmenu.rhtml"%>
+          </div>
+
+          <div id="L_wrapper">
+            <!--<input onclick="window.open('/review/replyindex')" style="width:83px" type="button" value="回复" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />-->
+            <%if isrole("管理员")%>
+              <input onclick="window.open('/review/base_data_index')" style="width:83px" type="button" value="基础数据调整" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <%end%>
+            <!--<input onclick="window.open('/review/back_commont_list')" style="width:83px" type="button" value="内部点评列表" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />-->
+            <input onclick="window.open('/review/back_company_list')" style="width:83px" type="button" value="内部公司列表" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/review/note_list')" style="width:83px" type="button" value="日记管理" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/review/diary_posts_list')" style="width:83px" type="button" value="日记内容管理" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/remarks')" style="width:83px" type="button" value="留言管理" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/review/case_list')" style="width:83px" type="button" value="案例管理" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/mobile_verifiy')" style="width:83px" type="button" value="手机验证" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/review/first_summary')" style="width:83px" type="button" value="一日汇总" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/review/cat_mobile_verify')" style="width:83px" type="button" value="手机验证查看" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/firm_impressions')" style="width:83px" type="button" value="印象采集" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+            <input onclick="window.open('/deco_impressions')" style="width:83px" type="button" value="公司印象管理" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" /><br />
+          </div>
+
+          <div id="R_wrapper">
+            <style type="text/css">
+              .nav{
+                background:url(http://www.51hejia.com/images/zhuangxiu805/iconav.png) left center no-repeat;
+                line-height:27px;
+                color:#666666;
+                padding-left:15px;
+                margin:10px 12px 0 12px;
+              }
+            </style>
+            <div class="nav"><strong></strong><%= location -%></div>
+            <%=yield%>
+          </div>
+
+          <iframe width="0" height="0" name="hideiframe" id="hideiframe"></iframe>
+        </body>
+        </html>

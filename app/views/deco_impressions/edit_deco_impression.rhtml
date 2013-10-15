@@ -1,0 +1,29 @@
+<h3>公司印象修改</h3>
+<script>
+  $(document).ready(function(){
+    $(".search_firm_id").click(function(){
+      $.post("/deco_impressions/edit_deco_impression",{
+        'firm_id': $("#firm_id").val()
+      },function(data){
+        $("#deco_firm_impress").html(data)
+      });
+    });
+  });
+</script>
+<table>
+  <tr>
+    <td>请输入要查询的公司名(ID)</td>
+    <td>
+      <form action="">
+        <input type="text" id="firm_id" class="firm_id" value="<%= @firm_id if @firm_id %>" size="30"/>
+        <input name="" type="button" value="查找" class="search_firm_id" />
+      </form>
+    </td>
+  </tr>
+</table>
+
+<div id="deco_firm_impress">
+  <%= render :partial => "deco_firm_impress" %>
+</div>
+
+

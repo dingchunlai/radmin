@@ -1,0 +1,15 @@
+<h1>装修日记标签管理</h1>
+<table>
+	<tr>
+		<th>标题</th>
+		<th>修改标签</th>
+		<th>创建日期</th>
+	</tr>
+	<% @decoration_diaries.each do |decoration_diary| %>
+	<tr>
+		<td><%=link_to h(decoration_diary.title), decoration_diary.url %></td>
+		<td><%= link_to "修改标签", edit_decoration_diary_label_path(decoration_diary)%></td>
+		<th><%= decoration_diary.created_at.to_date%></th>
+	</tr>
+	<% end -%>
+</table>

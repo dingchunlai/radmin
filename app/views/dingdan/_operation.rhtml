@@ -1,0 +1,89 @@
+<script type="text/javascript">
+function gotopage(page){
+    window.open("/dingdan/list?page="+page+"&recordcount=<%=@recordcount%>&name=<%=u(@name)%>&telephone=<%=@telephone%>&user_id=<%=@user_id%>&status=<%=@status%>&riqi1=<%=@riqi1%>&riqi2=<%=@riqi2%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location="/user/del?id="+id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      ids = getids();
+      if (ids!="") hideiframe.location="/user/del?ids="+ids;
+    }
+}
+function getids(){
+    var ids = "0";
+    if (document.form1.userid.length==undefined){
+        if (document.form1.userid.checked) ids = document.form1.userid.value;
+    }else{
+        for (i=0; i<document.form1.userid.length;i++){
+            if (document.form1.userid[i].checked) ids += ", " + document.form1.userid[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择订购单记录！"); return "";} else return ids;
+}
+function chengjiao(){   //成交订单
+    ids = getids();
+    if (ids!=""){
+      if (confirm('确定将选中的订购单更改为《已成交》状态吗？')) hideiframe.location="/dingdan/chengjiao?ids=" + ids;
+    }
+}
+function zuofei(){   //作废订单
+    ids = getids();
+    if (ids!=""){
+      if (confirm('确定将选中的订购单更改为《已作废》状态吗？')) hideiframe.location="/dingdan/zuofei?ids=" + ids;
+    }
+}
+function daochu(){
+    ids = getids();
+    if (ids!="") window.open("/hejia/export_select?ids=" + ids,"_self");
+}
+function daochu_search(){
+    window.open("/hejia/export_search?cd=<%=u(@cd)%>","_self");
+}
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+    if (field.length==undefined)
+      field.checked = true;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = true;
+    checkflag = "true";
+    return "false";
+  }
+  else {
+    if (field.length==undefined)
+      field.checked = false;
+    else
+      for (i = 0; i < field.length; i++) field[i].checked = false;
+    checkflag = "false";
+    return "true";
+  }
+}
+</script>
+<div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 10px 5px; ">
+      客户姓名：<input name="name" type="text" size="10" value="<%=@name%>" />
+      客户手机：<input name="telephone" type="text" size="11" value="<%=@telephone%>" />
+      用户ID：<input name="user_id" type="text" size="8" value="<%=@user_id%>" />
+      <br />
+      预约日期：<input name="riqi1" type="text" size="6" value="<%=@riqi1%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" /> - <input name="riqi2" type="text" size="6" value="<%=@riqi2%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　　
+      处理状态：<select name="status" id="status"><option value="">-----------</option>
+                    <%
+                    0.upto(DINGDAN_STATE.size-1) do |v|
+                    %>
+                    <option value="<%=v%>"><%=DINGDAN_STATE[v]%></option>
+                    <%end%>
+                </select>
+      　
+      <input type="submit" value="搜 索" />
+    </div>
+    <hr style="border:1px solid #EEEEEE;" />
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 5px 0px 10px 5px; ">
+      <input type="button" value="全选" onclick="SelectAll(document.form1.userid);" />　
+      <input type="button" value="成交订单" onclick="chengjiao();" />　
+      <input type="button" value="作废订单" onclick="zuofei();" />　　
+      <!--
+      <input type="button" value="导出选择记录" onclick="daochu();" />　
+      <input type="button" value="导出搜索结果" onclick="daochu_search();" />
+      -->
+    </div>

@@ -1,0 +1,191 @@
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+  //designer_DESRESUME
+  tinyMCE.init({
+    mode : "exact",
+    elements : "",
+    language : "zh",
+    theme : "advanced",
+    dialog_type : "modal",
+    convert_urls : false,
+    plugins : "advhr,advimage,advlink,emotions,fullscreen,preview,paste,table",
+    theme_advanced_layout_manager : "SimpleLayout",
+    theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,separator,forecolor,backcolor,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,link,unlink,advhr,image,advimage,advlink,emotions,pastetext,pasteword,fullscreen,selectall,code",
+    theme_advanced_buttons2 : "tablecontrols",
+    theme_advanced_buttons3 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    extended_valid_elements : "fieldset[style],legend[style],a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+  });
+</script>
+
+<DIV class="user_right">
+
+  <DIV id=widebar  STYLE="height:806px;">
+    <DIV id=nav_bottom></DIV>
+    <DIV id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 设计师</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          在这里您可以添加和维护设计师信息。以下有*的为必填项 （注：<font color="red">若没有绑定案例，则设计师不显示</font>）
+        </div>
+      </div>
+    </DIV>
+    <DIV class=mainbox>
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/deco/designer_list">设计师列表</a></li>
+
+          <li class="line"></li>
+          <li id="s2" class="menu_on"><a href="/deco/designer_edit">添加设计师</a></li>
+          <li class="more"></li>
+        </ul>
+      </div>
+
+      <script type="text/javascript">
+        window.onload = function(){
+        }
+        function onformsubmit(form){
+          valReturn = true;
+          if (ge("designer_DESNAME").value==""){
+            alert("设计师姓名必须填写！");
+            ge("designer_DESNAME").focus();
+            valReturn = false;
+          }
+          else if (ge("designer_DESFEE").value=="0"){
+            alert("设计师收费标准必须选择！");
+            ge("designer_DESFEE").focus();
+            valReturn = false;
+          }
+          else if (ge("designer_DESAGE").value=="0"){
+            alert("设计师从业年限必须选择！");
+            ge("designer_DESAGE").focus();
+            valReturn = false;
+          }
+          else if (!checkselected()){
+            alert("设计师擅长风格至少选择一项！");
+            ge("DESSTYLE[]").focus();
+            valReturn = false;
+          }
+          else if (ge("PICURL").value=="" && ge("is_edit").value==0){
+            alert("设计师照片必须上传！");
+            ge("PICURL").focus();
+            valReturn = false;
+          }
+          return valReturn
+        }
+        function checkselected(){
+          var chs = document.getElementsByName("DESSTYLE[]");
+          if(chs.length > 0){
+            var count = 0;
+            for(var i=0;i<chs.length;i++){
+              if(chs[i].checked == true)
+                count++;
+            }
+          }else{
+            return false;
+          }
+          if(count == 0){
+            return false;
+          }else{
+            return true;
+          }
+        }
+      </script>
+
+      <div id="same1" style="padding:10px;">
+        <FORM action="/deco/designer_edit_save" method="post" enctype="multipart/form-data" target="hideiframe" onsubmit="return onformsubmit(this);">
+          <TABLE width="50%" cellPadding=0 cellSpacing=0>
+            <TBODY>
+              <!--<%#if @bbs.nil?%><TR height="30">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center"><font color="red">*</font> 登录名：</TD>
+                <TD><input name="username" value=""/></TD>
+                <TD width="15%">密码：</TD>
+                <TD><input name="password" value=""/></TD>
+              </TR><%#end%>-->
+              <TR height="30"><!-- ID as id, DESNAME, DESFEE, DESAGE, DESTEL, DESSCHOOL, DESSTYLE, DESRESUME -->
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center"><font color="red">*</font> 姓名：</TD>
+                <TD><%=text_field("designer","DESNAME",{:size=>40})%></TD>
+                <TD width="15%"><font color="red">*</font> 收费标准：</TD>
+                <TD><%=select("designer","DESFEE", array_to_hash(DECO_DESFEE,true))%></TD>
+              </TR>
+              <TR height="30">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center"><font color="red">*</font> 从业年限：</TD>
+                <TD><%=select("designer","DESAGE", array_to_hash(DECO_DESAGE,true))%></TD>
+                <TD width="15%"><font color="red">*</font> 擅长风格：</TD>
+                <TD>
+                  <%1.upto(DECO_DESSTYLE.size-1) do |i|%>
+                    <input name="DESSTYLE[]" id="DESSTYLE[]" type="checkbox" value="<%=i%>" <%=@desstyle.include?(i.to_s) ? "checked":"" rescue ""%>/> <%=DECO_DESSTYLE[i]%>
+                  <%end%>
+                </TD>
+              </TR>
+              <TR height="30" style="display:none;">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center">联系电话：</TD>
+                <TD><%=text_field("designer","DESTEL",{:size=>40})%></TD>
+                <TD width="15%">毕业学校：</TD>
+                <TD><%=text_field("designer","DESSCHOOL",{:size=>40})%></TD>
+              </TR>
+              <TR height="30" style="display:none;">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center">级别：</TD>
+                <TD><input name="grade" type="radio" value="高级" <%if @designer["GRADE"]=='高级'%>checked<%end%>/>高级  <input name="grade" type="radio" value="普通" <%if @designer["GRADE"]=='普通'%>checked<%end%>/>普通</TD>
+                <TD width="15%">职位：</TD>
+                <TD><%=text_field("designer","POSITION",{:size=>40})%></TD>
+              </TR>
+              <TR height="30" style="display:none;">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center">荣誉：</TD>
+                <TD COLSPAN="3"><%=text_area("designer","GLORY",:style=>"width:95%;height:150px;")%></TD>
+              </TR>
+              <TR height="30">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center">设计师简介：</TD>
+                <TD COLSPAN="3"><%=text_area("designer","DESRESUME",:style=>"width:95%;height:150px;")%></TD>
+              </TR>
+              <%if !@back.nil?%>
+                <TR height="30">
+                  <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                  <TD width="15%" align="center">排序码：</TD>
+                  <TD COLSPAN="3">
+                    <%=select("designer","STATUS",@paixu)%>
+                  </TD>
+                </TR>
+              <%end%>
+              <TR height="30">
+                <TD width="4%" align="center" style="font-weight:bold">&nbsp;</TD>
+                <TD width="15%" align="center"><font color="red">*</font> 照片上传：</TD>
+                <TD COLSPAN="3">
+                	<input type="hidden" value="<%=pp(@picurl) ? 1 : 0%>" id="is_edit">
+                  <%if pp(@picurl)%>
+                    <img src="/files/designer/<%=@picurl%>" height="110" />
+                  <%else%>
+                    <img src="/images/nil.gif" height="110"  />
+                  <%end%>
+                  <input name="PICURL" id="PICURL" type="file" style="width:280px;" /><span style="color:red;"> (设计师图片比例为4：3)</span>
+                </TD>
+              </TR>
+              <TR height="30">
+                <TD align="center">&nbsp;</TD>
+                <TD align="center">&nbsp;</TD>
+                <TD>
+                  <BUTTON name="pmsend" type="submit" style="margin-top:5px;">提交保存</BUTTON>
+                  <input type="hidden" name="id" value="<%=@id%>" />
+                </TD>
+                <TD>&nbsp;</TD>
+                <TD>&nbsp;</TD>
+              </TR>
+            </TBODY>
+          </TABLE></FORM>
+      </div>
+    </DIV>
+  </DIV>
+</DIV>
+
+</DIV>

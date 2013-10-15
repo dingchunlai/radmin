@@ -1,0 +1,5 @@
+<%= error_messages_for :vendor %>
+<% form_for( :vendor, :url => "/vendor/update", :html => {:method => :put, :multipart => true}) do |f| -%>
+  <%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>
+

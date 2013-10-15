@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+  <TITLE>文章管理</TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="MSHTML 6.00.2900.2722" name=GENERATOR>
+      <% unless flash[:error].blank? -%>
+      <div id='error'><%= flash[:error]%></div>
+      <% end -%>
+      <script src="/javascripts/tiny_mce/tiny_mce_src.js?1241055414" type="text/javascript"></script>
+      <script type="text/javascript">
+
+    //<![CDATA[
+    tinyMCE.init({
+      convert_urls : false,
+      editor_selector : 'mceEditor',
+      language : 'zh',
+      mode : 'textareas',
+      plugins : "table,fullscreen,upload,product",
+      relative_urls : false,
+      theme : 'advanced',
+      theme_advanced_buttons1 : 'product,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontselect,fontsizeselect,|,outdent,indent,blockquote,|,undo,redo',
+      theme_advanced_buttons2 : 'tablecontrols,|,hr,removeformat,visualaid,code |,hr,removeformat,visualaid,|,link,unlink,anchor,image,upload,cleanup,|,forecolor,backcolor,code',
+      theme_advanced_buttons3 : '',
+      theme_advanced_resize_horizontal : false,
+      theme_advanced_resizing : true,
+      theme_advanced_statusbar_location : 'bottom',
+      theme_advanced_toolbar_align : 'left',
+      theme_advanced_toolbar_location : 'top',
+      visual : false,
+      width : '760px',
+      height : '500px'
+    });
+    //]]>
+    </script>
+    <style type="text/css">
+    <!--
+    body {
+      background-color: #c4d8ed;
+    }
+    .style2 {color: #000000}
+    .style4 {
+      color: #FF0000;
+      font-size: 10pt;
+    }
+    .list1 { border-bottom:1px solid #D6DFF7; font-size:12px
+    }
+
+    -->
+    </style>
+    <style type="text/css">
+    <!--
+    .menu_title {}
+    .sec_menu {	BORDER-RIGHT: white 1px solid; BACKGROUND: #d6dff7; OVERFLOW: hidden; BORDER-LEFT: white 1px solid; BORDER-BOTTOM: white 1px solid
+    }
+    .style1 {	COLOR: #ff0000
+    }
+    -->
+    </style>
+  </HEAD>
+  <BODY>
+
+    <TABLE cellSpacing=1 cellPadding=0 width="100%" align=center
+    bgColor=#ffffff border=0>
+    <TBODY>
+      <TR>
+        <TD height="392" align="left" vAlign=top bgcolor="#e8f1ff"><table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:7px">
+
+        </table>
+        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#cecece">
+          <tr>
+            <th height="25" align="left" valign="middle" background="images/admin_bg_1.gif" class="box_news_b" scope="col">
+              <a href="/article/artshow?id=<%=@articleId%>">关联文章</a>&nbsp;&nbsp;&nbsp;<a href="/article/proshow?id=<%=@articleId%>">关联产品</a>&nbsp;&nbsp;&nbsp;<a href="/article/linkshow?art=<%=@articleId%>">关联品牌</a>
+              &nbsp;&nbsp;&nbsp;
+              <a href="<%if @article.article_type1 && @article.article_type1.TAGURL=='zhuangxiu'%>http://d.51hejia.com/<%elsif @article.article_type1 && @article.article_type1.TAGURL=='pinpaiku'%>http://b.51hejia.com/<%elsif @article.article_type1 && @article.article_type1.TAGURL=='youqigongzhishi'%>http://www.yougong.51hejia.com/<%else%>http://www.51hejia.com/<%end%><% if @article.article_type1 && @article.article_type1.TAGURL=='youqigongzhishi' %>youqishigong/<% else %><%= @article.article_type1.TAGURL unless @article.article_type1.blank? %>/<%end%><%if @article.CREATETIME%><%= @article.CREATETIME.utc.strftime("%Y%m%d")%>/<%end%><%= @article.id%>_preview" target="_blank">预览</a> &nbsp;
+            </th>
+          </tr>
+        </table>
+        <div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+          <form name="form1" method="post" action="/article/update" style="margin:0" enctype="multipart/form-data" onSubmit="return check()">
+            <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#cecece" align="left">
+              <tr>
+                <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>文章标题：</strong></td>
+                <td bgcolor="#F7FAFF" style="padding:5px">
+                  <input name="id" value="<%=@articleId%>" type="hidden"/>
+                  <input name="title" id="title" type="text" class="input_box_m" size="40" value="<%=@article.TITLE%>">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="articletagstyle()">点击 展开/关闭 文章标签</a>
+                </td>
+              </tr>
+              <tr id="articletag" style="display:none">
+                <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>文章标签：</strong></td>
+                <td bgcolor="#F7FAFF" style="padding:5px">
+                  <%for f in @aft %>
+                  <%=f.TAGNAME%>:&nbsp;&nbsp;&nbsp;&nbsp;
+                  <%for t in @at%>
+                  <%if f.TAGID.to_s == t.TAGFATHERID.to_s %>
+                  <INPUT type=checkbox value="<%=t.TAGID%>"  name="tagsBox[]"
+                    <%for i in @article.tags%>
+                    <%if i.TAGID == t.TAGID%>
+                    checked
+                    <%end%>
+                    <%end%>
+                    ><%=t.TAGNAME%>
+                    <%end%>
+                    <%end%><br>
+                    <%end%>
+                  </td>
+                </tr>
+
+                <script language="javascript">
+                function articletagstyle(){
+                  var tag=document.getElementById("articletag");
+                  var count=document.getElementById("tagsLevel1Conut");
+                  if(tag.style.display=="none"){
+                    tag.style.display="";
+                    if(count!=null){
+                      for(i=1;i<=count.value;i++){
+                        var other=document.getElementById("articletag"+i);
+                        other.style.display="";
+                      }
+                    }
+                  }else{
+                    tag.style.display="none";
+                    if(count!=null){
+                      for(i=1;i<=count.value;i++){
+                        var other=document.getElementById("articletag"+i);
+                        other.style.display="none";
+                      }
+                    }
+                  }
+                }
+                </script>
+              </span>
+              <tr>
+                <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>文章类别：</strong></td>
+                <td bgcolor="#F7FAFF" style="padding:5px">
+
+                  <!-- 大类 -->
+                  <select id="first" name="first" onchange="new Ajax.Updater('select_second', '/article/select_second', {asynchronous:true, evalScripts:true, parameters:'first='+this.value});new Ajax.Updater('paint_keywords', '/article/paint_keywords?article_id=<%= @article.ID %>', {asynchronous:true, evalScripts:true, parameters:'first='+this.value})">
+                    <option value="0">请选择</option>
+                    <% for t1 in @categories %>
+                    <option value="<%=t1.TAGID%>"
+                      <%if t1.TAGID && t1.TAGID.to_s == @article.FIRSTCATEGORY.to_s%>
+                      selected
+                      <%end%>
+                      ><%=t1.TAGNAME%></option>
+                      <% end %>
+                    </select>
+                    <!-- 小类 -->
+                    <span id='select_second' >
+                      <select name="second" id="second" onchange="new Ajax.Updater('select_third', '/article/select_third', {asynchronous:true, evalScripts:true, parameters:'second='+this.value})">
+                        <option value="0">请选择</option>
+                        <%if @article.FIRSTCATEGORY && @article.FIRSTCATEGORY.to_s != '0' && @secondcategories%>
+                        <% for t1 in @secondcategories %>
+                        <option value="<%=t1.TAGID%>"
+                          <%if t1.TAGID.to_s == @article.SECONDCATEGORY.to_s %>
+                          selected
+                          <%end%>
+                          >
+                          <%=t1.TAGNAME%>
+                        </option>
+                        <% end %>
+                        <%end%>
+                      </select>
+                    </span>
+
+                    <!-- 小类 -->
+                    <span id='select_third' >
+
+                      <% if ArticleTag.all_categories.map(&:TAGID).member? @article.SECONDCATEGORY.to_i %>
+                      <% @thirdcategories.each do |b| %>
+                      <input type="checkbox" name="third[product_category_ids][]" value="<%= b.id %>" <%= @article.production_category_ids.include?(b.id) ? 'checked = "checked"' : '' %> /><%= b.name %>
+                      <% end %>
+                      <% else %>
+                      <select name="third" id="third">
+                        <option value="0">请选择</option>
+                        <%if @article.SECONDCATEGORY && @article.SECONDCATEGORY != '0' && @thirdcategories%>
+                        <% for t1 in @thirdcategories %>
+                        <option value="<%=t1.TAGID%>"
+                          <%if t1.TAGID.to_s == @article.THIRDCATEGORY.to_s %>
+                          selected
+                          <%end%>
+                          >
+                          <%=t1.TAGNAME%>
+                        </option>
+                        <% end %>
+                        <%end%>
+                      </select>
+                      <% end %>
+                    </span>
+                  </td>
+                </tr>
+                <tr id="paint_keywords">
+                  <% unless @article.paint_keyword_articles.blank? %>
+                    <%= render :partial => "paint_keywords", :locals => {:article => @article} %>
+                  <% end %>
+                </tr>
+                <tr>
+                  <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>关键字：</strong></td>
+                  <td bgcolor="#F7FAFF" style="padding:5px">
+                    <input name="keyword1" id="article.keyword1" type="text" class="input_box_m" size="60" value="<%=@article.KEYWORD1%>">
+                  </td>
+                </tr>
+                <tr>
+                  <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>文章作者：</strong></td>
+                  <td bgcolor="#F7FAFF" style="padding:5px">
+                    <input name="author" id="article.author" type="text" class="input_box_m" size="14" value="<%=@article.AUTHOR%>"></td>
+                  </tr>
+                  <tr>
+                    <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>文章来源：</strong></td>
+                    <td bgcolor="#F7FAFF" style="padding:5px">
+                      <select name="source">
+                        <option value="和家社区" <%if @article.SOURCE=='和家社区'%>selected <%end%>>和家社区</option>
+                        <option value="原创[带版权]" <%if @article.SOURCE=='原创[带版权]'%>selected <%end%>>原创[带版权]</option>
+                        <option value="原创" <%if @article.SOURCE=='原创'%>selected <%end%>>原创</option>
+                        <option value="转载" <%if @article.SOURCE=='转载'%>selected <%end%>>转载</option>
+                      </select></td>
+                    </tr>
+                    <tr>
+                      <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>品牌类型：</strong></td>
+                      <td bgcolor="#F7FAFF" style="padding:5px">
+                        <select name="checkbrand">
+                          <option value="">请选择</option>
+                          <%Article::TYPES.sort{|a,b| a[1]<=>b[1]}.each do |type|%>
+                          <option value="<%=type[1]%>" <%if @article.CHECK_BRAND==type[1]%> selected <%end%>><%=type[0]%></option>
+                          <%end%>
+                        </select></td>
+                      </tr>
+                      <tr>
+                        <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>文章类型：</strong></td>
+                        <td bgcolor="#F7FAFF" style="padding:5px">
+                          <select name="articletype">
+                            <option value="1" <%if @article.CITYORDERBY == 1%>selected<%end%>>推广型文章</option>
+                            <option value="2" <%if @article.CITYORDERBY == 2%>selected<%end%>>新闻</option>
+                            <option value="3" <%if @article.CITYORDERBY == 3%>selected<%end%>>实用性文章</option>
+                          </select>
+                        </tr>
+                        <!--打水印end-->
+                        <tr>
+                          <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>文章摘要：</strong></td>
+                          <td bgcolor="#F7FAFF" style="padding:5px">
+                            <textarea name="summary" id="article.summary" cols="60" rows="6" class="input_box_m" ><%=@article.SUMMARY%></textarea>
+                            <br />
+                            <%= check_box_tag "insert_summary", '1', @article.insert_summary.to_i==1?true:false%> 将“文章摘要”做为“文章导语”
+                          </td>
+                        </tr>
+                        <tr>
+                          <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>文章内容：</strong></td>
+                          <td bgcolor="#F7FAFF" class="font_s_new" style="padding:5px">
+                            <textarea name="content" class="mceEditor"><%=@article.article_content.CONTENT%></textarea>
+                            <br>
+                            <input name="pageBtn" type="button" class="input_button2" value="插入分页符" onclick="buttonValue(0);">
+                            &nbsp;&nbsp;
+                            <input name="notice" id="notice" type="text" class="input_box_m">
+                            <input name="titleBtn" type="button" class="input_button2" value="插入页标题" onclick="buttonValue(1);">
+                            <br>操作时按下相应的按钮，复制文本框的内容粘贴至相应位置即可
+                          </td>
+                        </tr>
+                        <!--打水印start-->
+                        <tr>
+                          <td height="36" align="right" bgcolor="#F7FAFF" class="box_news_g"><strong>图片水印：</strong></td>
+                          <td bgcolor="#F7FAFF" style="padding:5px">
+                            <iframe height=100 width=50% frameborder=0 scrolling=auto src="/article/iframe?id=<%=@article.ID%>"></iframe>
+                          </br>
+                          自动打水印:<%= check_box_tag "water_mark", '1' -%> 
+                          左下角:<%= check_box_tag "mark", '1' -%>
+                          左上角:<%= check_box_tag "mark", '2' -%>
+                          右下角:<%= check_box_tag "mark", '3' -%>
+                          右上角:<%= check_box_tag "mark", '4' -%>
+                          中间:<%= check_box_tag "mark", '5' -%>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>第一分类排序：</strong></td>
+                        <td bgcolor="#F7FAFF" style="padding:5px">
+                          <input type="text" name="FIRSTORDERID" value="<%=@article.FIRSTORDERID%>">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>第二分类排序：</strong></td>
+                        <td bgcolor="#F7FAFF" style="padding:5px">
+                          <input type="text" name="SECONDORDERID" value="<%=@article.SECONDORDERID%>">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>第三分类排序：</strong></td>
+                        <td bgcolor="#F7FAFF" style="padding:5px">
+                          <input type="text" name="THIRDORDERID" value="<%=@article.THIRDORDERID%>">
+                        </td>
+                      </tr>
+                      <tr bgcolor="#e8f1ff">
+                        <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>图片：</strong></td>
+                        <td>
+                          <%if @article.IMAGENAME%>
+                          <IMG id=logoimg src="/files/hekea/article_img/sourceImage/<%=@article.IMAGENAME.slice(3,8)%>/<%=@article.IMAGENAME%>" height=120 width=90>
+                            <A href="/files/hekea/article_img/sourceImage/<%=@article.IMAGENAME.slice(3,8)%>/<%=@article.IMAGENAME%>" target="_blank">预览</A>
+                            <%else%>
+                            <IMG id=logoimg height=120 src="http://js.51hejia.com/images/up.gif" width=90>
+                              <%end%>
+                              <br>
+                              <input name="image[uploaded_data]" type="file" id="image_uploaded_data" onchange="document.getElementById('logoimg').src=this.value" size="40"></td>
+                            </tr>
+                            <tr>
+                              <td height="36" align="right" valign="top" bgcolor="#F7FAFF" class="box_news_g"><strong>操作记录：</strong></td>
+                              <td bgcolor="#F7FAFF" style="padding:5px">
+                                <%if isrole('实习编辑')%>
+                                <input type='radio' name='state' value="2" <%if @article.STATE.to_s=="2" || @article.STATE.to_s=="0"%>checked<%end%>>初稿&nbsp;&nbsp;
+                                <input type='radio' name='state' value="-2" <%if @article.STATE.to_s=="-2"%>checked<%end%>>退回
+                                <%else%>
+                                <input type='radio' name='state' value="2" <%if @article.STATE.to_s=="2"%>checked<%end%>>初稿&nbsp;&nbsp;
+                                <input type='radio' name='state' value="0" <%if @article.STATE.to_s=="0"%>checked<%end%>>发布&nbsp;&nbsp;
+                                <input type='radio' name='state' value="-2" <%if @article.STATE.to_s=="-2"%>checked<%end%>>退回
+                                <%end%>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td width="150" height="36" align="right" bgcolor="#F7FAFF" class="box_news_g">&nbsp;</td>
+                              <td bgcolor="#F7FAFF" style="paddsssing:5px">
+                                <input type="submit" class="input_button2" value="保存文章修改">
+                                <input name="reset" type="reset" class="input_button2" value="放弃文章修改"></td>
+                              </tr>
+
+                            </table>
+                          </form>
+                        </div></TD>
+                      </TR></TABLE>
+
+                      <script language="JavaScript">
+                      function buttonValue(x)
+                      {
+                        if(x==0)
+                        {
+                          document.getElementById('notice').value="{==PAGE-BREAK==}";
+                        }
+                        else
+                        {
+                          document.getElementById('notice').value="~value~";
+                        }
+                      }
+                      var sInitColor = null;
+    function callColorDlg(oDiv){ //打开系统颜色对话框,,,(只有IE5.5或者更高才支持)
+      if (sInitColor == null)
+        var sColor = dlgHelper.ChooseColorDlg();
+      else
+        var sColor = dlgHelper.ChooseColorDlg(sInitColor);
+      sColor = sColor.toString(16);//把数字转换为16进制
+      if (sColor.length < 6)
+      {
+        var sTempString = "000000".substring(0,6-sColor.length);
+        sColor = sTempString.concat(sColor); //如小于六位补足6位
+      }
+      oDiv.style.background= sColor;
+      oDiv.value= '#'+sColor;
+      sInitColor = sColor;
+    }
+    document.body.style.overflowy ="auto";
+    document.body.style.overflowX = "hidden";
+    </script>
+    <OBJECT id="dlgHelper" CLASSID="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px" ></OBJECT>
+  </BODY></HTML>

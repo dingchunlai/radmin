@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/lsbfm
+END
+generate.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/lsbfm/generate.rhtml
+END
+lsbfm_new.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/lsbfm/lsbfm_new.rhtml
+END
+lsbfm_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/lsbfm/lsbfm_list.rhtml
+END
+_lsbfm_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/lsbfm/_lsbfm_form.rhtml
+END
+lsbfm_edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/lsbfm/lsbfm_edit.rhtml
+END

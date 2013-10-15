@@ -1,0 +1,204 @@
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  #docom tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]);
+  }
+</style>
+<form action="/admin_applications/index" method=get id="fmid">
+  <p align=center>
+			联系人:<input type="text" name="name" value="<%=@name%>"/>
+			联系电话:<input type="text" name="tel" value="<%=@tel%>"/>
+    公司名称:<input type="text" name="company" value="<%=@company%>"/>
+			状态：<select name='status_1'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @status_1.to_i == 1%>selected<%end%>>未确认</option>
+      <option value='2' <%if @status_1.to_i == 2%>selected<%end%>>已确认</option>
+    </select>
+			备注内容：<input type="text" name="marker_1" value="<%=@marker_1%>"/><br/><br/>
+			操作状态：<select name='status_2'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @status_2.to_i == 1%>selected<%end%>>未删除</option>
+      <option value='2' <%if @status_2.to_i == 2%>selected<%end%>>已删除</option>
+    </select>
+			备注状态：<select name='marker_2'>
+      <option value='0'>请选择</option>
+      <option value='1' <%if @marker_2.to_i == 1%>selected<%end%>>未备注</option>
+      <option value='2' <%if @marker_2.to_i == 2%>selected<%end%>>已备注</option>
+    </select>
+			来源类型:<%= select_tag :from_type,options_for_select([["请选择",""],["未知","0"],["首页本月预约排行榜","1"],["首页全程案例","2"],["首页实惠","3"],["公司列表在线预约","4"],["右侧预约排行榜","5"],["终端页免费设计咨询","6"],["公司对比","7"]], params[:from_type].to_s) %>
+    城市:<select name="city">
+      <option value="">请选择</option>
+      <%CITIES.each do |c|%>
+        <option value="<%=c[0]%>" <%if c[0].to_i == @city.to_i%>selected<%end%>><%=c[1]%></option>
+      <%end%>
+    </select>
+    开始：<input type=text name="begintime"  onclick="new Calendar().show(this);" <%if @begintime%>value="<%=@begintime%>"<%end%>/>
+	结束：<input type=text name="endtime"  onclick="new Calendar().show(this);" <%if @endtime%>value="<%=@endtime%>"<%end%>/>
+
+    <input type="submit" value="搜索"/>
+  </p>
+  <br/>
+  <!--| ID |联系人，联系电话，小区名称，装修预算，装修方式，装修户型，城市(公司所属地区），预约时间，状态（已确认/未确认），备注，操作（删除功能） -->
+  <table id="docom">
+    <tr>
+      <th ><div id="zhuangyong"><input type="checkbox" id="quanxuan" name="quanxuan" onclick="check(1)"/></div><div id="tongyong" style="display:none;"><input id="quanxuan1" type="checkbox" name="quanxuan1" checked onclick="check(0)"/></div></th>
+      <th >联系人</th>
+      <th >联系电话</th>
+      <th >公司名称</th>
+      <th >小区名称</th>
+      <th >装修预算</th>
+      <th >装修方式</th>
+      <th >装修户型</th>
+      <th >喜欢风格</th>
+      <th >城市</th>
+      <th >预约时间</th>
+      <th >状态</th>
+      <th >来源类型</th>
+      <th >来源URL</th>
+      <th >备注处理</th>
+      <th >操作</th>
+    </tr>
+    <%@applicants.each do |applicant|%>
+      <tr >
+        <td><%= check_box_tag "applicant[selected_ids][]", applicant.id %><%= applicant.id %></td>
+        <td><%= applicant.name %></td>
+        <td><%= applicant.tel ? applicant.tel : '' %></td>
+        <td><%= applicant.deco_firm ? applicant.deco_firm.name_zh : '暂无记录' %></td>
+        <td><%= applicant.community %></td>
+        <td><%= applicant.budget %>万</td>
+        <td><%= applicant.model.blank? ? '' : MODELS[applicant.model.to_i] %></td>
+        <td><%= applicant.room.blank? ? '' : ROOM[applicant.room.to_i] %></td>
+        <td><%= applicant.style.blank? ? '' : STYLES[applicant.style.to_i] %></td>
+        <td><%= applicant.deco_firm ? (applicant.deco_firm.city.to_i == 11910 ? "上海" : CITIES[applicant.deco_firm.district.to_i]) : '' %></td>
+        <td><%= applicant.created_at.ago(3600*8).strftime("%Y-%m-%d") unless applicant.created_at.blank? %></td>
+        <td><%if applicant.status == -1 %>已被删除<%elsif applicant.status == 0%>未确认<%elsif applicant.status == 1%>已确认<%end%></td>
+        <td><%= applicant.from_type.blank? ? '' : YUYUE_FROM_TYPE[applicant.from_type.to_i] %></td>
+        <td><%= applicant.from_url.last(13) unless applicant.from_url.blank? %></td>
+        <td width="100">
+          <input type='hidden' id="applicant<%=applicant.id%>" value="<%=applicant.id%>" />
+          <input type="text" size="20" id="marker<%=applicant.id%>" value="<%=applicant.marker%>"/><input type="button" onclick="return marker_edit(<%=applicant.id%>);" value="更新"/>
+        </td>
+        <!--<td><a href="#n" onclick="deleteapplicant('<%#= applicant.id %>')">删除</a></td>隐藏删除功能-->
+      </tr>
+    <%end%>
+  </table>
+  <br/>
+  <table>
+    <tr>
+      <td align="left">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <!--<a href="#n" onclick="delete_applicants_selected()">批量删除</a>隐藏删除功能-->
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <table>
+    <tr>
+      <td align="right" style="font-size:16px;">
+				共<span style="color:red"> <%=@applicants.total_entries %> </span>位预约客户
+      </td>
+      <td align="center" style="font-size:16px;">
+        <%= will_paginate @applicants %>
+      </td>
+      <td>
+        <input type="submit" name="submit1" value="跳转"/><input type="text" name="page" size="4"/>页
+        <input type="hidden" id="applicantid" name="applicantid"/>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+</form>
+
+<script type="text/javascript">
+
+  function deleteapplicant(id){
+    if(window.confirm('确定删除该预约客户吗？')){
+      document.getElementById('applicantid').value = id;
+      document.getElementById('fmid').action = '/admin_applications/applicants_del';
+      document.getElementById('fmid').submit();
+    }
+  }
+
+  function checkselected(){
+    var chs = document.getElementsByName("applicant[selected_ids][]");
+    if(chs.length > 0){
+      var count = 0;
+      for(var i=0;i<chs.length;i++){
+        if(chs[i].checked == true)
+          count++;
+      }
+    }else{
+      return false;
+    }
+    if(count == 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  function delete_applicants_selected(){
+    if(!checkselected()){
+      alert('请选择预约人');
+      return false;
+    }
+    if(window.confirm('确定删除这些预约客户吗?')){
+      document.getElementById('fmid').action = '/admin_applications/applicants_del';
+      document.getElementById('fmid').submit();
+    }
+  }
+
+  function check(num){
+    var chs = document.getElementsByName("applicant[selected_ids][]");
+
+    if(chs.length > 0){
+      for(var i=0;i<chs.length;i++){
+        var ch = chs[i];
+        if(num == '1'){
+          ch.checked = true;
+          document.getElementById('quanxuan').checked = false;
+          document.getElementById('tongyong').style.display='block';
+          document.getElementById('zhuangyong').style.display='none';
+        }else{
+          ch.checked = false;
+          document.getElementById('quanxuan1').checked = true;
+          document.getElementById('zhuangyong').style.display='block';
+          document.getElementById('tongyong').style.display='none';
+        }
+      }
+    }
+  }
+
+  function marker_edit(mark){
+    applicant_mark = 'applicant' + mark;
+    marker_mark = 'marker' + mark;
+    applicant_id = document.getElementById(applicant_mark).value;
+    marker = document.getElementById(marker_mark).value;
+    $.post('/admin_applications/update_applicant_marker',{
+      applicant_id : applicant_id,
+      marker : marker
+    },function(data){
+      if(data == "true"){
+        alert("已更改");
+      }else{
+        alert("请重新操作");
+      }
+    });
+
+    return false;
+  }
+
+</script>

@@ -1,0 +1,20 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">所属参数</td>
+		<td>
+			<%= f.select :param_id, @category_params.collect {|p| [p.key, p.id]} -%>
+		</td>
+	</tr>
+	<tr>
+		<td class="label">选项名称</td>
+		<td><%= f.text_field :value %></td>
+	</tr>
+	<tr>
+		<td class="label">排序位置</td>
+		<td><%= f.text_field :position %></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= submit_tag(controller.action_name == "new" ? "创建" : "更新") -%></td>
+	</tr>
+</table>

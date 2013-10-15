@@ -1,0 +1,25 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>编号</th>
+		<th>缩略图</th>
+		<th>标题</th>
+		<th>创建日期</th>
+		<th>更新日期</th>
+		<th>相关操作</th>
+	</tr>
+	<% @promotions.each do |promotion| %>
+	<tr>
+		<td><%= promotion.id %></td>
+		<td><%= image_tag(promotion.image.url(:thumb)) if promotion.image %></td>
+		<td><%= promotion.title %></td>
+		<td><%= promotion.created_at.to_s(:db) %></td>
+		<td><%= promotion.updated_at.to_s(:db) %></td>
+		<td>
+			<%= link_to "查看", vendor_promotion_path(promotion) %>
+			<%= link_to "编辑", edit_vendor_promotion_path(promotion) %>
+			<%= link_to "删除", vendor_promotion_path(promotion), :method => :delete, :confirm => "确认删除吗？" %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<%= will_paginate @promotions %>

@@ -1,0 +1,43 @@
+<h2>编辑： <%= @firm.name_zh %> 分公司信息管理页面</h2>
+<hr />
+<div id="branch_list">
+    <% if @firm.branches %>
+    <table>
+    <tr>
+        <th>编号</th>
+        <th>名称</th>
+        <th>电话</th>
+        <th>地址</th>
+        <th>服务区域</th>
+        <th>操作</th>
+    </tr>
+    <% @firm.branches && @firm.branches.each_with_index do |branch, index| %>
+    <tr>
+        <td><%= branch.id %> </td> 
+        <td><%= branch.name %> </td>
+        <td><%= branch.tel %> </td>
+        <td><%= branch.address %></td>
+        <td><%= YAML.load(branch.service_area).collect{|a| Tag.find(a).TAGNAME + '|' } %> </td>
+        <td><%= link_to "Destory", "/decocompany/branch_destroy?id=#{branch.id}", :method => :delete, :confirm => ' Are you sure ? ' %></td>
+    </tr>
+    <% end %>
+    </table>
+    <% end %>
+</div>
+<hr />
+<br />
+<div id="add_branch">
+    <label style="font-size:18px;color:#654123;">新建分公司信息<label>
+    <% form_for :deco_firm_branch, :url => {:action => "branches_save"}, :html => {:id => "branch"} do |f| %>
+        <%= hidden_field_tag "deco_firm_id", @firm.id %>
+        名称：<%= f.text_field :name %><br />
+        电话：<%= f.text_field :tel %><br />
+        地址：<%= f.text_field :address %><br />
+        服务区域：
+        <% @tags.each do |tag| %>
+            <%= check_box_tag  "area[]", tag.TAGID %> <%= tag.TAGNAME %>
+        <% end %><br />
+        <%= submit_tag "提交" %>
+    <% end %>
+<div>
+<hr />

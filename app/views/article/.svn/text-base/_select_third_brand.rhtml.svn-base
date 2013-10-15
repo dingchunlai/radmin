@@ -1,0 +1,6 @@
+
+<% @thirdlist.each do |b| %>
+
+    <input type="checkbox" name="third[product_category_ids][]" value="<%= b.id %>" /><%= b.name %>
+
+<% end %>

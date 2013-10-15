@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>用户登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="http://js.51hejia.com/js/open_div.js"></script>
+<script type="text/javascript">
+function open_userlogin_div(){
+    OpenDiv(223,223,"<iframe scrolling='no' frameborder='0' width='222' height='222' src='/member/login_small_win'></iframe>");
+}
+function open_userreg_div(){
+    OpenDiv(482,397,"<iframe scrolling='no' frameborder='0' width='480' height='395' src='/member/reg_small_win'></iframe>");
+}
+</script>
+</head>
+
+<body>
+
+<div>
+<div id="Loading" style="display:none" ondblclick="this.style.display='none'"></div>
+<a href="javascript://" onclick="open_userlogin_div();">用户登录</a>　　
+<a href="javascript://" onclick="open_userreg_div();">注册</a>
+</div>
+
+
+
+</body>
+</html>

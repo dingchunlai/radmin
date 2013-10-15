@@ -1,0 +1,19 @@
+<form name="form1" method="post" action="/company/new" style="margin:0">
+<%if @message == 1%>
+<p><font color=red>公司名不能重复</font></p>
+<%end%>
+<table border=1>
+<tr><td>
+	公司名字:</td><td><input type="text" name="companyname"> &nbsp;
+</td></tr>
+<tr><td>
+	星级:</td><td><input type="text" name="starclass"> &nbsp;
+</td></tr>
+<tr><td>
+	合作公司:</td><td>是<input type="radio" name="special" value=1>&nbsp;否<input type="radio" name="special" value=0 checked>
+</td></tr>
+<tr><td colspan=2 align=center>
+	<input type="submit" value="确定">
+</td></tr>
+</table>
+</form>

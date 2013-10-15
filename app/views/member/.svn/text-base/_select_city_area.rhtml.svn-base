@@ -1,0 +1,6 @@
+<select id="city_area" name="area">
+<option value="">请选择</option>
+<%@area.each do |a|%>
+	<option value="<%=a[0]%>"><%=a[1]%></option>
+<%end%>
+</select>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/lib/caboose/acts
+END
+belongs_to_with_deleted_association.rb
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/lib/caboose/acts/belongs_to_with_deleted_association.rb
+END
+paranoid.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/lib/caboose/acts/paranoid.rb
+END
+paranoid_find_wrapper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/lib/caboose/acts/paranoid_find_wrapper.rb
+END
+has_many_through_without_deleted_association.rb
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/acts_as_paranoid/lib/caboose/acts/has_many_through_without_deleted_association.rb
+END

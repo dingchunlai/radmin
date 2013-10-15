@@ -1,0 +1,94 @@
+<style type="text/css">
+  * {
+    margin:0px;
+    padding:0px;
+  }
+  ul {
+    list-style-type:none;
+    padding:10px;
+    width:1000px;
+  }
+  li {
+    list-style-type:none;
+    line-height:30px;
+  }
+  .right {
+    float:right;
+  }
+  .text_right {
+    text-align:right;
+  }
+  #page {
+    margin:0 auto;
+    padding:50px;
+    width:1100px;
+  }
+  #page a {color:#336699;text-decoration:none;font-size:13px;margin:0;padding:3px 0;}
+  #page a:hover {color:#FFF;text-decoration:none;font-size:13px;margin:0;}
+  img {
+    border:0 none;
+  }
+  .success {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:#E6EFC2 none repeat scroll 0 0;
+    border-color:#C6D880;
+    color:#264409;
+  }
+</style>
+<script type="text/javascript">
+  function ch(id){
+    i = document.getElementById(id);
+    if(i.checked){
+      i.checked = false;
+    } else {
+      i.checked = true;
+    }
+  }
+</script>
+<script type="text/javascript">
+  function option_tags(tag_id) {
+    $$("input[name='tag[TAGFATHERID]']").each(function(html) {
+      html.value = tag_id;
+    });
+    new Ajax.Request('/admin_case/option_tags?tag_id=' + tag_id, {
+      method: 'get'
+    });
+  }
+
+  function tags_show(tag_id){
+    new Ajax.Request('/admin_case/tags_show?id=' + tag_id, {
+      method: 'get'
+    });
+  }
+</script>
+<div id="page">
+  <h2 style="background:#EEF9EB;font-weight:bold;color:#336699;line-height:28px;">
+    <a href="/admin_case/articles_to_cases_index" style="font-size:15px;margin:0 5px;">打标签首页</a>
+  </h2>
+  <div id="case_tags">
+    <%= render :partial => "case_tags" %>
+  </div>
+  <div id="tag_list" style="margin-top:10px">
+
+  </div>
+  <div id="tt" style="border-bottom:1px dashed;"></div>
+  <%=
+  button_to_function "增加案例标签" do |page|
+    page.insert_html :bottom, :tt, :partial => 'tag_form', :object => @case_tags
+  end
+%>
+  <div id="ttd" style="border-bottom:1px dashed;"></div>
+  <%=
+  button_to_function "增加图片标签" do |page|
+    page.insert_html :bottom, :ttd, :partial => 'pic_tag_form', :object => @case_pic_tags
+  end
+%>
+  <div id="ttt" style="border-bottom:1px dashed;"></div>
+  <%=
+  button_to_function "增加标签类别" do |page|
+    page.insert_html :bottom, :ttt, :partial => 'case_tag_form'
+  end
+%>
+</div>

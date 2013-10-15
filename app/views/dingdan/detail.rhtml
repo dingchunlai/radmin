@@ -1,0 +1,114 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 800;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+}
+</script>
+<style type="text/css">
+.t1 {color:#757575}
+.tb{
+    width:100%; clear:left; padding-bottom:10px;
+}
+.tb1{
+  width:100px;
+  float:left;
+  font-size:14px;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.tb2{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #000000; padding-top: 4px;
+}
+</style>
+
+<div id="div_main" style="padding:10px;">
+  <form name="form1" action="/dingdan/remark_save" method="post" target="hideiframe">
+    <input type="hidden" name="id1" id="id1" value="<%=@order.id%>" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                订购单详情信息
+    </div>
+    <div class="tb">
+            <div class="tb1">订单状态：</div>
+            <div class="tb2" style="width:35%;">
+                <%
+                case @order.status
+                when 3
+                color = "blue"
+                when 4
+                color = "#CE0000"
+                else
+                color = "#757575"
+                end
+                %>
+                <font color="<%=color%>"><%=DINGDAN_STATE[@order.status]%></font>　
+                [ <B><%=@order.id%></B> ]
+            </div>
+            <div class="tb1">用户ID：</div>
+            <div class="tb2"><%=@order.user_id%></div>
+    </div>
+    <div class="tb">
+            <div class="tb1">客户姓名：</div>
+            <div class="tb2" style="width:35%;"><%=@order.name%></div>
+            <div class="tb1">客户电话：</div>
+            <div class="tb2"><%=@order.telephone%></div>
+    </div>
+    <div class="tb">
+            <div class="tb1">下单时间：</div>
+            <div class="tb2" style="width:35%;"><%=@order.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></div>
+            <div class="tb1">预约时间：</div>
+            <div class="tb2"><%=@order.booking_at.strftime("%Y-%m-%d") rescue ""%></div>
+    </div>
+    <div class="tb">
+            <div class="tb1">备 注：</div>
+            <div class="tb2"><textarea name="remark" rows="5" style="width:90%"><%=@order.remark%></textarea></div>
+    </div>
+    <div class="tb" style="margin-top:10px;">
+            <div class="tb1"></div>
+            <div class="tb2">
+              <input style="width:80px;letter-spacing:3px;" type="submit" value="保存备注" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+              <input <%if @order.status==3%>disabled<%end%> onclick="hideiframe.location='/dingdan/chengjiao?ids=<%=@order.id%>';" style="width:80px;letter-spacing:3px;" type="button" value="成交订单" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+              <input <%if @order.status==4%>disabled<%end%> onclick="hideiframe.location='/dingdan/zuofei?ids=<%=@order.id%>';" style="width:80px;letter-spacing:3px;" type="button" value="作废订单" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+            </div>
+    </div>
+    <div class="tb">
+            <div class="tb1">订单内容：</div>
+            <div class="tb2">
+              <%if @products.nil?%>
+                  无
+              <%else%>
+                  <table id="datalist" style="width:870px; margin-bottom:20px;">
+                  <caption align="left"></caption>
+                  <tr>
+                          <th>商品编号</th>
+                          <th>商品名称</th>
+                          <th>品牌</th>
+                          <th>型号</th>
+                          <th>价格</th>
+                          <th>数量</th>
+                          <th>单品小计</th>
+
+                  </tr>
+                  <%for p in @products%>
+                      <tr align="center">
+                        <td><%=p.productid%></td>
+                        <td><a href="http://p.51hejia.com/products/<%=p.productid%>.html" target="_blank"><%=p.name%></a></td>
+                        <td><%=p.brand.name_zh rescue ""%></td>
+                        <td><%=p.model%></td>
+                        <td><%=@price[p.id]%></td>
+                        <td><%=@amount[p.id]%></td>
+                        <td><%=@price[p.id]*@amount[p.id] rescue ""%></td>
+                      </tr>
+                  <%end%>
+                  </table>
+              <%end%>
+            </div>
+    </div>
+ 
+    
+    
+
+</form>
+</div>

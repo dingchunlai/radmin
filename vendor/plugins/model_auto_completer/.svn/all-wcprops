@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/README
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/Rakefile
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/init.rb
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/ChangeLog
+END
+THANKS
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/THANKS
+END
+install.rb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/install.rb
+END
+MIT-LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/MIT-LICENSE
+END
+about.yml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/about.yml
+END
+uninstall.rb
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/model_auto_completer/uninstall.rb
+END

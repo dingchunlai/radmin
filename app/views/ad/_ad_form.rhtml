@@ -1,0 +1,58 @@
+<script type="text/javascript">
+  function submitForm(form){
+    var cn = ["customer", "position", "scale", "starttime", "endtime", "click_code"];
+    var rv = true;
+    for (i=0;i<cn.length;i++){
+    ge("p_" + cn[i]).style.color="#999999";
+    if (trim(ge(cn[i]).value)==""){
+      ge("p_" + cn[i]).style.color="red";
+      rv = false;
+    }
+    }
+    return rv;
+  }
+</script>
+<div class="formouter">
+  <div class="formleft">客户信息：</div>
+  <div class="formcenter"><input name="customer" id="customer" type="text" value="<%=@customer%>" /></div>
+  <div class="formright" id="p_customer">必填项，如：立邦与您点亮爱的地铁</div>
+</div>
+<div class="formouter">
+  <div class="formleft">广告位：</div>
+  <div class="formcenter"><input name="position" id="position" type="text" value="<%=@position%>" /></div>
+  <div class="formright" id="p_position">必填项，如：图库终端页通栏1</div>
+</div>
+<div class="formouter">
+  <div class="formleft">脚本位置：</div>
+  <div class="formcenter">
+    <%0.upto(AD_SPACES.length-1) do |i|%>
+      <input type="radio" name="pageid" style="width:20px;" value="<%=i%>" <%="checked" if i==@pageid%> /> <%=AD_SPACES[i]%>
+    <%end%>
+  </div>
+  <div class="formright" id="p_pageid">请选择相应的脚本位置</div>
+</div>
+<div class="formouter">
+  <div class="formleft">点击比例：</div>
+  <div class="formcenter"><input name="scale" id="scale" type="text" value="<%=@scale%>" /></div>
+  <div class="formright" id="p_scale">必填项，如：30 (代表30%的点击率)</div>
+</div>
+<div class="formouter">
+  <div class="formleft">开始日期：</div>
+  <div class="formcenter"><input name="starttime" id="starttime" type="text" value="<%=@starttime%>" /></div>
+  <div class="formright" id="p_starttime">必须填写</div>
+</div>
+<div class="formouter">
+  <div class="formleft">结束日期：</div>
+  <div class="formcenter"><input name="endtime" id="endtime" type="text" value="<%=@endtime%>" /></div>
+  <div class="formright" id="p_endtime">必须填写</div>
+</div>
+<div class="formouter">
+  <div class="formleft">点击URL：</div>
+  <div class="formcenter"><textarea name="click_code" id="click_code" rows="6" style="width:300px;"><%=@click_code%></textarea></div>
+  <div class="formright" id="p_click_code">必填项，通常应该是以 http://a.51hejia.com/www/delivery/ck.php... 开头</div>
+</div>
+<div class="formouter">
+  <div class="formleft">AFP_ID：</div>
+  <div class="formcenter"><input name="view_code" id="view_code" type="text" value="<%=@view_code%>" /></div>
+  <div class="formright" id="p_view_code">只有新版广告系统的图片及Flash广告才需要填写，文字链广告请勿填写此项。</div>
+</div>

@@ -1,0 +1,11 @@
+<h3>数据同步</h3>
+<ul>
+  <li><%= link_to "同步分类产品数量", :controller => "common", :action => "sync_categories_products_count" %></li>
+  <li><%= link_to "同步品牌产品数量", :controller => "common", :action => "sync_brands_products_count" %></li>
+  <li><%= link_to "同步商家产品数量", :controller => "common", :action => "sync_vendors_products_count" %></li>
+</ul>
+<h3>清理缓存</h3>
+<ul>
+  <li><%= link_to "清理所有分类终端页<strong>话题</strong>相关缓存", :controller => "common", :action => "delete_topics_related_cache" %></li>
+  <li><%= link_to "清理所有分类终端页<strong>文章</strong>相关缓存", :controller => "common", :action => "delete_articles_related_cache" %></li>
+</ul>

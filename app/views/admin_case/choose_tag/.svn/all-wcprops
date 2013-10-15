@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag
+END
+_choose_case_type.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_choose_case_type.rhtml
+END
+_choose_tag_head.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_choose_tag_head.rhtml
+END
+_user_total_info.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_user_total_info.rhtml
+END
+_case_editor.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_case_editor.rhtml
+END
+_case_pic_tags.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_case_pic_tags.rhtml
+END
+_choose_case_type_all.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_choose_case_type_all.rhtml
+END
+_search_editor_cases.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_search_editor_cases.rhtml
+END
+_user_info.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/admin_case/choose_tag/_user_info.rhtml
+END

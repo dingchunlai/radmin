@@ -1,0 +1,20 @@
+<%if @bbs_list && @bbs_list.size>0 %>
+<div id="div_main" align="center">
+    <table id="datalist" style="width:100%" >
+    <tr style="background-color:#FFE6CC">
+    		<th>编号</th>
+            <th>BBS登录名</th>
+            <th>编辑用户名</th>
+            <th>操作</th>
+    </tr>
+	    <%for bbs_user in @bbs_list%>
+	    <tr align="center" style="background-color:#CCCCCC">
+	      <td><%=bbs_user.USERBBSID%></td>
+	      <td><%=bbs_user.USERNAME%></td>
+	      <td><%=bbs_user.user.rname if bbs_user.user %></td>
+	      <td><a href="/bbs_user/show?user_id=<%=bbs_user.user_id%>">查看</a></td>
+	    </tr>
+	    <%end %>
+    </table>
+</div>
+<%end%>

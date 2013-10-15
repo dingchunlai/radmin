@@ -1,0 +1,45 @@
+<script type="text/javascript">
+window.onload = function(){
+  setValue();
+  div_main_height = 480;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+function setValue(){
+
+}
+</script>
+<style type="text/css">
+.formouter{
+    width:100%; clear:left; padding-bottom:20px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:220px; float:left;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+  
+<form name="form1" action="edit_save" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <input type="hidden" name="id" id="id" value="<%=params[:id]%>" />
+    <div style="text-align:center;color:#636097;background-color:#DEDDEA;padding:5px;margin-bottom:20px;font-size:18px;letter-spacing: 6px;">
+                编辑表单信息
+    </div>
+    
+    <%=render :partial => "form_form"%>
+    
+    <div style="margin-left:100px;margin-top:15px;">
+      <input value="提交保存" type="submit" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+    </div>
+</form>
+</div>

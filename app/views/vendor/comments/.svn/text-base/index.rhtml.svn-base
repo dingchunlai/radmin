@@ -1,0 +1,40 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="comments_list">
+	<tr>
+		<th>咨询主题</th>
+		<th>咨询者</th>
+		<th>当前状态</th>
+		<th>产品名称</th>
+		<th>咨询时间</th>
+		<th>相关操作</th>
+	</tr>
+	<% @comments.each do |comment| %>
+	<tr class="<%= cycle("odd", "even")%>" id="<%= comment.dom_id -%>">
+		<td><%= comment.title %></td>
+		<td><%= comment.user ? comment.user.USERNAME : "和家网友" %></td>
+		<td><%= comment_state(comment.state) %></td>
+		<td><%= link_to comment.product.name, vendor_product_path(:id => comment.product.productid) if comment.product %></td>
+		<td><%= comment.created_at.to_s(:db) %></td>
+		<td><%= link_to_function "查看", "$('body_#{comment.dom_id}').toggle();" %> <%= link_to_function "回复", "$('body_#{comment.dom_id}').show();$('reply_#{comment.dom_id}').toggle();" %></td>
+	</tr>
+	<tr class="comment_body" id="body_<%= comment.dom_id -%>" style="display:none;">
+		<td colspan="6">
+			<div id="<%= "comments_#{comment.dom_id}" -%>">
+				<div class="main_body"><%=h comment.body %></div>
+				<%= render :partial => "comment", :collection => comment.children %>
+			</div>
+
+			<div class="reply_form" id="<%= "reply_#{comment.dom_id}" -%>" style="display:none;">
+			<% form_remote_for :comment, :url => vendor_comments_path, :html => {:id => "comment_form"} do |f| %>
+				<%= f.text_area :body, :rows => 3, :cols => 70 %>
+				<%= hidden_field_tag "comment[title]", comment.title %>
+				<%= hidden_field_tag "comment[parent_id]", comment.id %>
+				<%= hidden_field_tag "comment[product_id]", comment.product_id %>
+				<%= hidden_field_tag "comment[vendor_id]", comment.vendor_id %>
+				<div class="btn"><%= submit_tag "提交回复" %> <%= link_to_function "取消", "$('reply_#{comment.dom_id}').hide();" %></div>
+			<% end %>
+			</div>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<%= will_paginate @comments %>

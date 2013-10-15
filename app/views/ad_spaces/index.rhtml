@@ -1,0 +1,205 @@
+<script type="text/javascript" src=" http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 1040;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+  }
+
+  var checkflag = "false";
+  function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = true;}
+      checkflag = "true";
+      return "false";
+    }
+    else {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = false; }
+      checkflag = "false";
+      return "true";
+
+    }
+  }
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+
+  <form action="/ad_spaces" method="get">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      广告位管理　
+      <input type="text" name="keyword" value="<%=@keyword%>" style="width:80px;" />
+      <input type="submit" value="搜索" />　
+      <%=mypage_entries_info(@spaces)%>
+      <div style="width:620px;">
+      常用分类：
+      <% ad_sort_query = %w(上海站 宁波站 苏州站 无锡站 杭州站 武汉站 南京站 青岛站 长沙站 合肥站 郑州站 北京站 广州站 深圳站 成都站 海口站 厦门站 天津站 大连站 石家庄站 长春站 哈尔滨站 西安站 太原站 昆明站 重庆站 沈阳站 吉林站 福州站 南昌站 济南站 洛阳站 珠海站 南宁站 贵阳站 三亚站 兰州站 银川站 西宁站 俱乐部 抵用券 问吧 家电 品牌库 装修点评 图库 居尚 行业新闻 客厅 家具 油漆涂料 照明 装修资讯 产品资讯 家具资讯) %>
+      <% ad_sort_query.each do |sort| %>
+        <%= @sort == sort ? sort : link_to(sort, "ad_spaces?sort=#{u(sort)}")%>
+      <%end%>
+      </div>
+      
+    </div>
+  </form>
+
+  <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+      <th>编号</th>
+      <th>广告位代号</th>
+      <th>广告ID</th>
+      <th>类型</th>
+      <th>状态</th>
+      <th>操作</th>
+
+    </tr>
+
+    <%form_for :space, :url=>ad_spaces_path(), :html => {'data-name'=>'space_form'} do |f|%>
+      <tr style="text-align: center;">
+        <td align="center">
+          ---
+        </td>
+        <td><%=f.text_field :code, :style => 'width:170px;'%></td>
+        <td><%=f.text_field :ad_id, :style => 'width:80px;'%></td>
+        <td><%=f.select :ad_type, AdSpace.ad_type_options, {}%></td>
+        <td>
+          ---
+        </td>
+        <td>
+          <%=submit_tag '添加'%>
+        </td>
+      </tr>
+    <%end%>
+
+    <%@spaces.each do |s|%>
+      <%form_for :space, s, :url=>ad_space_path(s), :html => {:method=>:put, 'data-name'=>'space_form'} do |f|%>
+        <tr style="text-align: center;" id="tr_space_id_<%=s.id%>">
+          <td align="center">
+            <%=s.id%>
+          </td>
+          <td><%=f.text_field :code, :style => 'width:170px;', 'data-code' => ad_space_path(s)%></td>
+          <td><%=f.text_field :ad_id, :style => 'width:80px;', 'data-code' => ad_space_path(s)%></td>
+          <td><%=f.select :ad_type, AdSpace.ad_type_options, {}, 'data-code' => ad_space_path(s)%></td>
+          <td is_using_action="<%=is_using_change_ad_space_path(s)%>?id=<%=s.id%>" style="cursor:hand">
+            <%if s.is_using == 0%>
+              <%=AdSpace::IS_USING[s.is_using]%>
+            <%else%>
+              <span style='color:blue'><%=AdSpace::IS_USING[s.is_using]%></span>
+            <%end%>
+          </td>
+          <td>
+            <%=submit_tag '保存', 'data-name' => ad_space_path(s), :style => 'display:none;'%>
+            <input type="button" value="删除" space_id="<%=s.id%>" url="<%=ad_space_path(s)%>" data-name="delete_button" />
+            <%= link_to '查看点击统计', { :controller => 'afp_stat', :action => 'index', :ad_id => s.ad_id } , :target => "_blank"%>
+          </td>
+        </tr>
+      <%end%>
+    <% end %>
+  </table>
+
+  <div id="div_pagelist" style="margin-top:15px;">
+    <%=will_paginate @spaces, :previous_label => "上一页", :next_label => "下一页"%>
+  </div>
+
+  <div>
+    <br />
+
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  //修改广告位启用状态
+  /*
+  $('td[is_using_action]').click(function(){
+    var td = $(this);
+    $.get(td.attr('is_using_action'), function(data){
+      switch(data){
+        case '1':
+          td.html("<span style='color:blue'>已启用</span>");break;
+        case '0':
+          td.html("未启用");break;
+        default:
+          alert(data);break;
+      }
+    }, "text")
+  });
+  */
+
+  //当数据有改动的时候，将保存按钮设为可用
+  $('input[type=text]').keyup(function(){
+    var btn = $('input[data-name=' + $(this).attr('data-code') + ']');
+    btn.show();
+  });
+  $('select[id=space_ad_type]').change(function(event){
+    var btn = $('input[data-name=' + $(this).attr('data-code') + ']');
+    btn.show();
+  });
+
+  //添加删除广告位操作
+  $('input[data-name=delete_button]').click(function(event){
+    if (confirm('您确定要删除该广告位吗？')){
+      var btn = $(this)
+      btn.attr('disabled', 'disabled');
+      $.ajax({
+        url:$(this).attr('url'),
+        type: 'delete',
+        error: function(data) {
+          alert(data.responseText);
+          btn.attr('disabled', null);
+        },
+        success: function(data) {
+          $('#tr_space_id_'+data).hide();
+        }
+      });
+    }
+  });
+
+  //添加更新广告位操作
+  $('form[data-name=space_form]').submit(function(event) {
+    var btn = $('input[data-name=' + $(this).attr('action') + ']');
+    btn.attr('disabled', 'disabled');
+    $.ajax({
+      url: $(this).attr('action'),
+      type: 'post',
+      data: $(this).serialize(),
+      dataType: 'text',
+
+      error: function(data) {
+        alert(data.responseText);
+        btn.attr('disabled', null);
+      },
+
+      success: function(data) {
+        if (data=='0')
+          window.open('/ad_spaces','_top');
+        else
+          btn.attr('disabled', null);
+          btn.hide();
+      }
+    });
+    event.preventDefault();
+    return false;
+  });
+
+</script>

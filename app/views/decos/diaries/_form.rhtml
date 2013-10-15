@@ -1,0 +1,18 @@
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>标题：</td>
+				<td><%= f.text_field :title, :size => 80 %></td>
+			</tr>
+			<tr>
+				<td>链接：</td>
+				<td><%= f.text_field :url %></td>
+			</tr>
+			<tr>
+				<td>业主：</td>
+				<td><%= f.text_field :owner %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag(controller.action_name == "new" ? "创建日记" : "更新日记") -%></td>
+			</tr>
+		</table>

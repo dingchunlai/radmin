@@ -1,0 +1,158 @@
+<%if staff_logged_in?%>
+
+  <span style="background-color:#970000; color:white;"><%if RAILS_ENV == 'development'%>线下开发环境<%elsif RAILS_ENV == 'staging'%>线下测试环境<%end%></span>
+
+  <a href="/admin/index" title="访问后台首页">首页</a>
+
+  <%if isrole("管理员") || isrole("问吧管理")%>
+    <a href="/wenba/examine_topics" title="问吧管理">问吧</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("论坛管理")%>
+    <a href="/bbs/forum_tag_handle" title="论坛管理">论坛</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("文章编辑")%>
+    <a href="/boke/boke_list" title="博客管理">博客</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("会员管理")%>
+    <a href="http://zx.admin.51hejia.com/members/lists" title="会员管理">会员</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("广告管理")%>
+    <a href="/ad/ad_list" title="广告管理">广告</a>
+    <a href="http://api.51hejia.com/afp/admin" title="新广告管理">新广告(afp)</a>
+    <a href="/afp_stat/" title="广告(afp)点击统计">广告点击统计(afp)</a>
+  <%end%>
+
+  <%# if isrole("管理员") || isrole("表单管理") %>
+    <!--a href="/form/list?status=1" title="表单管理">表单</a-->
+  <%# end %>
+
+  <%if isrole("管理员") || isrole("核价组长") || isrole("核价组员")|| isrole("订单管理")|| isrole("产品管理")|| isrole("产品组员")%>
+    <a href="/hejia/list" title="商城管理">商城</a>
+    <a href="/vendors" title="产品管理">产品</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("评论管理")%>
+    <a href="/comment/reply_list" title="评论管理">评论</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("关键字管理")%>
+    <a href="/hejiatag/inner_link_list" title="内链关键词库">关键字</a>
+  <%end%>
+  <%if isrole("管理员") || isrole("关键字管理") || isrole("文章编辑")%>
+    <a href="/wordmanager/list" title="内链关键词库">关键词</a>
+  <%end%>
+  <%if isrole("管理员")%>
+    <a href="/user/list" title="用户管理">用户</a>
+  <%end%>
+
+  <%if isrole("管理员")%>
+    <a href="/webpm/list" title="参数管理">参数</a>
+  <%end%>
+  <!--
+  <%if isrole("管理员")%>
+      <a href="/baselogdate/index" title="统计选项">统计选项</a>
+  <%end%>
+
+  <%if isrole("管理员")%>
+      <a href="/editercount/seeallchannel" title="编辑绩效">编辑绩效</a>
+  <%end%>
+
+  <%if isrole("推广文章负责人") || isrole("新闻负责人") || isrole("实用文章负责人")%>
+      <a href="/editercount/lookchannelscore" title="频道绩效">频道绩效</a>
+  <%end%>
+
+  <%if isrole("文章编辑")%>
+      <a href="/editercount/lookselfscore" title="自己绩效">自己绩效</a>
+  <%end%>
+  -->
+  <%if isrole("文章编辑") || isrole("实习编辑") || isrole("管理员") %>
+    <a href="/article/index" title="文章编辑">文章</a><a href="/article/new" target="_blank" title="添加文章">(添加)</a>
+  <%end%>
+  <!--
+  <%if isrole("文章编辑") || isrole("管理员")%>
+      <a href="/booking/index" title="预约单">预约单</a>
+  <%end%>
+  -->
+
+  <%if isrole("页面制作") || isrole("管理员") || isrole("实习编辑") || isrole("文章编辑")%>
+    <a href="/pages/index" title="页面制作">页面管理</a>
+  <%end%>
+  <!--
+  <%if isrole("页面制作") || isrole("管理员") || isrole("文章编辑") || isrole("实习编辑")%>
+      <a href="/mobanmanager/index" title="页面制作">模板管理</a>
+  <%end%>
+  -->
+  <%if isrole("管理员") || isrole("文章编辑") %>
+    <a href="/articletag/index" title="文章标签">文章标签</a>
+  <%end%>
+  <% if isrole("管理员") || isrole("会员管理") %>
+    <a href="/hejia_index_keywords" title="标签管理">标签</a>
+  <% end %>
+
+  <% if isrole("管理员") || isrole("文章编辑") || isrole("seo专员") %>
+    <a href="/exports" title="导出数据管理">导出数据</a>
+  <% end %>
+  <% if isrole("管理员") %>
+    <a href="/statistics/all" title="数据统计">数据统计</a>
+  <% end %>
+  <br />
+  <%if isrole("管理员") || isrole("装潢编辑") %>
+    <a href="http://zx.admin.51hejia.com/firms" title="装潢公司">装潢公司</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("图库编辑") %>
+    <a href="/company/linktofront?companyid=7" target="_blank" title="图库专用前台">图库专用前台</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("装潢编辑") %>
+    <a href="http://zx.admin.51hejia.com/stories/note_list" title="评论管理">评论管理</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("文章编辑") || isrole("兼职文章编辑") %>
+    <a href="/casemanager/list" title="色卡">色卡</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("装潢编辑") %>
+    <a href="/admin_case/index" title="为设计师分配案例">分配案例</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("文章编辑") || isrole("兼职文章编辑") %>
+    <a href="/admin_case/articles_to_cases_index" title="打标签">打标签</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("文章编辑")%>
+    <a href="/pinlei/list" title="品类频道管理">品类</a>
+    <a href="/zhuanqu/sort_list" title="专区管理">专区</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("推广管理") %>
+    <a href="http://api.51hejia.com/admin/login" title="推广管理" target="_blank">推广管理</a>
+    <!--a href="http://zx.admin.51hejia.com/publishs" title="推广管理" target="_blank">推广管理</a-->
+  <%end%>
+
+  <%if isrole("管理员") || isrole("页面制作") || isrole("评论管理")%>
+    <a href="/activities">活动管理</a>
+  <%end%>
+
+  <%if isrole("管理员") || isrole("文章编辑") || isrole("页面制作") || isrole("评论管理")%>
+    <a href="http://zx.admin.51hejia.com/words">敏感词管理</a>
+  <%end%>
+
+  <a href="http://api.51hejia.com/baidu_map"  target="_blank">百度地图数据采集</a>
+  <%if isrole("管理员") %>
+    <a href="/relate_tag">标签对应</a>
+  <%end%>
+  <a href="/photo_ads" title="图库广告">图库广告</a>
+    当前用户:  <a href="/admin/change_password" title="用户角色：<%= current_staff.roles ? current_staff.roles.join('，') : "未知角色"%> [点这里修改密码]"><%= current_staff.name || "未知用户名"%></a>　<a href="/user/login?signout=true">注销登录</a>
+
+<%else%>
+
+  <script type="text/javascript">
+    window.open('/user/login?signout=true','_top');
+  </script>
+
+<%end%>

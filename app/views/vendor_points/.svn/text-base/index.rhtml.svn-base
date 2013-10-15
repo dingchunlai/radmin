@@ -1,0 +1,52 @@
+<div id="products_list">
+  <% form_tag "/vendor_points/operate", :id => "comments_form" do %>
+    <ul class="button_list clearfix">
+      <li><%= submit_tag "删除", :name => "destroy_all", :onclick => "return confirm('你确定吗?')" %></li>
+    </ul>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="comments_list">
+      <tr>
+        <th><input id="checkbox_selector" type="checkbox" value="0" /></th>
+        <th>编号</th>
+        <th>商家</th>
+        <th>总结评论</th>
+        <th>分数</th>
+        <th>评论人</th>
+        <th>相关操作</th>
+      </tr>
+      <% @vendor_points.each do |comment| %>
+        <tr class="<%= cycle("odd", "even")%>" id="<%= comment.dom_id -%>">
+          <td><%= check_box_tag "comment_ids[]", comment.id %></td>
+          <td><%= comment.id %></td>
+          <td><%= link_to comment.vendor.name_zh, vendor_points_path(:vendor_id => comment.vendor.id) %></td>
+          <td><%=h comment.reason %></td>
+          <td><%= comment.point %></td>
+          <td><%= comment.user ? comment.user.USERNAME : "和家网友" %></td>
+          <td>
+            <%= link_to_function "查看问答", "$('body_#{comment.dom_id}').toggle();" %>
+            <%= link_to "编辑", edit_vendor_point_path(comment) %>
+            <%= link_to_remote "删除", :url => vendor_point_path(comment), :confirm => "确认删除该评论吗？", :method => :delete %>
+          </td>
+        </tr>
+        <tr id="body_<%= comment.dom_id -%>" style="display:none;">
+          <td colspan="6">
+            <%=h comment.answer  %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <%= will_paginate @vendor_points %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  var checkboxes = $$("#comments_form input[type=checkbox]");
+  var cbControl = $("checkbox_selector");
+
+  cbControl.observe("click", function(){
+    checkboxes.each(function(box){
+      box.checked = cbControl.checked;
+    });
+  });
+
+</script>

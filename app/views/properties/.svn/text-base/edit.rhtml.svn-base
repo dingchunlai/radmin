@@ -1,0 +1,4 @@
+<%= error_messages_for :property %>
+<% form_for :property, :url => property_path(@property), :html => {:method => :put} do |f| -%>
+  <%= render :partial => "form", :locals => {:f => f} -%>
+<% end %>

@@ -1,0 +1,19 @@
+<tr style="background:#EEF9EB;color:#336699;line-height:20px;">
+  <td style="font-weight:bold;"><a href="#" onclick="show_users();" title="点击展开">兼职编辑</a></td>
+  <td style="font-weight:bold;">案例总数=</td>
+  <td>未打标签+</td>
+  <td>已打标签未审核+</td>
+  <td>未通过审核+</td>
+  <td>已通过审核</td>
+  <td style="font-weight:bold;">图片数量=</td>
+  <td>未打标签+</td>
+  <td>已打标签未审核+</td>
+  <td>未通过审核+</td>
+  <td>已通过审核</td>
+</tr>
+<% @users.each do |u| %>
+  <tr style="line-height:20px;display:none;" onmouseover="mover(this,'#EEF9EB');" onmouseout="mout(this,'#ffffff');" id="user_<%= u.id %>">
+    <% @u = u %>
+    <%= render :partial => "admin_case/choose_tag/user_info", :object => @u %>
+  </tr>
+<% end %>

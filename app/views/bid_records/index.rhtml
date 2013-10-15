@@ -1,0 +1,38 @@
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+    竞标列表
+  </div>
+  <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <tr>
+      <th>编号</th>
+      <th>月份</th>
+    </tr>
+    <% for bid_record in @bid_records %>
+      <tr align="center" style="background-color:#FFFDE6">
+        <td align="left"><%= bid_record.id %></td>
+        <td>
+          <%= link_to("#{bid_record.bid_month}月竞标", "/bid_records/#{bid_record.id}") %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

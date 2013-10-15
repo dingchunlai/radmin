@@ -1,0 +1,11 @@
+<div id="div_main">
+  <form name="ftiwen" id="ftiwen" action="/statistics/yusuan" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      日期：<input name="riqi1" type="text" size="6" value="<%= @riqi1 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%= @riqi2 %>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      <input type="submit"value="搜 索" />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      点击统计数：<%= Statistic.count(:conditions => ["code = ? and created_at > ? and created_at < ?", "ad_baoming_yusuan_gif", @riqi1.to_time.beginning_of_day, @riqi2.to_time.tomorrow.beginning_of_day]) %>
+    </div>
+  </form>
+</div>

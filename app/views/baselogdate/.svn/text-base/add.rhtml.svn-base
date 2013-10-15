@@ -1,0 +1,24 @@
+<form action="/baselogdate/add" method="post">
+	<table border=1 align=center>
+		<tr>
+			<td>名字:</td>
+			<td><input type="text" name="dname"></td>
+		</tr>
+		<tr>
+			<td>值:</td>
+			<td><input type="text" name="dvalue"></td>
+		</tr>
+		<tr>
+			<td>类型:</td>
+			<td>
+				<select name="dtype">
+					<option value="1">统计文章类型</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="确定"></td>
+		
+		</tr>
+	</table>
+</form>

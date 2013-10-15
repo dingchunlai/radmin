@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers
+END
+constants.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/constants.rb
+END
+dictionaries.rb
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/dictionaries.rb
+END
+hoptoad.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/hoptoad.rb
+END
+will_paginate.rb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/will_paginate.rb
+END
+hejia.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/hejia.rb
+END
+mail.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/mail.rb
+END
+cache.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/cache.rb
+END
+ruby_compatibility.rb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/!svn/ver/99/51hejia/repos/radmin/release/config/initializers/ruby_compatibility.rb
+END

@@ -1,0 +1,4 @@
+<%= error_messages_for :category %>
+<% form_for :category, @category, :url => { :action => "update" }, :html => {:method => "put"} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>

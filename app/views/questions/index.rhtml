@@ -1,0 +1,23 @@
+<% title (@activity.name+" 问题列表") %>
+<p><%= link_to "新建问题", new_activity_question_path(@activity) %>
+<span style="width:300px;border:1px solid #FF0000;background-color:#FFBFBF;font-size:12px;padding:2px">
+	提示: 红色背景色表示该问题没有设置正确选项。
+</span>
+</p>
+<table width="800">
+  <tr>
+    <th>类别</th>
+    <th>问题内容</th>
+     <th>操作</th>
+  </tr>
+  <%  @questions.each do |question| %>
+    <tr class = "question_list">
+      <td><%=h get_question_category(question.category) %></td>
+      <td width="400"  style="<%= 'border:1px solid #FF0000;background-color:#FFBFBF;' if  has_1_currect_options(question)%>"><%=h question.title %></td>
+      <td><%= link_to "添加选项", question_options_path(question) %></td>
+      <td><%= link_to "编辑", edit_activity_question_path(@activity,question) %></td>
+      <td><%= link_to "删除", activity_question_path(@activity,question), :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+<p><%= link_to "返回活动列表", activities_path() %></p>

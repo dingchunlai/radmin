@@ -1,0 +1,77 @@
+<div class="user_right">
+
+  <div id=widebar >
+    <div id=nav_bottom></div>
+    <div id=widebar_content>
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>我的和家 - 常规报价</div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+	  在这里您可以添加和维护常规报价信息。
+        </div>
+      </div>
+    </div>
+
+    <div class=mainbox style="height:480px;">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on">
+            <%= link_to "报价列表",quoted_prices_path %>
+          </li>
+          <li class="line"></li>
+          <li id="s2" class="menu_on">
+            <%= link_to "新建报价",new_quoted_price_path %>
+          </li>
+          <li class="more"></li>
+        </ul>
+      </div>
+      <p style="color:#DD4504;padding:5px 0 5px 10px;">第一页排位前5个的将显示在前台，供业主参考。排位可以通过鼠标拖拽变更。</p>
+
+      <table id="datalist" class="sjslist" style="margin-left:7px;width:97%">
+        <tr>
+          <% QuotedPrice.list_columns.each do |column| %>
+            <th><%=h translate_to_chinese(column) %></th>
+          <% end %>
+          <th>操作</th>
+        </tr>
+        <tbody id="quoted_prices" >
+          <% @quoted_prices.each do |quoted_price| %>
+            <tr  id="quoted_price_<%= quoted_price.id %>"  >
+              <% QuotedPrice.list_columns.each do |column| %>
+                <td style="background-color:#FFFDE6;height:30px;">
+                  <% if (%w[room].include? column) %>
+                    <%=h FACTORY_FANGXING[quoted_price.send(column)] %>
+                  <% elsif (%w[deco_type].include? column) %>
+                    <%=h QUOTE_PRICE_TYPE[quoted_price.send(column)] %>
+                  <% else %>
+                    <%=h quoted_price.send(column) %> <% end %>
+                </td>
+              <% end %>
+      <!--	  <td><%= link_to 'Show', :action => 'show', :id => quoted_price %></td>   -->
+              <td style="background-color:#FFFDE6;height:30px;">
+                <%= link_to '编辑', :action => 'edit', :id => quoted_price %>
+                <%= link_to '删除', { :action => 'destroy', :id => quoted_price }, :confirm => '确认删除?', :method => :delete %>
+                <span style="padding:0 0 0 5px">↑↓</span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div id="div_pagelist" style="margin:0px 10px 0px 10px;">      
+        <div style="float:right">
+          <span id="pagelist">
+            <%= will_paginate @quoted_prices %>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%= sortable_element('quoted_prices',:url => {:action => "sort_by_position"},:format => '/^quoted_price_(.*)$/',:tag => 'tr') %>
+
+

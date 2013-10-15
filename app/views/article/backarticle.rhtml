@@ -1,0 +1,16 @@
+<form id="fmid" action="/article/backarticle" method="post">
+	<input type="hidden" value="-2" name="stype">
+	<input type="hidden" value="<%=@articleid%>" name="articleid">
+	<p><textarea name="backreason" id="bkid" cols=50 rows=10></textarea></p>
+	<p><input type="button" value="退回" onclick="backarticle();"></p>
+</form>
+<script language="javascript">
+	function backarticle(){
+		var bkreason = document.getElementById('bkid').value;
+		if(bkreason == null || bkreason =='' ){
+			alert('必须写退回理由');
+			return;
+		}
+		document.getElementById('fmid').submit();
+	}
+</script>

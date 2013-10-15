@@ -1,0 +1,91 @@
+<script type="text/javascript">
+  var TotalSeconds = <%= ((@bid_record.expired_time - Time.now)/1000).to_i * 1000 %>;
+
+  function takeCount()
+  {
+    //计数减一
+    if(TotalSeconds > 0)
+    {
+      TotalSeconds -= 1;
+
+      //计算时分秒
+      var days = Math.floor( TotalSeconds / ( 60 * 60 * 24 ));
+      var hours = Math.floor( TotalSeconds / ( 60 * 60 )) % 24;
+      var minutes = Math.floor(TotalSeconds / (60)) % 60;
+      var seconds = Math.floor(TotalSeconds) % 60;
+
+      //将时分秒插入到html中
+      document.getElementById("RemainTime").innerHTML = "离标签结束还有 " + days + "天" + hours + "小时" + minutes + "分" + seconds + "秒";
+    }
+    else
+    {
+      document.getElementById("RemainTime").innerHTML = "竞标已经结束"
+    }
+  }
+
+  window.onload = setInterval("takeCount();",1000);
+</script>
+<div class="user_right">
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id=userprofile>
+        <div class=top>
+          <div class=profile_name>
+            我的和家 - 当前开放的竞标标签列表
+          </div>
+        </div>
+        <div style="padding:5px; PADDING-LEFT: 30px; color:#808080">
+          在这里您可以参加竞标。
+        </div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on" style="width: 120px;">当前开放的竞标标签</li>
+          <li class="line"></li>
+          <li class="more"></li>
+        </ul>
+      </div>
+
+      <div id="RemainTime">
+
+      </div>
+
+      <div id="same1">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <% for price in BidRecord::PRICE.keys %>
+            <tr style="background-color:#FFFDE6">
+              <td>
+                <%= BidRecord::PRICE.values_at(price) %>
+              </td>
+              <td>
+                <%= @bid_record.radmin_bids("PRICE", price).size %>家参加竞标
+              </td>
+              <td>
+                <%= link_to("竞标", "/decos/bid_records/#{@bid_record.id}/PRICE-#{price}") %>
+              </td>
+            </tr>
+          <% end %>
+
+          <% for style in BidRecord::STYLE.keys %>
+            <tr style="background-color:#FFFDE6">
+              <td>
+                <%= BidRecord::STYLE.values_at(style) %>
+              </td>
+              <td>
+                <%= @bid_record.radmin_bids("STYLE", price).size %>家参加竞标
+              </td>
+              <td>
+                <%= link_to("竞标", "/decos/bid_records/#{@bid_record.id}/STYLE-#{style}") %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

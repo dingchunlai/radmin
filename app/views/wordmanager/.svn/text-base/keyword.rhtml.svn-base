@@ -1,0 +1,36 @@
+<form action="/wordmanager/link" method="post">
+<table id="datalist" style="width:auto;" summary="这个表格是...">
+<input type="hidden" name="articleid" value="<%=@article.ID%>"/>
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>上一级关键字</th>
+            <th>所属级别</th>
+            <th>关键字</th>
+            <th>专区</th>
+            <th>内联</th>
+            <th>同义词</th>
+            <th>创建时间</th>
+            <th>引用数</th>
+    </tr>
+    <%for w in @keylist%>
+    <tr align="center" style="background-color:#FFFDE6" id="tr_<%=w.id%>">
+      <td align="left"><input type="checkbox" name="wid[]" id="wid" value="<%=w.id%>" <%=@tagids.include?(w.id) ? "checked":""%>/> <%=w.id%></td>
+      <td><%if w.fatherid.nil?||w.fatherid.to_s==''||w.fatherid.to_s=='0'%>无上级<%else%><%=getleadword(w.fatherid)%><%end%></td>
+      <td><%=w.level%></td>
+      <td><%=w.name%></td>
+      <td><%=w.zhuanqu%></td>
+      <td><%=w.inline%></td>
+      <td><%=sameword(w.id)%></td>
+      <td>
+      <%=w.created_at.strftime("%Y-%m-%d") rescue ""%>
+      </td>
+      <td>
+      <%=w.entity_counter%>
+      </td>
+    </tr>
+    <%end%>
+    </table>
+    <input type="submit" name="submit" value="提交"/>
+</form>
+	

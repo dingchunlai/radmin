@@ -1,0 +1,154 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 660;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+6;
+  recordcount = <%=@recordcount%>;
+  pagesize = <%=@pagesize%>;
+  curpage = <%=@curpage%>;
+  cur_list = 0;
+  listsize = <%=@listsize%>;
+  page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+}
+function gotopage(page){
+    window.open("/form/list?page="+page+"&recordcount=<%=@recordcount%>&status=<%=@status%>", "_self");
+}
+function del(id){
+    if (confirm('您确定要删除这条记录吗？')) hideiframe.location = "/form/del?id=" + id;
+}
+function deleteAll(){
+    if (confirm('您确定要删除这些记录吗？')){
+      var ids = getids();
+      if (ids!="") hideiframe.location = "/form/del?ids=" + ids;
+    }
+}
+function getids(){
+    var ids = "0";
+    if (document.form1.formid.length==undefined){
+        if (document.form1.formid.checked) ids = document.form1.formid.value;
+    }else{
+        for (i=0; i<document.form1.formid.length;i++){
+            if (document.form1.formid[i].checked) ids += ", " + document.form1.formid[i].value;
+        }
+    }
+    if (ids=="0"){alert("请选择表单记录！"); return "";} else return ids;
+}
+function set_used(){
+  var ids = getids();
+  if (ids!=""){
+      hideiframe.location="/form/change_status?status=1&ids=" + ids;
+  }
+}
+function set_hide(){
+  var ids = getids();
+  if (ids!=""){
+      hideiframe.location="/form/change_status?status=0&ids=" + ids;
+  }
+}
+var checkflag = "false";
+function SelectAll(field) { //全选checkbox
+  if (checkflag == "false") {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = true;}
+  checkflag = "true";
+  return "false";
+  }
+  else {
+  for (i = 0; i < field.length; i++) {
+  field[i].checked = false; }
+  checkflag = "false";
+  return "true";
+
+  }
+}
+</script>
+<style type="text/css">
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="form1">
+
+  <div style="font-family:Verdana; color:#7389A4; font-size:14px; letter-spacing:2px; margin: 5px 0px 0px 5px; ">
+      <input value="全 选" onclick="SelectAll(document.form1.formid);" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="设为正常" onclick="set_used();" style="width:75px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="设为隐藏" onclick="set_hide();" style="width:75px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+    </div>
+
+  <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 5px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+	    <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+    <caption align="left"></caption>
+    <tr>
+            <th>编号</th>
+            <th>表单标题</th>
+            <th>字段数</th>
+            <th>所属部门</th>
+            <th>转向地址</th>
+            <th>表单备注</th>
+            <th>最后更新</th>
+            <th>状态</th>
+            <th>操作</th>
+    </tr>
+    <%for form in @forms%>
+    <tr style="background-color:#FFFDE6">
+      <td><input type="checkbox" name="formid" value="<%=form.id%>" /> <%=form.id%></td>
+      <td><a href="/form/data?id=<%=form.id%>" target="_blank" title="点击查看数据记录..."><%=form.title%></a></td>
+      <td align="center">
+          <b style="color:#CE0000"><%=form.cnum%></b>
+          <a href="/form/column_list?id=<%=form.id%>" target="_blank" title="维护字段...">[维护]</a>
+          <%if form.cnum!=0%>
+            <a href="/form/preview?id=<%=form.id%>" target="_blank" title="预览表单...">[预览]</a>
+            <a href="/form/code?id=<%=form.id%>" target="_blank" title="浏览代码...">[代码]</a>
+          <%end%>
+      </td>
+      <td align="center"><%=get_webpm("department")[form.department]%></td>
+      <td align="center"><input type="text" size="20" value="<%=form.forward%>" /></td>
+      <td align="center"><input type="text" size="20" value="<%=form.remark%>" /></td>
+      <td align="center"><%=form.udate%></td>
+      <td align="center">
+        <%if form.status==1%>
+          <font color="blue"><%=FORM_STATE[form.status]%></font>
+        <%else%>
+          <%=FORM_STATE[form.status]%>
+        <%end%>
+      </td>
+      <td align="center">
+        <a href="/form/edit?id=<%=form.id%>" target="_blank">编辑</a>
+        <a href="javascript:del(<%=form.id%>)">删除</a>
+      </td>
+
+    </tr>
+    <% end %>
+    </table>
+
+    <div id="div_pagelist" style="margin-top:15px;">
+	<input value="全 选" onclick="SelectAll(document.form1.formid);" style="width:55px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="设为正常" onclick="set_used();" style="width:75px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input value="设为隐藏" onclick="set_hide();" style="width:75px" type="button" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <input onclick="deleteAll()" type="button" value="批量删除" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　　
+	<span id="pagelist"></span>
+    </div>
+
+</form>
+</div>

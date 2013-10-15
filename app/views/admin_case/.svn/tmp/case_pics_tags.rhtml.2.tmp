@@ -1,0 +1,35 @@
+<table>
+  <tr style="background:#EEF9EB;color:#336699;line-height:20px;font-weight:bold;">
+    <td>内容</td>
+    <td>标签</td>
+  </tr>
+  <tr style="line-height:20px;background-color:<%= cycle("#ffffff", "#EEF9EB") -%>;">
+    <td><%= @cname %></td>
+    <td>
+      <%
+      n = []
+      @c_tags.each do |t|
+        tt = Tag.find(:first, :conditions => "TAGID = #{t.TAGID}")
+        n << tt.TAGNAME if tt
+      end
+    %>
+      <%= n.join(",") %>
+    </td>
+  </tr>
+  <% @photos.each do |p| %>
+    <tr style="line-height:20px;background-color:<%= cycle("#ffffff", "#EEF9EB") -%>;">
+      <td><img src="<%= p.get_photo_url %>" height="200" width="320"></td>
+      <td>
+        <%
+        p_tags = PhotoPhotosTag.find(:all, :conditions => "photo_id = #{p.id}")
+        n = []
+        p_tags.each do |t|
+          tt = PhotoTag.find(:first, :conditions => "id = #{t.tag_id}")
+          n << tt.name if tt
+        end
+      %>
+        <%= n.join(",") %>
+      </td>
+    </tr>
+  <% end %>
+</table>

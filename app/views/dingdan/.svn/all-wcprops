@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan
+END
+edit.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/edit.rhtml
+END
+vendor_list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/vendor_list.rhtml
+END
+new.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/new.rhtml
+END
+list.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/list.rhtml
+END
+_operation.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/_operation.rhtml
+END
+_hejia_form.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/_hejia_form.rhtml
+END
+detail.rhtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/app/views/dingdan/detail.rhtml
+END

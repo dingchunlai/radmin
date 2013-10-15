@@ -1,0 +1,84 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 1000;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  }
+  function gotopage(page){
+    window.open("/wenba/posts?page="+page+"&recordcount=<%=@recordcount%>&keyword=<%=u(@keyword)%>", "_self");
+  }
+</script>
+<style type="text/css">
+  .ellipsis{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap
+  }
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="ftiwen" id="ftiwen" action="/wenba/posts" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      关键字：<input name="keyword" type="text" size="6" value="<%=@keyword%>" />　
+      <input type="submit"value="搜 索" />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+      <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>内容</th>
+        <th>所属问题</th>
+        <th>创建时间</th>
+      </tr>
+      <% for post in @posts %>
+        <tr align="center" style="background-color:#FFFDE6" id="tr_<%= post.id %>">
+          <td align="left"><%= post.id %></td>
+          <td>
+            <% unless post.content.blank? %>
+              <label title="<%= h(post.content).to_s.split(//u) %>">
+                <%= truncate_u(h(post.content),60,"...") %>
+              </label>
+            <% end %>
+          </td>
+          <td>
+            <% unless post.topic.blank? %>
+              <a href="http://wb.51hejia.com/q/<%= post.topic.id %>.html" target="_blank"><%= post.topic.subject %></a>
+            <% end %>
+          </td>
+          <td><%= post.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+        </tr>
+      <%end %>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+      <span id="pagelist"></span>
+    </div>
+  </form>
+</div>

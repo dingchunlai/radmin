@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	function checkuser(){
+		var flg=false;
+		var name=document.getElementById("bbsname");
+		var city=document.getElementById("city");
+		var area=document.getElementById("areas");
+		if(parseInt(city.value) == 0){
+			alert("请选择城市");
+			return false;
+		}
+		if(parseInt(area.value) == 0){
+			alert("请选择该城市下的市区");
+			return false;
+		}
+		if(name.value == "")
+		{
+			alert("请输入BBS用户名");
+			return false;
+		}
+	}
+</script>
+<div align="center">
+	<%if @message && @message.to_s !=""%><%=@message%><%end%>
+</div>
+ 	<%if @bbs_users && @bbs_users.size>0 %>
+            <div id="div_main" align="center">
+			    <table id="datalist" style="width:100%" >
+			    <tr style="background-color:#FFE6CC">
+			    		<th>编号</th>
+			            <th>BBS登录名</th>
+			            <th>后台用户名</th>
+			            <th>操作</th>
+			    </tr>
+				    <%for bbs_user in @bbs_users%>
+				    <tr align="center" style="background-color:#CCCCCC">
+				      <td><%=bbs_user.USERBBSID%></td>
+				      <td><%=bbs_user.USERNAME%></td>
+				      <td><%=bbs_user.user.rname %></td>
+				      <td><a href="/bbs_user/delete/<%=bbs_user.USERBBSID%>">删除</a></td>
+				    </tr>
+				    <%end %>
+			    </table>
+			</div>
+			<%end%>
+			<div style="text-align:center"><%= will_paginate @bbs_users %></div>
+			<br />
+<div id="div_create">
+	<form action="/bbs_user/create" method="post" onsubmit="return checkuser();">
+		用户名<input type="text" name="bbsname" id="bbsname" size="50px">&nbsp;&nbsp;&nbsp;&nbsp;注：可以同时输入多个用户名  请用 "," 隔开. (默认密码为111111)
+		省份<select id="city" name="city" onchange="new Ajax.Updater('scity', '/bbs_user/select_city', {asynchronous:true, evalScripts:true, parameters:'cityid='+this.value})">
+		<option value="0">请选择</option>
+		<%@cities.each do |c|%>
+				<option value="<%=c.TAGID%>" ><%=c.TAGNAME%></option>
+		<%end%>
+		</select>
+		市区<span id="scity">
+			<select id="areas" name="areas">
+				<option value="0">请选择</option>
+			</select>
+		</span>
+		&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="添加">
+	</form>
+</div>

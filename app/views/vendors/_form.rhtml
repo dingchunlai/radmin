@@ -1,0 +1,147 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="label required">经销商全称</td>
+    <td><%= f.text_field :company_name, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label required">中文名称</td>
+    <td><%= f.text_field :name_zh, :size => 60 -%>
+      <% if has_role?("产品组长") %>
+        <%= f.check_box :is_cooperation %> 是否合作
+        <%= f.check_box :is_recommend %> 是否推荐
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">英文名称</td>
+    <td><%= f.text_field :name_en -%></td>
+  </tr>
+  <tr>
+    <td class="label">永久链接</td>
+    <td><%= f.text_field :permalink -%></td>
+  </tr>
+  <tr>
+    <td class="label">官方网站</td>
+    <td><%= f.text_field :website -%></td>
+  </tr>
+  <tr>
+    <td class="label">二级域名</td>
+    <td><%= f.text_field :subdomain -%></td>
+  </tr>
+  <tr>
+    <td class="label required">营业时间</td>
+    <td><%= f.text_field :open_time -%></td>
+  </tr>
+  <tr>
+    <td class="label required">商家地址</td>
+    <td><%= f.text_field :address, :size => 60 -%></td>
+  </tr>
+  <tr>
+    <td class="label">所在省市</td>
+    <td><%= f.text_field :province, :size => "10" -%> <%= f.text_field :city, :size => "10" -%></td>
+  </tr>
+  <tr>
+    <td class="label">邮政编码</td>
+    <td><%= f.text_field :zip_code, :size => 10 -%></td>
+  </tr>
+  <tr>
+    <td class="label required">联&nbsp;系&nbsp;人</td>
+    <td><%= f.text_field :contact -%></td>
+  </tr>
+  <tr>
+    <td class="label required">电话号码</td>
+    <td><%= f.text_field :telephone -%></td>
+  </tr>
+  <tr>
+    <td class="label">传真号码</td>
+    <td><%= f.text_field :fax -%></td>
+  </tr>
+  <tr>
+    <td class="label">400电话</td>
+    <td><%= f.text_field :service_telephone -%></td>
+  </tr>
+  <tr>
+    <td class="label">电子邮件</td>
+    <td><%= f.text_field :email -%></td>
+  </tr>
+  <tr>
+    <td class="label">店铺等级</td>
+    <td><%= f.select "class_index", (0..10).collect {|n| [class_index_string(n), n]} -%></td>
+  </tr>
+  <tr>
+    <td class="label">商户诚信度</td>
+    <td><%= f.text_field :price_faith -%></td>
+  </tr>	<tr>
+    <td class="label">品牌知名度</td>
+    <td><%= f.text_field :brand_awareness -%></td>
+  </tr>	<tr>
+    <td class="label">产品数量</td>
+    <td><%= f.text_field :products_count -%></td>
+  </tr>
+  <tr>
+    <td class="label">所属市场</td>
+    <td><%= f.select "market_id", ProductMarket.find(:all).collect {|m| [m.name_zh, m.id]}, {:include_blank => true}, (@vendor.is_independent ? {:disabled => true} : {:disabled => false}) -%>
+      <%= f.check_box :is_independent, {:onClick => "document.forms['vendors_form'].vendor_market_id.disabled = this.checked;"} -%>是否独立</td>
+  </tr>
+
+  <tr>
+    <td class="label">选择LOGO</td>
+    <td><%= file_field 'image', :uploaded_data %></td>
+  </tr>
+  <tr>
+    <td class="label required">所属类别</td>
+    <td>
+      <ul class="category_list">
+        <% ProductCategory.first_class.each do |category| -%>
+          <li><strong><%= category.name_zh -%>：</strong>
+            <% category.valid_children.each do |c| -%>
+              <%= check_box_tag "vendor[category_ids][]", c.id, @vendor.categories.include?(c) %>
+              <%= c.name_zh -%>
+            <% end -%>
+          </li>
+        <% end -%>
+      </ul>
+    </td>
+  </tr>
+  <% if @vendor.categories.size > 0 && @controller.action_name == "edit" %>
+    <tr>
+      <td class="label required">经营品牌</td>
+      <td>
+        <ul class="brand_list">
+          <% @vendor.categories.each do |category| -%>
+            <li><strong><%= category.name_zh -%>：</strong>
+              <% category.brands.each do |b| -%>
+                <%= check_box_tag "vendor[brand_ids][]", b.id, @vendor.brands.include?(b) %>
+                <%= b.name_zh -%>
+              <% end -%>
+            </li>
+          <% end -%>
+        </ul>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td class="label">商家简介</td>
+    <td><%= f.text_area :description, :class => "mceEditor" -%></td>
+  </tr>
+  <tr>
+    <td class="label">最新消息</td>
+    <td><%= f.text_area :latest_news, :rows => 5, :cols => 90 -%></td>
+  </tr>
+  <tr>
+    <td class="label">推荐理由</td>
+    <td><%= f.text_area :selected_reason, :rows => 5, :cols => 90 -%></td>
+  </tr>
+  <tr>
+    <td class="label">购买方式</td>
+    <td><%= f.text_area :purchase_method, :rows => 5, :cols => 90 -%></td>
+  </tr>
+  <tr>
+    <td class="label">售后方式</td>
+    <td><%= f.text_area :sale_method, :rows => 5, :cols => 90 -%></td>
+  </tr>
+  <tr>
+    <td class="label">&nbsp;</td>
+    <td><%= submit_tag(controller.action_name == "new" ? "创建商家" : "更新商家") -%></td>
+  </tr>
+</table>

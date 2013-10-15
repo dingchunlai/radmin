@@ -1,0 +1,99 @@
+<div class="user_right">
+
+  <div id="widebar">
+    <div id="nav_bottom"></div>
+    <div id="widebar_content">
+      <div id="userprofile">
+        <div class="top">
+          <div class="profile_name">我的和家 - 施工图片</div>
+        </div>
+        <div style="padding:5px; padding-left: 30px; color:#808080"><%if flash[:success]%><%= flash[:success] %><%else%>在这里您可以添加和维护施工图片信息。<%end%></div>
+      </div>
+    </div>
+    <div class="mainbox">
+      <div class="same_cha">
+        <ul>
+          <li class="line"></li>
+          <li id="s1" class="menu_on"><a href="/decos/photos">图片列表</a></li>
+          <li class="line"></li>
+          <li id="s1" class="menu_off"><a href="/decos/photos/new">上传图片</a></li>
+          <li class="line"></li>
+        </ul>
+      </div>
+      <form action="/decos/photos/index" method="post" id="fmid">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <% @photos.each do |photo| %>
+            <tr>
+              <td><input type='checkbox' name='photo_id[]' value='<%=photo.id%>'/><%= photo.id %></td>
+              <td><%= image_tag(photo.image.url(:thumb), :alt => photo.title) %></td>
+              <td><%=h photo.title %></td>
+              <td><%=h photo.summary %></td>
+              <td><%=h photo.created_at.strftime("%Y-%m-%d") %></td>
+              <td>
+                <%= link_to "查看", deco_photo_path(photo) %>
+                <%= link_to "编辑", edit_deco_photo_path(photo) %>
+                <a href="/decos/photos/destroy/<%=photo.id%>">删除</a>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr><td><input type='checkbox' id='all_check_id' onclick='all_check();'/>全选&nbsp;&nbsp;
+          <input type="button" value="批量删除" onclick='deletephotos();'/>&nbsp;&nbsp;</td></tr>
+        </table>
+        <%= will_paginate @photos %>
+
+    </div>
+  </div>
+
+
+</div>
+<script type="text/javascript">
+  function all_check(){
+    if(document.getElementById('all_check_id').checked == true)
+      check(1);
+    else
+      check(0);
+  }
+  function check(num){
+    var chs = document.getElementsByName("photo_id[]");
+
+    if(chs.length > 0){
+      for(var i=0;i<chs.length;i++){
+        var ch = chs[i];
+        if(num == '1')
+          ch.checked = true;
+        else
+          ch.checked = false;
+      }
+    }
+  }
+
+  function checkselected(){
+    var chs = document.getElementsByName("photo_id[]");
+    if(chs.length > 0){
+      var count = 0;
+      for(var i=0;i<chs.length;i++){
+        if(chs[i].checked == true)
+          count++;
+      }
+    }else{
+      return false;
+    }
+    if(count == 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  function deletephotos(){
+    if (!checkselected()){
+      alert('请选择施工图片');
+      return false;
+    }
+    if(window.confirm('确定删除吗？')){
+      document.getElementById('fmid').action = '/decos/photos_destory';
+      document.getElementById('fmid').submit();
+    }
+  }
+</script>

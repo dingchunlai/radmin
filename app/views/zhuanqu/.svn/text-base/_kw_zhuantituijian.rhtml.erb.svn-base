@@ -1,0 +1,93 @@
+<hr style="margin-bottom:12px;" />
+
+<div class="formouter">
+            <div class="formleft">专题推荐标题1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:80px;">
+            <div class="formleft">专题推荐图片1：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.zt_image_url1) ? @zq.zt_image_url1 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="zt_image_url1" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">专题推荐链接1：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url1",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题推荐标题2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:80px;">
+            <div class="formleft">专题推荐图片2：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.zt_image_url2) ? @zq.zt_image_url2 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="zt_image_url2" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">专题推荐链接2：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url2",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题推荐标题3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:80px;">
+            <div class="formleft">专题推荐图片3：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.zt_image_url3) ? @zq.zt_image_url3 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="zt_image_url3" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">专题推荐链接3：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url3",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+
+<div class="formouter">
+            <div class="formleft">专题推荐标题4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_title4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter" style="height:80px;">
+            <div class="formleft">专题推荐图片4：</div>
+            <div class="formcenter">
+                <img src="<%= pp(@zq.zt_image_url4) ? @zq.zt_image_url4 : "http://member.51hejia.com/images/nil.gif"%>" width="110" height="80" />
+                <input type="file" name="zt_image_url4" size="30" />
+            </div>
+            <div class="formright"></div>
+</div>
+<div class="formouter">
+            <div class="formleft">专题推荐链接4：</div>
+            <div class="formcenter">
+                <%=text_field("zq","zt_url4",{:size=>60})%>
+            </div>
+            <div class="formright"></div>
+</div>

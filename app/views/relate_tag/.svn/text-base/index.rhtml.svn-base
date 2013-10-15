@@ -1,0 +1,52 @@
+<script>
+	$(document).ready(function(){
+		$("#select_all").click(function(){
+			$(".check_box").attr("checked",$(this).attr("checked"))
+		});
+	});
+</script>
+<style type="text/css">
+	li{list-style:none;}
+	.tag_ul li{padding:5px;border:1px solid #7EBF4F;margin:5px;}
+	.tag_ul table{border-top:1px solid #7EBF4F;border-left:1px solid #7EBF4F;margin-bottom:10px;}
+	.tag_ul td{border-bottom:1px solid #7EBF4F;border-right:1px solid #7EBF4F;padding:0 5px;}
+	.tag_ul em{color:red;}
+</style>
+<ul class="tag_ul">
+	<li>
+		<% form_for :relate_tag , @relate_tag ,:url => {:action => "create"}  do |f| %>
+		<em>添加对应关系</em>:文章标签:<%= f.text_field :article_tag %>
+		日记标签:<%= f.text_field :diary_tag %>
+		<%= submit_tag "添加" %>
+		<% end %>
+	</li>
+	<li>
+		<% form_tag  "/relate_tag" ,:method => :get do %>
+			<em>搜索对应关系:</em>文章标签:<%= text_field_tag :article_tag ,@article_tag %>
+			日记标签:<%= text_field_tag :diary_tag ,@diary_tag %>
+			<%= submit_tag "搜索"%>
+		<% end %>
+	</li>
+	<li>
+		<em>标签对应列表</em>
+		<% form_tag "/relate_tag/delete" ,:mothod => "post" do %>
+			<table class="tag_table">
+				<tr>
+					<td><input type="checkbox" id="select_all"></td>
+					<td width="300">文章标签</td>
+					<td>日记标签</td>	
+				</tr>
+				<% @tags.each do |tag| %>
+					<tr>
+						<td><input type="checkbox" name="tag_ids[]" class="check_box" value="<%= tag.id %>"></td>
+						<td><%= tag.article_tag %></td>
+						<td><%= tag.diary_tag %></td>
+					</tr>
+				<% end %>
+			</table>
+			<%= submit_tag "删除" , :confirm => '确定删除'%>
+			<%= will_paginate @tags, :previous_label => "上一页", :next_label => "下一页"%>
+		<% end %>
+	</li>
+	
+</ul>

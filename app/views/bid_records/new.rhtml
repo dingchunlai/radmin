@@ -1,0 +1,30 @@
+<div id="div_main">
+  <% form_for :bid_record, @bid_record, :url => {:action => "create"} do |f| %>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      新建竞标
+    </div>
+    <div>
+      <% if flash[:error_message] %>
+        <p>
+          <%= flash[:error_message] %>
+        </p>
+      <% end %>
+      <p>
+        <label>选择月份</label>
+        <% options = (1..12).map{|i| [ "#{i}月",i ]} %>
+        <%= f.select "bid_month", options %>
+      </p>
+      <p>
+        <label>截至日期</label>
+        <%= text_field_tag "expired_date", Date.today, :onfocus => "return SelectDate(this,'yyyy-MM-dd');" %>
+      </p>
+      <p>
+        <label>截至时间</label>
+        <%= text_field_tag "info_time", "" %>
+      </p>
+      <p>
+        <%= submit_tag "确认" %>
+      </p>
+    </div>
+  <% end %>
+</div>

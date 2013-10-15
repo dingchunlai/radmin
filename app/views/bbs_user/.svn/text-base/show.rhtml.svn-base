@@ -1,0 +1,21 @@
+<%if @show_bbs_users && @show_bbs_users.size>0 %>
+<div id="div_main" align="center">
+    <table id="datalist" style="width:100%" >
+    <tr style="background-color:#FFE6CC">
+    		<th>编号</th>
+            <th>BBS登录名</th>
+            <th>后台用户名</th>
+            <!--<th>操作</th>-->
+    </tr>
+	    <%for bbs_user in @show_bbs_users%>
+	    <tr align="center" style="background-color:#CCCCCC">
+	      <td><%=bbs_user.USERBBSID%></td>
+	      <td><%=bbs_user.USERNAME%></td>
+	      <td><%=bbs_user.user.rname %></td>
+	      <!--<td><%=link_to "删除" %></td>-->
+	    </tr>
+	    <%end %>
+    </table>
+</div>
+<%end%>
+

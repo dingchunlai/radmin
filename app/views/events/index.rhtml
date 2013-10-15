@@ -1,0 +1,27 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>编号</th>
+    <th>事件名</th>
+    <th>分数</th>
+    <th>永久链接</th>
+    <th>操作</th>
+  </tr>
+  
+<% for event in @events %>
+  <tr>
+    <td><%= event.id %></td>
+    <td><%= event.name %></td>
+    <td><%= event.point %></td>
+    <td><%= event.permalink %></td>
+    <td><%= link_to '显示', :action => 'show', :id => event %>
+    <%= link_to '编辑', :action => 'edit', :id => event %>
+    <!--<%= link_to '删除', { :action => 'destroy', :id => event }, :confirm => '你确定吗?', :method => :post %>--></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @events %>
+
+<br />
+
+<%= link_to '新建事件', :action => 'new' %>

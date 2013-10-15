@@ -1,0 +1,46 @@
+<script type="text/javascript">
+window.onload = function(){
+  div_main_height = 400;
+  ge("div_main").style.height = div_main_height;
+  ge("L_wrapper").style.height = div_main_height+26;
+}
+</script>
+<style type="text/css">
+a {
+    color: #2853FF;
+    text-decoration: none;
+}
+a:hover {
+    color: #FD352B;
+    text-decoration: none;
+}
+.formouter{
+    width:100%; clear:left; padding-bottom:10px;
+}
+.formleft{
+  width:100px; float:left;
+  font-size:12pt;
+  letter-spacing: 2px;
+  color: #3465D6; padding-top: 4px;
+}
+.formcenter{
+    width:180px; float:left;
+}
+.formcenter input{
+    width:150px;
+}
+.formright{
+    float:left;font-size:14px;
+    letter-spacing: 1px;
+    color: #999999; padding-top: 4px;
+}
+</style>
+<div id="div_main" style="padding:10px;">
+
+<form action="new_save" name="form1" target="hideiframe" method="post" onsubmit="return submitForm(this);">
+    <p><a href="/dingdan/vendor_list" style="font-size:20pt">商铺管理</a></p>
+    <p><a href="/dingdan/list" style="font-size:20pt">订购单管理</a></p>
+    <p><a href="/hejia/list" style="font-size:20pt">核价单管理</a></p>
+    <%if isrole("管理员") || isrole("产品管理")%><p><a href="/vendors" style="font-size:20pt">产品管理</a></p><%end%>
+</form>
+</div>

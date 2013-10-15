@@ -1,0 +1,41 @@
+<table style="margin:0 auto;">
+  <tr>
+    <td colspan="5" style="line-height:26px;background-color:#EEF9EB;font-size:15px;font-weight:bold;">其他</td>
+  </tr>
+  <tr>
+    <td>精华</td>
+    <% num = HejiaCase.count :conditions => "ISGOOD = 1 and STATUS != -100" %>
+    <td><%= link_to "精华", "/admin_case/case_preview?jinghua=true", :target => "_blank" %>
+    (<strong <%= "style=\"color:red;\"" if num >= 24 %>><%= num %></strong>)</td>
+  </tr>
+  <tr>
+    <td>立邦</td>
+    <% num = HejiaCase.count :conditions => "STATUS = 1000" %>
+    <td><%= link_to "立邦", "/admin_case/case_preview?nippon=true", :target => "_blank" %>
+    (<strong <%= "style=\"color:red;\"" if num >= 24 %>><%= num %></strong>)</td>
+  </tr>
+  <% @case_tags.each do |t| %>
+    <tr>
+      <td colspan="5" style="line-height:26px;background-color:#EEF9EB;font-size:15px;font-weight:bold;"><%= t.TAGNAME %>-<%= t.TAGURL %></td>
+    </tr>
+    <% children = Tag.find(:all, :conditions => "TAGFATHERID = #{t.TAGID} and TAGESTATE != -1") %>
+    <% children.in_groups_of(5, false) do |g| %>
+      <tr>
+        <% g.each do |item| %>
+          <td>
+            <%= item.TAGID %>.
+            <%= link_to item.TAGNAME, "/admin_case/case_preview/#{item.TAGID}", :target => "_blank" %>
+            <%
+            entity_ids = HejiaTagEntityLink.query_entity_id_by_tag_id_linktype(item.TAGID, "case")
+            if entity_ids.empty?
+              num = 0
+            else
+              num = HejiaCase.count :conditions => "ID in (#{entity_ids.join(",")}) and STATUS != -100"
+            end %>
+            (<strong <%= "style=\"color:red;\"" if num >= 24 %>><%= num %></strong>)
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

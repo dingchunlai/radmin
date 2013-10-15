@@ -1,0 +1,22 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">系列名称</td>
+		<td><%= @serie.name -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属品牌</td>
+		<td><%= @serie.brand.name_zh -%></td>
+	</tr>
+	<tr>
+		<td class="label">所属分类</td>
+		<td><%= @serie.category.name_zh if @serie.category -%></td>
+	</tr>
+	<tr>
+		<td class="label">系列描述</td>
+		<td><%= @serie.description -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td><%= link_to "编辑产品", edit_serie_path(@serie) %></td>
+	</tr>
+</table>

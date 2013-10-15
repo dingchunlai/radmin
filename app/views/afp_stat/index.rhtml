@@ -1,0 +1,116 @@
+<script type="text/javascript" src="http://js.51hejia.com/js/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/WebCalendar_utf.js" ></script>
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+    font-size:12px;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]);
+  }
+</style>
+<form action="" method="get" id="qfrm">
+广告ID：<input type=text name="ad_id" value="<%= params[:ad_id] %>" id="ad_id"/>
+开始日期：<input type=text name="begintime"  onclick="new Calendar().show(this);" value="<%= params[:begintime] %>" id="begintime" />
+结束日期：<input type=text name="endtime"  onclick="new Calendar().show(this);" value="<%= params[:endtime] %>" id="endtime" />
+<input type="button" value="查询总数" id="qtotal" style="background-color: #456890; color: yellow; border:1px solid blue;" /><input type="submit" value="查询详细" />
+</form>
+<div id="total_cnt" style="border:1px dashed red; padding: 5px; color: blue; display: none;"></div>
+<table width="100%" align="center" cellspacing="1" cellpadding="0" bgcolor="#336699" border="1">
+<tr bgcolor="yellow" style="color: #333333">
+  <th>广告ID</th>
+  <th>点击数</th>
+  <th>日期</th>
+</tr>
+<% @afp_stats.each do |stat| %>
+<tr bgcolor="white">
+  <td>
+    <%= stat.ad_id %>
+  </td>
+  <td>
+    <%= stat.hits %>
+  </td>
+  <td>
+    <%= stat.stat_date.to_s(:db) %>
+  </td>
+</tr>
+<% end %>
+</table>
+<% unless @afp_stats.empty? %>
+    <%= will_paginate @afp_stats %>
+<% end %>
+<script type="text/javascript">
+     $(function() {
+          $("#qfrm").submit(function(){
+            if ($("#ad_id").val() == "") { alert('请输入广告ID'); return false; }
+            if ($("#begintime").val() != '') {
+                if ($("#endtime").val() == '') {
+                    alert('请选择结束日期');
+                    return false;
+                } else {
+                    if (Date.parse($("#endtime").val()) < Date.parse($("#begintime").val())) {
+                        alert('结束日期不能小于起始日期');
+                        return false;
+                    }
+                }
+            }
+
+          if ($("#endtime").val() != '') {
+              if ($("#begintime").val() == '') {
+                  alert('请选择开始日期');
+                  return false;
+              } else {
+                  if (Date.parse($("#endtime").val()) < Date.parse($("#begintime").val())) {
+                      alert('结束日期不能小于起始日期');
+                      return false;
+                  }
+              }
+          }
+          });
+
+         $("#qtotal").click(function(){
+            $("#total_cnt").css("display", 'none');
+            if ($("#ad_id").val() == "") { alert('请输入广告ID'); return; }
+
+            if ($("#begintime").val() != '') {
+                if ($("#endtime").val() == '') {
+                    alert('请选择结束日期');
+                    return;
+                } else {
+                    if (Date.parse($("#endtime").val()) < Date.parse($("#begintime").val())) {
+                        alert('结束日期不能小于起始日期');
+                        return;
+                    }
+                }
+            }
+
+          if ($("#endtime").val() != '') {
+              if ($("#begintime").val() == '') {
+                  alert('请选择开始日期');
+                  return;
+              } else {
+                  if (Date.parse($("#endtime").val()) < Date.parse($("#begintime").val())) {
+                      alert('结束日期不能小于起始日期');
+                      return;
+                  }
+              }
+          }
+
+             $.get("/afp_stat/ad_total_hits", { ad_id : $("#ad_id").val(), begintime: $("#begintime").val(), endtime: $("#endtime").val() }, function(data) {
+                 $("#total_cnt").html("该广告总点击数:" + data + "次.");
+                 $("#total_cnt").css('display', '');
+             }, "html");
+
+          
+         });
+      });
+</script>

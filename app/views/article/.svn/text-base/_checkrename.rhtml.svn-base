@@ -1,0 +1,14 @@
+<% if @as && @as.size > 0 -%>
+	<input type="hidden" id="isrepeat" value="1">
+	<font color=red>您的文章和以前文章名字有重复</font>
+<%else -%>
+	<input type="hidden" id="isrepeat" value="0">
+<% end -%>
+<script language="javascript">
+	if(document.getElementById('isrepeat').value == '0')
+	{
+		if(document.getElementById('fmid')){
+			document.getElementById('fmid').submit();
+		}
+	}
+</script>

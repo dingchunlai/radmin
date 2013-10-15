@@ -1,0 +1,1 @@
+<%= link_to query_designer_name_by_id(session[:designer_id]), { :action => "show_designer", :designer_id => session[:designer_id]} %>(<%= query_case_num_by_designer_id(session[:designer_id]) %>)

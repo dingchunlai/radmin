@@ -1,0 +1,8 @@
+<form action="/review/commont_editor_score" method=post>
+	<input type="hidden" name="commont_id" value="<%=@commont_id%>">
+	<p align=center>修改评论基础分</p>
+	<p align=center>真实性:<input type="text" name="real_score" value="<%=@score.real_score%>"><%if @real && @real.id%>(<%=@real.start_num%>-<%=@real.end_num%>)<%end%></p>
+	<!--<p align=center>重要度:<input type="text" name="important_score" value="<%=@score.important_score%>"><%if @important && @important.id%>(<%=@important.start_num%>-<%=@important.end_num%><%end%>)切记，一般为0</p>-->
+	<p align=center>编辑评:<input type="text" name="editor_score" value="<%=@score.editor_score%>"><%if @editor && @editor.id%>(<%=@editor.start_num%>-<%=@editor.end_num%><%end%>)</p>
+	<p align=center><input type="submit" value="确定"></p>
+</form>

@@ -1,0 +1,6 @@
+<select id="brand" name="brand">
+	<option value="0">请选择</option>
+	<% for u in @brandselectlist %>
+		<option value="<%=u.id%>"><%=u.name_zh%></option>
+	<% end %>
+</select>

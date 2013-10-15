@@ -1,0 +1,6 @@
+<select name="district">
+<option value="0">选择</option>
+<%@areas.sort.each do |a|%>
+	<option value="<%=a[0]%>"><%=a[1]%></option>
+<%end%>
+</select>

@@ -1,0 +1,20 @@
+<%= render :partial => 'search_designer_case' %>
+<% unless @cs.blank? %>
+  <div class="paginate">
+  <%= link_to '&laquo; 上一页', { :page => @pages.current.previous.to_i, :n => @case_name, :m => @model, :p => @cost, :s => @style, :c => @color, :u => @use, :w => @way } if @pages.current.previous %>
+  <%= pagination_links(@pages, :params => { :n => @case_name, :m => @model, :p => @cost, :s => @style, :c => @color, :u => @use, :w => @way }, :window_size => 14) %>
+  <%= link_to '下一页 &raquo;', { :page => @pages.current.next.to_i, :n => @case_name, :m => @model, :p => @cost, :s => @style, :c => @color, :u => @use, :w => @way } if @pages.current.next %>
+  </div>
+<% end %>
+<br> 
+<div id="cases_list">
+<%= render :partial => 'cases_list' %>
+</div>
+<br>
+<% unless @cs.blank? %>
+  <div class="paginate">
+  <%= link_to '&laquo; 上一页', { :page => @pages.current.previous.to_i, :n => @case_name, :m => @model, :p => @cost, :s => @style, :c => @color, :u => @use, :w => @way } if @pages.current.previous %>
+  <%= pagination_links(@pages, :params => { :n => @case_name, :m => @model, :p => @cost, :s => @style, :c => @color, :u => @use, :w => @way }, :window_size => 14) %>
+  <%= link_to '下一页 &raquo;', { :page => @pages.current.next.to_i, :n => @case_name, :m => @model, :p => @cost, :s => @style, :c => @color, :u => @use, :w => @way } if @pages.current.next %>
+  </div>
+<% end %>

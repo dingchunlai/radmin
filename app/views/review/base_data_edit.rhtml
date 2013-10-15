@@ -1,0 +1,132 @@
+<script>
+	function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+	function check_name(){
+	    if (trim(document.getElementById('username').value)!=''){
+	        if (StrLenthByByte(document.getElementById('username').value)>0&&document.getElementById('username').value!='<%=@data.name%>'){
+	        	hideiframe_reg.location.href='/review/check_name?username='+trim(document.getElementById('username').value);
+	        }else{
+	            namecheck.innerHTML='名字不能为空';
+	        }
+	    }else{
+	    	namecheck.innerHTML='名字不能为空';
+	    	document.getElementById('username').focus();
+	    }
+	}
+	function check_keyword(){
+	    if (trim(document.getElementById('keyword_check').value)!=''){
+	    	document.getElementById('checkkeyword').innerHTML='填写正确';
+	    }else{
+	    	document.getElementById('checkkeyword').innerHTML='关键字不能为空';
+	    }
+	}
+	function checkinfo(){
+		if (trim(document.getElementById('username').value)!=''){
+	        namecheck.innerHTML='填写正确';
+	    }else{
+	    	namecheck.innerHTML='名字不能为空';
+	    	document.getElementById('username').focus();
+	    	return false;
+	    }
+	    if (trim(document.getElementById('keyword_check').value)!=''){
+	    	document.getElementById('checkkeyword').innerHTML='填写正确';
+	    }else{
+	    	document.getElementById('checkkeyword').innerHTML='关键字不能为空';
+	    	return false;
+	    }
+	    if(document.getElementById('k1').checked){
+			if (trim(document.getElementById('dingzhi').value)!=''){
+				document.getElementById('dingzhicheck').innerHTML='填写正确';
+			}else{
+				document.getElementById('dingzhicheck').innerHTML='定值不能为空';
+				return false;
+			}
+		}
+		if(document.getElementById('k2').checked){
+			if (trim(document.getElementById('start_num').value)!=''){
+				document.getElementById('startcheck').innerHTML='填写正确';
+			}else{
+				document.getElementById('startcheck').innerHTML='开始不能为空';
+				return false;
+			}
+			if (trim(document.getElementById('end_num').value)!=''){
+				document.getElementById('endcheck').innerHTML='填写正确';
+			}else{
+				document.getElementById('endcheck').innerHTML='结束不能为空';
+				return false;
+			}
+			
+		}
+		if(document.getElementById('k3').checked){
+			if (trim(document.getElementById('dingzhi').value)!=''){
+				document.getElementById('dingzhicheck').innerHTML='填写正确';
+			}else{
+				document.getElementById('dingzhicheck').innerHTML='定值不能为空';
+				return false;
+			}
+			if (trim(document.getElementById('start_num').value)!=''){
+				document.getElementById('startcheck').innerHTML='填写正确';
+			}else{
+				document.getElementById('startcheck').innerHTML='开始不能为空';
+				return false;
+			}
+			if (trim(document.getElementById('end_num').value)!=''){
+				document.getElementById('endcheck').innerHTML='填写正确';
+			}else{
+				document.getElementById('endcheck').innerHTML='结束不能为空';
+				return false;
+			}
+		}
+		return true;
+	}
+</script>
+<%if @message == '1'%>
+<p align=center><font color=red>录入成功</font></p>
+<%elsif @message == '2'%>
+<p align=center><font color=red>修改成功</font></p>
+<%elsif @message == '3'%>
+<p align=center><font color=red>名字已存在，请换一个名字!</font></p>
+<%end%>
+<form action="/review/base_data_edit" method=post onSubmit="return checkinfo();">
+	<input type="hidden" name="id" value="<%=@data.id%>">
+	<table align=center>
+		<tr>
+			<td>名字:</td>
+			<td><input id="username" type="text" name="name" value="<%=@data.name%>" onblur="check_name();"><span id="namecheck"></span></td>
+		</tr>
+		<tr>
+			<td>关键字:</td>
+			<td><input id="keyword_check" type="text" name="keyword" value="<%=@data.keyword%>" onblur="check_keyword();"><span id="checkkeyword"></span></td>
+		</tr>
+		<tr>
+			<td>类型:</td>
+			<td><input id="k1" type="radio" name="keytype" value="1" <%if @data.keytype == 1%>checked<%end%>>定值
+			<input id="k2" type="radio" name="keytype" value="2" <%if @data.keytype == 2%>checked<%end%>>范围
+			<input id="k3" type="radio" name="keytype" value="3" <%if @data.keytype == 3%>checked<%end%>>时间</td>
+		</tr>
+		<tr>
+			<td>开始:</td>
+			<td><input id="start_num" type="text" name="start_num" value="<%=@data.start_num%>"><span id="startcheck"></span></td>
+		</tr>
+		<tr>
+			<td>结束:</td>
+			<td><input id="end_num" type="text" name="end_num" value="<%=@data.end_num%>"><span id="endcheck"></span></td>
+		</tr>
+		<tr>
+			<td>定值:</td>
+			<td><input id="dingzhi" type="text" name="value" value="<%=@data.value%>"><span id="dingzhicheck"></span></td>
+		</tr>
+		<tr>
+			<td>定值2:</td>
+			<td><input id="dingzhi" type="text" name="value2" value="<%=@data.value2%>"><span id="dingzhicheck2"></span></td>
+		</tr>
+		<tr>
+			<td>定值3:</td>
+			<td><input id="dingzhi" type="text" name="value3" value="<%=@data.value3%>"><span id="dingzhicheck3"></span></td>
+		</tr>					
+		<tr>
+			<td></td>
+			<td><input type="submit" value="确定"></td>
+		</tr>									
+	</table>
+</form>
+<iframe name="hideiframe_reg" width="0" height="0"></iframe>

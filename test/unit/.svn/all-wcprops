@@ -1,0 +1,191 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit
+END
+ruser_huser_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/ruser_huser_test.rb
+END
+applicant_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/applicant_test.rb
+END
+sent_mail_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/sent_mail_test.rb
+END
+stat_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/stat_test.rb
+END
+ask_zhidao_topic_post_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/ask_zhidao_topic_post_test.rb
+END
+inner_link_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/inner_link_test.rb
+END
+ruser_channel_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/ruser_channel_test.rb
+END
+siemens_shop_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/siemens_shop_test.rb
+END
+pricing_bill_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/pricing_bill_test.rb
+END
+column_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/column_test.rb
+END
+comment_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/comment_test.rb
+END
+zhuanqu_sort_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/zhuanqu_sort_test.rb
+END
+stat_data_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/stat_data_test.rb
+END
+form_up_file_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/form_up_file_test.rb
+END
+user_login_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/user_login_test.rb
+END
+member_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/member_test.rb
+END
+ads_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/ads_test.rb
+END
+topic_stat_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/topic_stat_test.rb
+END
+fdata_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/fdata_test.rb
+END
+pinlei_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/pinlei_test.rb
+END
+community_user_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/community_user_test.rb
+END
+ad_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/ad_test.rb
+END
+zhuanqu_cw_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/zhuanqu_cw_test.rb
+END
+zhuanqu_dantu_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/zhuanqu_dantu_test.rb
+END
+wenba_tag_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/wenba_tag_test.rb
+END
+admin_log_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/admin_log_test.rb
+END
+pricing_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/pricing_test.rb
+END
+excelcase_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/excelcase_test.rb
+END
+zhuanqu_kw_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/zhuanqu_kw_test.rb
+END
+photo_photo_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/photo_photo_test.rb
+END
+url_test.rb
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/99/51hejia/repos/radmin/release/test/unit/url_test.rb
+END

@@ -1,0 +1,246 @@
+<style type="text/css">
+  table {
+    border:1px solid #CCC;
+    border-collapse:collapse ;
+    width:100%;
+  }
+  th, td {
+    border:1px solid #DDD;
+    border-left:0;
+    border-right:0;
+    padding:.3em .5em;
+  }
+
+  #docom tr{
+    background-color:expression('#F0F0F0,#DDD'.split(',')[rowIndex%2]); 
+  }
+</style>
+<form action="/decocompany/index" method=get id="fmid">
+  <table>
+    <tr>
+      <td>
+			公司编号(ID):<input type="text" name="company_id" value="<%=@company_id%>">
+      </td>
+      <td>
+			公司名:<input type="text" name="companyname" value="<%=@companyname%>"> 
+      </td>
+      <td>
+			合作：<select name="is_cooperation">
+          <option value="">请选择</option>
+          <option value="1" <%if @is_cooperation == '1'%>selected<%end%>>合作</option>
+          <option value="0" <%if @is_cooperation == '0'%>selected<%end%>>非合作</option>
+          <option value="-1" <%if @is_cooperation == '-1'%>selected<%end%>>意向</option>
+        </select>
+      </td>
+      <td>
+			评论:<select name="has_review">
+          <option value="">请选择</option>
+          <option value="1" <%if @has_review == '1'%>selected<%end%>>有评论</option>
+          <option value="2" <%if @has_review == '2'%>selected<%end%>>无评论</option>
+        </select>
+      </td>
+      <td>
+			地区:<select name="city">
+          <option value="">请选择</option>
+          <% cities_for_query.each do |c|%>
+            <option value="<%=c[0]%>" <%if c[0].to_i == @city.to_i%>selected<%end%>><%=c[1]%></option>
+          <%end%>
+        </select>
+      </td>
+      <td>
+			状态:<select name="shangjia">
+          <option value="">请选择</option>
+          <option value="1" <%if @shangjia == '1'%>selected<%end%>>全部</option>
+          <option value="2" <%if @shangjia == '2'%>selected<%end%>>上架</option>
+          <option value="3" <%if @shangjia == '3'%>selected<%end%>>下架</option>
+          <option value="4" <%if @shangjia == '4'%>selected<%end%>>注册公司</option>
+        </select>
+      </td>
+      <td>
+        <input type="submit" value="搜索">
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <table id="docom">
+    <tr>
+      <th ><div id="zhuangyong"><input type="checkbox" id="quanxuan" name="quanxuan" onclick="check(1)"/></div><div id="tongyong" style="display:none;"><input id="quanxuan1" type="checkbox" name="quanxuan1" checked onclick="check(0)"/></div></th>
+      <th >编号</th>
+      <th >公司</th>
+      <th >简称</th>
+      <th >合作</th>
+      <th >地区</th>
+      <th >统计</th>
+      <th >操作</th>
+      <th >业务员</th>
+    </tr>
+    <%
+      sales_men = SalesMan.valid
+      @companys.each do |company|
+    %>
+      <tr >
+        <td><%= check_box_tag "company[selected_ids][]", company.id %></td>
+        <td><%=company.id%></td>
+        <td><%=company.name_zh%>&nbsp;<a href="/decocompany/update?companyid=<%=company.id%>" target="_blank">修改</a>
+        <%if company.state.to_s=='-99'%>&nbsp;<a href="#n" onclick="usecompany('<%=company.id%>')">上架</a><%elsif company.state.to_s=='-100'%>&nbsp;<a href="#n" onclick="usecompany('<%=company.id%>')">注册公司审核</a><%else%>&nbsp;<a href="#n" onclick="downcompany('<%=company.id%>')">下架</a><%end%>
+        <a href="/decocompany/edit_firm_info?companyid=<%=company.id%>" target="_blank">资料修改</a>
+        <a href="/decocompany/popedom_edit?companyid=<%=company.id%>" target="_blank">权限修改</a>
+        <%= link_to "地址管理", "/decocompany/contacts?company_id=#{company.id}", :target => '_balnk' %>
+        <%= link_to "预约合同管理", "/decocompany/applicant_contracts?company_id=#{company.id}", :target => '_balnk' %>
+        </td>
+        <th><%=company.name_abbr%></th>
+        <td>
+          <%if company.is_cooperation==1%>
+            是
+          <%elsif company.is_cooperation==0%>
+            否
+          <%elsif company.is_cooperation==-1%>
+            意向
+          <%end%>
+        </td>
+        <td><%=DecoFirm.getcity(company.city)%>-<%=DecoFirm.getarea(company.district)%></td>
+        <%comments_count = company.comments_count%>
+        <%casecount = DecoFirm.getcase(company.id)%>
+        <%designercount = DecoFirm.getdesigner(company.id)%>
+        <%photocount = DecoFirm.getphoto(company.id)%>
+        <%deco_firm_comments_counts = Remark.getcompanycomments(company.id)%>
+        <td>
+          <%if !comments_count.nil?&&comments_count.to_s!='0'%>日记(<%=comments_count%>)&nbsp;&nbsp;<%end%>
+          <%if !casecount.nil?&&casecount.to_s!='0'%>案例(<%=casecount%>)&nbsp;&nbsp;<%end%>
+          <%if !designercount.nil?&&designercount.to_s!='0'%>设计师(<%=designercount%>)&nbsp;&nbsp;<%end%>
+          <%if !photocount.nil?&&photocount.to_s!='0'%>施工图(<%=photocount%>)&nbsp;&nbsp;<%end%>
+          <%if !deco_firm_comments_counts.nil?&&deco_firm_comments_counts.to_s!='0'%>评论(<%=deco_firm_comments_counts%>)<%end%></td>
+        <td>
+          <a href="/company/linktofront?companyid=<%=company.id%>" target="_blank">维护后台</a>
+          &nbsp;
+          <a href="#n" onclick="deletecompany('<%=company.id%>')">删除</a>
+          &nbsp;
+          <a href="/decocompany/vedioindex?companyid=<%=company.id%>" target="_blank">视频</a>
+          &nbsp;
+          <a href="/decocompany/branches?firm_id=<%= company.id %>" target="_blank">分公司</a>
+        </td>
+        <td><%= select_tag "sales_man", options_for_select(sales_men.collect {|s| [s.name, s.id]}.unshift(['请选择','0']), (company.sales_man ? company.sales_man.id : '0').to_i), :onchange => "updateFirmSaleMan(#{company.id}, this.value)" %></td>
+      </tr>
+    <%end%>
+  </table>
+  <br/>
+  <table>
+    <tr>
+      <td align="left">
+        <a href="#n" onclick="delete_company_selected()">删除公司</a>
+      </td>
+    </tr>
+  </table>
+  <br/>
+
+  <table>
+    <tr>
+      <td align="right" style="font-size:16px;">
+				共<span style="color:red"> <%=@companys.total_entries %> </span>家公司
+      </td>
+      <td align="center" style="font-size:16px;">
+        <%= will_paginate @companys %>
+      </td>
+      <td>
+        <input type="submit" name="submit1" value="跳转"/><input type="text" name="page" size="4">页
+        <input type="hidden" id="cid" name="companyid">
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+</form>
+
+<script language="javascript">
+	
+	
+  function deletecompany(id){
+    if(window.confirm('确定下架该公司吗？')){
+      document.getElementById('cid').value = id;
+      document.getElementById('fmid').action = '/decocompany/delete';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function downcompany(id){
+    if(window.confirm('确定下架该公司吗？')){
+      document.getElementById('cid').value = id;
+      document.getElementById('fmid').action = '/decocompany/shdown';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function usecompany(id){
+    if(window.confirm('确定上架该公司吗？')){
+      document.getElementById('cid').value = id;
+      document.getElementById('fmid').action = '/decocompany/shupdate';
+      document.getElementById('fmid').submit();
+    }
+  }
+  function checkselected(){
+    var chs = document.getElementsByName("company[selected_ids][]");
+    if(chs.length > 0){
+      var count = 0;
+      for(var i=0;i<chs.length;i++){
+        if(chs[i].checked == true)
+          count++;
+      }
+    }else{
+      return false;
+    }
+    if(count == 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+	
+  function delete_company_selected(){
+    if(!checkselected()){
+      alert('请选择公司');
+      return false;
+    }
+    if(window.confirm('确定删除这些公司吗?')){
+      document.getElementById('fmid').action = '/decocompany/delete_all_company';
+      document.getElementById('fmid').submit();
+    }
+  }
+	
+  function check(num){
+    var chs = document.getElementsByName("company[selected_ids][]");
+		
+    if(chs.length > 0){
+      for(var i=0;i<chs.length;i++){
+        var ch = chs[i];
+        if(num == '1'){
+          ch.checked = true;
+          document.getElementById('quanxuan').checked = false;
+          document.getElementById('tongyong').style.display='block';
+          document.getElementById('zhuangyong').style.display='none';
+        }else{
+          ch.checked = false;
+          document.getElementById('quanxuan1').checked = true;
+          document.getElementById('zhuangyong').style.display='block';
+          document.getElementById('tongyong').style.display='none';
+        }
+      }
+    }
+  }
+
+  function updateFirmSaleMan(company_id, value){
+    if (value == 0 || value == "") {
+      alert('请选择业务员，选择后即可保存！');
+    } else {
+      $.ajax({
+          url: "/decocompany/change_firm_for_sales",
+          type: 'GET',
+          data: ({firm_id: company_id, sale_id: value}),
+          dataType: 'text',
+          success: function(data){
+            alert(data);
+          },
+          error: function(request){
+            alert(request.responseText);
+          }
+        });
+    }
+  }
+</script>

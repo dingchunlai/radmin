@@ -1,0 +1,51 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="vendors">
+  <tr>
+    <th>编号</th>
+    <th>名称</th>
+    <th>原品牌</th>
+    <th>分类</th>
+    <th>编辑评分</th>
+    <th>编辑关注度</th>
+    <th>网友关注度</th>
+    <th>品牌问吧关键字</th>
+    <th>分类问吧关键字</th>
+    <th>必看精彩专题ID</th>
+    <th>频道精华文章ID</th>
+    <th>行情导购文章ID</th>
+    <th>相关操作</th>
+  </tr>
+  <% @library_brand = @brand %>
+  <tr>
+    <td><%= @brand.id %></td>
+    <td><%= link_to @brand.name, library_brand_path(@brand) -%></td>
+    <td><%= link_to @brand.brand.name_zh, library_brands_path(:brand_id => @brand.brand.id) if @brand.brand %></td>
+    <td><%= link_to @brand.category.name_zh, library_brands_path(:category_id => @brand.category.id) if @brand.category %></td>
+    <td>
+      <%= in_place_editor_field :library_brand, :editor_point, {}, {:cancel_text => '取消', :save_text => '保存', :saving_text => "正在保存...", :external_control => "editor_point-#{@brand.id}"} %>
+    </td>
+    <td>
+      <%= in_place_editor_field :library_brand, :editor_view_count, {}, {:cancel_text => '取消', :save_text => '保存', :saving_text => "正在保存...", :external_control => "editor_view_count-#{@brand.id}"} %>
+    </td>
+    <td><%= @brand.view_count %></td>
+    <td><%= @brand.brand_question_query %></td>
+    <td><%= @brand.category_question_query %></td>
+    <td><%= @brand.brand_subject_id %></td>
+    <td><%= @brand.category_article_id %></td>
+    <td><%= @brand.shopping_article_id %></td>
+    <td>
+      <%= link_to "编辑", edit_library_brand_path(@brand) %>
+    </td>
+  </tr>
+  <tr>
+    <td>点评摘要：</td>
+    <td colspan="12"><%= @brand.comment %></td>
+  </tr>
+  <tr>
+    <td>厂商资料：</td>
+    <td colspan="12"><%= @brand.manufacturer %></td>
+  </tr>
+</table>
+
+<h3>旗下 <%= @brand.category.name_zh %> 产品 <span>(总数：<%= @products.total_entries %>)</span></h3>
+<%= render :partial => "shared/search" %>
+<%= render :partial => "shared/library_products" unless @products.empty? -%>

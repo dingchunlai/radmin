@@ -1,0 +1,44 @@
+<style type="text/css" media="screen">
+	#deco_ideas_list li{
+		margin:10px;
+		padding-bottom:10px;
+		border-bottom:1px dashed #ccc;
+	}
+	#deco_ideas_list li .info{
+		margin:10px;
+		
+	}
+	#deco_ideas_list li .info p{
+		width:550px;height:50px;
+		border:1px dashed #ccc;
+			margin:5px 0;
+	}
+</style>
+
+<%= render :partial => 'header' %>
+      <div style="PADDING-LEFT: 10px;">
+        <form action="/deco_ideas/update_idea_name" method="post">
+          <input type='hidden' id='company_id' name="company_id" value="<%= @firm.id %>"/>
+          <%= (REDIS_DB.get("deco_idea_#{@firm.id}").nil? || REDIS_DB.get("deco_idea_#{@firm.id}") == "" || REDIS_DB.get("deco_idea_#{@firm.id}").squeeze(" ") == " ") ? '设计理念' : REDIS_DB.get("deco_idea_#{@firm.id}")%>>重命名:<input type="text" id="idea_name" name="idea_name" value="<%= REDIS_DB.get("deco_idea_#{@firm.id}") %>" size="10"/>
+          <input type=submit value="提交"/>
+        </form>
+      </div>
+	<ul id="deco_ideas_list">
+		<% @deco_ideas.each do |deco_idea|%>
+			<li class="clearfix">
+				<div class="img f_l">
+					<%= image_tag deco_idea.master_picture.url("120x100"), :size => "120x100"%>
+				</div>
+				<div class="info f_l">
+					<%=h deco_idea.title%>
+					<p><%= truncate_u(strip_tags(deco_idea.content).gsub(/\<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" \/\>/, '').tr(' ', ''),50)%></p>
+					<div>
+						操作: <%= link_to "编辑", edit_deco_idea_path(deco_idea)%> | <%= link_to "删除", deco_idea_path(deco_idea), :method => "delete", :confirm => "确认删除?"%> 
+						创建日期:<%= deco_idea.created_at.to_s(:db)%>
+					</div>
+				</div>
+			</li>
+		<% end -%>
+	</ul>
+	
+<%= render :partial => 'footer' %>

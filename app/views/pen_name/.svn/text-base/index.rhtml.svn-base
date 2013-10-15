@@ -1,0 +1,98 @@
+<style type="text/css">
+table {
+	border:1px solid #CCC;
+	border-collapse:collapse ;
+	width:100%;
+	font-size:15px;
+	font-weight: 100;
+}
+tr {
+	height: 40px; 
+}
+
+</style>
+<% unless flash[:notice].blank? -%>
+  <div id='notice' style="width:100%;color:red;font-size:18px;text-align:center"><%=flash[:notice]%></div>
+<% end -%>
+<% if @pen && @pen.size>0 %>
+	<div style="background-color:#F0F0F0;vertical-align:middle;text-align: middle;font-weight: bold;">
+		<span style="font-size:20px;">作者笔名管理<h1>
+	</div>
+	<div >
+		<table id="pen" border=1 align="center" >
+			<tr>
+	  			<th style="text-align:center;">用户名</th>
+	  			<th style="text-align:center;">笔名</th>
+	  			<th style="text-align:center">状态</th>
+				<th style="text-align:center">操作</th>
+				<th style="display:none">编号</th>
+			</tr>
+			<%for p in @pen%>
+					<tr align="center" onmouseover="style.backgroundColor='#CCCCCC'" onmouseout="style.backgroundColor='#FFFFFF'" bgcolor='#FFFFFF'>
+						<td><%=@rname%></td>
+						<td><%=p.name%></td>
+						<td><%if p.ischoice==1%>启用<%else%>禁用<%end%></td>
+						<td>
+							<a href="#n" onclick="delpen(<%=p.id%>)">删除</a> | <%if p.ischoice == 1%><a href="/pen_name/edit_ischo/<%=p.id%>&<%=p.ischoice %>" >更改禁用</a><%else%><a href="/pen_name/edit_ischo/<%=p.id%>&<%=p.ischoice %>" >更改启用</a><%end%> | <a href="#n" onclick="update_pen('1')">修改</a>
+						</td>
+						<td style="display:none"><%=p.id%></td>
+					</tr>
+			<%end%>		
+		</table>
+	</div>
+	<div style="text-align:right;font-size:14px;">
+		<%= will_paginate @pen %> 
+	</div>
+<% end%>
+
+<br />
+<div style="font-size:15px;">
+	<form action="/pen_name/create_update" method="get" onsubmit="return adups()">
+	 <input type="text" id="nam" name="nam" size="40" value="请输入新添加的笔名  " onmousedown="pop()" onblur="blurs()">&nbsp;&nbsp;
+	  |&nbsp;&nbsp;是否使用: <select name="ischo" id="ischo">
+	  		<option value="1">启用</option>
+	  		<option value="-1">禁用</option>
+	  	</select> &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+	  	<input type="hidden" name="addorupdate" value="add">
+	  	<input type="hidden" name="p_id">
+	 <input type="submit" id="anniu" value=" 添 加 " >
+	</form>
+</div>
+<script language="javascript">
+	
+	function delpen(id){
+		if(window.confirm('确定删除吗')){
+			location.href="/pen_name/delete/"+id;
+			
+		}
+	}
+	var bm=document.getElementById("nam");
+	function update_pen()
+	{
+		var ptab=$("pen");
+		var ptd=window.document.activeElement.parentElement;
+		var ptr=ptd.parentNode;
+		var biming=ptab.rows[ptr.rowIndex].cells[ptd.cellIndex-2].innerHTML;
+		bm.value = biming;
+		var ischo=ptab.rows[ptr.rowIndex].cells[ptd.cellIndex - 1].innerHTML;
+		if(ischo == "禁用")
+			document.getElementById("ischo").selectedIndex = 1;
+		else
+			document.getElementById("ischo").selectedIndex = 0;
+		document.getElementById("anniu").value=" 修 改 ";
+		document.getElementById("addorupdate").value="update";
+		document.getElementById("p_id").value=ptab.rows[ptr.rowIndex].cells[ptd.cellIndex + 1].innerHTML;
+	}
+	function pop(){
+		if(bm.value == "请输入新添加的笔名  ")bm.value = "";
+	}
+	function blurs(){	
+		if(bm.value.length <= 0)bm.value = "请输入新添加的笔名  ";
+	}
+	function adups(){
+		if(bm.value == "请输入新添加的笔名  "){
+			alert("请录入新笔名  ");
+			return false;
+		}
+	}
+</script>

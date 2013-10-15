@@ -1,0 +1,186 @@
+<script type="text/javascript">
+  window.onload = function(){
+    div_main_height = 1000;
+    ge("div_main").style.height = div_main_height;
+    ge("L_wrapper").style.height = div_main_height+6;
+    recordcount = <%=@recordcount%>;
+    pagesize = <%=@pagesize%>;
+    curpage = <%=@curpage%>;
+    cur_list = 0;
+    listsize = <%=@listsize%>;
+    page_index_list(recordcount, pagesize, curpage, cur_list, listsize);
+  }
+  function gotopage(page){
+    window.open("/wenba/examine_topics?page="+page+"&recordcount=<%=@recordcount%>&riqi1=<%=@riqi1%>&riqi2=<%=@riqi2%>&keyword=<%=u(@keyword)%>&username=<%=u(@username)%>&method=<%=@method%>", "_self");
+  }
+  function hidden_record(ids){
+    ids = ids.split(",");
+    for (var id in ids){
+      if (ge('arid' + ids[id])!=null){
+        ge('arid' + ids[id]).value = '0';
+        ge('tr_' + ids[id]).style.display = "none";
+      }
+    }
+  }
+  function tag_assign(){
+    var cid = ge('cid').value;
+    if (cid == 1 || cid == 38 || cid == 173 || cid == 265){
+      alert("请选择二级或三级板块分类!");
+    }else{
+      var ids = getids();
+      if (ids!=""){
+        hideiframe.location = "/wenba/tag_assign?tag_id=" + cid + "&topic_ids=" + ids;
+        hidden_record(ids);
+      }
+    }
+  }
+  function getids(){
+    var ids = [];
+    if (document.ftiwen.arid.length==undefined){
+      if (document.ftiwen.arid.checked) ids = document.ftiwen.arid.value;
+    }else{
+      for (i=0; i<document.ftiwen.arid.length;i++){
+        if (document.ftiwen.arid[i].checked && document.ftiwen.arid[i].value!='0') ids.push(document.ftiwen.arid[i].value);
+      }
+      ids = ids.join(",");
+    }
+    if (ids==""){alert("请选择记录！"); return "";} else return ids;
+  }
+  function deleteAll(){
+    if (confirm('您确定要不通过这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        var submit_form = document.getElementById("ftiwen");
+        submit_form.action = "/wenba/topic_del?ids=" + ids;
+        submit_form.submit();
+      }
+    }
+  }
+
+  function examineAll(){
+    if (confirm('您确定要通过这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        var submit_form = document.getElementById("ftiwen");
+        submit_form.action = "/wenba/examine?ids=" + ids;
+        submit_form.submit();
+      }
+    }
+  }
+  function deleteUserAll(){
+    if (confirm('您确定要禁用这些记录吗？')){
+      var ids = getids();
+      if (ids!=""){
+        var submit_form = document.getElementById("ftiwen");
+        submit_form.action = "/wenba/users_del?ids=" + ids;
+        submit_form.submit();
+      }
+    }
+  }
+
+  var checkflag = "false";
+  function SelectAll(field) { //全选checkbox
+    if (checkflag == "false") {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = true;}
+      checkflag = "true";
+      return "false";
+    }
+    else {
+      for (i = 0; i < field.length; i++) {
+        field[i].checked = false; }
+      checkflag = "false";
+      return "true";
+
+    }
+  }
+</script>
+<style type="text/css">
+  .ellipsis{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap
+  }
+  #pagelist{
+    font-family:Verdana;
+    color:#999999;
+    font-size:14px;
+    letter-spacing:1px;
+    vertical-align: middle;
+  }
+  #pagelist a{
+    color:#000040;
+    text-decoration:none;
+  }
+  #pagelist a:hover{
+    background-color: #000040;
+    color:white;
+    text-decoration:none;
+  }
+</style>
+
+<div id="div_main">
+  <form name="ftiwen" id="ftiwen" action="/wenba/examine_topics" method="post">
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+      提问时间：<input name="riqi1" type="text" size="6" value="<%=@riqi1%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />-<input name="riqi2" type="text" size="6" value="<%=@riqi2%>" onfocus="return SelectDate(this,'yyyy-MM-dd');" />　
+      关键字：<input name="keyword" type="text" size="6" value="<%=@keyword%>" />　
+      用户名：<input name="username" type="text" size="6" value="<%=@username%>" />　
+      数据类型：
+      <select name="method">
+        <option value="0">全部数据</option>
+        <option value="1" <%="selected" if @method==1%>>真实部分</option>
+        <option value="2" <%="selected" if @method==2%>>未分配[导入]</option>
+        <option value="3" <%="selected" if @method==3%>>已分配[导入]</option>
+      </select>　
+      <input type="submit"value="搜 索" />
+    </div>
+    <div style="font-family:Verdana; color:#7389A4; line-height:34px; font-size:14px; letter-spacing:2px; margin: 0px 0px 0px 5px; ">
+		总共搜索到<B><%=@recordcount%></B>条记录 当前显示第
+      <script type="text/javascript">document.write(generate_select_by_number(1, <%=@pagecount%>, <%=@curpage%>, "", "", "onchange=\"gotopage(this.value);\""));</script>
+	    页 共<B><%=@pagecount%></B>页
+    </div>
+
+    <table id="datalist" style="width:auto;" summary="这个表格是...">
+      <caption align="left"></caption>
+      <tr>
+        <th>编号</th>
+        <th>标题</th>
+        <th>内容</th>
+        <th>回复数</th>
+        <th>用户</th>
+        <th>创建时间</th>
+        <th>操作</th>
+      </tr>
+      <%for topic in @topics%>
+        <tr align="center" style="background-color:#FFFDE6" id="tr_<%=topic.id%>">
+          <td align="left"><input type="checkbox" name="arid" id="arid<%=topic.id%>" value="<%=topic.id%>" /> <%=topic.id%></td>
+          <td align="left"><div class="ellipsis" style="width:400px;">
+              <a href="http://wb.51hejia.com/q/<%=topic.id%>.html" target="_blank"><%=topic.subject%></a>
+            </div>
+          </td>
+          <td>
+            <label title="<%= h(topic.description).to_s.split(//u) %>">
+              <%= truncate_u(h(topic.description),20,"...") %>
+            </label>
+          </td>
+          <td><%=topic.post_counter%></td>
+          <td><%if topic.user_id==0%>游客<%else%><a href="http://blog.51hejia.com/u/<%=topic.user_id%>" target="_blank"><%=topic.user.USERNAME rescue "<font color='red'>未知用户</font>"%></a><%end%></td>
+          <td><%=topic.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+          <td>
+            <%= link_to("通过", {:action => "examine", :ids => topic.id}) %> |
+            <%= link_to("不通过", {:action => "topic_del", :ids => topic.id}) %> |
+            <%= link_to("删除用户", {:action => "delete_user", :uid => topic.user_id}) %>
+          </td>
+        </tr>
+      <%end %>
+    </table>
+    <div id="div_pagelist" style="margin-top:15px;">
+      <input onclick="SelectAll(document.ftiwen.arid)" type="button" value="全选" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />&nbsp;
+      <input onclick="examineAll()" type="button" value="批量审核通过" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+      <input onclick="deleteAll()" type="button" value="批量审核不通过" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />
+      原因：<%= text_field_tag :reason %>
+      <input onclick="deleteUserAll()" type="button" value="批量禁用用户" class="btn1_mouseout" onmouseover="this.className='btn1_mouseover'" onmouseout="this.className='btn1_mouseout'" />　
+      <span id="pagelist"></span>
+    </div>
+  </form>
+</div>

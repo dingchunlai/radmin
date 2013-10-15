@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control
+END
+rails3.rb
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control/rails3.rb
+END
+ruby.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control/ruby.rb
+END
+sinatra.rb
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control/sinatra.rb
+END
+external.rb
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control/external.rb
+END
+merb.rb
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control/merb.rb
+END
+rails.rb
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/control/rails.rb
+END

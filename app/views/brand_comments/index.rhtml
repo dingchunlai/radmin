@@ -1,0 +1,42 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="comments_list">
+  <tr>
+    <th>编号</th>
+    <th>评论标题</th>
+    <th>用户</th>
+    <th>品牌</th>
+    <th>评价</th>
+    <th>是否精华</th>
+    <th>是否审核</th>
+    <th>评论时间</th>
+    <th>相关操作</th>
+    <th>质量-售后-口碑-性价比-知名度</th>
+  </tr>
+  <% @comments.each do |comment| %>
+    <tr class="<%= cycle("odd", "even")%>" id="<%= comment.dom_id -%>">
+      <td><%= comment.id %></td>
+      <td><%=h comment.c20 %></td>
+      <td><%= comment.c1 %></td>
+      <td><%= link_to comment.brand.name_zh, brand_comments_path(:brand_id => comment.brand.id) %></td>
+      <td><%= comment.c24 == 1 ? "好评" : "差评" %></td>
+      <td>
+        <%= check_box_tag "comment_c23", comment.c23, comment.c23 == 1, {:onclick => remote_function( :url => is_good_brand_comment_path(comment), :with => "'cvalue='+this.checked", :method => "put")} -%>
+        <span id="is_good_<%= comment.dom_id -%>"><%= comment.c23 == 1 ? "<strong>精华</strong>" : "普通" %></span>
+      </td>
+      <td>
+        <%= check_box_tag "comment_c33", comment.c33, comment.c33 == 1, {:onclick => remote_function( :url => is_verify_brand_comment_path(comment), :with => "'cvalue='+this.checked", :method => "put")} -%>
+        <span id="is_verify_<%= comment.dom_id -%>"><%= comment.c33 == 1 ? "<strong>审核</strong>" : "否" %></span>
+      </td>
+      <td><%= comment.cdate.to_s(:db) %></td>
+      <td>
+        <%= link_to_function "查看内容", "$('content_#{comment.dom_id}').toggle();" %>
+        <%= link_to_remote "删除", :url => brand_comment_path(comment), :confirm => "确认删除该评论吗？", :method => :delete %>
+      </td>
+      <td>&nbsp;&nbsp;<%= comment.c26 %>&nbsp;&nbsp;&nbsp;&nbsp;<%= comment.c25 %>&nbsp;&nbsp;&nbsp;&nbsp;<%= comment.c27 %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= comment.c28 %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= comment.c29 %></td>
+    </tr>
+    <tr id="content_<%= comment.dom_id %>" style="display:none;">
+      <th>内容</th>
+      <td colspan="8"><%= comment.c30 %></td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @comments %>

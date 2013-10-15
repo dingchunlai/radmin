@@ -1,0 +1,54 @@
+<div class="user_right">
+
+	<div id="widebar">
+		<div id="nav_bottom"></div>
+		<div id="widebar_content">
+			<div id="userprofile">
+				<div class="top">
+					<div class="profile_name">我的和家 - 活动报名</div>
+				</div>
+				<div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以查看活动报名信息。</div>
+			</div>
+		</div>
+		<div class="mainbox">
+			<div class="same_cha">
+				<ul>
+					<li class="line"></li>
+					<li id="s1" class="menu_on"><a href="/decos/registers">活动报名</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_on">编辑报名</li>
+					<li class="line"></li>
+				</ul>
+			</div>
+
+			<%= error_messages_for :event %>
+			<% form_for( :register, :url => deco_register_path(@register), :html => {:name => "registers_form", :method => :put} ) do |f| -%>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>姓名：</td>
+					<td><%= f.text_field :name %></td>
+				</tr>
+				<tr>
+					<td>电话：</td>
+					<td><%= f.text_field :phone %></td>
+				</tr>
+				<tr>
+					<td>电邮：</td>
+					<td><%= f.text_field :email %></td>
+				</tr>
+				<tr>
+					<td>时间：</td>
+					<td><%= f.date_select :created_at %></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><%= submit_tag "提交" %></td>
+				</tr>
+			</table>
+			<% end %>
+
+		</div>
+	</div>
+
+
+</div>

@@ -1,0 +1,5 @@
+<%= error_messages_for :case %>
+<% form_for :case, @case, :url => vendor_case_path(@case), :html => {:method => "put", :multipart => true} do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>
+

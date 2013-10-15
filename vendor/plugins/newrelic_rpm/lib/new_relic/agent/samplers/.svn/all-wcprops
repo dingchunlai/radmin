@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/samplers
+END
+cpu_sampler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/samplers/cpu_sampler.rb
+END
+memory_sampler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/samplers/memory_sampler.rb
+END
+delayed_job_lock_sampler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/samplers/delayed_job_lock_sampler.rb
+END
+object_sampler.rb
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/!svn/ver/99/51hejia/repos/radmin/release/vendor/plugins/newrelic_rpm/lib/new_relic/agent/samplers/object_sampler.rb
+END

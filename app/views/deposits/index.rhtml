@@ -1,0 +1,14 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>充值账户</th>
+		<th>充值金额</th>
+		<th>充值时间</th>
+	</tr>
+	<% @deposits.each do |deposit| %>
+	<tr>
+		<td><%= link_to deposit.vendor.name_zh, vendor_path(deposit.vendor) %></td>
+		<td><%= deposit.amount %>元</td>
+		<td><%= deposit.created_at.to_s(:db) %></td>
+	</tr>
+	<% end %>
+</table>

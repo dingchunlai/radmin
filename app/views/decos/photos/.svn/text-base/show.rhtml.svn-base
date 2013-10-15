@@ -1,0 +1,39 @@
+<div class="user_right">
+
+	<div id="widebar">
+		<div id="nav_bottom"></div>
+		<div id="widebar_content">
+			<div id="userprofile">
+				<div class="top">
+					<div class="profile_name">我的和家 - 施工图片</div>
+				</div>
+				<div style="padding:5px; padding-left: 30px; color:#808080">在这里您可以添加和维护施工图片信息。</div>
+			</div>
+		</div>
+		<div class="mainbox">
+			<div class="same_cha">
+				<ul>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/photos">图片列表</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_off"><a href="/decos/photos/new">上传图片</a></li>
+					<li class="line"></li>
+					<li id="s1" class="menu_on">图片详情</li>
+					<li class="line"></li>
+				</ul>
+			</div>
+
+			<div id="same1" style="padding:10px;">
+				<h2><%= @photo.title %></h2>
+				<ul>
+					<li><%= image_tag(@photo.image.url) %></li>
+					<li><%= @photo.summary %></li>
+					<li><%= @photo.created_at.to_s(:db) %></li>
+				</ul>
+			</div>
+
+		</div>
+		
+	</div>
+
+</div>

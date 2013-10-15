@@ -1,0 +1,13 @@
+<h3>手机验证管理</h3>
+<span style="color:red"><%= flash[:notice] if flash[:notice] %></span>
+<table>
+  <tr>
+    <td>
+      <form action="/mobile_verifiy/update" method="get" accept-charset="utf-8">
+	请输入用户名:<br/>
+        <%= text_area_tag "mobile_verifies",params[:mobile_verifies],:rows => 10, :cols => 25 %>（注：输入多个用户名以“Enter(回车键)”隔开）<br/>
+        <%= submit_tag("验证")%>&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag("取消验证")%>
+      </form>
+    </td>
+  </tr>
+</table>

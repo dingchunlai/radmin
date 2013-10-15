@@ -1,0 +1,31 @@
+<form action="/review/back_reply" method="post">
+<input type="hidden" name="review_id" value="<%=@review_id%>">
+<p align=center>回复人：<input type="text" name="username" id="uid">
+马甲<select name="majia" onclick="setdata(this)">
+	<option value="0" >选择马甲</option>
+	<%@majias.each do |majia|%>
+		<option value="<%=majia.USERBBSID%>"><%=majia.USERNAME%></option>
+	<%end%>
+</select>
+</p>
+<p align=center>
+	内容：<textarea name="content" cols=50 rows=10></textarea>
+</p>
+<p align=center>
+	<input type="submit" value="确定">
+</p>
+</form>
+<script language="javascript">
+	function setdata(obj){
+		if(obj.value != '0'){
+			for(var i=0;i<obj.options.length;i++){
+				if(obj.options[i].selected){
+					document.getElementById('uid').value = obj.options[i].text;
+					return;
+				}
+			}
+		}else{
+			document.getElementById('uid').value = '';
+		}
+	}
+</script>

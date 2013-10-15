@@ -1,0 +1,5 @@
+<%= error_messages_for :brand %>
+<% form_for( :brand, :url => brand_path(@brand), :html => {:method => "put", :multipart => true}) do |f| -%>
+	<%= render :partial => "form", :locals => {:f => f} -%>
+<% end -%>
+

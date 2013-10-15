@@ -1,0 +1,171 @@
+<SCRIPT LANGUAGE="JavaScript" SRC="/javascripts/tiny_mce/tiny_mce.js"></SCRIPT>
+<script language="javascript" type="text/javascript">
+      tinyMCE.init({
+        mode : "exact",
+        elements : "content2",
+        language : "zh",
+        theme : "simple",
+        dialog_type : "modal",
+        convert_urls : false,
+        plugins : "advhr,advimage,advlink,emotions,fullscreen,preview,paste,table",
+        theme_advanced_layout_manager : "SimpleLayout",
+        theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,separator,forecolor,backcolor,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,link,unlink,advhr,image,advimage,advlink,emotions,pastetext,pasteword,fullscreen,selectall,code",
+        theme_advanced_buttons2 : "tablecontrols",
+        theme_advanced_buttons3 : "",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        extended_valid_elements : "fieldset[style],legend[style],a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+      });
+function trim(str){return str.replace(/^\s*(.*?)[\s\n]*$/g,  '$1');}
+function blank_filter(str){		//过滤空格
+	while (str.indexOf(" ")>=0||str.indexOf("　")>=0){
+			str = str.replace(" ","").replace("　","");
+	}
+	return str;
+}
+function form_comment_submit(thisform){
+    var valReturn = true;
+    thisform.nickname.value = blank_filter(thisform.nickname.value);
+    if (thisform.nickname.value==""){
+        alert("请填写用户昵称！");
+        thisform.nickname.focus();
+        valReturn = false;
+    }
+    return valReturn;
+}
+</script>
+<style type="text/css">
+a {font-size:12px;text-decoration:none;color:black}
+a:hover {color:red;}
+.STYLE1 {
+	font-size: 14px;
+	color: #033d63;
+	font-weight: bold;
+}
+.STYLE2 {
+	font-size: 12px;
+	color: #242323;
+}
+.kuang {width:679px; height:86px;}
+.menu { width:76px; height:22px;}
+.STYLE4 {font-size: 12px; color: #4d4d4d; }
+</style>
+
+<table width="734" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="734" height="34" background="/images/comment/pinglun_01.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="35"></td>
+        <td height="34">
+            <span style="float:right;padding:5px 15px 0px 0px"></span>
+            <span class="STYLE1">最新评论</span>
+        </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="427" bordercolor="#CCCCCC" bgcolor="#f3f4f9"><table width="714" height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="10"></td>
+      </tr>
+
+     <%for comment in @comments%>
+      <tr><td height="64" bgcolor="#FFFFFF" style="padding:0 4px;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+      <td height="35" class="STYLE2"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ECEBEB">
+      <tr>
+      <td height="28" style="padding-left:12px;font-size:12px;"><%=strip_tags(comment.nickname)%>：</td>
+      <td width="120" style="font-size:12px;"><%=comment.created_at.utc.strftime("%Y-%m-%d %H:%M") rescue ""%></td>
+      </tr>
+      </table></td>
+      </tr>
+      <%if @sort_id!=0%>
+      <tr>
+      <td width="0" height="21" class="STYLE2" style="padding:1px 12px;color:#666666">
+           <%1.upto(@comment_sort.length-1) do |i|%><%=@comment_sort[i]%>:
+              <%pv = eval("comment.pv"+i.to_s)%>
+              <%1.upto(4) do |v|%>
+                  <%if v <= pv.to_i%>
+                  <img src="/images/comment/01.gif" width="16" height="16" align="absmiddle" />
+                  <%else%>
+                  <img src="/images/comment/02.gif" width="16" height="16" align="absmiddle" />
+                  <%end%>
+              <%end%>
+            <%end%>
+      </td>
+      </tr>
+      <%end%>
+      <tr>
+      <td height="21" class="STYLE2" style="padding:3px 12px;">
+            评论内容：<%=strip_tags(comment.content)%>
+            <%unless comment.reply.nil?%>
+            <div style="background-color:#989898;color:white;padding:5px;margin-top:3px;">管理员回复：<%=strip_tags(comment.reply)%></div>
+            <%end%>
+      </td>
+      </tr>
+      </table>
+      </td></tr>
+      <%end%>
+
+      <tr>
+        <td height="248"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="28" bgcolor="#e4e8f3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="10"></td>
+                <td height="30"><span class="STYLE1">我要评论</span></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="220">
+              <iframe name="hideiframe" width="0" height="0" style="display: none;"></iframe>
+
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <form name="form_comment" accept-charset="utf-8" action="/comment/comment_addnew" target="hideiframe" method="post" onsubmit="return form_comment_submit(this);">
+              <tr>
+                <td width="10" height="26"></td>
+                <td class="STYLE2">
+                  <strong class="STYLE4">用户昵称：</strong><input type="text" name="nickname" style="width:70px;" />
+                  <%if @sort_id!=0%>
+                      &nbsp;&nbsp;
+                      <%1.upto(@comment_sort.length-1) do |i|%>
+                        <%=@comment_sort[i]%> <select name="pv<%=i%>"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                      <%end%>
+                  <%end%>
+                  </td>
+              </tr>
+              <tr>
+                <td width="10"></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td width="10" height="32"></td>
+                <td>
+
+                    <textarea id="content" name="content" class="kuang"></textarea>
+                 </td>
+              </tr>
+              <tr>
+                <td width="10" height="40" class="STYLE2"></td>
+                <td align="center" class="STYLE2">
+                  <script>document.writeln("<input name=\"r_url\" type=\"hidden\" value=\"" + top.location.href + "\" \/>");</script>
+                      <input name="theme_id" type="hidden" value="<%=@theme_id%>" />
+                      <input id="submit_button" type="submit" value="发表评论" class="menu" />
+                </td>
+              </tr>
+              <tr>
+                <td height="40" class="STYLE2"></td>
+                <td class="STYLE4">发言请遵守有关法律法规，并注意语言文明，您在51hejia.com发表的作品，51hejia.com有权转载或引用。</td>
+              </tr>
+              </form>
+            </table>
+
+            </td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

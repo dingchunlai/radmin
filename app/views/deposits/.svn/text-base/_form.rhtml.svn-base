@@ -1,0 +1,20 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="label">充值账户</td>
+		<td><%= link_to @vendor.name_zh, vendor_path(@vendor) %><%= hidden_field_tag "deposit[vendor_id]", @vendor.id %></td>
+	</tr>
+	<tr>
+		<td class="label required">充值金额</td>
+		<td><%= f.text_field :amount -%>元</td>
+	</tr>
+	<tr>
+		<td class="label">相关备注</td>
+		<td><%= f.text_area :note, :rows => 5 -%></td>
+	</tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td>
+			<%= submit_tag(controller.action_name == "new" ? "确认充值" : "更新充值", :class => "btn") -%>&nbsp;&nbsp;
+		</td>
+	</tr>
+</table>

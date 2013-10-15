@@ -1,0 +1,26 @@
+<form action="/admin_case/search_article_to_cases" method="post" style="display:inline;">
+  编辑名字:
+  <select name="editor_id">
+    <option value="">不选择</option>
+    <% unless @users.empty? %>
+      <% @users.each do |u| %>
+        <option value="<%= u.id %>" <%= "selected" if @editor_id == u.id.to_s %>><%= u.rname %>
+      <% end %>
+    <% end %>
+  </select>
+  按状态:
+  <select name="state">
+    <option value="">不选择</option>
+    <option value="0" <%= "selected" if @state == "0" %>>未分配</option>
+    <option value="1" <%= "selected" if @state == "1" %>>未打标签</option>
+    <option value="2" <%= "selected" if @state == "2" %>>已打标签未审核</option>
+    <option value="3" <%= "selected" if @state == "3" %>>未通过审核</option>
+    <option value="4" <%= "selected" if @state == "4" %>>已通过审核</option>
+  </select>
+  <input type="checkbox" name="use_time" value="1" checked>不用时间
+  <input name="start_time" type="text" onfocus="new Calendar().show(this);" size="10" maxlength="10" value="2009-07-01" class="validate-date"/>&nbsp;-
+  <input name="end_time" type="text" onfocus="new Calendar().show(this);" size="10" maxlength="10" value="2009-07-31" class="validate-date"/>
+  关键字:
+  <input name="case_name" type="text" size="20" id="case_name"/>
+  <input type="submit" value="搜索" class="input2"/>
+</form>
